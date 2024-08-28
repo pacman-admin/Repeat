@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="argo-3.10">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/argo-3.10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/argparse4j-0.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-lang3-3.12.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/commons-text-1.10.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/httpclient-4.5.6.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/Jama-1.0.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/SimpleNativeHooks_0_0_8.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/libs/argo-3.10.jar!/" />
+    </SOURCES>
+  </library>
+</component>

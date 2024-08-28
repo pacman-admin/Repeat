@@ -1,0 +1,119 @@
+{
+	"version": "2.15",
+	"global_settings": {
+		"debug": {
+			"level": "INFO"
+		},
+		"tray_icon_enabled": true,
+		"enabled_halt_by_key": true,
+		"execute_on_key_released": true,
+		"use_clipboard_to_type_string": false,
+		"run_task_with_server_config": false,
+		"use_java_awt_for_mouse_position": false,
+		"global_hotkey": {
+			"mouse_gesture_activation": 20,
+			"record": [
+				{
+					"type": "key_stroke",
+					"key": 120,
+					"modifier": 0
+				}
+			],
+			"replay": [
+				{
+					"type": "key_stroke",
+					"key": 122,
+					"modifier": 0
+				}
+			],
+			"replay_compiled": [
+				{
+					"type": "key_stroke",
+					"key": 123,
+					"modifier": 0
+				}
+			]
+		},
+		"tools_config": [
+			"local"
+		],
+		"core_config": [
+			"local"
+		]
+	},
+	"ipc_settings": [
+		{
+			"name": "controller_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 9999
+			}
+		},
+		{
+			"name": "cli_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 65432
+			}
+		},
+		{
+			"name": "web_ui_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 65401
+			}
+		},
+		{
+			"name": "python",
+			"config": {
+				"launch_at_startup": true,
+				"executing_program": null
+			}
+		},
+		{
+			"name": "C#",
+			"config": {
+				"launch_at_startup": true,
+				"executing_program": "/Users/Shared/MEGA/Pac-Man MOST RECENT/Repeat_Revamped/resources/csharp/Repeat.exe"
+			}
+		}
+	],
+	"remote_repeats_clients": {
+		"clients": []
+	},
+	"compilers": {
+		"local_compilers": [
+			{
+				"name": "C#",
+				"path": ".",
+				"compiler_specific_args": {}
+			},
+			{
+				"name": "python",
+				"path": "python.exe",
+				"compiler_specific_args": {}
+			},
+			{
+				"name": "java",
+				"path": "/Users/standard/.sdkman/candidates/java/21.0.4-tem",
+				"compiler_specific_args": {
+					"classpath": []
+				}
+			},
+			{
+				"name": "manual",
+				"path": ".",
+				"compiler_specific_args": {}
+			}
+		],
+		"remote_repeats_compilers": []
+	},
+	"task_groups": [
+		{
+			"group_id": "b9211885-4110-4ed2-8a12-435808b23b6b",
+			"name": "default",
+			"enabled": true,
+			"tasks": []
+		}
+	]
+}
