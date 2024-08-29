@@ -106,7 +106,7 @@ public final class FileUtility {
      * Append an extension to a file. If extension does not contain a dot, it will be automatically added
      *
      * @param file      file to add extension
-     * @param extension extension to be add
+     * @param extension extension to be added
      * @return file with extension: fileName.extension
      */
     public static File addExtension(File file, String extension) {
@@ -407,7 +407,7 @@ public final class FileUtility {
     /**
      * Remove a file
      *
-     * @param file file to be remove
+     * @param file file to remove
      * @return if removal is successful. Throw IOException if encounters error
      */
     public static boolean removeFile(File file) {

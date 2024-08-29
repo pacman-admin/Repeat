@@ -6,29 +6,6 @@ public final class NumberUtility {
     private NumberUtility() {
     }
 
-    public static boolean equalDouble(double a, double b) {
-        return Math.abs(a - b) < 0.00001d;
-    }
-
-    public static boolean equalFloat(float a, float b) {
-        return Math.abs(a - b) < 0.00001f;
-    }
-
-    public static int getDigit(int number, int digit) {//0 means lsb
-        String num = number + "";
-        int lsb = num.length() - 1;
-        lsb -= digit;
-        if (lsb >= 0) {
-            return num.charAt(lsb) - '0';
-        } else {
-            return -1;
-        }
-    }
-
-    public static boolean isInteger(double input) {
-        return (input == Math.floor(input)) && !Double.isInfinite(input);
-    }
-
     public static boolean isNegativeInteger(String input) {
         return !isInteger(input) || Long.parseLong(input) <= 0;
     }
@@ -69,14 +46,6 @@ public final class NumberUtility {
         input = input.replaceAll("\\.", "");
 
         return isInteger(input);
-    }
-
-    public static boolean inRange(int a, int lower, int upper) {
-        return (a >= lower) && (a <= upper);
-    }
-
-    public static boolean inRange(double a, double lower, double upper) {
-        return (a >= lower) && (a <= upper);
     }
 
     public static float fromIEEE754Binary(String binary) {
