@@ -3,8 +3,6 @@ package utilities.swing;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.UndoableEditEvent;
-import javax.swing.event.UndoableEditListener;
 import javax.swing.text.Document;
 import javax.swing.text.Element;
 import javax.swing.undo.CannotRedoException;
@@ -15,11 +13,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.KeyEvent;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 @SuppressWarnings({"unused", "BooleanMethodIsAlwaysInverted"})
 final class LinedTextArea extends JScrollPane {
 
     private static final Logger LOGGER = Logger.getLogger(LinedTextArea.class.getName());
-    private static final int MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    private static final int MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
     private final JTextArea lines;
 
     private LinedTextArea(final JTextArea textArea) {
