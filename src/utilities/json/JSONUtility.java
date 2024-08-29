@@ -160,6 +160,7 @@ public final class JSONUtility {
      * @param output the output collection where parsed objects will be added to
      * @return true if all JSON objects were successfully parsed, and false otherwise
      */
+    @SuppressWarnings("UnusedReturnValue")
     public static <E> boolean addAllJson(Collection<JsonNode> nodes, Function<JsonNode, E> parser, Collection<E> output) {
         boolean success = true;
         for (JsonNode node : nodes) {
