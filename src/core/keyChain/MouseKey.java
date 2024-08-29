@@ -8,7 +8,7 @@ import org.simplenativehooks.events.NativeMouseEvent.State;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-
+@SuppressWarnings("unused")
 public final class MouseKey implements ButtonStroke {
 
 	static final String TYPE_STRING = "mouse_key";
@@ -105,11 +105,8 @@ public final class MouseKey implements ButtonStroke {
 			return false;
 		}
 		MouseKey other = (MouseKey) obj;
-		if (key != other.key) {
-			return false;
-		}
-		return true;
-	}
+        return key == other.key;
+    }
 
 	@Override
 	public KeyboardResult getTypedString(KeyboardState keyboardState) {

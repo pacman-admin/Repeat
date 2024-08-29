@@ -1,12 +1,5 @@
 package core.keyChain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
@@ -15,192 +8,197 @@ import utilities.KeyCodeToChar;
 import utilities.StringUtilities;
 import utilities.json.IJsonable;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
 public abstract class KeySeries implements IJsonable {
 
-	private static final Logger LOGGER = Logger.getLogger(KeySeries.class.getName());
-	List<ButtonStroke> keys;
+    private static final Logger LOGGER = Logger.getLogger(KeySeries.class.getName());
+    List<ButtonStroke> keys;
 
-	KeySeries(List<ButtonStroke> keys) {
-		this.keys = new ArrayList<>(keys.size());
+    KeySeries(List<ButtonStroke> keys) {
+        this.keys = new ArrayList<>(keys.size());
 
         this.keys.addAll(keys);
-	}
+    }
 
-	KeySeries(Iterable<Integer> keys) {
-		this.keys = new ArrayList<>();
+    KeySeries(Iterable<Integer> keys) {
+        this.keys = new ArrayList<>();
 
-		for (Integer key : keys) {
-			this.keys.add(KeyStroke.of(key, KeyStroke.Modifier.KEY_MODIFIER_UNKNOWN));
-		}
-	}
+        for (Integer key : keys) {
+            this.keys.add(KeyStroke.of(key, KeyStroke.Modifier.KEY_MODIFIER_UNKNOWN));
+        }
+    }
 
-	KeySeries(int key) {
-		this(List.of(key));
-	}
+    KeySeries(int key) {
+        this(List.of(key));
+    }
 
-	KeySeries() {
-		this(new ArrayList<Integer>());
-	}
+    KeySeries() {
+        this(new ArrayList<Integer>());
+    }
 
-	public abstract boolean collideWith(KeySeries other);
+    static List<ButtonStroke> parseKeyStrokes(List<JsonNode> list) {
+        try {
+            return list.stream().map(ButtonStroke::parseJSON).collect(Collectors.toList());
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Unable to parse key series", e);
+            return null;
+        }
+    }
 
-	/**
-	 * @return list of key codes in this key chain.
-	 * @deprecated change to use {@link #getButtonStrokes()} instead.
-	 */
-	@Deprecated
-	public List<Integer> getKeys() {
-		List<Integer> output = new ArrayList<>();
-		for (ButtonStroke key : keys) {
-			output.add(key.getKey());
-		}
-		return output;
-	}
+    public abstract boolean collideWith(KeySeries other);
 
-	/**
-	 * @return the list of key strokes contained in this key chain.
-	 * @deprecated change to use {@link #getButtonStrokes()} instead. This will not
-	 *             include any mouse related strokes.
-	 */
-	@Deprecated
-	public List<KeyStroke> getKeyStrokes() {
-		List<KeyStroke> output = new ArrayList<>(keys.size());
-		for (ButtonStroke key : keys) {
-			ButtonStroke stroke = key.clone();
-			if (stroke instanceof KeyStroke) {
-				output.add((KeyStroke) stroke);
-			}
-		}
-		return output;
-	}
+    /**
+     * @return list of keycodes in this keychain.
+     * @deprecated change to use {@link #getButtonStrokes()} instead.
+     */
+    @Deprecated
+    public List<Integer> getKeys() {
+        List<Integer> output = new ArrayList<>();
+        for (ButtonStroke key : keys) {
+            output.add(key.getKey());
+        }
+        return output;
+    }
 
-	/**
-	 * @return the list of button strokes contained in this key chain.
-	 */
-	public final List<ButtonStroke> getButtonStrokes() {
-		List<ButtonStroke> output = new ArrayList<>(keys.size());
-		for (ButtonStroke key : keys) {
-			output.add(key.clone());
-		}
-		return output;
-	}
+    /**
+     * @return the list of keystrokes contained in this keychain.
+     * @deprecated change to use {@link #getButtonStrokes()} instead. This will not
+     * include any mouse related strokes.
+     */
+    @Deprecated
+    public List<KeyStroke> getKeyStrokes() {
+        List<KeyStroke> output = new ArrayList<>(keys.size());
+        for (ButtonStroke key : keys) {
+            ButtonStroke stroke = key.clone();
+            if (stroke instanceof KeyStroke) {
+                output.add((KeyStroke) stroke);
+            }
+        }
+        return output;
+    }
 
-	/**
-	 * @return the number of key strokes in this key chain.
-	 */
-	public final int getSize() {
-		return keys.size();
-	}
+    /**
+     * @return the list of button strokes contained in this keychain.
+     */
+    public final List<ButtonStroke> getButtonStrokes() {
+        List<ButtonStroke> output = new ArrayList<>(keys.size());
+        for (ButtonStroke key : keys) {
+            output.add(key.clone());
+        }
+        return output;
+    }
 
-	/*
-	 * Add all key strokes from another key chain.
-	 */
-	public void addFrom(KeySeries other) {
-		keys.addAll(other.keys);
-	}
+    /**
+     * @return the number of keystrokes in this keychain.
+     */
+    public final int getSize() {
+        return keys.size();
+    }
 
-	/**
-	 * Add a single stroke to the key chain.
-	 * @param stroke stroke to add.
-	 */
-	public void addKeyStroke(ButtonStroke stroke) {
-		keys.add(stroke);
-	}
+    /*
+     * Add all keystrokes from another keychain.
+     */
+    public void addFrom(KeySeries other) {
+        keys.addAll(other.keys);
+    }
 
-	/**
-	 * Remove all keys in this key chain.
-	 */
-	public final void clearKeys() {
-		keys.clear();
-	}
+    /**
+     * Add a single stroke to the keychain.
+     *
+     * @param stroke stroke to add.
+     */
+    public void addKeyStroke(ButtonStroke stroke) {
+        keys.add(stroke);
+    }
 
-	/**
-	 * Check whether this key chain contains no key.
-	 * @return if there is no key stroke in this key chain.
-	 */
-	public boolean isEmpty() {
-		return keys.isEmpty();
-	}
+    /**
+     * Remove all keys in this keychain.
+     */
+    public final void clearKeys() {
+        keys.clear();
+    }
 
-	/**
-	 * @param stroke the key stroke to find.
-	 * @return whether the given key stroke is in this key chain.
-	 */
-	public boolean contains(ButtonStroke stroke) {
-		for (ButtonStroke key : keys) {
-			if (key.equals(stroke)) {
-				return true;
-			}
-		}
-		return false;
-	}
+    /**
+     * Check whether this keychain contains no key.
+     *
+     * @return if there is no keystroke in this keychain.
+     */
+    public boolean isEmpty() {
+        return keys.isEmpty();
+    }
 
-	/**
-	 * Get the string which would be typed out if all keys in this {@link KeySequence} are pressed in the specified order.
-	 * Note that this ignores effects of keys like SHIFT, CAPSLOCK, or NUMSLOCK.
-	 */
-	public String getTypedString() {
-		StringBuilder builder = new StringBuilder();
-		KeyboardState keyboardState = KeyboardState.getDefault();
+    /**
+     * @param stroke the keystroke to find.
+     * @return whether the given keystroke is in this keychain.
+     */
+    public boolean contains(ButtonStroke stroke) {
+        for (ButtonStroke key : keys) {
+            if (key.equals(stroke)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
-		for (ButtonStroke keyStroke : getButtonStrokes()) {
-			String s = KeyCodeToChar.getCharForCode(keyStroke.getKey(), keyboardState);
-			builder.append(s);
-		}
+    /**
+     * Get the string which would be typed out if all keys in this {@link KeySequence} are pressed in the specified order.
+     * Note that this ignores effects of keys like SHIFT, CAPSLOCK, or NUMLOCK.
+     */
+    public String getTypedString() {
+        StringBuilder builder = new StringBuilder();
+        KeyboardState keyboardState = KeyboardState.getDefault();
 
-		return builder.toString();
-	}
+        for (ButtonStroke keyStroke : getButtonStrokes()) {
+            String s = KeyCodeToChar.getCharForCode(keyStroke.getKey(), keyboardState);
+            builder.append(s);
+        }
 
-	@Override
-	public String toString() {
-		return StringUtilities.join(keys.stream().map(s -> s.toString()).collect(Collectors.toList()), " + ");
-	}
+        return builder.toString();
+    }
 
-	@Override
-	public int hashCode() {
-		return this.toString().hashCode();
-	}
+    @Override
+    public String toString() {
+        return StringUtilities.join(keys.stream().map(Object::toString).collect(Collectors.toList()), " + ");
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
-		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
-			return false;
-		}
-		KeySeries other = (KeySeries) obj;
-		if (keys == null) {
-			if (other.keys != null) {
-				return false;
-			}
-		} else {
-			return this.keys.equals(other.keys);
-		}
-		return true;
-	}
+    @Override
+    public int hashCode() {
+        return this.toString().hashCode();
+    }
 
-	@Override
-	public JsonRootNode jsonize() {
-		List<JsonNode> keyChain = new Function<ButtonStroke, JsonNode>() {
-			@Override
-			public JsonNode apply(ButtonStroke s) {
-				return s.jsonize();
-			}
-		}.map(getButtonStrokes());
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        KeySeries other = (KeySeries) obj;
+        if (keys == null) {
+            return other.keys == null;
+        } else {
+            return this.keys.equals(other.keys);
+        }
+    }
 
-		return JsonNodeFactories.array(keyChain);
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        List<JsonNode> keyChain = new Function<ButtonStroke, JsonNode>() {
+            @Override
+            public JsonNode apply(ButtonStroke s) {
+                return s.jsonize();
+            }
+        }.map(getButtonStrokes());
 
-	static List<ButtonStroke> parseKeyStrokes(List<JsonNode> list) {
-		try {
-			return list.stream().map(ButtonStroke::parseJSON).collect(Collectors.toList());
-		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, "Unable to parse key series", e);
-			return null;
-		}
-	}
+        return JsonNodeFactories.array(keyChain);
+    }
 }

@@ -7,47 +7,50 @@ import utilities.json.IJsonable;
  * Represents any input button stroke (e.g. mouse button, keyboard, joystick, ...)
  */
 public interface ButtonStroke extends IJsonable {
-	public int getKey();
-
-	public static enum Source {
-		KEYBOARD,
-		MOUSE;
-	}
-
-	/**
-	 * Syntactic sugar for {@link #getKey()}.
-	 */
-	public default int k() {
-		return getKey();
-	}
-
-	public boolean isPressed();
-	public KeyboardResult getTypedString(KeyboardState keyboardState);
-	public ButtonStroke clone();
-	public Source getSource();
-
-	public static ButtonStroke parseJSON(JsonNode n) {
+    static ButtonStroke parseJSON(JsonNode n) {
         return n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING) ? MouseKey.parseJSON(n) : KeyStroke.parseJSON(n);
     }
 
-	public static final class KeyboardResult {
-		private KeyboardState keyboardState;
-		private String typedString;
+    int getKey();
 
-		static KeyboardResult of(KeyboardState keyboardState, String typedString) {
-			KeyboardResult result = new KeyboardResult();
-			result.keyboardState = keyboardState;
-			result.typedString = typedString;
+    /**
+     * Syntactic sugar for {@link #getKey()}.
+     */
+    default int k() {
+        return getKey();
+    }
 
-			return result;
-		}
+    boolean isPressed();
 
-		public KeyboardState keyboardState() {
-			return keyboardState;
-		}
+    KeyboardResult getTypedString(KeyboardState keyboardState);
 
-		public String typedString() {
-			return typedString;
-		}
-	}
+    ButtonStroke clone();
+
+    Source getSource();
+
+    enum Source {
+        KEYBOARD,
+        MOUSE
+    }
+
+    final class KeyboardResult {
+        private KeyboardState keyboardState;
+        private String typedString;
+
+        static KeyboardResult of(KeyboardState keyboardState, String typedString) {
+            KeyboardResult result = new KeyboardResult();
+            result.keyboardState = keyboardState;
+            result.typedString = typedString;
+
+            return result;
+        }
+
+        public KeyboardState keyboardState() {
+            return keyboardState;
+        }
+
+        public String typedString() {
+            return typedString;
+        }
+    }
 }

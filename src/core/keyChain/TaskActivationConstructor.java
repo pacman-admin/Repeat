@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import utilities.StringUtilities;
-
+@SuppressWarnings("unused")
 public final class TaskActivationConstructor {
 
 	private LinkedList<ButtonStroke> strokes;

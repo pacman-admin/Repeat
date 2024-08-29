@@ -6,29 +6,30 @@ import argo.jdom.JsonRootNode;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 import utilities.json.IJsonable;
 
+@SuppressWarnings("unused")
 public final class SharedVariablesActivation implements IJsonable {
-	private final SharedVariablesSubscription variable;
+    private final SharedVariablesSubscription variable;
 
-	private SharedVariablesActivation(SharedVariablesSubscription variable) {
-		this.variable = variable;
-	}
+    private SharedVariablesActivation(SharedVariablesSubscription variable) {
+        this.variable = variable;
+    }
 
-	public static SharedVariablesActivation of(SharedVariablesSubscription variable) {
-		return new SharedVariablesActivation(variable);
-	}
+    public static SharedVariablesActivation of(SharedVariablesSubscription variable) {
+        return new SharedVariablesActivation(variable);
+    }
 
-	public SharedVariablesSubscription getVariable() {
-		return variable;
-	}
+    public static SharedVariablesActivation parseJSON(JsonNode node) {
+        JsonNode variableNode = node.getNode("variable");
+        SharedVariablesSubscription variable = SharedVariablesSubscription.parseJSON(variableNode);
+        return of(variable);
+    }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(JsonNodeFactories.field("variable", variable.jsonize()));
-	}
+    public SharedVariablesSubscription getVariable() {
+        return variable;
+    }
 
-	public static SharedVariablesActivation parseJSON(JsonNode node) {
-		JsonNode variableNode = node.getNode("variable");
-		SharedVariablesSubscription variable = SharedVariablesSubscription.parseJSON(variableNode);
-		return of(variable);
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("variable", variable.jsonize()));
+    }
 }

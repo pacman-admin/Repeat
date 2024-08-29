@@ -6,7 +6,7 @@ import org.simplenativehooks.utilities.Function;
 
 import core.background.AbstractBackgroundEntityManager;
 import globalListener.GlobalListenerFactory;
-
+@SuppressWarnings("unused")
 public final class TaskActivationConstructorManager extends AbstractBackgroundEntityManager<TaskActivationConstructor> {
 
 	private final AbstractGlobalKeyListener keyListener;
