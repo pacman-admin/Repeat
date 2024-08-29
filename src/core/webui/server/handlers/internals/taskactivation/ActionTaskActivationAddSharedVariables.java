@@ -53,11 +53,7 @@ public final class ActionTaskActivationAddSharedVariables extends AbstractTaskAc
 			SharedVariablesActivation sharedVariablesActivation;
 			if (namespace.equals(ALL)) {
 				sharedVariablesActivation = SharedVariablesActivation.of(SharedVariablesSubscription.forAll());
-			} else if (name.equals(ALL)) {
-				sharedVariablesActivation = SharedVariablesActivation.of(SharedVariablesSubscription.forNamespace(namespace));
-			} else {
-				sharedVariablesActivation = SharedVariablesActivation.of(SharedVariablesSubscription.forVar(namespace, name));
-			}
+			} else sharedVariablesActivation = name.equals(ALL) ? SharedVariablesActivation.of(SharedVariablesSubscription.forNamespace(namespace)) : SharedVariablesActivation.of(SharedVariablesSubscription.forVar(namespace, name));
 
 			activationList.add(sharedVariablesActivation);
 		}

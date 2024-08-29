@@ -16,9 +16,6 @@ public abstract class AutoJsonable implements IJsonable {
 	@Override
 	public final JsonRootNode jsonize() {
 		JsonNode node = Jsonizer.jsonize(this);
-		if (node == null) {
-			return null;
-		}
-		return node.getRootNode();
-	}
+        return node == null ? null : node.getRootNode();
+    }
 }

@@ -23,10 +23,7 @@ public enum Language {
 
     public static Language identify(int index) {
     	Language[] languages = Language.values();
-    	if (index < 0 || index >= languages.length) {
-    		return null;
-    	}
-    	return languages[index];
+        return index < 0 || index >= languages.length ? null : languages[index];
     }
 
     public static Language identify(String name) {

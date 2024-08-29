@@ -71,12 +71,9 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
 		backEndHolder.setReplaySpeedup(speedup);
 
 		JsonNode responseNode = Jsonizer.jsonize(ResponseMessage.of(count, delay, speedup));
-		if (responseNode == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to jsonize response.");
-		}
+        return responseNode == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to jsonize response.") : HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode()));
 
-		return HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode()));
-	}
+    }
 
 	@SuppressWarnings("unused")
 	private static final class ResponseMessage {

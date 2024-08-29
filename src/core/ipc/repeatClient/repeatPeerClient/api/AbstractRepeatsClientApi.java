@@ -26,11 +26,8 @@ abstract class AbstractRepeatsClientApi {
 
 	final String waitAndGetResponseIfSuccess(IpcMessageType type, IJsonable message) {
 		JsonNode node = waitAndGetJsonResponseIfSuccess(type, message);
-		if (node == null) {
-			return "";
-		}
-		return node.getStringValue();
-	}
+        return node == null ? "" : node.getStringValue();
+    }
 
 	final JsonNode waitAndGetJsonResponseIfSuccess(IpcMessageType type, IJsonable message) {
 		long id = repeatPeerServiceClientWriter.enqueueMessage(type, message);
@@ -42,9 +39,6 @@ abstract class AbstractRepeatsClientApi {
 			return null;
 		}
 
-		if (reply.getStatus().equals(ApiProtocol.SUCCESS_STATUS)) {
-			return reply.getMessage();
-		}
-		return null;
-	}
+        return reply.getStatus().equals(ApiProtocol.SUCCESS_STATUS) ? reply.getMessage() : null;
+    }
 }

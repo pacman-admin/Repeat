@@ -27,11 +27,8 @@ public interface ButtonStroke extends IJsonable {
 	public Source getSource();
 
 	public static ButtonStroke parseJSON(JsonNode n) {
-		if (n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING)) {
-			return MouseKey.parseJSON(n);
-		}
-		return KeyStroke.parseJSON(n);
-	}
+        return n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING) ? MouseKey.parseJSON(n) : KeyStroke.parseJSON(n);
+    }
 
 	public static final class KeyboardResult {
 		private KeyboardState keyboardState;

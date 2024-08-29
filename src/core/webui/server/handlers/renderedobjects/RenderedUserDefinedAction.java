@@ -17,11 +17,8 @@ public final class RenderedUserDefinedAction {
 		output.id = action.getActionId();
 		output.name = action.getName();
 		String representative = action.getActivation().getRepresentativeString();
-		String activation = "None";
-		if (representative != null && !representative.isEmpty()) {
-			activation = representative;
-		}
-		output.activation = activation;
+		String activation = representative != null && !representative.isEmpty() ? representative : "None";
+        output.activation = activation;
 		output.enabled = action.isEnabled() + "";
 		output.useCount = action.getStatistics().getCount();
 

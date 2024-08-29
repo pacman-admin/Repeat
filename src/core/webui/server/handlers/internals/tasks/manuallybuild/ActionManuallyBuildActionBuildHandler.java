@@ -44,10 +44,7 @@ public final class ActionManuallyBuildActionBuildHandler extends AbstractSingleM
 		}
 
 		String source = constructor.generateSource();
-		if (!backEndHolder.compileSourceAndSetCurrent(source, null)) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to compile source.");
-		}
+        return !backEndHolder.compileSourceAndSetCurrent(source, null) ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to compile source.") : HttpServerUtilities.prepareTextResponse(exchange, 200, "");
 
-		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
-	}
+    }
 }

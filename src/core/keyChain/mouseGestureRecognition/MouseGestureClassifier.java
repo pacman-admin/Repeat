@@ -60,9 +60,6 @@ public final class MouseGestureClassifier {
 		}
 
 		MouseGesture result = MouseGesture.find(prediction);
-		if (result == null) {
-			return MouseGesture.RANDOM;
-		}
-		return result;
-	}
+        return result == null ? MouseGesture.RANDOM : result;
+    }
 }

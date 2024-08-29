@@ -22,11 +22,8 @@ public abstract class KeyStrokeManager extends ActivationEventManager {
 		}
 
 		ButtonStroke buttonStroke = event.getButtonStroke();
-		if (buttonStroke.isPressed()) {
-			return onButtonStrokePressed(buttonStroke);
-		}
-		return onButtonStrokeReleased(buttonStroke);
-	}
+        return buttonStroke.isPressed() ? onButtonStrokePressed(buttonStroke) : onButtonStrokeReleased(buttonStroke);
+    }
 
 	protected abstract Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke);
 	protected abstract Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke);

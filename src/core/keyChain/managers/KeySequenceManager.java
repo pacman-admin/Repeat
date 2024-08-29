@@ -41,21 +41,15 @@ public final class KeySequenceManager extends KeyStrokeManager {
 			currentKeyboardRollingKeySeries.addKeyStroke(stroke);
 		}
 		currentRollingKeySeries.addKeyStroke(stroke);
-		if (!getConfig().isExecuteOnKeyReleased()) {
-			return considerTaskExecution(stroke);
-		}
+        return !getConfig().isExecuteOnKeyReleased() ? considerTaskExecution(stroke) : Collections.<UserDefinedAction>emptySet();
 
-		return Collections.<UserDefinedAction>emptySet();
-	}
+    }
 
 	@Override
 	synchronized public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-		if (getConfig().isExecuteOnKeyReleased()) {
-			return considerTaskExecution(stroke);
-		}
+        return getConfig().isExecuteOnKeyReleased() ? considerTaskExecution(stroke) : Collections.<UserDefinedAction>emptySet();
 
-		return Collections.<UserDefinedAction>emptySet();
-	}
+    }
 
 	/**
 	 * Given a new key stroke coming in, consider start executing actions based on their activations.
@@ -74,11 +68,8 @@ public final class KeySequenceManager extends KeyStrokeManager {
 			}
 		}
 
-		if (key.equals(currentRollingKeySeries.getLast())) {
-			return tasksToExecute(currentRollingKeySeries);
-		}
-		return Collections.<UserDefinedAction>emptySet();
-	}
+        return key.equals(currentRollingKeySeries.getLast()) ? tasksToExecute(currentRollingKeySeries) : Collections.<UserDefinedAction>emptySet();
+    }
 
 	private Set<UserDefinedAction> tasksToExecute(RollingKeySeries keySeries) {
 		Set<UserDefinedAction> output = new HashSet<>();

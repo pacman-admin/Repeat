@@ -82,11 +82,8 @@ public final class MouseKey implements ButtonStroke {
 		if (key == InputEvent.BUTTON2_DOWN_MASK) {
 			return "Mouse (M)";
 		}
-		if (key == InputEvent.BUTTON3_DOWN_MASK) {
-			return "Mouse (R)";
-		}
-		return "Unknown mouse button (" + key + ")";
-	}
+        return key == InputEvent.BUTTON3_DOWN_MASK ? "Mouse (R)" : "Unknown mouse button (" + key + ")";
+    }
 
 	@Override
 	public int hashCode() {

@@ -35,10 +35,7 @@ public final class ActionManuallyBuildActionListActionsForActorHandler extends A
 		data.put("possibleActions", RenderedPossibleManuallyBuildActions.of(actions));
 
 		String page = objectRenderer.render("fragments/manually_build_task_actions_rendered", data);
-		if (page == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-		}
+        return page == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.") : HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
 
-		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
-	}
+    }
 }

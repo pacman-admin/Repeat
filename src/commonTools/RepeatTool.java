@@ -22,30 +22,18 @@ abstract class RepeatTool {
 	}
 
 	public String getSource(Language language) {
-		if (isSupported(language)) {
-			return "package core;\n"
-					+ StringUtilities.join(imports, "\n") + "\n\n"
-					+ getHeader(language) + getBodySource(language) + getFooter(language);
-		} else {
-			return "";
-		}
+        return isSupported(language) ? "package core;\n"
+                + StringUtilities.join(imports, "\n") + "\n\n"
+                + getHeader(language) + getBodySource(language) + getFooter(language) : "";
 	}
 
 	private String getHeader(Language language) {
-		if (language == Language.JAVA) {
-			return "public class CustomAction extends UserDefinedAction {\n"
-					+ "    public void action(final Core controller) throws InterruptedException {\n";
-		} else {
-			return "";
-		}
+        return language == Language.JAVA ? "public class CustomAction extends UserDefinedAction {\n"
+                + "    public void action(final Core controller) throws InterruptedException {\n" : "";
 	}
 
 	private String getFooter(Language language) {
-		if (language == Language.JAVA) {
-			return "    }\n}";
-		} else {
-			return "";
-		}
+        return language == Language.JAVA ? "    }\n}" : "";
 	}
 
 	protected abstract boolean isSupported(Language language);

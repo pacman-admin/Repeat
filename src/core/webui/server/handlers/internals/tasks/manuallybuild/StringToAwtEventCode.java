@@ -32,11 +32,8 @@ final class StringToAwtEventCode {
 	 */
 	public static int mouseMaskFromString(String value) {
 		value = value.toUpperCase();
-		if (!isValidMouseMask(value)) {
-			return UNKNOWN_VALUE;
-		}
-		return SUPPORTED_MASKS.get(value);
-	}
+        return !isValidMouseMask(value) ? UNKNOWN_VALUE : SUPPORTED_MASKS.get(value);
+    }
 
 	private static final Map<String, Integer> SUPPORTED_KEYS;
 	static {
@@ -140,11 +137,8 @@ final class StringToAwtEventCode {
 	 */
 	public static int keyCodeFromString(String value) {
 		value = value.toUpperCase();
-		if (!isValidKeyValue(value)) {
-			return UNKNOWN_VALUE;
-		}
-		return SUPPORTED_KEYS.get(value);
-	}
+        return !isValidKeyValue(value) ? UNKNOWN_VALUE : SUPPORTED_KEYS.get(value);
+    }
 
 	private StringToAwtEventCode() {}
 }

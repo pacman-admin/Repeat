@@ -154,11 +154,8 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
 	                } else {
 	                    for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
 	                    	String lineNumber = diagnostic != null ? String.valueOf(diagnostic.getLineNumber()) : "'unknown'";
-	                    	String fileUri = "unknown";
-	                    	if (diagnostic != null && diagnostic.getSource() != null) {
-	                    		fileUri = diagnostic.getSource().toUri().toString();
-	                    	}
-							String message = diagnostic != null ? diagnostic.getMessage(Locale.US) : "unknown message";
+	                    	String fileUri = diagnostic != null && diagnostic.getSource() != null ? diagnostic.getSource().toUri().toString() : "unknown";
+                            String message = diagnostic != null ? diagnostic.getMessage(Locale.US) : "unknown message";
 							getLogger().warning("Error on line " + lineNumber + " in " + fileUri + ".");
 							getLogger().warning(message);
 						}

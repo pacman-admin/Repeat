@@ -44,10 +44,7 @@ public final class GetTaskSourceHandler extends AbstractSingleMethodHttpHandler 
 
 		Long timestamp = Long.parseLong(timestampString);
 		String sourceCode = backEndHolder.getSourceForTask(action, timestamp);
-		if (sourceCode == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "No source code found for task " + id + ".");
-		}
+        return sourceCode == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "No source code found for task " + id + ".") : HttpServerUtilities.prepareTextResponse(exchange, 200, sourceCode);
 
-		return HttpServerUtilities.prepareTextResponse(exchange, 200, sourceCode);
-	}
+    }
 }

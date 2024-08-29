@@ -32,11 +32,8 @@ public final class Desktop {
         if (OSIdentifier.IS_LINUX) {
             return openFileLinux(file);
         }
-        if (OSIdentifier.IS_OSX) {
-            return openFileOSX(file);
-        }
+        return OSIdentifier.IS_OSX && openFileOSX(file);
 
-        return false;
     }
 
     private static boolean openFileWindows(File file) {

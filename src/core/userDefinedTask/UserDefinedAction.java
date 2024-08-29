@@ -130,12 +130,9 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
 	public String getSource() {
 		StringBuffer source = FileUtility.readFromFile(sourcePath);
-		if (source == null) {
-			return null;
-		}
+        return source == null ? null : source.toString();
 
-		return source.toString();
-	}
+    }
 
 	public final void setSourcePath(String sourcePath) {
 		this.sourcePath = sourcePath;
@@ -274,12 +271,9 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
 	}
 
 	public static UserDefinedAction parseJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
-		if (node.isNode("composite_action")) {
-			return CompositeUserDefinedAction.parseJSON(factory, node, parseMode);
-		}
+        return node.isNode("composite_action") ? CompositeUserDefinedAction.parseJSON(factory, node, parseMode) : parsePureJSON(factory, node, parseMode);
 
-		return parsePureJSON(factory, node, parseMode);
-	}
+    }
 
 	static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
 		try {

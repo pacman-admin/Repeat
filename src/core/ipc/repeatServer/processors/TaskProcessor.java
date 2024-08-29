@@ -73,12 +73,9 @@ public final class TaskProcessor extends AbstractMessageProcessor {
 
 	@Override
 	public boolean process(String type, long id, JsonNode content) throws InterruptedException {
-		if (ApiProtocol.isReplyMessage(content)) {
-			return processReply(type, id, content);
-		}
+        return ApiProtocol.isReplyMessage(content) ? processReply(type, id, content) : taskRequestProcessor.process(type, id, content);
 
-		return taskRequestProcessor.process(type, id, content);
-	}
+    }
 
 	private boolean processReply(String type, long id, JsonNode content) {
 		if (!locks.containsKey(id)) {

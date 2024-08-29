@@ -39,10 +39,7 @@ public final class ActionManuallyBuildActionBuilldAction extends AbstractSingleM
 		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
 		String source = constructor.generateSource();
 		backEndHolder.setCompilingLanguage(Language.MANUAL_BUILD);
-		if (!backEndHolder.compileSourceAndSetCurrent(source, null)) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to copmpile generated source code.");
-		}
+        return !backEndHolder.compileSourceAndSetCurrent(source, null) ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to copmpile generated source code.") : HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");
 
-		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");
-	}
+    }
 }

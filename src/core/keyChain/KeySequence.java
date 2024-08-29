@@ -42,11 +42,7 @@ public final class KeySequence extends KeySeries {
 
 		List<ButtonStroke> keys = getButtonStrokes();
 		List<ButtonStroke> otherKeys = other.getButtonStrokes();
-		if (keys.size() > otherKeys.size()) {
-			return Collections.indexOfSubList(keys, otherKeys) >= 0;
-		} else {
-			return Collections.indexOfSubList(otherKeys, keys) >= 0;
-		}
+        return keys.size() > otherKeys.size() ? Collections.indexOfSubList(keys, otherKeys) >= 0 : Collections.indexOfSubList(otherKeys, keys) >= 0;
 	}
 
 	public static KeySequence parseJSON(List<JsonNode> list) {

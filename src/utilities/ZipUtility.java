@@ -100,11 +100,7 @@ public final class ZipUtility {
             addFileToZip(path, srcFolder, zip, true);
         } else {
             for (String fileName : folder.list()) {
-                if (path.isEmpty()) {
-                    addFileToZip(folder.getName(), srcFolder + "/" + fileName, zip, false);
-                } else {
-                    addFileToZip(path + "/" + folder.getName(), srcFolder + "/" + fileName, zip, false);
-                }
+                addFileToZip(path.isEmpty() ? folder.getName() : path + "/" + folder.getName(), srcFolder + "/" + fileName, zip, false);
             }
         }
     }

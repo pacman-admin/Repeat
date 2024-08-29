@@ -75,11 +75,8 @@ public final class CommonTask {
 	public static TaskGroup getTaskGroupFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params, boolean useCurrentIfNotProvided) {
 		String groupValue = params.get("group");
 		if (groupValue == null) {
-			if (useCurrentIfNotProvided) {
-				return backEndHolder.getCurrentTaskGroup();
-			}
-			return null;
-		}
+            return useCurrentIfNotProvided ? backEndHolder.getCurrentTaskGroup() : null;
+        }
 
 		String id = getTaskGroupIdFromRequest(backEndHolder, params);
 		if (id == null) {

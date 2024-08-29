@@ -25,10 +25,7 @@ public final class SharedVariablesGetActionHandler extends SharedVariablesAction
 		}
 
 		String data = SharedVariables.getVar(namespace, variable);
-		if (data == null) {
-			return CliRpcCodec.prepareResponse(exchange, 404, "Variable not found.");
-		}
+        return data == null ? CliRpcCodec.prepareResponse(exchange, 404, "Variable not found.") : CliRpcCodec.prepareResponse(exchange, 200, data);
 
-		return CliRpcCodec.prepareResponse(exchange, 200, data);
-	}
+    }
 }

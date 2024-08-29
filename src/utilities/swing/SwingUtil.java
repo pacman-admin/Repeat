@@ -186,11 +186,7 @@ public final class SwingUtil {
 		static String getStringValueTable(JTable table, int row, int column) {
 			try {
 				Object value = table.getValueAt(row, column);
-				if (value == null) {
-					return "";
-				} else {
-					return value.toString().trim();
-				}
+                return value == null ? "" : value.toString().trim();
 			} catch (Exception e) {
 				return "";
 			}
@@ -439,11 +435,7 @@ public final class SwingUtil {
 
 			for (int i = 0; i < titles.length; i++) {
 				JPanel myPanel = new JPanel();
-				if (titles[i] != null) {
-					myPanel.add(new JLabel(titles[i]));
-				} else {
-					myPanel.add(new JLabel(i + ")"));
-				}
+                myPanel.add(titles[i] != null ? new JLabel(titles[i]) : new JLabel(i + ")"));
 				textFields[i] = new JTextField(10);
 				textFields[i].setText("");
 				myPanel.add(textFields[i]);

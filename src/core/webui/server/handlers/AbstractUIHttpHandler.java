@@ -114,10 +114,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
 
 	protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) throws IOException {
 		String page = objectRenderer.render(template, data);
-		if (page == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-		}
+		return page == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.") : HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
 
-		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
 	}
 }

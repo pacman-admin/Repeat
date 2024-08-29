@@ -17,10 +17,7 @@ public final class KeyEventCodeToString {
             case KeyEvent.VK_CONTROL:
                 return "Ctrl";
             case KeyEvent.VK_ALT:
-                if (OSIdentifier.IS_OSX) {
-                    return "Option";
-                }
-                return "Alt";
+                return OSIdentifier.IS_OSX ? "Option" : "Alt";
             case KeyEvent.VK_WINDOWS:
                 return "Windows";
             case KeyEvent.VK_META:

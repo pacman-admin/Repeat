@@ -77,12 +77,9 @@ public final class SharedVariables {
 	 */
 	public static synchronized String getVar(String namespace, String variable) {
 		Map<String, String> namespaceVariables = variables.get(namespace);
-		if (namespaceVariables == null) {
-			return null;
-		}
+        return namespaceVariables == null ? null : namespaceVariables.get(variable);
 
-		return namespaceVariables.get(variable);
-	}
+    }
 
 	/**
 	 * Set the value for a variable in a namespace.

@@ -34,11 +34,7 @@ public final class MainMessageSender implements ILoggable {
 
     public synchronized long sendMessage(String type, JsonNode content) {
         long id = newID();
-        if (sendMessage(type, id, content)) {
-            return id;
-        } else {
-            return -1;
-        }
+        return sendMessage(type, id, content) ? id : -1;
     }
 
     public synchronized boolean sendMessage(String type, long id, JsonNode content) {

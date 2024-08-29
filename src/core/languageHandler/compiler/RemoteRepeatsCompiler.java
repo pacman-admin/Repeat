@@ -92,12 +92,9 @@ public final class RemoteRepeatsCompiler extends AbstractCompiler {
 				LOGGER.log(Level.WARNING, "Interrupted while waiting for compilaiton thread.", e);
 			}
 		}
-		if (actions.size() != executions.size()) {
-			return RemoteRepeatsDyanmicCompilationResult.of(DynamicCompilerOutput.COMPILATION_ERROR, null, null);
-		}
+        return actions.size() != executions.size() ? RemoteRepeatsDyanmicCompilationResult.of(DynamicCompilerOutput.COMPILATION_ERROR, null, null) : RemoteRepeatsDyanmicCompilationResult.of(DynamicCompilerOutput.COMPILATION_SUCCESS, AggregateUserDefinedAction.of(actions), compilationInfo);
 
-		return RemoteRepeatsDyanmicCompilationResult.of(DynamicCompilerOutput.COMPILATION_SUCCESS, AggregateUserDefinedAction.of(actions), compilationInfo);
-	}
+    }
 
 	@Override
 	public boolean parseCompilerSpecificArgs(JsonNode node) {

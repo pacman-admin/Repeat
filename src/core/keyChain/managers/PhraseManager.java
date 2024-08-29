@@ -40,12 +40,9 @@ public final class PhraseManager extends KeyStrokeManager {
 		}
 
 		currentRollingKeySeries.addKeyStroke(stroke);
-		if (!getConfig().isExecuteOnKeyReleased()) {
-			return considerTaskExecution(stroke);
-		}
+        return !getConfig().isExecuteOnKeyReleased() ? considerTaskExecution(stroke) : Collections.<UserDefinedAction>emptySet();
 
-		return Collections.<UserDefinedAction>emptySet();
-	}
+    }
 
 	@Override
 	synchronized public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
@@ -53,12 +50,9 @@ public final class PhraseManager extends KeyStrokeManager {
 			return Collections.emptySet();
 		}
 		currentRollingKeySeries.addKeyStroke(stroke);
-		if (getConfig().isExecuteOnKeyReleased()) {
-			return considerTaskExecution(stroke);
-		}
+        return getConfig().isExecuteOnKeyReleased() ? considerTaskExecution(stroke) : Collections.<UserDefinedAction>emptySet();
 
-		return Collections.<UserDefinedAction>emptySet();
-	}
+    }
 
 	@Override
 	public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
@@ -121,11 +115,8 @@ public final class PhraseManager extends KeyStrokeManager {
 			return Collections.<UserDefinedAction>emptySet();
 		}
 
-		if (key.equals(currentRollingKeySeries.getLast())) {
-			return tasksToExecute();
-		}
-		return Collections.<UserDefinedAction>emptySet();
-	}
+        return key.equals(currentRollingKeySeries.getLast()) ? tasksToExecute() : Collections.<UserDefinedAction>emptySet();
+    }
 
 	private Set<UserDefinedAction> tasksToExecute() {
 		Set<UserDefinedAction> output = new HashSet<>();

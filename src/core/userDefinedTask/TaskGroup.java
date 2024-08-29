@@ -52,12 +52,9 @@ public final class TaskGroup implements IJsonable {
 	 * Get task based on given index, returning null if index out of bound.
 	 */
 	public UserDefinedAction getTask(int index) {
-		if (index < 0 || index >= tasks.size()) {
-			return null;
-		}
+        return index < 0 || index >= tasks.size() ? null : tasks.get(index);
 
-		return tasks.get(index);
-	}
+    }
 
 	/**
 	 * Get first task with given name, or null if no such task exists.
@@ -73,11 +70,8 @@ public final class TaskGroup implements IJsonable {
 
 	public UserDefinedAction getTask(String id) {
 		Optional<UserDefinedAction> task = tasks.stream().filter(t -> t.getActionId().equals(id)).findFirst();
-		if (task.isPresent()) {
-			return task.get();
-		}
-		return null;
-	}
+        return task.isPresent() ? task.get() : null;
+    }
 
 	public String getGroupId() {
 		return groupId;

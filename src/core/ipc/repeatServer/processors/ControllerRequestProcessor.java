@@ -340,11 +340,7 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
 
             if (params.size() == 1) {
                 return success(type, id, tools.execute(params.get(0)));
-            } else if (params.size() == 2) {
-                return success(type, id, tools.execute(params.get(0), new File(params.get(1))));
-            } else {
-                return failure(type, id, "Unexpected number of parameter for execution");
-            }
+            } else return params.size() == 2 ? success(type, id, tools.execute(params.get(0), new File(params.get(1)))) : failure(type, id, "Unexpected number of parameter for execution");
         } else if (action.equals("get_selection")) {
             if (parsedParams.size() < 3) {
                 return failure(type, id, "Need at least 3 parameters to get selection (title, selected, choices)");
@@ -380,19 +376,13 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
     }
 
     private Core getCore() {
-        if (holder.isLocalClientProcessor()) {
-            return coreProvider.get();
-        }
+        return holder.isLocalClientProcessor() ? coreProvider.get() : coreProvider.getLocal();
 
-        return coreProvider.getLocal();
     }
 
     private ITools getTools() {
-        if (holder.isLocalClientProcessor()) {
-            return DefaultTools.get();
-        }
+        return holder.isLocalClientProcessor() ? DefaultTools.get() : Tools.local();
 
-        return Tools.local();
     }
 
     private List<String> toStringParams(List<Object> params) {

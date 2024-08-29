@@ -14,11 +14,8 @@ public final class AggregateTools implements ITools {
 	}
 
 	public static AggregateTools of(Collection<ITools> tools) {
-		if (tools.isEmpty()) {
-			return new AggregateTools(Collections.singletonList(NoopTools.of()));
-		}
-		return new AggregateTools(tools);
-	}
+        return tools.isEmpty() ? new AggregateTools(Collections.singletonList(NoopTools.of())) : new AggregateTools(tools);
+    }
 
 	/**
 	 * Returns the first clipboard.

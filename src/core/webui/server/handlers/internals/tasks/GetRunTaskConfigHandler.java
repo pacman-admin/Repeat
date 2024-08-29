@@ -27,10 +27,7 @@ public final class GetRunTaskConfigHandler extends AbstractUIHttpHandler {
 		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(backEndHolder.getRunActionConfig()));
 
 		String page = objectRenderer.render("fragments/run_task_config_modal", data);
-		if (page == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-		}
+        return page == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.") : HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
 
-		return HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
-	}
+    }
 }

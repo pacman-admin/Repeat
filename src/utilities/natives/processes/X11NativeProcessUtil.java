@@ -120,11 +120,8 @@ public final class X11NativeProcessUtil {
 	    X11Extended INSTANCE = new Function<Void, X11Extended>(){
 	    	@Override
 			public X11Extended apply(Void d) {
-				if (!OSIdentifier.IS_LINUX) {
-					return null;
-				}
-				return Native.load("X11", X11Extended.class);
-	    	}
+                return !OSIdentifier.IS_LINUX ? null : Native.load("X11", X11Extended.class);
+            }
 	    }.apply(null);
 
 	    void XGetInputFocus(Display display, WindowByReference focusReturn, IntByReference revertToReturn);

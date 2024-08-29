@@ -50,26 +50,16 @@ public final class IPCServiceManager {
 
     public static IIPCService getIPCService(Language name) {
         int index = ipcByLanguage.get(name);
-        if (index >= 0) {
-            return ipcServices[index];
-        } else {
-            return null;
-        }
+        return index >= 0 ? ipcServices[index] : null;
     }
 
     public static IIPCService getIPCService(IPCServiceName name) {
-        if (name == null) {
-            return null;
-        }
-        return ipcServices[name.value()];
+        return name == null ? null : ipcServices[name.value()];
     }
 
     public static IIPCService getIPCService(int index) {
-        if (index >= IPC_SERVICE_COUNT) {
-            return null;
-        }
+        return index >= IPC_SERVICE_COUNT ? null : ipcServices[index];
 
-        return ipcServices[index];
     }
 
     public static void initiateServices(MainBackEndHolder backEndHolder) throws IOException {

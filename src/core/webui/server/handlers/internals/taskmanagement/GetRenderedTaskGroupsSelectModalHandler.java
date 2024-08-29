@@ -34,10 +34,7 @@ public final class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHtt
 		data.put("groups", groups.stream().map(g -> RenderedTaskGroupForSelectModal.fromTaskGroups(g, group)).collect(Collectors.toList()));
 
 		String page = objectRenderer.render("fragments/task_groups_select", data);
-		if (page == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-		}
+        return page == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.") : HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
 
-		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
-	}
+    }
 }

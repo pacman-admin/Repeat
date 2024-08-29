@@ -33,12 +33,8 @@ public final class Parser2_2 extends ConfigParser {
 
 			List<JsonNode> replacement = new ArrayList<>();
 			for (JsonNode compiler : compilers) {
-				if (compiler.getStringValue("name").equals(Language.JAVA.toString())) {
-					replacement.add(JSONUtility.replaceChild(compiler, "compiler_specific_args",
-							JsonNodeFactories.object(JsonNodeFactories.field("classpath", JsonNodeFactories.array()))));
-				} else {
-					replacement.add(compiler);
-				}
+                replacement.add(compiler.getStringValue("name").equals(Language.JAVA.toString()) ? JSONUtility.replaceChild(compiler, "compiler_specific_args",
+                        JsonNodeFactories.object(JsonNodeFactories.field("classpath", JsonNodeFactories.array()))) : compiler);
 			}
 
 			return JSONUtility.replaceChild(previousVersion, "compilers", JsonNodeFactories.array(replacement)).getRootNode();

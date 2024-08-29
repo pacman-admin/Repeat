@@ -10,11 +10,8 @@ abstract class AbstractDeviceSourceGenerator {
 	 * @return the source code for this action, or null if error occurs.
 	 */
     final String getSourceCode(String action, int[] params) {
-		if (!isKnownAction(action)) {
-			return null;
-		}
+		return !isKnownAction(action) ? null : internalGetSourceCode(action, params);
 
-		return internalGetSourceCode(action, params);
 	}
 
 	/**

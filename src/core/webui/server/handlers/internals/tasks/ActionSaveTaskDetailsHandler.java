@@ -171,9 +171,6 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 		if (type.equals(RenderedMatchingOptionSelection.EXACT_MATCH.getHtmlValue())) {
 			return ExactStringMatchCondition.of(value);
 		}
-		if (type.equals(RenderedMatchingOptionSelection.REGEX_MATCH.getHtmlValue())) {
-			return RegexStringMatchingCondition.of(value);
-		}
-		return AlwaysMatchingStringCondition.INSTANCE;
-	}
+        return type.equals(RenderedMatchingOptionSelection.REGEX_MATCH.getHtmlValue()) ? RegexStringMatchingCondition.of(value) : AlwaysMatchingStringCondition.INSTANCE;
+    }
 }

@@ -56,9 +56,6 @@ public final class DeviceCommandBuilder extends AutoJsonable {
 			stringParameters = new ArrayList<>();
 		}
 
-		if (stringParameters != null) {
-			return new StringDeviceCommand(device, action, stringParameters);
-		}
-		return new IntDeviceCommand(device, action, intParameters);
-	}
+        return stringParameters != null ? new StringDeviceCommand(device, action, stringParameters) : new IntDeviceCommand(device, action, intParameters);
+    }
 }

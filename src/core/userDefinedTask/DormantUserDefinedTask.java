@@ -25,11 +25,7 @@ public final class DormantUserDefinedTask extends UserDefinedAction implements I
 
 	@Override
 	public String getSource() {
-		if (source != null) {
-			return source;
-		} else {
-			return super.getSource();
-		}
+        return source != null ? source : super.getSource();
 	}
 
 	@Override

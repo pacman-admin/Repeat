@@ -84,11 +84,8 @@ public final class KeyChainInputPanel extends JPanel {
 		}
 
 		Set<KeyChain> keys = task.getHotkeys();
-		if (keys != null && keys.size() == 1) {
-			return keys.iterator().next();
-		}
-		return null;
-	}
+        return keys != null && keys.size() == 1 ? keys.iterator().next() : null;
+    }
 
 	public static TaskActivation getInputActivation(JFrame parent, TaskActivation prepopulated) {
 		inUse.lock();

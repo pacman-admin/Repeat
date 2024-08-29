@@ -19,12 +19,7 @@ public final class SubprocessUtility {
      * @throws ExecutionException if there is any exception encountered.
      */
     private static String[] execute(String command, String cwd) throws ExecutionException {
-        final File dir;
-        if (cwd != null && !cwd.isEmpty()) {
-            dir = new File(cwd);
-        } else {
-            dir = null;
-        }
+        final File dir = cwd != null && !cwd.isEmpty() ? new File(cwd) : null;
 
         return execute(command, new ExceptableFunction<>() {
             @SuppressWarnings("deprecation")
@@ -44,12 +39,7 @@ public final class SubprocessUtility {
      * @throws ExecutionException if there is any exception encountered.
      */
     public static String[] execute(String[] command, String cwd) throws ExecutionException {
-        final File dir;
-        if (cwd != null && !cwd.isEmpty()) {
-            dir = new File(cwd);
-        } else {
-            dir = null;
-        }
+        final File dir = cwd != null && !cwd.isEmpty() ? new File(cwd) : null;
 
         return execute(String.join(" ", Arrays.asList(command)), new ExceptableFunction<>() {
             @Override

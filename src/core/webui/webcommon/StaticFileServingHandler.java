@@ -85,9 +85,6 @@ public final class StaticFileServingHandler extends HttpSimpleAsyncRequestHandle
 		if (filePath.endsWith(".png")) {
 			return "image/png";
 		}
-		if (filePath.endsWith(".gif")) {
-			return "image/gif";
-		}
-		return "text/plain";
-	}
+        return filePath.endsWith(".gif") ? "image/gif" : "text/plain";
+    }
 }

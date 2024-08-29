@@ -625,12 +625,9 @@ public final class MainBackEndHolder {
 
 	private void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
 		Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-		boolean conflict = false;
-		if (!collisions.isEmpty()) {
-			conflict = collisions.size() != 1 || !collisions.iterator().next().equals(original);
-		}
+		boolean conflict = !collisions.isEmpty() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
 
-		if (!conflict) {
+        if (!conflict) {
 			keysManager.registerTask(action);
 		} else {
 			List<String> collisionNames = collisions.stream().map(t -> t.getName()).collect(Collectors.toList());
@@ -962,11 +959,8 @@ public final class MainBackEndHolder {
 	/********************************************Source code related**********************************************/
 
 	public String generateSource() {
-		String source = "";
-		if (applySpeedup()) {
-			source = recorder.getGeneratedCode(compilingLanguage);
-		}
-		return source;
+		String source = applySpeedup() ? recorder.getGeneratedCode(compilingLanguage) : "";
+        return source;
 	}
 
 	public void importTasks(File inputFile) {
@@ -1170,11 +1164,8 @@ public final class MainBackEndHolder {
 	public void setToolsClients(List<String> clients) {
 		config.getToolsConfig().setClients(clients);
 		List<ITools> tools = clients.stream().map(c -> {
-			if (c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)) {
-				return Tools.local();
-			}
-			return new RemoteRepeatsClientTools(peerServiceClientManager, c);
-		}).collect(Collectors.toList());
+            return c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT) ? Tools.local() : new RemoteRepeatsClientTools(peerServiceClientManager, c);
+        }).collect(Collectors.toList());
 		DefaultTools.setExecutor(AggregateTools.of(tools));
 	}
 
@@ -1257,11 +1248,8 @@ public final class MainBackEndHolder {
 	 * Get the task group with the index, returning null if index is out of range.
 	 */
 	public TaskGroup getTaskGroup(int index) {
-		if (index < 0 || index >= taskGroups.size()) {
-			return null;
-		}
-		return taskGroups.get(index);
-	}
+        return index < 0 || index >= taskGroups.size() ? null : taskGroups.get(index);
+    }
 
 	private int getTaskGroupIndex(String id) {
 		for (ListIterator<TaskGroup> iterator = taskGroups.listIterator(); iterator.hasNext();) {

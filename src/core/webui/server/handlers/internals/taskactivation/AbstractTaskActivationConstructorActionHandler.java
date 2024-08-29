@@ -40,12 +40,9 @@ public abstract class AbstractTaskActivationConstructorActionHandler extends Abs
 		}
 
 		TaskActivationConstructor constructor = taskActivationConstructorManager.get(id);
-		if (constructor == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 404, "No constructor found for ID '" + id + "'.");
-		}
+        return constructor == null ? HttpServerUtilities.prepareHttpResponse(exchange, 404, "No constructor found for ID '" + id + "'.") : handleRequestWithBackendAndConstructor(exchange, constructor, params);
 
-		return handleRequestWithBackendAndConstructor(exchange, constructor, params);
-	}
+    }
 
 	final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) throws IOException {
 		Map<String, Object> data = new HashMap<>();

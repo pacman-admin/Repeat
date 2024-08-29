@@ -78,11 +78,8 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
 		Map<String, Object> data = new HashMap<>();
 		data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));
 		String page = objectRenderer.render("fragments/task_builder_steps_table_rendered", data);
-		if (page == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-		}
-		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
-	}
+        return page == null ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.") : HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+    }
 
 	private ManuallyBuildStep getStepFromRequest(JsonNode params) throws InvalidManuallyBuildComponentException {
 		if (!params.isStringValue("actor")) {

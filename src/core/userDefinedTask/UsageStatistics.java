@@ -65,14 +65,9 @@ public final class UsageStatistics implements IJsonable {
 			long count = Long.parseLong(node.getNumberValue("count"));
 			long totalExecutionTime = Long.parseLong(node.getNumberValue("total_execution_time"));
 
-			Calendar lastUse;
-			if (node.isNullableObjectNode("last_use")) {
-				lastUse = null;
-			} else {
-				lastUse = DateUtility.stringToCalendar(node.getStringValue("last_use"));
-			}
+			Calendar lastUse = node.isNullableObjectNode("last_use") ? null : DateUtility.stringToCalendar(node.getStringValue("last_use"));
 
-			Calendar created = DateUtility.stringToCalendar(node.getStringValue("created"));
+            Calendar created = DateUtility.stringToCalendar(node.getStringValue("created"));
 			if (created == null) {
 				LOGGER.warning("Unable to parse created date object.");
 				return null;

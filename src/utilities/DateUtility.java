@@ -22,17 +22,11 @@ public final class DateUtility {
     }
 
     public static String calendarToTimeString(Calendar calendar) {
-        if (calendar == null) {
-            return null;
-        }
-        return TIME_FORMAT.format(calendar.getTime());
+        return calendar == null ? null : TIME_FORMAT.format(calendar.getTime());
     }
 
     public static String calendarToDateString(Calendar calendar) {
-        if (calendar == null) {
-            return null;
-        }
-        return DATE_FORMAT.format(calendar.getTime());
+        return calendar == null ? null : DATE_FORMAT.format(calendar.getTime());
     }
 
     /**

@@ -33,12 +33,9 @@ public final class CliConfig {
 			String version = root.getStringValue("version");
 			ConfigParser parser = Config.getConfigParser(version);
 			boolean foundVersion = parser != null;
-			boolean extractResult = false;
-			if (foundVersion) {
-				extractResult = parser.extractData(this, root);
-			}
+			boolean extractResult = foundVersion && parser.extractData(this, root);
 
-			if (!foundVersion) {
+            if (!foundVersion) {
 				JOptionPane.showMessageDialog(null, "Config file is in unknown version " + version);
 				//defaultExtract();
 			}

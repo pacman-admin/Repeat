@@ -65,11 +65,7 @@ public final class TaskActivation implements IJsonable {
 	 */
 	public KeyChain getFirstHotkey() {
 		Set<KeyChain> hotkeys = getHotkeys();
-		if (hotkeys.isEmpty()) {
-			return null;
-		} else {
-			return hotkeys.iterator().next();
-		}
+        return hotkeys.isEmpty() ? null : hotkeys.iterator().next();
 	}
 
 	/**
@@ -96,11 +92,7 @@ public final class TaskActivation implements IJsonable {
 	 */
 	public MouseGesture getFirstMouseGesture() {
 		Set<MouseGesture> gestures = getMouseGestures();
-		if (gestures.isEmpty()) {
-			return null;
-		} else {
-			return gestures.iterator().next();
-		}
+        return gestures.isEmpty() ? null : gestures.iterator().next();
 	}
 
 	/**
@@ -115,23 +107,16 @@ public final class TaskActivation implements IJsonable {
 	 * @return set of key sequences associated with this activation entity.
 	 */
 	public Set<KeySequence> getKeySequences() {
-		if (keySequences == null) {
-			return new HashSet<>();
-		}
+        return keySequences == null ? new HashSet<KeySequence>() : keySequences;
 
-		return keySequences;
-	}
+    }
 
 	/**
 	 * @return an arbitrary {@link KeySequence} from the set of gestures, or null if the set is empty.
 	 */
 	public KeySequence getFirstKeySequence() {
 		Set<KeySequence> keySequences = getKeySequences();
-		if (keySequences.isEmpty()) {
-			return null;
-		} else {
-			return keySequences.iterator().next();
-		}
+        return keySequences.isEmpty() ? null : keySequences.iterator().next();
 	}
 
 	/**
@@ -146,23 +131,16 @@ public final class TaskActivation implements IJsonable {
 	 * @return set of phrases associated with this activation entity.
 	 */
 	public Set<ActivationPhrase> getPhrases() {
-		if (phrases == null) {
-			return new HashSet<>();
-		}
+        return phrases == null ? new HashSet<ActivationPhrase>() : phrases;
 
-		return phrases;
-	}
+    }
 
 	/**
 	 * @return an arbitrary phrase from the set of pharses, or null if the set is empty.
 	 */
 	public ActivationPhrase getFirsPhrase() {
 		Set<ActivationPhrase> phrases = getPhrases();
-		if (phrases.isEmpty()) {
-			return null;
-		} else {
-			return phrases.iterator().next();
-		}
+        return phrases.isEmpty() ? null : phrases.iterator().next();
 	}
 
 	/**
@@ -177,34 +155,24 @@ public final class TaskActivation implements IJsonable {
 	 * @return set of variables associated with this activation entity.
 	 */
 	public Set<SharedVariablesActivation> getVariables() {
-		if (variables == null) {
-			return new HashSet<>();
-		}
+        return variables == null ? new HashSet<SharedVariablesActivation>() : variables;
 
-		return variables;
-	}
+    }
 
 	/**
 	 * @return an arbitrary variable from the set of variables, or null if the set is empty.
 	 */
 	public SharedVariablesActivation getFirstVariable() {
 		Set<SharedVariablesActivation> variables = getVariables();
-		if (variables.isEmpty()) {
-			return null;
-		} else {
-			return variables.iterator().next();
-		}
+        return variables.isEmpty() ? null : variables.iterator().next();
 	}
 
 	/**
 	 * @return the global activation configuration for this activation.
 	 */
 	public GlobalActivation getGlobalActivation() {
-		if (globalActivation == null) {
-			return GlobalActivation.newBuilder().build();
-		}
-		return globalActivation;
-	}
+        return globalActivation == null ? GlobalActivation.newBuilder().build() : globalActivation;
+    }
 
 	/**
 	 * @param globalActivation configuration to set.
@@ -256,12 +224,9 @@ public final class TaskActivation implements IJsonable {
 			if (var.isAll()) {
 				return "-(all)-";
 			}
-			if (var.isAllForNamespace()) {
-				return "-(" + var.getNamespace() + ") - (all)-";
-			}
+            return var.isAllForNamespace() ? "-(" + var.getNamespace() + ") - (all)-" : "-(" + var.getNamespace() + ") - (" + var.getName() + ")-";
 
-			return "-(" + var.getNamespace() + ") - (" + var.getName() + ")-";
-		}
+        }
 
 		return new KeyChain().toString();
 	}

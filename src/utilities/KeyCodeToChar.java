@@ -33,25 +33,16 @@ public final class KeyCodeToChar {
         if (isAlpha) {
             return alphaChar;
         }
-        if (isNumpad) {
-            return numpadChar;
-        }
-        return "";
+        return isNumpad ? numpadChar : "";
     }
 
     private static String getNonAlphaChar(int code, KeyboardState state) {
-        if (state.isShiftLocked()) {
-            return getNonAlphaCharWithShift(code);
-        }
-        return getNonAlphaCharWithoutShift(code);
+        return state.isShiftLocked() ? getNonAlphaCharWithShift(code) : getNonAlphaCharWithoutShift(code);
     }
 
     private static String getAlphaChar(int code, KeyboardState state) {
         boolean capitalized = state.isCapslockLocked() ^ state.isShiftLocked();
-        if (capitalized) {
-            return getUpperCaseAlphaChar(code);
-        }
-        return getLowerCaseAlphaChar(code);
+        return capitalized ? getUpperCaseAlphaChar(code) : getLowerCaseAlphaChar(code);
     }
 
     private static String getNonAlphaCharWithoutShift(int code) {
@@ -179,11 +170,7 @@ public final class KeyCodeToChar {
     }
 
     private static String getCharFromNumpadCode(int code, KeyboardState state) {
-        if (!state.isNumslockLocked()) {
-            return "";
-        }
-
-        return switch (code) {
+        return !state.isNumslockLocked() ? "" : switch (code) {
             case KeyEvent.VK_NUMPAD0 -> "0";
             case KeyEvent.VK_NUMPAD1 -> "1";
             case KeyEvent.VK_NUMPAD2 -> "2";
@@ -198,5 +185,6 @@ public final class KeyCodeToChar {
             case KeyEvent.VK_MULTIPLY -> "*";
             default -> "";
         };
+
     }
 }

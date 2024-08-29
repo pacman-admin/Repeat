@@ -9,10 +9,7 @@ public abstract class AbstractNativeCompiler extends AbstractCompiler implements
 
 	@Override
 	public final DynamicCompilationResult compile(String source, Language language) {
-		if (language != getName()) {
-			return DynamicCompilationResult.of(DynamicCompilerOutput.LANGUAGE_NOT_SUPPORTED, null);
-		}
-		return compile(source);
+		return language != getName() ? DynamicCompilationResult.of(DynamicCompilerOutput.LANGUAGE_NOT_SUPPORTED, null) : compile(source);
 	}
 	public abstract DynamicCompilationResult compile(String source);
 	public abstract DynamicCompilationResult compile(String source, File objectFile);

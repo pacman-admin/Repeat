@@ -32,10 +32,7 @@ public final class TaskAddMessage implements IJsonable {
             taskIdentifier = TaskIdentifier.parseJSON(node.getNode("task_identifier"));
         }
 
-        String filePath = "";
-        if (node.isStringValue("file_path")) {
-            filePath = node.getStringValue("file_path");
-        }
+        String filePath = node.isStringValue("file_path") ? node.getStringValue("file_path") : "";
 
         return new TaskAddMessage(taskIdentifier, filePath);
     }

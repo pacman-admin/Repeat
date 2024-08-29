@@ -71,11 +71,8 @@ public final class MouseGestureManager extends KeyStrokeManager {
 
 	@Override
 	public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-		if (stroke.getKey() == getConfig().getMouseGestureActivationKey()) {
-			return finishRecording();
-		}
-		return Collections.<UserDefinedAction>emptySet();
-	}
+        return stroke.getKey() == getConfig().getMouseGestureActivationKey() ? finishRecording() : Collections.<UserDefinedAction>emptySet();
+    }
 
 	@Override
 	public void clear() {

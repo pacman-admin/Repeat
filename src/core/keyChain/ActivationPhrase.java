@@ -45,11 +45,7 @@ public final class ActivationPhrase extends KeySeries {
 		}
 
 		ActivationPhrase other = (ActivationPhrase) series;
-		if (value.length() > other.value.length()) {
-			return value.indexOf(other.value) >= 0;
-		} else {
-			return other.value.indexOf(value) >= 0;
-		}
+        return value.length() > other.value.length() ? value.indexOf(other.value) >= 0 : other.value.indexOf(value) >= 0;
 	}
 
 	@Override

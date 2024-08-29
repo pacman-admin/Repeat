@@ -230,11 +230,7 @@ public final class JSONUtility {
 			String key = field.getName().getText();
 
 			if (parent.isNode(key)) { // Fail safe
-				if (replacingChildren.containsKey(key)) {
-					fields.add(JsonNodeFactories.field(key, replacingChildren.get(key)));
-				} else {
-					fields.add(field);
-				}
+                fields.add(replacingChildren.containsKey(key) ? JsonNodeFactories.field(key, replacingChildren.get(key)) : field);
 			}
 		}
 

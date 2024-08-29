@@ -28,11 +28,8 @@ public final class RenderedRemoteRepeatsClientsConfig {
 					if (o1.equals(ToolsConfig.LOCAL_CLIENT)) {
 						return -1;
 					}
-					if (o2.equals(ToolsConfig.LOCAL_CLIENT)) {
-						return 1;
-					}
-					return o1.compareTo(o2);
-				})
+                    return o2.equals(ToolsConfig.LOCAL_CLIENT) ? 1 : o1.compareTo(o2);
+                })
 				.map(c -> RenderedConfigRemotePeerClient.of(manager, c, enabledClients.contains(c)))
 				.collect(Collectors.toList());
 		return new RenderedRemoteRepeatsClientsConfig(clients);

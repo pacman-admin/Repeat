@@ -160,11 +160,8 @@ public final class KeyStroke implements ButtonStroke {
 
 	@Override
 	public String toString() {
-		String suffix = "";
-		if (modifier == Modifier.KEY_MODIFIER_LEFT) {
-			suffix = " (L)";
-		}
-		if (modifier == Modifier.KEY_MODIFIER_RIGHT) {
+		String suffix = modifier == Modifier.KEY_MODIFIER_LEFT ? " (L)" : "";
+        if (modifier == Modifier.KEY_MODIFIER_RIGHT) {
 			suffix = " (R)";
 		}
 		return KeyEventCodeToString.codeToString(key) + suffix;

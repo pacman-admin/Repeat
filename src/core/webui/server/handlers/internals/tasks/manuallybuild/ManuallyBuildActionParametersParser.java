@@ -151,12 +151,9 @@ public final class ManuallyBuildActionParametersParser {
 		}
 
 		private static int getCode(String value) throws InvalidManuallyBuildComponentException {
-			if (NumberUtility.isNonNegativeInteger(value)) {
-				return Integer.parseInt(value);
-			}
+            return NumberUtility.isNonNegativeInteger(value) ? Integer.parseInt(value) : StringToAwtEventCode.mouseMaskFromString(value);
 
-			return StringToAwtEventCode.mouseMaskFromString(value);
-		}
+        }
 	}
 
 	private static final class Key {
@@ -167,12 +164,9 @@ public final class ManuallyBuildActionParametersParser {
 		}
 
 		private static int getCode(String value) throws InvalidManuallyBuildComponentException {
-			if (NumberUtility.isNonNegativeInteger(value)) {
-				return Integer.parseInt(value);
-			}
+            return NumberUtility.isNonNegativeInteger(value) ? Integer.parseInt(value) : StringToAwtEventCode.keyCodeFromString(value);
 
-			return StringToAwtEventCode.keyCodeFromString(value);
-		}
+        }
 
 	}
 	private static final class NonNegativeLong {}

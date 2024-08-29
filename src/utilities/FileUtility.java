@@ -95,11 +95,7 @@ public final class FileUtility {
      */
     public static File removeExtension(File file) {
         String absolutePath = file.getAbsolutePath();
-        if (absolutePath.contains(".")) {
-            return new File(absolutePath.substring(0, absolutePath.lastIndexOf('.')));
-        } else {
-            return file;
-        }
+        return absolutePath.contains(".") ? new File(absolutePath.substring(0, absolutePath.lastIndexOf('.'))) : file;
     }
 
     /**
@@ -110,11 +106,7 @@ public final class FileUtility {
      * @return file with extension: fileName.extension
      */
     public static File addExtension(File file, String extension) {
-        if (extension.startsWith(".")) {
-            return new File(file.getAbsolutePath() + extension);
-        } else {
-            return new File(file.getAbsolutePath() + "." + extension);
-        }
+        return extension.startsWith(".") ? new File(file.getAbsolutePath() + extension) : new File(file.getAbsolutePath() + "." + extension);
     }
 
     /**
@@ -411,11 +403,7 @@ public final class FileUtility {
      * @return if removal is successful. Throw IOException if encounters error
      */
     public static boolean removeFile(File file) {
-        if (fileExists(file)) {
-            return file.delete();
-        } else {
-            return true;
-        }
+        return !fileExists(file) || file.delete();
     }
 
     /**

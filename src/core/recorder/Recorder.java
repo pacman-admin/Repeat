@@ -228,10 +228,7 @@ public final class Recorder {
 
 	public String getGeneratedCode(Language language) {
 		AbstractSourceGenerator generator = sourceGenerators.get(language);
-		if (generator != null) {
-			return generator.getSource(speedup);
-		} else { // Return null to indicate generator does not exist
-			return null;
-		}
+        // Return null to indicate generator does not exist
+        return generator != null ? generator.getSource(speedup) : null;
 	}
 }

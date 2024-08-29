@@ -38,9 +38,6 @@ public final class MenuSetCompilerConfigActionHandler extends AbstractSingleMeth
 		String[] classPaths = allClassPaths.split("\n");
 
 		JavaNativeCompiler compiler = (JavaNativeCompiler) backEndHolder.getCompiler();
-		if (!compiler.setClassPath(Arrays.asList(classPaths))) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to set class paths.");
-		}
-		return emptySuccessResponse(exchange);
-	}
+        return !compiler.setClassPath(Arrays.asList(classPaths)) ? HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to set class paths.") : emptySuccessResponse(exchange);
+    }
 }
