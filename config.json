@@ -84,7 +84,7 @@
 	"compilers": {
 		"local_compilers": [
 			{
-				"name": "C#",
+				"name": "manual",
 				"path": ".",
 				"compiler_specific_args": {}
 			},
@@ -101,7 +101,7 @@
 				}
 			},
 			{
-				"name": "manual",
+				"name": "C#",
 				"path": ".",
 				"compiler_specific_args": {}
 			}
@@ -113,7 +113,220 @@
 			"group_id": "b9211885-4110-4ed2-8a12-435808b23b6b",
 			"name": "default",
 			"enabled": true,
-			"tasks": []
+			"tasks": [
+				{
+					"action_id": "f736d430-9624-4298-ae57-b5efa2b0bb55",
+					"source_path": "data/source/manual/MANUAL_1724973437883.manualbuild",
+					"compiler": "manual",
+					"name": "Bla test 1",
+					"execution_preconditions": {
+						"active_window_condition": {
+							"title": {
+								"type": "always_valid"
+							},
+							"process_name": {
+								"type": "always_valid"
+							}
+						}
+					},
+					"activation": {
+						"hotkey": [],
+						"key_sequence": [],
+						"mouse_gesture": [],
+						"phrases": [],
+						"variables": [],
+						"global_activation": {
+							"on_key_released": false,
+							"on_key_pressed": false
+						}
+					},
+					"enabled": false,
+					"statistics": {
+						"count": 27,
+						"total_execution_time": 2830,
+						"last_use": "29/08/2024 19:22:9",
+						"created": "29/08/2024 19:17:17",
+						"task_activations_breakdown": [
+							{
+								"task_activation": {
+									"hotkey": [],
+									"key_sequence": [],
+									"mouse_gesture": [],
+									"phrases": [],
+									"variables": [],
+									"global_activation": {
+										"on_key_released": false,
+										"on_key_pressed": false
+									}
+								},
+								"count": 27
+							}
+						],
+						"execution_instances": [
+							{
+								"start": 1724973467045,
+								"end": 1724973467151
+							},
+							{
+								"start": 1724973477156,
+								"end": 1724973477260
+							},
+							{
+								"start": 1724973487260,
+								"end": 1724973487364
+							},
+							{
+								"start": 1724973497369,
+								"end": 1724973497473
+							},
+							{
+								"start": 1724973507473,
+								"end": 1724973507577
+							},
+							{
+								"start": 1724973517581,
+								"end": 1724973517684
+							},
+							{
+								"start": 1724973527689,
+								"end": 1724973527794
+							},
+							{
+								"start": 1724973537796,
+								"end": 1724973537906
+							},
+							{
+								"start": 1724973547906,
+								"end": 1724973548007
+							},
+							{
+								"start": 1724973558007,
+								"end": 1724973558114
+							},
+							{
+								"start": 1724973568116,
+								"end": 1724973568217
+							},
+							{
+								"start": 1724973578217,
+								"end": 1724973578319
+							},
+							{
+								"start": 1724973588324,
+								"end": 1724973588429
+							},
+							{
+								"start": 1724973598434,
+								"end": 1724973598543
+							},
+							{
+								"start": 1724973608553,
+								"end": 1724973608656
+							},
+							{
+								"start": 1724973618661,
+								"end": 1724973618766
+							},
+							{
+								"start": 1724973628767,
+								"end": 1724973628874
+							},
+							{
+								"start": 1724973638877,
+								"end": 1724973638980
+							},
+							{
+								"start": 1724973648983,
+								"end": 1724973649086
+							},
+							{
+								"start": 1724973659086,
+								"end": 1724973659192
+							},
+							{
+								"start": 1724973669192,
+								"end": 1724973669296
+							},
+							{
+								"start": 1724973679298,
+								"end": 1724973679406
+							},
+							{
+								"start": 1724973689407,
+								"end": 1724973689510
+							},
+							{
+								"start": 1724973699511,
+								"end": 1724973699614
+							},
+							{
+								"start": 1724973709614,
+								"end": 1724973709718
+							},
+							{
+								"start": 1724973719721,
+								"end": 1724973719831
+							},
+							{
+								"start": 1724973729836,
+								"end": 1724973729942
+							}
+						]
+					},
+					"source_history": {
+						"entries": [
+							{
+								"path": "data/source/manual/MANUAL_1724973437883.manualbuild",
+								"created_time": 1724973437885
+							}
+						]
+					}
+				},
+				{
+					"action_id": "11af1aab-bffb-4b7e-a535-9e9e6128b626",
+					"source_path": "data/source/manual/MANUAL_1724973693077.manualbuild",
+					"compiler": "manual",
+					"name": "New task",
+					"execution_preconditions": {
+						"active_window_condition": {
+							"title": {
+								"type": "always_valid"
+							},
+							"process_name": {
+								"type": "always_valid"
+							}
+						}
+					},
+					"activation": {
+						"hotkey": [],
+						"key_sequence": [],
+						"mouse_gesture": [],
+						"phrases": [],
+						"variables": [],
+						"global_activation": {
+							"on_key_released": false,
+							"on_key_pressed": false
+						}
+					},
+					"enabled": true,
+					"statistics": {
+						"count": 0,
+						"total_execution_time": 0,
+						"last_use": null,
+						"created": "29/08/2024 19:21:33",
+						"task_activations_breakdown": [],
+						"execution_instances": []
+					},
+					"source_history": {
+						"entries": [
+							{
+								"path": "data/source/manual/MANUAL_1724973693077.manualbuild",
+								"created_time": 1724973693078
+							}
+						]
+					}
+				}
+			]
 		}
 	]
 }

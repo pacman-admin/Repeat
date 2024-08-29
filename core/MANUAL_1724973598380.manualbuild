@@ -1,0 +1,5 @@
+version=1.0
+{"signature":"keyboard_press_key","data":{"key":65}}
+{"signature":"controller_delay","data":{"delay":1000}}
+{"signature":"keyboard_press_key","data":{"key":65}}
+{"signature":"keyboard_press_key","data":{"key":65}}
