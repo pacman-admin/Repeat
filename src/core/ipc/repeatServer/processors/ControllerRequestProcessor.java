@@ -251,7 +251,7 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
                     }
                     core.keyBoard().press(keys);
                 } else {
-                    return failure(type, id, "Unable to press key with " + params.size() + " parameters.");
+                    return failure(type, id, "Unable to press key with 0 parameters.");
                 }
                 return success(type, id);
             }
@@ -268,7 +268,7 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
                     }
                     core.keyBoard().release(keys);
                 } else {
-                    return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                    return failure(type, id, "Unable to release key with 0 parameters.");
                 }
                 return success(type, id);
             }
@@ -305,7 +305,7 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
                     }
                     core.keyBoard().type(chars);
                 } else {
-                    return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                    return failure(type, id, "Unable to release key with 0 parameters.");
                 }
                 return success(type, id);
             }
@@ -325,7 +325,7 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
                     return false;
                 }
 
-                boolean result = false;
+                boolean result;
                 if (params.size() == 1) {
                     result = core.keyBoard().isLocked(params.get(0));
                 } else {
@@ -338,54 +338,58 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
         return unsupportedAction(type, id, action);
     }
 
-    private boolean toolAction(String type, long id, final String action, final List<Object> parsedParams) throws InterruptedException {
+    private boolean toolAction(String type, long id, final String action, final List<Object> parsedParams) {
         ITools tools = getTools();
 
-        if (action.equals("get_clipboard")) {
-            return success(type, id, tools.getClipboard());
-        } else if (action.equals("set_clipboard")) {
-            List<String> params = toStringParams(parsedParams);
-            if (params == null) {
-                return false;
+        switch (action) {
+            case "get_clipboard" -> {
+                return success(type, id, tools.getClipboard());
             }
+            case "set_clipboard" -> {
+                List<String> params = toStringParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
 
-            String data = params.get(0);
-            tools.setClipboard(data);
-            return success(type, id);
-        } else if (action.equals("execute")) {
-            List<String> params = toStringParams(parsedParams);
-            if (params == null) {
-                return false;
+                String data = params.get(0);
+                tools.setClipboard(data);
+                return success(type, id);
             }
+            case "execute" -> {
+                List<String> params = toStringParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
 
-            if (params.size() == 1) {
-                return success(type, id, tools.execute(params.get(0)));
-            } else return params.size() == 2 ? success(type, id, tools.execute(params.get(0), new File(params.get(1)))) : failure(type, id, "Unexpected number of parameter for execution");
-        } else if (action.equals("get_selection")) {
-            if (parsedParams.size() < 3) {
-                return failure(type, id, "Need at least 3 parameters to get selection (title, selected, choices)");
+                if (params.size() == 1) {
+                    return success(type, id, tools.execute(params.get(0)));
+                } else
+                    return params.size() == 2 ? success(type, id, tools.execute(params.get(0), new File(params.get(1)))) : failure(type, id, "Unexpected number of parameter for execution");
             }
-
-            Iterator<Object> it = parsedParams.iterator();
-            String title = "";
-            int selected = 0;
-            try {
-                title = (String) it.next();
-                selected = (Integer) it.next();
-            } catch (ClassCastException e) {
-                return failure(type, id, "Need type string, int as first two paramters to get_selection");
+            case "get_selection" -> {
+                if (parsedParams.size() < 3) {
+                    return failure(type, id, "Need at least 3 parameters to get selection (title, selected, choices)");
+                }
+                Iterator<Object> it = parsedParams.iterator();
+                String title;
+                int selected;
+                try {
+                    title = (String) it.next();
+                    selected = (Integer) it.next();
+                } catch (ClassCastException e) {
+                    return failure(type, id, "Need type string, int as first two paramters to get_selection");
+                }
+                List<Object> choiceObjects = new ArrayList<>();
+                while (it.hasNext()) {
+                    choiceObjects.add(it.next());
+                }
+                final List<String> choices = toStringParams(choiceObjects);
+                if (choices == null) {
+                    return failure(type, id, "Type of choices must be string");
+                }
+                int selection = SwingUtil.DialogUtil.getSelection(null, title, choices.toArray(new String[choices.size()]), selected);
+                return success(type, id, JsonNodeFactories.number(selection));
             }
-
-            List<Object> choiceObjects = new ArrayList<>();
-            while (it.hasNext()) {
-                choiceObjects.add(it.next());
-            }
-            final List<String> choices = toStringParams(choiceObjects);
-            if (choices == null) {
-                return failure(type, id, "Type of choices must be string");
-            }
-            int selection = SwingUtil.DialogUtil.getSelection(null, title, choices.toArray(new String[choices.size()]), selected);
-            return success(type, id, JsonNodeFactories.number(selection));
         }
 
         return unsupportedAction(type, id, action);

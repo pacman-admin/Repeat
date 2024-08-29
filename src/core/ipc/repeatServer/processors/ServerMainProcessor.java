@@ -35,34 +35,31 @@ import java.util.logging.Logger;
  */
 public final class ServerMainProcessor implements ILoggable {
 
-    private final Map<IpcMessageType, AbstractMessageProcessor> messageProcesssors;
-    private final ControllerRequestProcessor actionProcessor;
+    private final Map<IpcMessageType, AbstractMessageProcessor> messageProcessors;
     private final TaskProcessor taskProcessor;
-    private final SystemRequestProcessor systemProcessor;
-    private final SharedMemoryProcessor sharedMemoryProcessor;
     // Whether this processor is processing requests from local client.
     private boolean localClientProcessor;
 
     public ServerMainProcessor(MainBackEndHolder backEnd, MainMessageSender messageSender) {
-        messageProcesssors = new HashMap<>();
+        messageProcessors = new HashMap<>();
 
-        actionProcessor = new ControllerRequestProcessor(messageSender, backEnd.getCoreProvider(), this);
+        ControllerRequestProcessor actionProcessor = new ControllerRequestProcessor(messageSender, backEnd.getCoreProvider(), this);
         taskProcessor = new TaskProcessor(backEnd, messageSender);
-        systemProcessor = new SystemRequestProcessor(messageSender, this);
-        sharedMemoryProcessor = new SharedMemoryProcessor(messageSender);
+        SystemRequestProcessor systemProcessor = new SystemRequestProcessor(messageSender, this);
+        SharedMemoryProcessor sharedMemoryProcessor = new SharedMemoryProcessor(messageSender);
 
-        messageProcesssors.put(IpcMessageType.ACTION, actionProcessor);
-        messageProcesssors.put(IpcMessageType.TASK, taskProcessor);
-        messageProcesssors.put(IpcMessageType.SHARED_MEMORY, sharedMemoryProcessor);
-        messageProcesssors.put(IpcMessageType.SYSTEM_HOST, systemProcessor);
-        messageProcesssors.put(IpcMessageType.SYSTEM_CLIENT, systemProcessor);
+        messageProcessors.put(IpcMessageType.ACTION, actionProcessor);
+        messageProcessors.put(IpcMessageType.TASK, taskProcessor);
+        messageProcessors.put(IpcMessageType.SHARED_MEMORY, sharedMemoryProcessor);
+        messageProcessors.put(IpcMessageType.SYSTEM_HOST, systemProcessor);
+        messageProcessors.put(IpcMessageType.SYSTEM_CLIENT, systemProcessor);
     }
 
     /**
      * Parse a request from client.
      *
      * @param message request from client as JSON string
-     * @return list of actions need to perform in order
+     * @return boolean indicating whether the message was successfully received
      */
     public boolean processRequest(String message) {
         JsonRootNode root = JSONUtility.jsonFromString(message);
@@ -77,7 +74,7 @@ public final class ServerMainProcessor implements ILoggable {
         JsonNode content = root.getNode("content");
 
         try {
-            messageProcesssors.get(type).process(type.getValue(), id, content);
+            messageProcessors.get(type).process(type.getValue(), id, content);
             return true;
         } catch (InterruptedException e) {
             getLogger().log(Level.WARNING, "Interrupted while processing message", e);
@@ -89,7 +86,7 @@ public final class ServerMainProcessor implements ILoggable {
         return message.isStringValue("type") &&
                 message.isNumberValue("id") &&
                 message.isObjectNode("content") &&
-                messageProcesssors.containsKey(IpcMessageType.identify(message.getStringValue("type")));
+                messageProcessors.containsKey(IpcMessageType.identify(message.getStringValue("type")));
     }
 
     boolean isLocalClientProcessor() {
