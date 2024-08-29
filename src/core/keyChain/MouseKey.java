@@ -8,7 +8,7 @@ import org.simplenativehooks.events.NativeMouseEvent.State;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "MethodDoesntCallSuperMethod"})
 public final class MouseKey implements ButtonStroke {
 
 	static final String TYPE_STRING = "mouse_key";
