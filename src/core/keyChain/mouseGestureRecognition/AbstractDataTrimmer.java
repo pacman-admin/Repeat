@@ -15,11 +15,8 @@ abstract class AbstractDataTrimmer {
 	 * @return a list of points with at most {@link DataNormalizer.POINT_COUNT} points.
 	 */
 	public final ArrayList<Point> trim(ArrayList<Point> input) {
-		if (input.size() <= DataNormalizer.POINT_COUNT) {
-			return input;
-		}
+		return input.size() <= DataNormalizer.POINT_COUNT ? input : internalTrim(input);
 
-		return internalTrim(input);
 	}
 
 	protected abstract ArrayList<Point> internalTrim(ArrayList<Point> input);
