@@ -2,6 +2,8 @@ package commonTools;
 
 import core.languageHandler.Language;
 
+
+@SuppressWarnings("unused")
 public final class ClickerTool extends RepeatTool {
 
 	@Override
@@ -12,11 +14,10 @@ public final class ClickerTool extends RepeatTool {
 	@Override
 	protected String getBodySource(Language language) {
 		if (language == Language.JAVA) {
-			String output = TWO_TAB + "for (int i = 0; ; i++) {\n" +
+
+            return TWO_TAB + "for (int i = 0; ; i++) {\n" +
 					THREE_TAB + "controller.mouse().leftClick();\n" +
 					TWO_TAB + "}\n";
-
-			return output;
 		}
 
 		return null;

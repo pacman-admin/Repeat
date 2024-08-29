@@ -9,13 +9,13 @@ import argo.jdom.JsonRootNode;
  */
 public abstract class AutoJsonable implements IJsonable {
 
-	public final boolean parse(JsonNode node) {
-		return Jsonizer.parse(node, this);
-	}
+    public final boolean parse(JsonNode node) {
+        return Jsonizer.parse(node, this);
+    }
 
-	@Override
-	public final JsonRootNode jsonize() {
-		JsonNode node = Jsonizer.jsonize(this);
+    @Override
+    public final JsonRootNode jsonize() {
+        JsonNode node = Jsonizer.jsonize(this);
         return node == null ? null : node.getRootNode();
     }
 }
