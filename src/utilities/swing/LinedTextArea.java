@@ -29,12 +29,7 @@ final class LinedTextArea extends JScrollPane {
 
         final UndoManager undoManager = new UndoManager();
         Document document = textArea.getDocument();
-        document.addUndoableEditListener(new UndoableEditListener() {
-            @Override
-            public void undoableEditHappened(UndoableEditEvent e) {
-                undoManager.addEdit(e.getEdit());
-            }
-        });
+        document.addUndoableEditListener(e -> undoManager.addEdit(e.getEdit()));
         textArea.getActionMap().put("Undo", new AbstractAction("Undo") {
             @Override
             public void actionPerformed(ActionEvent evt) {
@@ -68,7 +63,7 @@ final class LinedTextArea extends JScrollPane {
                 Element root = textArea.getDocument().getDefaultRootElement();
                 StringBuilder text = new StringBuilder("1" + System.getProperty("line.separator"));
                 for (int i = 2; i < root.getElementIndex(caretPosition) + 2; i++) {
-                    text.append(i + System.getProperty("line.separator"));
+                    text.append(i).append(System.getProperty("line.separator"));
                 }
                 return text.toString();
             }
