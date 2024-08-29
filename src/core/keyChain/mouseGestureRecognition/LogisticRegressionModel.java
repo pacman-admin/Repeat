@@ -9,6 +9,7 @@ import Jama.Matrix;
  *
  * @author HP Truong
  */
+@SuppressWarnings("unused")
 final class LogisticRegressionModel {
 
 	private String[] labels; // classifying classes
@@ -17,25 +18,21 @@ final class LogisticRegressionModel {
 
 	/**
 	 * Load model data from static resources.
-	 *
-	 * @return if operation was successful.
 	 */
-    boolean load() {
+    void load() {
 		labels = MouseGestureModelResources.getLabels();
-		if (labels == null) {
-			return false;
-		}
 
-		double[] intercepts = MouseGestureModelResources.getIntercepts();
+        double[] intercepts = MouseGestureModelResources.getIntercepts();
 		double[][] coefficients = MouseGestureModelResources.getCoefficients(labels.length);
 
-		w = new Matrix(coefficients);
+        assert coefficients != null;
+        w = new Matrix(coefficients);
 
-		double[][] twoDimensionalIntercept = new double[1][intercepts.length];
+        assert intercepts != null;
+        double[][] twoDimensionalIntercept = new double[1][intercepts.length];
 		twoDimensionalIntercept[0] = intercepts;
 		c = new Matrix(twoDimensionalIntercept);
 
-		return isLoaded();
 	}
 
 	/**

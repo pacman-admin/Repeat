@@ -2,7 +2,7 @@ package core.keyChain.mouseGestureRecognition;
 
 import java.awt.Point;
 import java.util.ArrayList;
-
+@SuppressWarnings("unused")
 final class DataNormalizer {
 
 	public static final int POINT_COUNT = 35;
@@ -39,32 +39,30 @@ final class DataNormalizer {
 
 		// Fit this into a square box. Center the appropriate dimension.
 		if (height > width) {
-			midX = (maxX + minX) / 2;
-			subX = midX - height / 2;
+			midX = (float) (maxX + minX) / 2;
+			subX = midX - (float) height / 2;
 			subY = minY;
 		} else if (width > height) {
 			subX = minX;
-			midY = (maxY + minY) / 2;
-			subY = midY - width / 2;
+			midY = (float)(maxY + minY) / 2;
+			subY = midY - (float) width / 2;
 		} else {
 			subX = minX;
 			subY = minY;
 		}
 
 		ArrayList<Point.Float> centered = new ArrayList<>(input.size());
-		for (int i = 0; i < input.size(); i++) {
-			Point current = input.get(i);
-			centered.add(new Point.Float(current.x - subX, current.y - subY));
-		}
+        for (Point current : input) {
+            centered.add(new Point.Float(current.x - subX, current.y - subY));
+        }
 
 		ArrayList<Float> output = new ArrayList<>(input.size() * 2);
 		// Now make it into a unit square and flatten
 		float scale = Math.max(width, height);
-		for (int i = 0; i < centered.size(); i++) {
-			Point.Float current = centered.get(i);
-			output.add(current.x / scale);
-			output.add(current.y / scale);
-		}
+        for (Point.Float current : centered) {
+            output.add(current.x / scale);
+            output.add(current.y / scale);
+        }
 
 		return output;
 	}

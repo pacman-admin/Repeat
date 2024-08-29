@@ -1,37 +1,39 @@
 package core.keyChain.managers;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Set;
-
 import core.config.Config;
 import core.keyChain.ActivationEvent;
 import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
-abstract class ActivationEventManager {
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
 
-	private final Config config;
+public abstract class ActivationEventManager {
 
-	ActivationEventManager(Config config) {
-		this.config = config;
-	}
+    private final Config config;
 
-	final Config getConfig() {
-		return config;
-	}
+    ActivationEventManager(Config config) {
+        this.config = config;
+    }
 
-	public abstract void startListening();
-	public abstract Set<UserDefinedAction> onActivationEvent(ActivationEvent event);
+    final Config getConfig() {
+        return config;
+    }
 
-	public abstract void clear();
+    public abstract void startListening();
 
-	protected abstract Set<UserDefinedAction> collision(Collection<TaskActivation> activations);
-	public final Set<UserDefinedAction> collision(TaskActivation activation) {
-		return collision(Collections.singletonList(activation));
-	}
+    public abstract Set<UserDefinedAction> onActivationEvent(ActivationEvent event);
 
-	public abstract Set<UserDefinedAction> registerAction(UserDefinedAction action);
-	public abstract Set<UserDefinedAction> unRegisterAction(UserDefinedAction action);
+    public abstract void clear();
+
+    protected abstract Set<UserDefinedAction> collision(Collection<TaskActivation> activations);
+
+    public final Set<UserDefinedAction> collision(TaskActivation activation) {
+        return collision(Collections.singletonList(activation));
+    }
+
+    public abstract Set<UserDefinedAction> registerAction(UserDefinedAction action);
+
+    public abstract Set<UserDefinedAction> unRegisterAction(UserDefinedAction action);
 }
