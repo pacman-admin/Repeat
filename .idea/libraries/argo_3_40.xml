@@ -1,7 +1,7 @@
 <component name="libraryTable">
-  <library name="argparse4j-0.8.1">
+  <library name="argo-3.40">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/libs/argparse4j-0.8.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/libs/argo-3.40.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
