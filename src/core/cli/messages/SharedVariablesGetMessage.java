@@ -6,33 +6,33 @@ import utilities.json.Jsonizer;
 
 public final class SharedVariablesGetMessage extends AutoJsonable {
 
-	private String namespace;
-	private String variable;
+    private String namespace;
+    private String variable;
 
-	public static SharedVariablesGetMessage parseJSON(JsonNode node) {
-		SharedVariablesGetMessage output = new SharedVariablesGetMessage();
-		return Jsonizer.parse(node, output) ? output : null;
-	}
+    public static SharedVariablesGetMessage parseJSON(JsonNode node) {
+        SharedVariablesGetMessage output = new SharedVariablesGetMessage();
+        return Jsonizer.parse(node, output) ? output : null;
+    }
 
-	public static SharedVariablesGetMessage of() {
-		return new SharedVariablesGetMessage();
-	}
+    public static SharedVariablesGetMessage of() {
+        return new SharedVariablesGetMessage();
+    }
 
-	public String getNamespace() {
-		return namespace;
-	}
+    public String getNamespace() {
+        return namespace;
+    }
 
-	public String getVariable() {
-		return variable;
-	}
+    public SharedVariablesGetMessage setNamespace(String namespace) {
+        this.namespace = namespace;
+        return this;
+    }
 
-	public SharedVariablesGetMessage setNamespace(String namespace) {
-		this.namespace = namespace;
-		return this;
-	}
+    public String getVariable() {
+        return variable;
+    }
 
-	public SharedVariablesGetMessage setVariable(String variable) {
-		this.variable = variable;
-		return this;
-	}
+    public SharedVariablesGetMessage setVariable(String variable) {
+        this.variable = variable;
+        return this;
+    }
 }

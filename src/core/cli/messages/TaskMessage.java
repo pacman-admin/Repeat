@@ -7,61 +7,58 @@ import utilities.json.IJsonable;
 
 public final class TaskMessage implements IJsonable {
 
-	private static final int UNKNOWN_INDEX = -1;
+    private static final int UNKNOWN_INDEX = -1;
 
-	private String name;
-	private int index = UNKNOWN_INDEX;
+    private String name;
+    private int index = UNKNOWN_INDEX;
 
-	private TaskMessage() {}
-	public static TaskMessage of() {
-		return new TaskMessage();
-	}
+    private TaskMessage() {
+    }
 
-	private TaskMessage(String name, int index) {
-		this.name = name;
-		this.index = index;
-	}
+    private TaskMessage(String name, int index) {
+        this.name = name;
+        this.index = index;
+    }
 
-	public static TaskMessage parseJSON(JsonNode node) {
-		int index = UNKNOWN_INDEX;
-		String name = "";
+    public static TaskMessage of() {
+        return new TaskMessage();
+    }
 
-		if (node.isNumberValue("index")) {
-			index = Integer.parseInt(node.getNumberValue("index"));
-		}
+    public static TaskMessage parseJSON(JsonNode node) {
+        int index = UNKNOWN_INDEX;
+        String name = "";
 
-		if (node.isStringValue("name")) {
-			name = node.getStringValue("name");
-		}
+        if (node.isNumberValue("index")) {
+            index = Integer.parseInt(node.getNumberValue("index"));
+        }
 
-		return new TaskMessage(name, index);
-	}
+        if (node.isStringValue("name")) {
+            name = node.getStringValue("name");
+        }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(JsonNodeFactories.field("index", JsonNodeFactories.number(index)),
-				JsonNodeFactories.field("name", JsonNodeFactories.string(name)));
-	}
+        return new TaskMessage(name, index);
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("index", JsonNodeFactories.number(index)), JsonNodeFactories.field("name", JsonNodeFactories.string(name)));
+    }
 
-	public TaskMessage setName(String name) {
-		this.name = name;
-		return this;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean hasIndex() {
-		return index != UNKNOWN_INDEX;
-	}
+    public TaskMessage setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	public TaskMessage setIndex(int index) {
-		this.index = index;
-		return this;
-	}
+    public TaskMessage setIndex(int index) {
+        this.index = index;
+        return this;
+    }
 }

@@ -1,6 +1,5 @@
 package core.background.loggers;
 
-import core.controller.CoreProvider;
 import globalListener.GlobalListenerFactory;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
@@ -13,9 +12,9 @@ import java.util.logging.Logger;
 /**
  * Logs info of the active window (application on OSX) every time any mouse button is released, at most once every second.
  */
-public final class ActiveWindowInfosLogger {
+public final class ActiveWindowInfoLogger {
 
-    private static final Logger LOGGER = Logger.getLogger(ActiveWindowInfosLogger.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(ActiveWindowInfoLogger.class.getName());
 
     private static final long LOG_MAX_INTERVAL_MS = 1000;
 
@@ -23,7 +22,7 @@ public final class ActiveWindowInfosLogger {
     private long lastLogged;
     private boolean enabled;
 
-    public ActiveWindowInfosLogger(CoreProvider coreProvider) {
+    public ActiveWindowInfoLogger() {
         mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
         mouseListener.setMouseReleased(new Function<>() {
             @Override

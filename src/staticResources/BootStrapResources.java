@@ -81,6 +81,7 @@ public final class BootStrapResources {
             //return ImageIO.read(BootStrapResources.class.getResourceAsStream(resource));
             return ImageIO.read(BootStrapResources.class.getResourceAsStream("/staticContent/Repeat.jpg"));
         } catch (IOException e) {
+            assert LOGGER != null;
             LOGGER.log(Level.SEVERE, "Cannot load image " + "/staticContent/Repeat.jpg", e);
             return null;
         }

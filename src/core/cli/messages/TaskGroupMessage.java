@@ -7,61 +7,58 @@ import utilities.json.IJsonable;
 
 public final class TaskGroupMessage implements IJsonable {
 
-	public static final int UNKNOWN_INDEX = -1;
+    public static final int UNKNOWN_INDEX = -1;
 
-	private String name;
-	private int index = UNKNOWN_INDEX;
+    private String name;
+    private int index = UNKNOWN_INDEX;
 
-	private TaskGroupMessage() {}
-	public static TaskGroupMessage of() {
-		return new TaskGroupMessage();
-	}
+    private TaskGroupMessage() {
+    }
 
-	private TaskGroupMessage(String name, int index) {
-		this.name = name;
-		this.index = index;
-	}
+    private TaskGroupMessage(String name, int index) {
+        this.name = name;
+        this.index = index;
+    }
 
-	public static TaskGroupMessage parseJSON(JsonNode node) {
-		int index = UNKNOWN_INDEX;
-		String name = "";
+    public static TaskGroupMessage of() {
+        return new TaskGroupMessage();
+    }
 
-		if (node.isNumberValue("index")) {
-			index = Integer.parseInt(node.getNumberValue("index"));
-		}
+    public static TaskGroupMessage parseJSON(JsonNode node) {
+        int index = UNKNOWN_INDEX;
+        String name = "";
 
-		if (node.isStringValue("name")) {
-			name = node.getStringValue("name");
-		}
+        if (node.isNumberValue("index")) {
+            index = Integer.parseInt(node.getNumberValue("index"));
+        }
 
-		return new TaskGroupMessage(name, index);
-	}
+        if (node.isStringValue("name")) {
+            name = node.getStringValue("name");
+        }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(JsonNodeFactories.field("index", JsonNodeFactories.number(index)),
-				JsonNodeFactories.field("name", JsonNodeFactories.string(name == null ? "" : name)));
-	}
+        return new TaskGroupMessage(name, index);
+    }
 
-	public String getName() {
-		return name;
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("index", JsonNodeFactories.number(index)), JsonNodeFactories.field("name", JsonNodeFactories.string(name == null ? "" : name)));
+    }
 
-	public TaskGroupMessage setName(String name) {
-		this.name = name;
-		return this;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public boolean hasIndex() {
-		return index != UNKNOWN_INDEX;
-	}
+    public TaskGroupMessage setName(String name) {
+        this.name = name;
+        return this;
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	public TaskGroupMessage setIndex(int index) {
-		this.index = index;
-		return this;
-	}
+    public TaskGroupMessage setIndex(int index) {
+        this.index = index;
+        return this;
+    }
 }

@@ -25,7 +25,7 @@ import java.util.logging.Logger;
 import java.util.logging.SimpleFormatter;
 import java.util.stream.Collectors;
 
-import core.background.loggers.ActiveWindowInfosLogger;
+import core.background.loggers.ActiveWindowInfoLogger;
 import core.background.loggers.MousePositionLogger;
 import core.config.AbstractRemoteRepeatsClientsConfig;
 import core.config.Config;
@@ -78,7 +78,7 @@ public final class MainBackEndHolder {
 
 	private final MinimizedFrame trayIcon;
 	private final LogHolder logHolder;
-	private final ActiveWindowInfosLogger activeWindowInfosLogger;
+	private final ActiveWindowInfoLogger activeWindowInfoLogger;
 	private final MousePositionLogger mousePositionLogger;
 
 	private final ScheduledThreadPoolExecutor executor;
@@ -131,7 +131,7 @@ public final class MainBackEndHolder {
 		taskInvoker = new TaskInvoker(coreProvider, taskGroups);
 		actionExecutor = new ActionExecutor(coreProvider);
 		keysManager = new GlobalEventsManager(config, coreProvider, actionExecutor);
-		activeWindowInfosLogger = new ActiveWindowInfosLogger(coreProvider);
+		activeWindowInfoLogger = new ActiveWindowInfoLogger();
 		mousePositionLogger = new MousePositionLogger(coreProvider);
 		replayConfig = ReplayConfig.of();
 		runActionConfig = RunActionConfig.of();
@@ -248,7 +248,7 @@ public final class MainBackEndHolder {
 	}
 
 	private void stopBackEndActivities() {
-		activeWindowInfosLogger.stop();
+		activeWindowInfoLogger.stop();
 		mousePositionLogger.stop();
 		executor.shutdown();
 
@@ -337,11 +337,11 @@ public final class MainBackEndHolder {
 	}
 
 	public void setEnabledActiveWindowInfosLogging(boolean enabled) {
-		activeWindowInfosLogger.setEnabled(enabled);
+		activeWindowInfoLogger.setEnabled(enabled);
 	}
 
 	public boolean isActiveWindowInfosLoggingEnabled() {
-		return activeWindowInfosLogger.isEnabled();
+		return activeWindowInfoLogger.isEnabled();
 	}
 
 	/*************************************************************************************************************/
