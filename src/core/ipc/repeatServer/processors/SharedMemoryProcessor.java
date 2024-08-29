@@ -46,25 +46,30 @@ public final class SharedMemoryProcessor extends AbstractMessageProcessor {
             }
         }.map(parameterNodes);
 
-        if (action.equals("get")) {
-            return params.size() == 2 ? constructSuccessfulMessage(type, id, SharedVariables.getVar(params.get(0), params.get(1))) : failure(type, id, "Invalid parameter length " + params.size());
-        } else if (action.equals("set")) {
-            return params.size() == 3 ? constructSuccessfulMessage(type, id, SharedVariables.setVar(params.get(0), params.get(1), params.get(2))) : failure(type, id, "Invalid parameter length " + params.size());
-        } else if (action.equals("del")) {
-            return params.size() == 2 ? constructSuccessfulMessage(type, id, SharedVariables.delVar(params.get(0), params.get(1))) : failure(type, id, "Invalid parameter length " + params.size());
-        } else if (action.equals("wait")) {
-            if (params.size() == 3) {
-                String timeoutMsString = params.get(2);
-                long timeoutMs = 0L;
-                try {
-                    timeoutMs = Long.parseLong(timeoutMsString);
-                } catch (NumberFormatException e) {
-                    return failure(type, id, "Third parameter must be integer " + timeoutMsString);
-                }
+        switch (action) {
+            case "get" -> {
+                return params.size() == 2 ? constructSuccessfulMessage(type, id, SharedVariables.getVar(params.get(0), params.get(1))) : failure(type, id, "Invalid parameter length " + params.size());
+            }
+            case "set" -> {
+                return params.size() == 3 ? constructSuccessfulMessage(type, id, SharedVariables.setVar(params.get(0), params.get(1), params.get(2))) : failure(type, id, "Invalid parameter length " + params.size());
+            }
+            case "del" -> {
+                return params.size() == 2 ? constructSuccessfulMessage(type, id, SharedVariables.delVar(params.get(0), params.get(1))) : failure(type, id, "Invalid parameter length " + params.size());
+            }
+            case "wait" -> {
+                if (params.size() == 3) {
+                    String timeoutMsString = params.get(2);
+                    long timeoutMs;
+                    try {
+                        timeoutMs = Long.parseLong(timeoutMsString);
+                    } catch (NumberFormatException e) {
+                        return failure(type, id, "Third parameter must be integer " + timeoutMsString);
+                    }
 
-                return constructSuccessfulMessage(type, id, SharedVariables.waitVar(params.get(0), params.get(1), timeoutMs));
-            } else {
-                return failure(type, id, "Invalid parameter length " + params.size());
+                    return constructSuccessfulMessage(type, id, SharedVariables.waitVar(params.get(0), params.get(1), timeoutMs));
+                } else {
+                    return failure(type, id, "Invalid parameter length " + params.size());
+                }
             }
         }
 

@@ -19,6 +19,7 @@ abstract class AbstractMessageProcessor implements ILoggable {
 
     public abstract boolean process(String type, long id, JsonNode content) throws InterruptedException;
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     protected abstract boolean verifyMessageContent(JsonNode content);
 
     final boolean verifyReplyContent(JsonNode content) {

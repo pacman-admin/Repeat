@@ -338,6 +338,7 @@ final class ControllerRequestProcessor extends AbstractMessageProcessor {
         return unsupportedAction(type, id, action);
     }
 
+    @SuppressWarnings("ToArrayCallWithZeroLengthArrayArgument")
     private boolean toolAction(String type, long id, final String action, final List<Object> parsedParams) {
         ITools tools = getTools();
 

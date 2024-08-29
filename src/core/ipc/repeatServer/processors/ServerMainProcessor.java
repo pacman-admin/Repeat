@@ -74,6 +74,7 @@ public final class ServerMainProcessor implements ILoggable {
         JsonNode content = root.getNode("content");
 
         try {
+            assert type != null;
             messageProcessors.get(type).process(type.getValue(), id, content);
             return true;
         } catch (InterruptedException e) {

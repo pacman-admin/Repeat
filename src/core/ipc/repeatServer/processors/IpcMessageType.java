@@ -1,11 +1,7 @@
 package core.ipc.repeatServer.processors;
 
 public enum IpcMessageType {
-    ACTION("action"),
-    TASK("task"),
-    SHARED_MEMORY("shared_memory"),
-    SYSTEM_HOST("system_host"),
-    SYSTEM_CLIENT("system_client");
+    ACTION("action"), TASK("task"), SHARED_MEMORY("shared_memory"), SYSTEM_HOST("system_host"), SYSTEM_CLIENT("system_client");
 
     private final String value;
 

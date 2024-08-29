@@ -31,7 +31,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     @Override
-    public boolean process(String type, long id, JsonNode content) throws InterruptedException {
+    public boolean process(String type, long id, JsonNode content) {
         if (!verifyMessageContent(content)) {
             return false;
         }
@@ -39,12 +39,16 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
         String action = content.getStringValue("task_action");
         JsonNode parameters = content.getNode("parameters");
 
-        if (action.equals(TaskProcessor.CREATE_TASK_ACTION)) {
-            return createServerTask(type, id, parameters);
-        } else if (action.equals(TaskProcessor.RUN_TASK_ACTION)) {
-            return runServerTask(type, id, parameters);
-        } else if (action.equals(TaskProcessor.REMOVE_TASK_ACTION)) {
-            return removeServerTask(type, id, parameters);
+        switch (action) {
+            case TaskProcessor.CREATE_TASK_ACTION -> {
+                return createServerTask(type, id, parameters);
+            }
+            case TaskProcessor.RUN_TASK_ACTION -> {
+                return runServerTask(type, id, parameters);
+            }
+            case TaskProcessor.REMOVE_TASK_ACTION -> {
+                return removeServerTask(type, id, parameters);
+            }
         }
 
         getLogger().warning("Unknown request with action " + action + ".");
@@ -52,7 +56,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     private boolean createServerTask(String type, long id, JsonNode parameters) {
-        String source = "";
+        String source;
         Language language = Language.JAVA;
         String previousId = "";
 
