@@ -3,7 +3,6 @@ package commonTools;
 import core.languageHandler.Language;
 
 
-
 @SuppressWarnings("unused")
 public final class AreaClickerTool extends RepeatTool {
 
