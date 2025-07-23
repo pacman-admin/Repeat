@@ -42,11 +42,13 @@ public class MenuSetCompilerPathActionHandler extends AbstractSingleMethodHttpHa
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot set path '" + path + "' for current compiler.");
         }
 
+        /*
+
         Language language = backEndHolder.getSelectedLanguage();
         if (language == Language.PYTHON) {
             File pythonExecutable = ((PythonRemoteCompiler) (backEndHolder.getConfig().getCompilerFactory()).getNativeCompiler(Language.PYTHON)).getPath();
             ((PythonIPCClientService) IPCServiceManager.getIPCService(IPCServiceName.PYTHON)).setExecutingProgram(pythonExecutable);
-        }
+        }*/
 
         return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
