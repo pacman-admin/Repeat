@@ -21,7 +21,7 @@ public class AbstractRemoteRepeatsClientsConfig implements IJsonable {
     }
 
     public static List<String> parseClientList(JsonNode node) {
-        return node.getArrayNode().stream().map(n -> n.getStringValue()).collect(Collectors.toList());
+        return node.getArrayNode().stream().map(JsonNode::getStringValue).collect(Collectors.toList());
     }
 
     public final boolean hasLocal() {
@@ -29,7 +29,7 @@ public class AbstractRemoteRepeatsClientsConfig implements IJsonable {
     }
 
     public final boolean hasOnlyLocal() {
-        return enabledClients.isEmpty() || (enabledClients.size() == 1 && enabledClients.get(0).equals(LOCAL_CLIENT));
+        return enabledClients.isEmpty() || (enabledClients.size() == 1 && enabledClients.getFirst().equals(LOCAL_CLIENT));
     }
 
     public final List<String> getClients() {

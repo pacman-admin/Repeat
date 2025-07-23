@@ -120,16 +120,13 @@ public class KeyChainInputPanel extends JPanel {
 		dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		dialog.setContentPane(optionPane);
 
-		optionPane.addPropertyChangeListener(new PropertyChangeListener() {
-	        @Override
-			public void propertyChange(PropertyChangeEvent e) {
-	            String prop = e.getPropertyName();
-	            if (dialog.isVisible() && (e.getSource() == optionPane) &&
-	            	(prop.equals(JOptionPane.VALUE_PROPERTY))) {
-	                dialog.setVisible(false);
-	            }
-	        }
-	    });
+		optionPane.addPropertyChangeListener(e -> {
+            String prop = e.getPropertyName();
+            if (dialog.isVisible() && (e.getSource() == optionPane) &&
+                (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+                dialog.setVisible(false);
+            }
+        });
 
 		dialog.pack();
 		dialog.setVisible(true);
@@ -237,21 +234,18 @@ public class KeyChainInputPanel extends JPanel {
 		scrollPaneKeyChain.setPreferredSize(new Dimension(150, 80));
 
 		final JButton bAddKeyChain = new JButton("Add key chain");
-		bAddKeyChain.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				KeyChain keyChain = new KeyChain(keyStrokes);
-				if (!keyChain.isEmpty()) {
-					if (modelKeyChain.getSize() >= limit) {
-						return;
-					}
+		bAddKeyChain.addActionListener(e -> {
+            KeyChain keyChain = new KeyChain(keyStrokes);
+            if (!keyChain.isEmpty()) {
+                if (modelKeyChain.getSize() >= limit) {
+                    return;
+                }
 
-					modelKeyChain.addElement(keyChain);
-					keyStrokes.clear();
-					tfKeySeries.setText("");
-				}
-			}
-		});
+                modelKeyChain.addElement(keyChain);
+                keyStrokes.clear();
+                tfKeySeries.setText("");
+            }
+        });
 
 		listKeyChain.addMouseListener(new MouseAdapter() {
 			@Override
@@ -280,21 +274,18 @@ public class KeyChainInputPanel extends JPanel {
 		scrollPaneKeySequence.setPreferredSize(new Dimension(150, 80));
 
 		final JButton bAddKeySequence = new JButton("Add key sequence");
-		bAddKeySequence.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				KeySequence keySequence = new KeySequence(keyStrokes);
-				if (!keySequence.isEmpty()) {
-					if (modelKeySequence.getSize() >= limit) {
-						return;
-					}
+		bAddKeySequence.addActionListener(e -> {
+            KeySequence keySequence = new KeySequence(keyStrokes);
+            if (!keySequence.isEmpty()) {
+                if (modelKeySequence.getSize() >= limit) {
+                    return;
+                }
 
-					modelKeySequence.addElement(keySequence);
-					keyStrokes.clear();
-					tfKeySeries.setText("");
-				}
-			}
-		});
+                modelKeySequence.addElement(keySequence);
+                keyStrokes.clear();
+                tfKeySeries.setText("");
+            }
+        });
 
 		listKeySequence.addMouseListener(new MouseAdapter() {
 			@Override
@@ -324,20 +315,17 @@ public class KeyChainInputPanel extends JPanel {
 		scrollPanePhrases.setPreferredSize(new Dimension(150, 80));
 
 		final JButton bAddPhrase = new JButton("Add phrase");
-		bAddPhrase.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				String phrase = tfPhrase.getText();
-				if (!phrase.isEmpty()) {
-					if (modelPhrases.getSize() >= limit) {
-						return;
-					}
+		bAddPhrase.addActionListener(e -> {
+            String phrase = tfPhrase.getText();
+            if (!phrase.isEmpty()) {
+                if (modelPhrases.getSize() >= limit) {
+                    return;
+                }
 
-					modelPhrases.addElement(ActivationPhrase.of(phrase));
-					tfPhrase.setText("");
-				}
-			}
-		});
+                modelPhrases.addElement(ActivationPhrase.of(phrase));
+                tfPhrase.setText("");
+            }
+        });
 
 		listPhrases.addMouseListener(new MouseAdapter() {
 			@Override

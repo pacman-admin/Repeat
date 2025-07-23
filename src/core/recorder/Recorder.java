@@ -57,12 +57,7 @@ public class Recorder {
 			public Boolean apply(final NativeKeyEvent r) {
 				final int code = r.getKey();
 				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, new Runnable(){
-					@Override
-					public void run() {
-						controller.keyBoard().press(code);
-					}
-				}));
+				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> controller.keyBoard().press(code)));
 
 				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
 					generator.submitTask(time, Device.KEYBOARD, "press", new int[]{code});
@@ -76,12 +71,7 @@ public class Recorder {
 			public Boolean apply(final NativeKeyEvent r) {
 				final int code = r.getKey();
 				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, new Runnable() {
-					@Override
-					public void run() {
-						controller.keyBoard().release(code);
-					}
-				}));
+				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> controller.keyBoard().release(code)));
 
 				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
 					generator.submitTask(time, Device.KEYBOARD, "release", new int[]{code});
@@ -97,15 +87,12 @@ public class Recorder {
 			public Boolean apply(final NativeMouseEvent r) {
 				final int code = r.getButton();
 				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, new Runnable(){
-					@Override
-					public void run() {
-						if (mode == MODE_MOUSE_CLICK_ONLY) {
-							controller.mouse().move(r.getX(), r.getY());
-						}
-						controller.mouse().release(code);
-					}
-				}));
+				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> {
+                    if (mode == MODE_MOUSE_CLICK_ONLY) {
+                        controller.mouse().move(r.getX(), r.getY());
+                    }
+                    controller.mouse().release(code);
+                }));
 
 
 				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
@@ -125,15 +112,12 @@ public class Recorder {
 			public Boolean apply(final NativeMouseEvent r) {
 				final int code = r.getButton();
 				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, new Runnable(){
-					@Override
-					public void run() {
-						if (mode == MODE_MOUSE_CLICK_ONLY) {
-							controller.mouse().move(r.getX(), r.getY());
-						}
-						controller.mouse().press(code);
-					}
-				}));
+				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> {
+                    if (mode == MODE_MOUSE_CLICK_ONLY) {
+                        controller.mouse().move(r.getX(), r.getY());
+                    }
+                    controller.mouse().press(code);
+                }));
 
 				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
 					if (mode == MODE_MOUSE_CLICK_ONLY) {
@@ -155,12 +139,7 @@ public class Recorder {
 				}
 
 				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, new Runnable(){
-					@Override
-					public void run() {
-						controller.mouse().move(r.getX(), r.getY());
-					}
-				}));
+				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> controller.mouse().move(r.getX(), r.getY())));
 
 				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
 					generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});

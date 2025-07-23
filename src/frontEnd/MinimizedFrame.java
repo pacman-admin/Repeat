@@ -35,20 +35,10 @@ public class MinimizedFrame extends TrayIcon {
 		PopupMenu trayPopupMenu = new PopupMenu();
 
 		MenuItem miInterface = new MenuItem("Show UI");
-		miInterface.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				show();
-			}
-		});
+		miInterface.addActionListener(e -> show());
 
 		MenuItem miClose = new MenuItem("Exit");
-		miClose.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				exit();
-			}
-		});
+		miClose.addActionListener(e -> exit());
 
 		trayPopupMenu.add(miInterface);
 		trayPopupMenu.add(miClose);

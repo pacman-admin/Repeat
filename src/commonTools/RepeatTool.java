@@ -31,7 +31,10 @@ public abstract class RepeatTool {
 
     protected String getHeader(Language language) {
         if (language == Language.JAVA) {
-            return "public class CustomAction extends UserDefinedAction {\n" + "    public void action(final Core controller) throws InterruptedException {\n";
+            return """
+                    public class CustomAction extends UserDefinedAction {
+                        public void action(final Core controller) throws InterruptedException {
+                    """;
         } else {
             return "";
         }

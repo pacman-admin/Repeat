@@ -12,12 +12,10 @@ public class ClickerTool extends RepeatTool {
     @Override
     protected String getBodySource(Language language) {
         if (language == Language.JAVA) {
-            StringBuilder output = new StringBuilder();
-            output.append(TWO_TAB + "for (int i = 0; ; i++) {\n");
-            output.append(THREE_TAB + "controller.mouse().leftClick();\n");
-            output.append(TWO_TAB + "}\n");
 
-            return output.toString();
+            return TWO_TAB + "for (int i = 0; ; i++) {\n" +
+                    THREE_TAB + "controller.mouse().leftClick();\n" +
+                    TWO_TAB + "}\n";
         }
 
         return null;

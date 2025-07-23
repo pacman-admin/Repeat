@@ -91,26 +91,26 @@ public class MainBackEndHolder {
 
         switchRecord = new UserDefinedAction() {
             @Override
-            public void action(Core controller) throws InterruptedException {
+            public void action(Core controller) {
                 switchRecord();
             }
         };
 
         switchReplay = new UserDefinedAction() {
             @Override
-            public void action(Core controller) throws InterruptedException {
+            public void action(Core controller) {
                 switchReplay();
             }
         };
 
         switchReplayCompiled = new UserDefinedAction() {
             @Override
-            public void action(Core controller) throws InterruptedException {
+            public void action(Core controller) {
                 switchRunningCompiledAction();
             }
         };
 
-        TaskProcessorManager.setProcessorIdentifyCallback(new Function<Language, Void>() {
+        TaskProcessorManager.setProcessorIdentifyCallback(new Function<>() {
             @Override
             public Void apply(Language language) {
                 recompiledNativeTasks(language);
@@ -146,7 +146,7 @@ public class MainBackEndHolder {
                     StringWriter sw = new StringWriter();
                     PrintWriter pw = new PrintWriter(sw);
                     lr.getThrown().printStackTrace(pw);
-                    builder.append(sw.toString());
+                    builder.append(sw);
                 }
                 return builder.toString();
             }
@@ -223,12 +223,7 @@ public class MainBackEndHolder {
     }
 
     public void scheduleExit(long delayMs) {
-        executor.schedule(new Runnable() {
-            @Override
-            public void run() {
-                exit();
-            }
-        }, delayMs, TimeUnit.MILLISECONDS);
+        executor.schedule(() -> exit(), delayMs, TimeUnit.MILLISECONDS);
     }
 
     private void exit() {
@@ -368,7 +363,7 @@ public class MainBackEndHolder {
             }
 
             isReplaying = true;
-            recorder.replay(replayConfig.getCount(), replayConfig.getDelay(), new Function<Void, Void>() {
+            recorder.replay(replayConfig.getCount(), replayConfig.getDelay(), new Function<>() {
                 @Override
                 public Void apply(Void r) {
                     switchReplay();
@@ -410,19 +405,16 @@ public class MainBackEndHolder {
 
             isRunningCompiledTask = true;
 
-            compiledExecutor = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        customFunction.action(coreProvider.get());
-                    } catch (InterruptedException e) { // Stopped prematurely
-                        return;
-                    } catch (Exception e) {
-                        LOGGER.log(Level.WARNING, "Exception caught while executing custom function", e);
-                    }
-
-                    switchRunningCompiledAction();
+            compiledExecutor = new Thread(() -> {
+                try {
+                    customFunction.action(coreProvider.get());
+                } catch (InterruptedException e) { // Stopped prematurely
+                    return;
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception caught while executing custom function", e);
                 }
+
+                switchRunningCompiledAction();
             });
             compiledExecutor.start();
         }

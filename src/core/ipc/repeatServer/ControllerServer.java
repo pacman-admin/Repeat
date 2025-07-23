@@ -42,54 +42,51 @@ public class ControllerServer extends IPCServiceWithModifablePort {
 	protected void start() throws IOException {
 		setStop(false);
 
-		mainThread = new Thread() {
-			@Override
-			public void run() {
-				try {
-					listener = new ServerSocket(port, MAX_SERVER_BACK_LOG, InetAddress.getByName("localhost"));
-				} catch (IOException e) {
-					getLogger().log(Level.SEVERE, "IO Exception when starting server", e);
-					return;
-				}
+		mainThread = new Thread(() -> {
+            try {
+                listener = new ServerSocket(port, MAX_SERVER_BACK_LOG, InetAddress.getByName("localhost"));
+            } catch (IOException e) {
+                getLogger().log(Level.SEVERE, "IO Exception when starting server", e);
+                return;
+            }
 
-				try {
-					getLogger().info("Waiting for client connections...");
-					while (!isStopped()) {
-		                final Socket socket;
-		                try {
-		                	socket = listener.accept();
-		                	socket.setSoTimeout(DEFAULT_TIMEOUT_MS);
-		                	getLogger().info("New client accepted: " + socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
-		                } catch (SocketException e) {
-		                	if (!listener.isClosed()) {
-		                		getLogger().log(Level.SEVERE, "Socket exception when serving", e);
-		                	}
-		                	continue;
-		                } catch (IOException e) {
-		                	getLogger().log(Level.SEVERE, "IO Exception when serving", e);
-		                	continue;
-		                }
+            try {
+                getLogger().info("Waiting for client connections...");
+                while (!isStopped()) {
+                    final Socket socket;
+                    try {
+                        socket = listener.accept();
+                        socket.setSoTimeout(DEFAULT_TIMEOUT_MS);
+                        getLogger().info("New client accepted: " + socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
+                    } catch (SocketException e) {
+                        if (!listener.isClosed()) {
+                            getLogger().log(Level.SEVERE, "Socket exception when serving", e);
+                        }
+                        continue;
+                    } catch (IOException e) {
+                        getLogger().log(Level.SEVERE, "IO Exception when serving", e);
+                        continue;
+                    }
 
-		                ClientServingThread newClient = new ClientServingThread(backEnd, socket);
-		                clientServingThreads.add(newClient);
-		                threadPool.submit(newClient);
-		            }
-				} finally {
-					try {
-						listener.close();
-					} catch (IOException e) {
-						getLogger().log(Level.SEVERE, "IO Exception when closing server", e);
-					}
-				}
+                    ClientServingThread newClient = new ClientServingThread(backEnd, socket);
+                    clientServingThreads.add(newClient);
+                    threadPool.submit(newClient);
+                }
+            } finally {
+                try {
+                    listener.close();
+                } catch (IOException e) {
+                    getLogger().log(Level.SEVERE, "IO Exception when closing server", e);
+                }
+            }
 
-				getLogger().log(Level.INFO, "Controller server terminating...");
-				for (ClientServingThread clientThread : clientServingThreads) {
-					clientThread.stop();
-				}
-				clientServingThreads.clear();
-				getLogger().log(Level.INFO, "Controller server terminated!");
-			}
-		};
+            getLogger().log(Level.INFO, "Controller server terminating...");
+            for (ClientServingThread clientThread : clientServingThreads) {
+                clientThread.stop();
+            }
+            clientServingThreads.clear();
+            getLogger().log(Level.INFO, "Controller server terminated!");
+        });
 		mainThread.start();
 	}
 

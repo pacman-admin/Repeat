@@ -55,31 +55,28 @@ public class RemoteRepeatsCompiler extends AbstractCompiler {
 				continue;
 			}
 
-			executions.add(new Thread() {
-				@Override
-				public void run() {
-					RepeatsPeerServiceClient client = clients.getClient(clientId);
-					if (client == null) {
-						LOGGER.warning("Cannot compile action with client " + clientId + " since it does not exist.");
-						return;
-					}
+			executions.add(new Thread(() -> {
+                RepeatsPeerServiceClient client = clients.getClient(clientId);
+                if (client == null) {
+                    LOGGER.warning("Cannot compile action with client " + clientId + " since it does not exist.");
+                    return;
+                }
 
-					String previousId = compilationHint.getOrDefault(client.getClientId(), "");
-					UserDefinedAction action = client.api().actions().createTask(source, language, RepeatsRemoteCompilationHints.of(previousId));
-					if (action == null) {
-						LOGGER.warning("Failed to compile remote Repeats action.");
-						return;
-					}
+                String previousId = compilationHint.getOrDefault(client.getClientId(), "");
+                UserDefinedAction action = client.api().actions().createTask(source, language, RepeatsRemoteCompilationHints.of(previousId));
+                if (action == null) {
+                    LOGGER.warning("Failed to compile remote Repeats action.");
+                    return;
+                }
 
-					mutex.lock();
-					try {
-						actions.add(action);
-						compilationInfo.put(clientId, action.getActionId());
-					} finally {
-						mutex.unlock();
-					}
-				}
-			});
+                mutex.lock();
+                try {
+                    actions.add(action);
+                    compilationInfo.put(clientId, action.getActionId());
+                } finally {
+                    mutex.unlock();
+                }
+            }));
 		}
 
 		for (Thread t : executions) {

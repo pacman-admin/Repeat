@@ -39,50 +39,47 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 		}
 
 		isRunning = true;
-		Runnable running = new Runnable() {
-			@Override
-			public void run() {
-				for (long i = 0; i < count; i++) {
-					long time = 0;
-					for (SchedulingData<Runnable> t : tasks) {
-						long currentTime = t.getTime();
+		Runnable running = () -> {
+            for (long i = 0; i < count; i++) {
+                long time = 0;
+                for (SchedulingData<Runnable> t : tasks) {
+                    long currentTime = t.getTime();
 
-						if (currentTime < time) {
-							LOGGER.severe("Something went really bad");
-							System.exit(1);
-						}
+                    if (currentTime < time) {
+                        LOGGER.severe("Something went really bad");
+                        System.exit(1);
+                    }
 
-						try {
-							Thread.sleep((long)((currentTime - time) / speedup));
-						} catch (InterruptedException e) {
-							LOGGER.info("Ended prematuredly");
-							return; // Ended prematurely
-						}
+                    try {
+                        Thread.sleep((long)((currentTime - time) / speedup));
+                    } catch (InterruptedException e) {
+                        LOGGER.info("Ended prematuredly");
+                        return; // Ended prematurely
+                    }
 
-						time = currentTime;
-						t.getData().run();
-					}
+                    time = currentTime;
+                    t.getData().run();
+                }
 
-					if (delay > 0) {
-						try {
-							Thread.sleep((long)(delay / speedup));
-						} catch (InterruptedException e) {
-							LOGGER.info("Ended prematuredly");
-							return; // Ended prematurely
-						}
-					}
-				}
+                if (delay > 0) {
+                    try {
+                        Thread.sleep((long)(delay / speedup));
+                    } catch (InterruptedException e) {
+                        LOGGER.info("Ended prematuredly");
+                        return; // Ended prematurely
+                    }
+                }
+            }
 
-				if (callBack != null && callBackDelay > 0) {
-					try {
-						Thread.sleep((long)(callBackDelay / speedup));
-					} catch (InterruptedException e) {
-						return; // Ended prematurely
-					}
-					callBack.apply(null);
-				}
-			}
-		};
+            if (callBack != null && callBackDelay > 0) {
+                try {
+                    Thread.sleep((long)(callBackDelay / speedup));
+                } catch (InterruptedException e) {
+                    return; // Ended prematurely
+                }
+                callBack.apply(null);
+            }
+        };
 		executeAgent = new Thread(running);
 		executeAgent.start();
 

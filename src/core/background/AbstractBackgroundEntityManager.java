@@ -32,12 +32,7 @@ public abstract class AbstractBackgroundEntityManager<T> {
         if (executor == null) {
             executor = new ScheduledThreadPoolExecutor(2);
         }
-        executor.scheduleWithFixedDelay(new Runnable() {
-            @Override
-            public void run() {
-                cleanup();
-            }
-        }, 0, CLEAN_UP_PERIOD_SECOND, TimeUnit.SECONDS);
+        executor.scheduleWithFixedDelay(this::cleanup, 0, CLEAN_UP_PERIOD_SECOND, TimeUnit.SECONDS);
     }
 
     public void stop() {
@@ -52,8 +47,7 @@ public abstract class AbstractBackgroundEntityManager<T> {
         long now = System.currentTimeMillis();
         List<String> toRemove = new ArrayList<>();
 
-        for (Iterator<Entry<String, Long>> iterator = lastUsed.entrySet().iterator(); iterator.hasNext(); ) {
-            Entry<String, Long> entry = iterator.next();
+        for (Entry<String, Long> entry : lastUsed.entrySet()) {
             String id = entry.getKey();
             Long lastUsed = entry.getValue();
 

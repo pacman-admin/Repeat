@@ -41,12 +41,7 @@ public final class TaskProcessorManager {
 		if (callBack != null) {
 			// It is necessary to call back in a separate thread to not block the receiving
 			// thread operation
-			new Thread() {
-				@Override
-				public void run() {
-					callBack.apply(identified);
-				}
-			}.start();
+			new Thread(() -> callBack.apply(identified)).start();
 		}
 		return true;
 	}

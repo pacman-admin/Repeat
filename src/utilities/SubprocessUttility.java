@@ -70,29 +70,23 @@ public class SubprocessUttility {
 			BufferedReader bufferStdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			BufferedReader bufferStderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
-			Thread t1 = new Thread() {
-				@Override
-				public void run() {
-					try {
-						readFromStream(bufferStdout, stdout);
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Exception encountered reading stdout of command $" + command, e);
-						fail[0] = true;
-					}
-				}
-			};
+			Thread t1 = new Thread(() -> {
+                try {
+                    readFromStream(bufferStdout, stdout);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception encountered reading stdout of command $" + command, e);
+                    fail[0] = true;
+                }
+            });
 			t1.start();
-			Thread t2 = new Thread() {
-				@Override
-				public void run() {
-					try {
-						readFromStream(bufferStderr, stderr);
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Exception encountered reading stderr of command $" + command, e);
-						fail[1] = true;
-					}
-				}
-			};
+			Thread t2 = new Thread(() -> {
+                try {
+                    readFromStream(bufferStderr, stderr);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception encountered reading stderr of command $" + command, e);
+                    fail[1] = true;
+                }
+            });
 			t2.start();
 			t1.join();
 			t2.join();

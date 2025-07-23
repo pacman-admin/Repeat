@@ -48,14 +48,11 @@ public class SharedVariablesPubSubManager {
 			return;
 		}
 
-		processingThread = new Thread() {
-			@Override
-			public void run() {
-				while (!stopped) {
-					processLoop();
-				}
-			}
-		};
+		processingThread = new Thread(() -> {
+            while (!stopped) {
+                processLoop();
+            }
+        });
 		processingThread.start();
 	}
 

@@ -9,9 +9,6 @@ public enum IPCServiceName {
     private final int index;
     private final String name;
 
-    /**
-     * @param index
-     */
     IPCServiceName(final int index, final String name) {
         this.index = index;
         this.name = name;

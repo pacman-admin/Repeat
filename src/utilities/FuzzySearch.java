@@ -32,17 +32,14 @@ public class FuzzySearch {
 		}
 
 		// Sort by edit distance
-		Collections.sort(output, new Comparator<FuzzySearchable>() {
-			@Override
-			public int compare(FuzzySearchable fs0, FuzzySearchable fs1) {
-				String s0 = fs0.getString();
-				String s1 = fs1.getString();
+		Collections.sort(output, (fs0, fs1) -> {
+            String s0 = fs0.getString();
+            String s1 = fs1.getString();
 
-				int d0 = StringUtilities.levenshteinDistance(s0, key);
-				int d1 = StringUtilities.levenshteinDistance(s1, key);
-				return d0 - d1;
-			}
-		});
+            int d0 = StringUtilities.levenshteinDistance(s0, key);
+            int d1 = StringUtilities.levenshteinDistance(s1, key);
+            return d0 - d1;
+        });
 
 		return output;
 	}

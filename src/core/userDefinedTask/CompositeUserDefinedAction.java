@@ -51,18 +51,15 @@ public class CompositeUserDefinedAction extends UserDefinedAction {
 
 		List<Thread> executions = new ArrayList<>(actions.size());
 		for (final UserDefinedAction action : actions) {
-			executions.add(new Thread() {
-				@Override
-				public void run() {
-					try {
-						action.action(controller);
-					} catch (InterruptedException ie) {
-						LOGGER.log(Level.WARNING, "Interrupted when executing action.", ie);
-					} catch (Exception e) {
-						LOGGER.log(Level.WARNING, "Exception when executing action.", e);
-					}
-				}
-			});
+			executions.add(new Thread(() -> {
+                try {
+                    action.action(controller);
+                } catch (InterruptedException ie) {
+                    LOGGER.log(Level.WARNING, "Interrupted when executing action.", ie);
+                } catch (Exception e) {
+                    LOGGER.log(Level.WARNING, "Exception when executing action.", e);
+                }
+            }));
 		}
 
 		for (Thread t : executions) {

@@ -54,24 +54,21 @@ public class ActionExecutor {
 		}
 
 		final String id = RandomUtil.randomID();
-		Thread execution = new Thread(new Runnable() {
-			@Override
-			public void run() {
-				try {
-					for (int i = 0; i < request.getRepeatCount(); i++) {
-						action.trackedAction(coreProvider.get());
-						Thread.sleep(request.getDelayMsBetweenRepeat());
-					}
-				} catch (InterruptedException e) {
-					LOGGER.info("Task ended prematurely");
-				} catch (Exception e) {
-					String name = action.getName() == null ? "" : action.getName();
-					LOGGER.log(Level.WARNING, "Exception while executing task " + name, e);
-				}
+		Thread execution = new Thread(() -> {
+            try {
+                for (int i = 0; i < request.getRepeatCount(); i++) {
+                    action.trackedAction(coreProvider.get());
+                    Thread.sleep(request.getDelayMsBetweenRepeat());
+                }
+            } catch (InterruptedException e) {
+                LOGGER.info("Task ended prematurely");
+            } catch (Exception e) {
+                String name = action.getName() == null ? "" : action.getName();
+                LOGGER.log(Level.WARNING, "Exception while executing task " + name, e);
+            }
 
-				executions.remove(id);
-			}
-		});
+            executions.remove(id);
+        });
 
 		executions.put(id, execution);
 		execution.start();

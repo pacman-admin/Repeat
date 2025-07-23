@@ -509,19 +509,11 @@ public class SwingUtil {
 			buttonPanel.add(bYes);
 			buttonPanel.add(bNo);
 
-			bYes.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					result.value = true;
-					dialog.dispose();
-				}
-			});
-			bNo.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					dialog.dispose();
-				}
-			});
+			bYes.addActionListener(e -> {
+                result.value = true;
+                dialog.dispose();
+            });
+			bNo.addActionListener(e -> dialog.dispose());
 
 			JPanel panel = new JPanel();
 			panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -661,14 +653,11 @@ public class SwingUtil {
 		private static final void getFocus(Window w) {
 			Semaphore s = new Semaphore(0);
 			if (!w.isVisible()) {
-				new Thread() {
-					@Override
-					public void run() {
-						s.release();
-						w.setVisible(true); // This call is blocking so it needs to be in a separate thread.
-						s.release();
-					}
-				}.start();
+				new Thread(() -> {
+                    s.release();
+                    w.setVisible(true); // This call is blocking so it needs to be in a separate thread.
+                    s.release();
+                }).start();
 			} else {
 				s.release(2);
 			}
@@ -724,21 +713,15 @@ public class SwingUtil {
 			buttonPanel.add(bCancel);
 			panel.add(buttonPanel);
 
-			bOK.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					result.setValue(true);
-					dialog.dispose();
-				}
-			});
+			bOK.addActionListener(e -> {
+                result.setValue(true);
+                dialog.dispose();
+            });
 
-			bCancel.addActionListener(new ActionListener() {
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					result.setValue(false);
-					dialog.dispose();
-				}
-			});
+			bCancel.addActionListener(e -> {
+                result.setValue(false);
+                dialog.dispose();
+            });
 
 			dialog.add(panel);
 			dialog.pack();
