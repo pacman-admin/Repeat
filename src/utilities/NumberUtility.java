@@ -41,7 +41,7 @@ public final class NumberUtility {
 			return false;
 		}
 
-		if (input.length() == 0) {
+		if (input.isEmpty()) {
 			return false;
 		}
 

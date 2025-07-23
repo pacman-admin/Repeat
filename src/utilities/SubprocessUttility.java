@@ -109,7 +109,7 @@ public class SubprocessUttility {
 		String line;
 		while ((line = reader.readLine()) != null) {
 			String trimmed = line.trim();
-			if (trimmed.length() == 0) {
+			if (trimmed.isEmpty()) {
 				continue;
 			}
 			output.append(trimmed);

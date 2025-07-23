@@ -138,7 +138,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
 	private boolean runServerTask(String type, long id, JsonNode parameters) {
 		List<JsonNode> parameterNodes = parameters.getArrayNode();
-		if (parameterNodes.size() == 0 || parameterNodes.size() > 2) {
+		if (parameterNodes.isEmpty() || parameterNodes.size() > 2) {
 			return failure(type, id, "Cannot run task with " + parameterNodes.size() + " parameters.");
 		}
 

@@ -454,7 +454,7 @@ public class MainBackEndHolder {
             if (collisions.isEmpty()) {
                 keysManager.registerTask(action);
             } else {
-                result &= false;
+                result = false;
                 String collisionNames = StringUtilities.join(collisions.stream().map(t -> t.getName()).collect(Collectors.toList()), ", ");
                 LOGGER.log(Level.WARNING, "Cannot register action " + action.getName() + ". There are collisions with " + collisionNames + " in hotkeys!");
             }
@@ -481,7 +481,7 @@ public class MainBackEndHolder {
         }
 
         TaskGroup removed = taskGroups.remove(index);
-        if (taskGroups.size() < 1) {
+        if (taskGroups.isEmpty()) {
             taskGroups.add(new TaskGroup("default"));
         }
 
@@ -986,7 +986,7 @@ public class MainBackEndHolder {
         }
 
         allNames.removeAll(using);
-        if (allNames.size() == 0) {
+        if (allNames.isEmpty()) {
             LOGGER.info("Nothing to clean...");
             return;
         }

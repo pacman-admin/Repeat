@@ -101,7 +101,7 @@ class ClientServingThread implements Runnable, ILoggable {
 		}
 
 		List<String> messages = IPCProtocol.getMessages(reader);
-		if (messages == null || messages.size() == 0) {
+		if (messages == null || messages.isEmpty()) {
 			getLogger().warning("Messages is null or messages size is 0. " + messages);
 			return false;
 		}

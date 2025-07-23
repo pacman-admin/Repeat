@@ -71,7 +71,7 @@ public abstract class IPCClientService extends IIPCService {
 
 					while ((line = input.readLine()) != null) {
 						String trimmed = line.trim();
-						if (trimmed.length() == 0) {
+						if (trimmed.isEmpty()) {
 							continue;
 						}
 

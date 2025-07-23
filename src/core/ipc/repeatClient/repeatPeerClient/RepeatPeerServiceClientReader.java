@@ -25,7 +25,7 @@ class RepeatPeerServiceClientReader extends AbstractRepeatsClientStoppableThread
 	@Override
 	protected void processLoop() throws IOException, InterruptedException {
 		List<String> messages = IPCProtocol.getMessages(reader);
-		if (messages == null || messages.size() == 0) {
+		if (messages == null || messages.isEmpty()) {
 			LOGGER.warning("Messages is null or messages size is 0. " + messages);
 			return;
 		}

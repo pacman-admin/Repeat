@@ -46,7 +46,7 @@ public class StringUtilities {
 		while (iter.hasNext()) {
 			String next = iter.next();
 
-			boolean valid = next.replaceAll(" ", "").length() != 0;
+			boolean valid = !next.replaceAll(" ", "").isEmpty();
 
 			if (valid) {
 				builder.append(next);
@@ -280,7 +280,7 @@ public class StringUtilities {
 		if (s == null) {
 			return null;
 		}
-		if (s.length() == 0) {
+		if (s.isEmpty()) {
 			return s;
 		}
 		StringBuilder sb = new StringBuilder();

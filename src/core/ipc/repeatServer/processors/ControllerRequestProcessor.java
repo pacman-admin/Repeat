@@ -209,7 +209,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 			return success(type, id, JsonNodeFactories.array(JsonNodeFactories.number(p.x), JsonNodeFactories.number(p.y)));
 		} else if (action.equals("get_color")) {
 			Point p = null;
-			if (params.size() == 0) {
+			if (params.isEmpty()) {
 				p = core.mouse().getPosition();
 			} else if (params.size() == 2) {
 				p = new Point(params.get(0), params.get(1));
@@ -233,7 +233,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 				return false;
 			}
 
-			if (params.size() >= 1) {
+			if (!params.isEmpty()) {
 				final int[] keys = new int[params.size()];
 				for (int i = 0; i < keys.length; i++) {
 					keys[i] = params.get(i);
@@ -249,7 +249,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 				return false;
 			}
 
-			if (params.size() >= 1) {
+			if (!params.isEmpty()) {
 				final int[] keys = new int[params.size()];
 				for (int i = 0; i < keys.length; i++) {
 					keys[i] = params.get(i);
@@ -282,7 +282,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 				return false;
 			}
 
-			if (params.size() >= 1) {
+			if (!params.isEmpty()) {
 				final char[] chars = new char[params.size()];
 				for (int i = 0; i < chars.length; i++) {
 					int v = params.get(i);
