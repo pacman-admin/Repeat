@@ -26,26 +26,26 @@ public class ActiveWindowInfosLogger {
 
 	public ActiveWindowInfosLogger(CoreProvider coreProvider) {
 		mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
-		mouseListener.setMouseReleased(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeMouseEvent arg0) {
-				if (!enabled) {
-					return true;
-				}
+		mouseListener.setMouseReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent arg0) {
+                if (!enabled) {
+                    return true;
+                }
 
-				long now = System.currentTimeMillis();
-				long diff = Math.abs(now - lastLogged);
-				if (diff <= LOG_MAX_INTERVAL_MS) {
-					return true;
-				}
-				lastLogged = now;
-				NativeWindowInfo info = NativeProcessUtil.getActiveWindowInfo();
+                long now = System.currentTimeMillis();
+                long diff = Math.abs(now - lastLogged);
+                if (diff <= LOG_MAX_INTERVAL_MS) {
+                    return true;
+                }
+                lastLogged = now;
+                NativeWindowInfo info = NativeProcessUtil.getActiveWindowInfo();
 
-				LOGGER.info("Active window title: " + info.getTitle());
-				LOGGER.info("Active process name: " + info.getProcessName());
-				return true;
-			}
-		});
+                LOGGER.info("Active window title: " + info.getTitle());
+                LOGGER.info("Active process name: " + info.getProcessName());
+                return true;
+            }
+        });
 		mouseListener.startListening();
 	}
 
