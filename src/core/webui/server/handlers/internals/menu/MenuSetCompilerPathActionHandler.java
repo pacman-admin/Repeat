@@ -1,10 +1,5 @@
 package core.webui.server.handlers.internals.menu;
 
-import core.ipc.IPCServiceManager;
-import core.ipc.IPCServiceName;
-import core.ipc.repeatClient.PythonIPCClientService;
-import core.languageHandler.Language;
-import core.languageHandler.compiler.PythonRemoteCompiler;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpException;
