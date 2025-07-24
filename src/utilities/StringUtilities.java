@@ -28,8 +28,7 @@ public class StringUtilities {
 	 * @return hex string represents the input color
 	 */
 	public static String getHexString(Color color) {
-		String hex = String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
-		return hex;
+        return String.format("#%02x%02x%02x", color.getRed(), color.getGreen(), color.getBlue());
 	}
 
 	/**

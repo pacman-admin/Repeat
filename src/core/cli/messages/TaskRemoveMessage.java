@@ -1,7 +1,22 @@
+/**
+ * Copyright 2025 Langdon Staab
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author Langdon Staab
+ * @author HP Truong
+ */
 package core.cli.messages;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
@@ -9,42 +24,47 @@ import argo.jdom.JsonRootNode;
 import argo.jdom.JsonStringNode;
 import utilities.json.IJsonable;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class TaskRemoveMessage implements IJsonable {
-	private TaskIdentifier taskIdentifier;
+    private TaskIdentifier taskIdentifier;
 
-	private TaskRemoveMessage() {}
-	public static TaskRemoveMessage of() {
-		return new TaskRemoveMessage();
-	}
+    private TaskRemoveMessage() {
+    }
 
-	private TaskRemoveMessage(TaskIdentifier taskIdentifier) {
-		this.taskIdentifier = taskIdentifier;
-	}
+    private TaskRemoveMessage(TaskIdentifier taskIdentifier) {
+        this.taskIdentifier = taskIdentifier;
+    }
 
-	@Override
-	public JsonRootNode jsonize() {
-		Map<JsonStringNode, JsonNode> data = new HashMap<>();
-		if (taskIdentifier != null) {
-			data.put(JsonNodeFactories.string("task_identifier"), taskIdentifier.jsonize());
-		}
-		return JsonNodeFactories.object(data);
-	}
+    public static TaskRemoveMessage of() {
+        return new TaskRemoveMessage();
+    }
 
-	public static TaskRemoveMessage parseJSON(JsonNode node) {
-		TaskIdentifier taskIdentifier = null;
-		if (node.isObjectNode("task_identifier")) {
-			taskIdentifier = TaskIdentifier.parseJSON(node.getNode("task_identifier"));
-		}
+    public static TaskRemoveMessage parseJSON(JsonNode node) {
+        TaskIdentifier taskIdentifier = null;
+        if (node.isObjectNode("task_identifier")) {
+            taskIdentifier = TaskIdentifier.parseJSON(node.getNode("task_identifier"));
+        }
 
-		return new TaskRemoveMessage(taskIdentifier);
-	}
+        return new TaskRemoveMessage(taskIdentifier);
+    }
 
-	public TaskIdentifier getTaskIdentifier() {
-		return taskIdentifier;
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        Map<JsonStringNode, JsonNode> data = new HashMap<>();
+        if (taskIdentifier != null) {
+            data.put(JsonNodeFactories.string("task_identifier"), taskIdentifier.jsonize());
+        }
+        return JsonNodeFactories.object(data);
+    }
 
-	public TaskRemoveMessage setTaskIdentifier(TaskIdentifier taskIdentifier) {
-		this.taskIdentifier = taskIdentifier;
-		return this;
-	}
+    public TaskIdentifier getTaskIdentifier() {
+        return taskIdentifier;
+    }
+
+    public TaskRemoveMessage setTaskIdentifier(TaskIdentifier taskIdentifier) {
+        this.taskIdentifier = taskIdentifier;
+        return this;
+    }
 }

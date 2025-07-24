@@ -198,17 +198,14 @@ public class Jsonizer {
 			int value = Integer.parseInt(node.getNumberValue());
 			return (short) value;
 		} else if (clazz == Integer.TYPE || clazz == Integer.class) {
-			int value = Integer.parseInt(node.getNumberValue());
-			return value;
+            return Integer.parseInt(node.getNumberValue());
 		} else if (clazz == Long.TYPE || clazz == Long.class) {
 			long value = Long.parseLong(node.getNumberValue());
 			return (long) value;
 		} else if (clazz == Float.TYPE || clazz == Float.class) {
-			float value = Float.parseFloat(node.getNumberValue());
-			return value;
+            return Float.parseFloat(node.getNumberValue());
 		} else if (clazz == Double.TYPE || clazz == Double.class) {
-			double value = Double.parseDouble(node.getNumberValue());
-			return value;
+            return Double.parseDouble(node.getNumberValue());
 		} else {
 			throw new IllegalArgumentException("Unknown type " + clazz);
 		}

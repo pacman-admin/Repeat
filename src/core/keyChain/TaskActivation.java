@@ -340,15 +340,14 @@ public class TaskActivation implements IJsonable {
 				globalActivation = GlobalActivation.newBuilder().build();
 			}
 
-			TaskActivation output = TaskActivation.newBuilder()
-										.withHotKeys(keyChains)
-										.withKeySequence(keySequences)
-										.withMouseGestures(gestures)
-										.withPhrases(phrases)
-										.withVariables(variables)
-										.withGlobalActivation(globalActivation)
-										.build();
-			return output;
+            return TaskActivation.newBuilder()
+                                        .withHotKeys(keyChains)
+                                        .withKeySequence(keySequences)
+                                        .withMouseGestures(gestures)
+                                        .withPhrases(phrases)
+                                        .withVariables(variables)
+                                        .withGlobalActivation(globalActivation)
+                                        .build();
 		} catch (Exception e) {
 			LOGGER.log(Level.WARNING, "Exception while parsing task activation.", e);
 			return null;

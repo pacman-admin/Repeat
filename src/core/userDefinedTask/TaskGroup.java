@@ -148,8 +148,7 @@ public class TaskGroup implements IJsonable {
 		try {
 			String groupId = node.getStringValue("group_id");
 			TaskGroup output = parseMode == ConfigParsingMode.DEFAULT ? new TaskGroup("", groupId) : new TaskGroup("");
-			String name = node.getStringValue("name");
-			output.name = name;
+            output.name = node.getStringValue("name");
 
 			for (JsonNode task : node.getArrayNode("tasks")) {
 				UserDefinedAction action = UserDefinedAction.parseJSON(factory, task, parseMode);

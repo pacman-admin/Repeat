@@ -38,8 +38,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 			return null;
 		}
 		ClientTask createdTask = ClientTask.parseJSON(response);
-		UserDefinedAction action = new RepeatsRemoteUserDefinedAction(createdTask.getId(), createdTask.getFileName(), language);
-		return action;
+        return new RepeatsRemoteUserDefinedAction(createdTask.getId(), createdTask.getFileName(), language);
 	}
 
 	public void runTask(String id) {

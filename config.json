@@ -9,7 +9,7 @@
 		"execute_on_key_released": true,
 		"use_clipboard_to_type_string": false,
 		"run_task_with_server_config": false,
-		"use_java_awt_for_mouse_position": false,
+		"use_java_awt_for_mouse_position": true,
 		"global_hotkey": {
 			"mouse_gesture_activation": 20,
 			"record": [

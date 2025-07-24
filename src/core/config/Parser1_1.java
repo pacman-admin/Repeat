@@ -43,14 +43,12 @@ public class Parser1_1 extends ConfigParser {
 					));
 
 
-			JsonRootNode newRoot = JsonNodeFactories.object(
-					JsonNodeFactories.field("version", JsonNodeFactories.string(getVersion())),
-					JsonNodeFactories.field("global_hotkey", previousVersion.getNode("global_hotkey")),
-					JsonNodeFactories.field("compilers", previousVersion.getNode("compilers")),
-					JsonNodeFactories.field("task_groups", onlyGroup)
-					);
-
-			return newRoot;
+            return JsonNodeFactories.object(
+                    JsonNodeFactories.field("version", JsonNodeFactories.string(getVersion())),
+                    JsonNodeFactories.field("global_hotkey", previousVersion.getNode("global_hotkey")),
+                    JsonNodeFactories.field("compilers", previousVersion.getNode("compilers")),
+                    JsonNodeFactories.field("task_groups", onlyGroup)
+                    );
 		} catch (Exception e) {
 			LOGGER.log(Level.WARNING, "Unable to convert json from previous version " + getPreviousVersion(), e);
 			return null;

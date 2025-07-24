@@ -31,9 +31,8 @@ public class GeneralUtility {
 	 */
 	public static String copyFromClipboard() {
 		try {
-			String data = (String) Toolkit.getDefaultToolkit()
-			        .getSystemClipboard().getData(DataFlavor.stringFlavor);
-			return data;
+            return (String) Toolkit.getDefaultToolkit()
+                    .getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
 			LOGGER.log(Level.WARNING, "Error retrieving text from clipboard.", e);
 			return "";

@@ -26,8 +26,7 @@ final class WindowsNativeProcessUtil {
 		char[] buffer = new char[MAX_TITLE_LENGTH * 2];
 		HWND window = User32DLL.GetForegroundWindow();
 		User32DLL.GetWindowTextW(window, buffer, MAX_TITLE_LENGTH);
-		String title = Native.toString(buffer);
-		return title;
+        return Native.toString(buffer);
 	}
 
 	private static String getActiveWindowProcessName() {
@@ -37,8 +36,7 @@ final class WindowsNativeProcessUtil {
 		User32DLL.GetWindowThreadProcessId(window, pointer);
 		Pointer process = Kernel32.OpenProcess(Kernel32.PROCESS_QUERY_INFORMATION | Kernel32.PROCESS_VM_READ, false, pointer.getValue());
 		Psapi.GetModuleBaseNameW(process, null, buffer, MAX_TITLE_LENGTH);
-		String processName = Native.toString(buffer);
-		return processName;
+        return Native.toString(buffer);
 	}
 
 	static class Psapi {

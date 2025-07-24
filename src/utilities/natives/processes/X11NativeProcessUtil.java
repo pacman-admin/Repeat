@@ -48,15 +48,14 @@ public class X11NativeProcessUtil {
 
 	private static long findTopWindow(X11 x11, Display display, X11.WindowByReference current) {
 		X11.Window window = current.getValue();
-	    X11.WindowByReference parentRef = current;
-	    X11.WindowByReference rootRef = new X11.WindowByReference();
+        X11.WindowByReference rootRef = new X11.WindowByReference();
 	    PointerByReference childrenRef = new PointerByReference();
 	    IntByReference childCountRef = new IntByReference();
 
-	    while (parentRef.getValue().longValue() != rootRef.getValue().longValue()) {
-	    	window = new X11.Window(parentRef.getValue().longValue());
+	    while (current.getValue().longValue() != rootRef.getValue().longValue()) {
+	    	window = new X11.Window(current.getValue().longValue());
 
-			int res = x11.XQueryTree(display, window, rootRef, parentRef, childrenRef, childCountRef);
+			int res = x11.XQueryTree(display, window, rootRef, current, childrenRef, childCountRef);
 			if (res != 0) {
 				x11.XFree(childrenRef.getValue());
 			}

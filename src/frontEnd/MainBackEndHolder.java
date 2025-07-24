@@ -622,8 +622,7 @@ public class MainBackEndHolder {
             LOGGER.warning("Unable to read from temp file.");
             return null;
         }
-        String source = sourceCode.toString();
-        return source;
+        return sourceCode.toString();
     }
 
     private void unregisterTask(UserDefinedAction task) {

@@ -29,8 +29,7 @@ public class LocalTools implements ITools {
 	@Override
 	public String getClipboard() {
 		try {
-			String data = (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-			return data;
+            return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
 		} catch (HeadlessException | UnsupportedFlavorException | IOException e) {
 			LOGGER.log(Level.WARNING, "Unable to retrieve text from clipboard", e);
 			return "";
