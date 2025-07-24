@@ -58,62 +58,62 @@ public final class GlobalEventsManager {
 
 	public void startGlobalListener() throws Exception {
 		AbstractGlobalKeyListener keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
-		keyListener.setKeyPressed(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeKeyEvent r) {
-				KeyStroke stroke = KeyStroke.of(r);
-				LOGGER.fine("Key pressed " + stroke.toString());
+		keyListener.setKeyPressed(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent r) {
+                KeyStroke stroke = KeyStroke.of(r);
+                LOGGER.fine("Key pressed " + stroke.toString());
 
-				if (!shouldDelegate(stroke)) {
-					return true;
-				}
+                if (!shouldDelegate(stroke)) {
+                    return true;
+                }
 
-				Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
-				actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-				actionExecutor.startExecutingActions(actions);
-				return true;
-			}
-		});
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
+                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+                actionExecutor.startExecutingActions(actions);
+                return true;
+            }
+        });
 
-		keyListener.setKeyReleased(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeKeyEvent r) {
-				KeyStroke stroke = KeyStroke.of(r);
-				LOGGER.fine("Key released " + stroke.toString());
-				if (!shouldDelegate(stroke)) {
-					return true;
-				}
+		keyListener.setKeyReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent r) {
+                KeyStroke stroke = KeyStroke.of(r);
+                LOGGER.fine("Key released " + stroke.toString());
+                if (!shouldDelegate(stroke)) {
+                    return true;
+                }
 
-				Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
-				actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-				actionExecutor.startExecutingActions(actions);
-				return true;
-			}
-		});
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
+                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+                actionExecutor.startExecutingActions(actions);
+                return true;
+            }
+        });
 
 		AbstractGlobalMouseListener mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
-		mouseListener.setMousePressed(new Function<NativeMouseEvent, Boolean>(){
-			@Override
-			public Boolean apply(NativeMouseEvent r) {
-				MouseKey stroke = MouseKey.of(r);
+		mouseListener.setMousePressed(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent r) {
+                MouseKey stroke = MouseKey.of(r);
 
-				Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
-				actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-				actionExecutor.startExecutingActions(actions);
-				return true;
-			}
-		});
-		mouseListener.setMouseReleased(new Function<NativeMouseEvent, Boolean>(){
-			@Override
-			public Boolean apply(NativeMouseEvent r) {
-				MouseKey stroke = MouseKey.of(r);
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
+                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+                actionExecutor.startExecutingActions(actions);
+                return true;
+            }
+        });
+		mouseListener.setMouseReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent r) {
+                MouseKey stroke = MouseKey.of(r);
 
-				Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
-				actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-				actionExecutor.startExecutingActions(actions);
-				return true;
-			}
-		});
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
+                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+                actionExecutor.startExecutingActions(actions);
+                return true;
+            }
+        });
 
 		SharedVariablesPubSubManager.get().addSubscriber(SharedVariablesSubscriber.of(SharedVariablesSubscription.forAll(), e -> {
 			Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(e));

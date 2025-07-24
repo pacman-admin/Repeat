@@ -52,14 +52,14 @@ public class Parser1_2 extends ConfigParser {
 										if (!newName.endsWith(".java")) {
 											newName += ".java";
 										}
-									} else if (compiler.equals(Language.PYTHON.toString())) {
+									/*} else if (compiler.equals(Language.PYTHON.toString())) {
 										if (!newName.startsWith("PY_")) {
 											newName = "PY_" + newName;
 										}
 
 										if (!newName.endsWith(".py")) {
 											newName = newName + ".py";
-										}
+										}*/
 									}
 									newFile = FileUtility.renameFile(f, newName);
 

@@ -70,11 +70,6 @@
 	"compilers": {
 		"local_compilers": [
 			{
-				"name": "python",
-				"path": "python.exe",
-				"compiler_specific_args": {}
-			},
-			{
 				"name": "java",
 				"path": "/home/langdon/.sdkman/candidates/java/21.0.7-tem",
 				"compiler_specific_args": {
@@ -85,18 +80,13 @@
 				"name": "manual",
 				"path": ".",
 				"compiler_specific_args": {}
-			},
-			{
-				"name": "C#",
-				"path": ".",
-				"compiler_specific_args": {}
 			}
 		],
 		"remote_repeats_compilers": []
 	},
 	"task_groups": [
 		{
-			"group_id": "1471d68e-43f0-4e0c-a7f0-fe555f3251eb",
+			"group_id": "90cdf54a-47fb-43a9-9398-95edbbaa6bf0",
 			"name": "default",
 			"enabled": true,
 			"tasks": []

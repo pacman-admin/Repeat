@@ -227,7 +227,7 @@ public class JSONUtility {
 		if (parent == null) {
 			return null;
 		}
-		List<JsonField> fields = new ArrayList<JsonField>();
+		List<JsonField> fields = new ArrayList<>();
 
 		for (JsonField field : parent.getFieldList()) {
 			String key = field.getName().getText();

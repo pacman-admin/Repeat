@@ -20,17 +20,17 @@ public abstract class AbstractBootstrapResource implements BootstrapResourcesExt
 		}
 
 		final String path = getRelativeSourcePath();
-		FileUtility.extractFromCurrentJar(path, getExtractingDest(), new Function<String, Boolean>() {
-			@Override
-			public Boolean apply(String name) {
-				return correctExtension(name);
-			}
-		}, new Function<String, Boolean>() {
-			@Override
-			public Boolean apply(String name) {
-				return postProcessing(name);
-			}
-		});
+		FileUtility.extractFromCurrentJar(path, getExtractingDest(), new Function<>() {
+            @Override
+            public Boolean apply(String name) {
+                return correctExtension(name);
+            }
+        }, new Function<>() {
+            @Override
+            public Boolean apply(String name) {
+                return postProcessing(name);
+            }
+        });
 	}
 
 	protected boolean postProcessing(String name) {

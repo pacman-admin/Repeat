@@ -19,13 +19,13 @@ public class TaskActivationConstructorManager extends AbstractBackgroundEntityMa
 	public void start() {
 		super.start();
 
-		keyListener.setKeyReleased(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(NativeKeyEvent r) {
-				onStroke(KeyStroke.of(r));
-				return true;
-			}
-		});
+		keyListener.setKeyReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent r) {
+                onStroke(KeyStroke.of(r));
+                return true;
+            }
+        });
 
 		keyListener.startListening();
 	}

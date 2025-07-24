@@ -2,7 +2,7 @@ package core.languageHandler;
 
 public enum Language {
 	JAVA("java"),
-    PYTHON("python"),
+    //PYTHON("python"),
     CSHARP("C#"),
     MANUAL_BUILD("manual"),
     ;

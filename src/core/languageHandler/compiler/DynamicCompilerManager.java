@@ -25,8 +25,8 @@ public class DynamicCompilerManager implements IJsonable {
 	public DynamicCompilerManager() {
 		compilers = new HashMap<>();
 		compilers.put(Language.JAVA, new JavaNativeCompiler("CustomAction", new String[]{"core"}, new String[]{}));
-		compilers.put(Language.PYTHON, new PythonRemoteCompiler(new File("core")));
-		compilers.put(Language.CSHARP, new CSharpRemoteCompiler(new File("core")));
+		//compilers.put(Language.PYTHON, new PythonRemoteCompiler(new File("core")));
+		//compilers.put(Language.CSHARP, new CSharpRemoteCompiler(new File("core")));
 		compilers.put(Language.MANUAL_BUILD, new ManualBuildNativeCompiler(new File("core")));
 
 		remoteRepeatsCompilerConfig = new RemoteRepeatsCompilerConfig(new ArrayList<>());

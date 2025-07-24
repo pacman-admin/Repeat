@@ -6,7 +6,7 @@ public class Pair<A, B> {
 	private final B b;
 
 	public static<A,B> Pair<A, B> of(A a, B b) {
-		return new Pair<A, B>(a, b);
+		return new Pair<>(a, b);
 	}
 
 	public Pair(A a, B b) {

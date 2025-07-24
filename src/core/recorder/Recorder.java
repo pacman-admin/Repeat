@@ -16,7 +16,7 @@ import core.languageHandler.sourceGenerator.AbstractSourceGenerator.Device;
 import core.languageHandler.sourceGenerator.CSharpSourceGenerator;
 import core.languageHandler.sourceGenerator.JavaSourceGenerator;
 import core.languageHandler.sourceGenerator.ManuallyBuildSourceGenerator;
-import core.languageHandler.sourceGenerator.PythonSourceGenerator;
+//import core.languageHandler.sourceGenerator.PythonSourceGenerator;
 import core.scheduler.SchedulingData;
 import globalListener.GlobalListenerFactory;
 
@@ -46,48 +46,48 @@ public class Recorder {
 
 		sourceGenerators = new HashMap<>();
 		sourceGenerators.put(Language.JAVA, new JavaSourceGenerator());
-		sourceGenerators.put(Language.PYTHON, new PythonSourceGenerator());
-		sourceGenerators.put(Language.CSHARP, new CSharpSourceGenerator());
+		//sourceGenerators.put(Language.PYTHON, new PythonSourceGenerator());
+		//sourceGenerators.put(Language.CSHARP, new CSharpSourceGenerator());
 		sourceGenerators.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
 
 		/*************************************************************************************************/
 		keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
-		keyListener.setKeyPressed(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(final NativeKeyEvent r) {
-				final int code = r.getKey();
-				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> controller.keyBoard().press(code)));
+		keyListener.setKeyPressed(new Function<>() {
+            @Override
+            public Boolean apply(final NativeKeyEvent r) {
+                final int code = r.getKey();
+                final long time = System.currentTimeMillis() - startTime;
+                taskScheduler.addTask(new SchedulingData<>(time, () -> controller.keyBoard().press(code)));
 
-				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-					generator.submitTask(time, Device.KEYBOARD, "press", new int[]{code});
-				}
-				return true;
-			}
-		});
+                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                    generator.submitTask(time, Device.KEYBOARD, "press", new int[]{code});
+                }
+                return true;
+            }
+        });
 
-		keyListener.setKeyReleased(new Function<NativeKeyEvent, Boolean>() {
-			@Override
-			public Boolean apply(final NativeKeyEvent r) {
-				final int code = r.getKey();
-				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> controller.keyBoard().release(code)));
+		keyListener.setKeyReleased(new Function<>() {
+            @Override
+            public Boolean apply(final NativeKeyEvent r) {
+                final int code = r.getKey();
+                final long time = System.currentTimeMillis() - startTime;
+                taskScheduler.addTask(new SchedulingData<>(time, () -> controller.keyBoard().release(code)));
 
-				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-					generator.submitTask(time, Device.KEYBOARD, "release", new int[]{code});
-				}
-				return true;
-			}
-		});
+                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                    generator.submitTask(time, Device.KEYBOARD, "release", new int[]{code});
+                }
+                return true;
+            }
+        });
 
 		/*************************************************************************************************/
 		mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
-		mouseListener.setMouseReleased(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(final NativeMouseEvent r) {
-				final int code = r.getButton();
-				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> {
+		mouseListener.setMouseReleased(new Function<>() {
+            @Override
+            public Boolean apply(final NativeMouseEvent r) {
+                final int code = r.getButton();
+                final long time = System.currentTimeMillis() - startTime;
+                taskScheduler.addTask(new SchedulingData<>(time, () -> {
                     if (mode == MODE_MOUSE_CLICK_ONLY) {
                         controller.mouse().move(r.getX(), r.getY());
                     }
@@ -95,58 +95,58 @@ public class Recorder {
                 }));
 
 
-				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-					if (mode == MODE_MOUSE_CLICK_ONLY) {
-						generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});
-						generator.submitTask(time + 5, Device.MOUSE, "release", new int[]{code});
-					} else {
-						generator.submitTask(time, Device.MOUSE, "release", new int[]{code});
-					}
-				}
-				return true;
-			}
-		});
+                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                    if (mode == MODE_MOUSE_CLICK_ONLY) {
+                        generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});
+                        generator.submitTask(time + 5, Device.MOUSE, "release", new int[]{code});
+                    } else {
+                        generator.submitTask(time, Device.MOUSE, "release", new int[]{code});
+                    }
+                }
+                return true;
+            }
+        });
 
-		mouseListener.setMousePressed(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(final NativeMouseEvent r) {
-				final int code = r.getButton();
-				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> {
+		mouseListener.setMousePressed(new Function<>() {
+            @Override
+            public Boolean apply(final NativeMouseEvent r) {
+                final int code = r.getButton();
+                final long time = System.currentTimeMillis() - startTime;
+                taskScheduler.addTask(new SchedulingData<>(time, () -> {
                     if (mode == MODE_MOUSE_CLICK_ONLY) {
                         controller.mouse().move(r.getX(), r.getY());
                     }
                     controller.mouse().press(code);
                 }));
 
-				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-					if (mode == MODE_MOUSE_CLICK_ONLY) {
-						generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});
-						generator.submitTask(time + 5, Device.MOUSE, "press", new int[]{code});
-					} else {
-						generator.submitTask(time, Device.MOUSE, "press", new int[]{code});
-					}
-				}
-				return true;
-			}
-		});
+                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                    if (mode == MODE_MOUSE_CLICK_ONLY) {
+                        generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});
+                        generator.submitTask(time + 5, Device.MOUSE, "press", new int[]{code});
+                    } else {
+                        generator.submitTask(time, Device.MOUSE, "press", new int[]{code});
+                    }
+                }
+                return true;
+            }
+        });
 
-		mouseListener.setMouseMoved(new Function<NativeMouseEvent, Boolean>() {
-			@Override
-			public Boolean apply(final NativeMouseEvent r) {
-				if (mode == MODE_MOUSE_CLICK_ONLY) {
-					return true;
-				}
+		mouseListener.setMouseMoved(new Function<>() {
+            @Override
+            public Boolean apply(final NativeMouseEvent r) {
+                if (mode == MODE_MOUSE_CLICK_ONLY) {
+                    return true;
+                }
 
-				final long time = System.currentTimeMillis() - startTime;
-				taskScheduler.addTask(new SchedulingData<Runnable>(time, () -> controller.mouse().move(r.getX(), r.getY())));
+                final long time = System.currentTimeMillis() - startTime;
+                taskScheduler.addTask(new SchedulingData<>(time, () -> controller.mouse().move(r.getX(), r.getY())));
 
-				for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-					generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});
-				}
-				return true;
-			}
-		});
+                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                    generator.submitTask(time, Device.MOUSE, "move", new int[]{r.getX(), r.getY()});
+                }
+                return true;
+            }
+        });
 	}
 
 	/**

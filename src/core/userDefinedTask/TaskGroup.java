@@ -33,11 +33,11 @@ public class TaskGroup implements IJsonable {
 	}
 
 	private TaskGroup(String name, String groupId) {
-		this(name, new ArrayList<UserDefinedAction>(), groupId);
+		this(name, new ArrayList<>(), groupId);
 	}
 
 	public TaskGroup(String name) {
-		this(name, new ArrayList<UserDefinedAction>(), UUID.randomUUID().toString());
+		this(name, new ArrayList<>(), UUID.randomUUID().toString());
 	}
 
 	public static TaskGroup remoteTaskGroup() {

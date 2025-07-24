@@ -47,16 +47,16 @@ public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 
 		for (int i = 0; i < inputs.length; i++) {
 			final int index = i;
-			charShiftType.put(inputs[index], new Function<LocalKeyboardCore, Void>() {
-				@Override
-				public Void apply(LocalKeyboardCore c) {
-					c.press(KeyEvent.VK_SHIFT);
-					c.press(keys[index]);
-					c.release(KeyEvent.VK_SHIFT);
-					c.release(keys[index]);
-					return null;
-				}
-			});
+			charShiftType.put(inputs[index], new Function<>() {
+                @Override
+                public Void apply(LocalKeyboardCore c) {
+                    c.press(KeyEvent.VK_SHIFT);
+                    c.press(keys[index]);
+                    c.release(KeyEvent.VK_SHIFT);
+                    c.release(keys[index]);
+                    return null;
+                }
+            });
 		}
 	}
 

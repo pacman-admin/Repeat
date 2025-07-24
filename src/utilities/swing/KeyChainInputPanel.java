@@ -269,7 +269,7 @@ public class KeyChainInputPanel extends JPanel {
 
     public static void main(String[] args) {
         TaskActivation.Builder ac = TaskActivation.newBuilder();
-        HashSet<MouseGesture> gs = new HashSet<MouseGesture>();
+        HashSet<MouseGesture> gs = new HashSet<>();
         gs.add(MouseGesture.ALPHA);
         gs.add(MouseGesture.HORIZONTAL);
         ac.withMouseGestures(gs);

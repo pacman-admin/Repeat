@@ -118,7 +118,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
 	                }
 
 	                /** Compilation Requirements *********************************************************************************************/
-	                DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<JavaFileObject>();
+	                DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
 	                JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 					if (compiler == null) {
 						getLogger().warning("No java compiler found. Set class path points to JDK in setting?\nNote that for Java 9 an above. Setting class path no longer "
@@ -129,7 +129,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
 
 	                // This sets up the class path that the compiler will use.
 	                // Added the .jar file that contains the [className] interface within in it...
-	                List<String> optionList = new ArrayList<String>();
+	                List<String> optionList = new ArrayList<>();
 	                optionList.add("-classpath");
 	                String paths = System.getProperty("java.class.path");
 	                if (classPaths.length > 0) {
@@ -285,12 +285,12 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
 		}
 
 		List<String> paths = new ArrayList<>();
-		JSONUtility.addAllJson(node.getArrayNode("classpath"), new Function<JsonNode, String>(){
-			@Override
-			public String apply(JsonNode d) {
-				return d.getStringValue().toString();
-			}
-		}, paths);
+		JSONUtility.addAllJson(node.getArrayNode("classpath"), new Function<>() {
+            @Override
+            public String apply(JsonNode d) {
+                return d.getStringValue().toString();
+            }
+        }, paths);
 		// Override current class paths
 		classPaths = paths.toArray(classPaths);
 		try {

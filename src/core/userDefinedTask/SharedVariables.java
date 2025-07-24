@@ -98,7 +98,7 @@ public class SharedVariables {
 		}
 
 		if (!variables.containsKey(namespace)) {
-			variables.put(namespace, new HashMap<String, String>());
+			variables.put(namespace, new HashMap<>());
 		}
 
 		Map<String, String> namespaceVariables = variables.get(namespace);

@@ -46,7 +46,7 @@ public class MouseGestureManager extends KeyStrokeManager {
 		super(config);
 		mouseGestureRecognizer = new MouseGestureClassifier();
 		actionMap = new HashMap<>();
-		coordinates = new ConcurrentLinkedQueue<Point>();
+		coordinates = new ConcurrentLinkedQueue<>();
 		mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
 	}
 
@@ -55,15 +55,16 @@ public class MouseGestureManager extends KeyStrokeManager {
 	 */
 	@Override
 	public void startListening() {
-		mouseListener.setMouseMoved(new Function<NativeMouseEvent, Boolean> () {
-			@Override
-			public Boolean apply(NativeMouseEvent d) {
-				LOGGER.fine("Mouse moved to " + d.getX() + ", " + d.getY() + ".");
-				if (enabled && coordinates.size() < MAX_COORDINATES_COUNT) {
-					coordinates.add(new Point(d.getX(), d.getY()));
-				}
-				return true;
-			}});
+		mouseListener.setMouseMoved(new Function<>() {
+            @Override
+            public Boolean apply(NativeMouseEvent d) {
+                LOGGER.fine("Mouse moved to " + d.getX() + ", " + d.getY() + ".");
+                if (enabled && coordinates.size() < MAX_COORDINATES_COUNT) {
+                    coordinates.add(new Point(d.getX(), d.getY()));
+                }
+                return true;
+            }
+        });
 		mouseListener.startListening();
 	}
 

@@ -40,8 +40,8 @@ public abstract class AbstractSourceGenerator {
 	static {
 		REFERENCE_SOURCES = new HashMap<>();
 		REFERENCE_SOURCES.put(Language.JAVA, new JavaSourceGenerator());
-		REFERENCE_SOURCES.put(Language.PYTHON, new PythonSourceGenerator());
-		REFERENCE_SOURCES.put(Language.CSHARP, new CSharpSourceGenerator());
+		//REFERENCE_SOURCES.put(Language.PYTHON, new PythonSourceGenerator());
+		//REFERENCE_SOURCES.put(Language.CSHARP, new CSharpSourceGenerator());
 		REFERENCE_SOURCES.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
 	}
 
@@ -82,7 +82,7 @@ public abstract class AbstractSourceGenerator {
 			return false;
 		}
 
-		return mid == null ? false : sourceScheduler.addTask(new SchedulingData<String>(time, getSourceTab() + mid + "\n"));
+		return mid == null ? false : sourceScheduler.addTask(new SchedulingData<>(time, getSourceTab() + mid + "\n"));
 	}
 
 	protected final boolean verify(Device device, String action, int[] param) {

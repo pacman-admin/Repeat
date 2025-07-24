@@ -206,7 +206,7 @@ public class SwingUtil {
             public TableSearcher(JTable table, String value, Function<Point, Void> functions) {
                 this.action = functions;
 
-                this.found = new ArrayList<Point>();
+                this.found = new ArrayList<>();
                 index = -1;
                 for (int row = 0; row < table.getRowCount(); row++) {
                     for (int column = 0; column < table.getColumnCount(); column++) {

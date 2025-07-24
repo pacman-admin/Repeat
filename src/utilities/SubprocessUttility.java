@@ -27,12 +27,12 @@ public class SubprocessUttility {
 			dir = null;
 		}
 
-		return execute(command, new ExceptableFunction<Void, Process, IOException>() {
-			@Override
-			public Process apply(Void d) throws IOException {
-				return Runtime.getRuntime().exec(command, null, dir);
-			}
-		});
+		return execute(command, new ExceptableFunction<>() {
+            @Override
+            public Process apply(Void d) throws IOException {
+                return Runtime.getRuntime().exec(command, null, dir);
+            }
+        });
 	}
 
 	/**
@@ -50,12 +50,12 @@ public class SubprocessUttility {
 			dir = null;
 		}
 
-		return execute(String.join(" ", Arrays.asList(command)), new ExceptableFunction<Void, Process, IOException>() {
-			@Override
-			public Process apply(Void d) throws IOException {
-				return Runtime.getRuntime().exec(command, null, dir);
-			}
-		});
+		return execute(String.join(" ", Arrays.asList(command)), new ExceptableFunction<>() {
+            @Override
+            public Process apply(Void d) throws IOException {
+                return Runtime.getRuntime().exec(command, null, dir);
+            }
+        });
 	}
 
 	private static String[] execute(String command, ExceptableFunction<Void, Process, IOException> processSupplier) throws ExecutionException {

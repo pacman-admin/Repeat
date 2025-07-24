@@ -7,12 +7,12 @@ public class CSharpSourceGenerator extends InjectionSourceGenerator {
 
 	public CSharpSourceGenerator() {
 		super();
-		this.sourceScheduler.setSleepSource(new Function<Long, String>() {
-			@Override
-			public String apply(Long r) {
-				return FOUR_TAB + "Thread.Sleep(" + r + ");";
-			}
-		});
+		this.sourceScheduler.setSleepSource(new Function<>() {
+            @Override
+            public String apply(Long r) {
+                return FOUR_TAB + "Thread.Sleep(" + r + ");";
+            }
+        });
 	}
 
 	@Override

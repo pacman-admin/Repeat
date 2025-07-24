@@ -7,12 +7,12 @@ public class JavaSourceGenerator extends InjectionSourceGenerator {
 
 	public JavaSourceGenerator() {
 		super();
-		this.sourceScheduler.setSleepSource(new Function<Long, String>() {
-			@Override
-			public String apply(Long r) {
-				return TWO_TAB + "c.blockingWait(" + r + ");";
-			}
-		});
+		this.sourceScheduler.setSleepSource(new Function<>() {
+            @Override
+            public String apply(Long r) {
+                return TWO_TAB + "c.blockingWait(" + r + ");";
+            }
+        });
 	}
 
 	@Override

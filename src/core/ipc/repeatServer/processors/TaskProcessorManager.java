@@ -15,7 +15,7 @@ public final class TaskProcessorManager {
 	private static Function<Language, Void> callBack;
 
 	static {
-		taskManagers = Collections.synchronizedMap(new HashMap<Language, TaskProcessor>());
+		taskManagers = Collections.synchronizedMap(new HashMap<>());
 	}
 
 	public static boolean hasProcessor(Language language) {

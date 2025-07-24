@@ -169,7 +169,7 @@ public class FileUtility {
 	 * @return list of files found. This does not include the directory names
 	 */
 	public static List<File> walk(String path) {
-		LinkedList<File> output = new LinkedList<File>();
+		LinkedList<File> output = new LinkedList<>();
 
 		File root = new File(path);
 		File[] list = root.listFiles();

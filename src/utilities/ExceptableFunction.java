@@ -8,7 +8,7 @@ public abstract class ExceptableFunction<D,R, E extends Exception> {
 	public abstract R apply(D d) throws E;
 
 	public List<R> applyList(List<D> ds) throws E {
-		List<R> output = new ArrayList<R>();
+		List<R> output = new ArrayList<>();
 		for (D d : ds) {
 			output.add(this.apply(d));
 		}
@@ -16,11 +16,11 @@ public abstract class ExceptableFunction<D,R, E extends Exception> {
 	}
 
 	public ExceptableFunction<D, D, E> identity() {
-		return new ExceptableFunction<D, D, E>() {
-			@Override
-			public D apply(D d) {
-				return d;
-			}
-		};
+		return new ExceptableFunction<>() {
+            @Override
+            public D apply(D d) {
+                return d;
+            }
+        };
 	}
 }

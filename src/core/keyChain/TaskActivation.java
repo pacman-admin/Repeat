@@ -55,7 +55,7 @@ public class TaskActivation implements IJsonable {
 	 */
 	public final Set<KeyChain> getHotkeys() {
 		if (hotkeys == null) {
-			hotkeys = new HashSet<KeyChain>();
+			hotkeys = new HashSet<>();
 		}
 		return hotkeys;
 	}
