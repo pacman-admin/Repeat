@@ -70,91 +70,26 @@
 	"compilers": {
 		"local_compilers": [
 			{
-				"name": "manual",
-				"path": ".",
-				"compiler_specific_args": {}
-			},
-			{
 				"name": "java",
 				"path": "/home/langdon/.sdkman/candidates/java/21.0.7-tem",
 				"compiler_specific_args": {
 					"classpath": []
 				}
+			},
+			{
+				"name": "manual",
+				"path": ".",
+				"compiler_specific_args": {}
 			}
 		],
 		"remote_repeats_compilers": []
 	},
 	"task_groups": [
 		{
-			"group_id": "427c5c08-4a03-4ab8-9322-9c87ec22bb7f",
+			"group_id": "c36d7512-7066-4f23-ac99-3e8a8d8bfeca",
 			"name": "default",
 			"enabled": true,
-			"tasks": [
-				{
-					"action_id": "807b9c8d-c3a8-414f-9d46-6392a108ee31",
-					"source_path": "data/source/manual/MANUAL_1753655477910.manualbuild",
-					"compiler": "manual",
-					"name": "Test",
-					"execution_preconditions": {
-						"active_window_condition": {
-							"title": {
-								"type": "always_valid"
-							},
-							"process_name": {
-								"type": "always_valid"
-							}
-						}
-					},
-					"activation": {
-						"hotkey": [],
-						"key_sequence": [],
-						"mouse_gesture": [],
-						"phrases": [],
-						"variables": [],
-						"global_activation": {
-							"on_key_released": false,
-							"on_key_pressed": false
-						}
-					},
-					"enabled": true,
-					"statistics": {
-						"count": 1,
-						"total_execution_time": 4166,
-						"last_use": "27/07/2025 18:33:6",
-						"created": "27/07/2025 18:31:17",
-						"task_activations_breakdown": [
-							{
-								"task_activation": {
-									"hotkey": [],
-									"key_sequence": [],
-									"mouse_gesture": [],
-									"phrases": [],
-									"variables": [],
-									"global_activation": {
-										"on_key_released": false,
-										"on_key_pressed": false
-									}
-								},
-								"count": 1
-							}
-						],
-						"execution_instances": [
-							{
-								"start": 1753655586161,
-								"end": 1753655590327
-							}
-						]
-					},
-					"source_history": {
-						"entries": [
-							{
-								"path": "data/source/manual/MANUAL_1753655477910.manualbuild",
-								"created_time": 1753655477912
-							}
-						]
-					}
-				}
-			]
+			"tasks": []
 		}
 	]
 }
