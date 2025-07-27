@@ -27,7 +27,7 @@ import utilities.json.JSONUtility;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-abstract class ConfigParser {
+public abstract class ConfigParser {
 
     private static final Logger LOGGER = Logger.getLogger(ConfigParser.class.getName());
 
