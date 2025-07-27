@@ -94,14 +94,13 @@ public class MouseGestureModelResources {
     /**
      * Load the list of labels from file. Each line is a label name.
      *
-     * @return list of labels loaded.
+     * @return array of labels loaded.
      */
     public static String[] getLabels() {
         String content = BootStrapResources.getFile(LABELS_FILE);
         if (content == null) {
             return null;
         }
-
         return content.split("\n");
     }
 }
