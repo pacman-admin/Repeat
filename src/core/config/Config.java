@@ -44,7 +44,7 @@ import utilities.json.JSONUtility;
 
 public class Config implements ILoggable {
 
-	public static final String RELEASE_VERSION = "5.7.2";
+	public static final String RELEASE_VERSION = "6.0.0";
 	protected static final String CONFIG_FILE_NAME = "config.json";
 	public static final String EXPORTED_CONFIG_FILE_NAME = "exported_" + CONFIG_FILE_NAME;
 	protected static final String CURRENT_CONFIG_VERSION = "2.15";
@@ -83,47 +83,44 @@ public class Config implements ILoggable {
 	private Level nativeHookDebugLevel;
 
 	static {
-		knownParsers = Arrays.asList(new ConfigParser[]{
-				new Parser1_0(),
-				new Parser1_1(),
-				new Parser1_2(),
-				new Parser1_3(),
-				new Parser1_4(),
-				new Parser1_5(),
-				new Parser1_6(),
-				new Parser1_7(),
-				new Parser1_8(),
-				new Parser1_9(),
-				new Parser2_0(),
-				new Parser2_1(),
-				new Parser2_2(),
-				new Parser2_3(),
-				new Parser2_4(),
-				new Parser2_5(),
-				new Parser2_6(),
-				new Parser2_7(),
-				new Parser2_8(),
-				new Parser2_9(),
-				new Parser2_10(),
-				new Parser2_11(),
-				new Parser2_12(),
-				new Parser2_13(),
-				new Parser2_14(),
-				new Parser2_15()
-			});
+		knownParsers = Arrays.asList(new Parser1_0(),
+                new Parser1_1(),
+                new Parser1_2(),
+                new Parser1_3(),
+                new Parser1_4(),
+                new Parser1_5(),
+                new Parser1_6(),
+                new Parser1_7(),
+                new Parser1_8(),
+                new Parser1_9(),
+                new Parser2_0(),
+                new Parser2_1(),
+                new Parser2_2(),
+                new Parser2_3(),
+                new Parser2_4(),
+                new Parser2_5(),
+                new Parser2_6(),
+                new Parser2_7(),
+                new Parser2_8(),
+                new Parser2_9(),
+                new Parser2_10(),
+                new Parser2_11(),
+                new Parser2_12(),
+                new Parser2_13(),
+                new Parser2_14(),
+                new Parser2_15());
 	}
 
 	public Config(MainBackEndHolder backEnd) {
 		this.backEnd = backEnd;
 		useTrayIcon = DEFAULT_TRAY_ICON_USE;
-		this.enabledHaltingKeyPressed = true;
-		this.executeOnKeyReleased = true;
-		this.nativeHookDebugLevel = DEFAULT_NATIVE_HOOK_DEBUG_LEVEL;
-
-		this.mouseGestureActivationKey = KeyEvent.VK_CAPS_LOCK;
-		RECORD = new KeyChain(KeyEvent.VK_F9);
-		REPLAY = new KeyChain(KeyEvent.VK_F11);
-		COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F12);
+		enabledHaltingKeyPressed = true;
+		executeOnKeyReleased = true;
+		nativeHookDebugLevel = DEFAULT_NATIVE_HOOK_DEBUG_LEVEL;
+		mouseGestureActivationKey = KeyEvent.VK_BACK_QUOTE;
+		RECORD = new KeyChain(KeyEvent.VK_F7);
+		REPLAY = new KeyChain(KeyEvent.VK_F8);
+		COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F9);
 	}
 
 	public DynamicCompilerManager getCompilerFactory() {
@@ -264,7 +261,7 @@ public class Config implements ILoggable {
 		String version = root.getStringValue("version");
 		ConfigParser parser = getConfigParser(version);
 		if (parser == null) {
-			getLogger().warning("Uknown version " + version);
+			getLogger().warning("Unknown version " + version);
 			return false;
 		}
 

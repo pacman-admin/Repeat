@@ -85,7 +85,7 @@ public class DynamicCompilerManager implements IJsonable {
             String name = compilerNode.getStringValue("name");
             String path = compilerNode.getStringValue("path");
             JsonNode compilerSpecificArgs = compilerNode.getNode("compiler_specific_args");
-
+            //JsonNode compilerSpecificArgs = compilerNode.getNode("compilers");
             AbstractNativeCompiler compiler = getNativeCompiler(name);
             if (compiler != null) {
                 compiler.setPath(new File(path));
