@@ -23,7 +23,6 @@ import core.languageHandler.Language;
 import utilities.FileUtility;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
@@ -47,7 +46,7 @@ public class BootStrapResources {
     private static final Logger LOGGER = Logger.getLogger(BootStrapResources.class.getName());
     private static final Map<Language, String> LANGUAGE_API;
     private static final Map<Language, String> NATIVE_LANGUAGE_TEMPLATES;
-    private static final Map<Language, AbstractNativeLanguageBootstrapResource> NATIVE_BOOTSTRAP_RESOURCES;
+    //private static final Map<Language, AbstractNativeLanguageBootstrapResource> NATIVE_BOOTSTRAP_RESOURCES;
     private static final Set<BootstrapResourcesExtrator> BOOTSTRAP_RESOURCES;
     private static final NativeHookBootstrapResources nativeHookResources;
 
@@ -68,35 +67,24 @@ public class BootStrapResources {
         NATIVE_LANGUAGE_TEMPLATES.put(Language.MANUAL_BUILD, getFile("/staticContent/natives/manual/TemplateRepeat.txt"));
 
         /*********************************************************************************/
-        NATIVE_BOOTSTRAP_RESOURCES = new HashMap<>();
+        //NATIVE_BOOTSTRAP_RESOURCES = new HashMap<>();
         //NATIVE_BOOTSTRAP_RESOURCES.put(Language.PYTHON, new PythonResources());
         //NATIVE_BOOTSTRAP_RESOURCES.put(Language.CSHARP, new CSharpResources());
 
         /*********************************************************************************/
         BOOTSTRAP_RESOURCES = new HashSet<>();
-        BOOTSTRAP_RESOURCES.addAll(NATIVE_BOOTSTRAP_RESOURCES.values());
+        //BOOTSTRAP_RESOURCES.addAll(NATIVE_BOOTSTRAP_RESOURCES.values());
 
         nativeHookResources = new NativeHookBootstrapResources();
         BOOTSTRAP_RESOURCES.add(nativeHookResources);
     }
-
     private BootStrapResources() {
     }
-
-    public static AbstractNativeLanguageBootstrapResource getBootstrapResource(Language language) {
-        return NATIVE_BOOTSTRAP_RESOURCES.get(language);
-    }
-
     public static void extractResources() throws IOException, URISyntaxException {
         for (BootstrapResourcesExtrator resource : BOOTSTRAP_RESOURCES) {
             resource.extractResources();
         }
     }
-
-    protected static ImageIcon getIcon(String resource) {
-        return new ImageIcon(getImage(resource));
-    }
-
     public static InputStream getStaticContentStream(String resource) {
         return BootStrapResources.class.getResourceAsStream(resource);
     }
@@ -109,28 +97,16 @@ public class BootStrapResources {
             return null;
         }
     }
-
     protected static String getFile(String path) {
         return FileUtility.readFromStream(BootStrapResources.class.getResourceAsStream(path)).toString();
     }
-
     public static String getAbout() {
         return "Repeat " + Config.RELEASE_VERSION + "\n" + "A tool to repeat yourself with some intelligence.\n" + "Created by HP Truong. Contact me at hptruong93@gmail.com.";
     }
-
     public static String getAPI(Language language) {
-        if (LANGUAGE_API.containsKey(language)) {
-            return LANGUAGE_API.get(language);
-        } else {
-            return "";
-        }
+        return LANGUAGE_API.getOrDefault(language, "");
     }
-
     public static String getNativeLanguageTemplate(Language language) {
-        if (NATIVE_LANGUAGE_TEMPLATES.containsKey(language)) {
-            return NATIVE_LANGUAGE_TEMPLATES.get(language);
-        } else {
-            return "";
-        }
+        return NATIVE_LANGUAGE_TEMPLATES.getOrDefault(language, "");
     }
 }

@@ -19,7 +19,7 @@ public class ObjectRenderer {
 
 	private static final Logger LOGGER = Logger.getLogger(ObjectRenderer.class.getName());
 
-	private final String TEMPLATE_EXTENSION = ".ftlh";
+	private static final String TEMPLATE_EXTENSION = ".ftlh";
 	private final Configuration config;
 
 	public ObjectRenderer() {
