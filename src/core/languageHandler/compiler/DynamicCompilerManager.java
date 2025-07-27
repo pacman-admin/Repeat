@@ -31,11 +31,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class DynamicCompilerManager implements IJsonable {
-
     private static final Logger LOGGER = Logger.getLogger(DynamicCompilerManager.class.getName());
     private final Map<Language, AbstractNativeCompiler> compilers;
     private RemoteRepeatsCompilerConfig remoteRepeatsCompilerConfig;
@@ -43,10 +41,7 @@ public class DynamicCompilerManager implements IJsonable {
     public DynamicCompilerManager() {
         compilers = new HashMap<>();
         compilers.put(Language.JAVA, new JavaNativeCompiler("CustomAction", new String[]{"core"}, new String[]{}));
-        //compilers.put(Language.PYTHON, new PythonRemoteCompiler(new File("core")));
-        //compilers.put(Language.CSHARP, new CSharpRemoteCompiler(new File("core")));
         compilers.put(Language.MANUAL_BUILD, new ManualBuildNativeCompiler(new File("core")));
-
         remoteRepeatsCompilerConfig = new RemoteRepeatsCompilerConfig(new ArrayList<>());
     }
 
@@ -95,7 +90,7 @@ public class DynamicCompilerManager implements IJsonable {
             if (compiler != null) {
                 compiler.setPath(new File(path));
                 if (!compiler.parseCompilerSpecificArgs(compilerSpecificArgs)) {
-                    LOGGER.log(Level.WARNING, "Compiler " + name + " was unable to parse its specific arguments.");
+                    LOGGER.warning("Compiler " + name + " was unable to parse its specific arguments.\n");
                 }
             } else {
                 throw new IllegalStateException("Unknown compiler " + name);
