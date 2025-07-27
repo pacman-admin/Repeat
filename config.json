@@ -94,7 +94,7 @@
 					"action_id": "807b9c8d-c3a8-414f-9d46-6392a108ee31",
 					"source_path": "data/source/manual/MANUAL_1753655477910.manualbuild",
 					"compiler": "manual",
-					"name": "New task",
+					"name": "Test",
 					"execution_preconditions": {
 						"active_window_condition": {
 							"title": {
@@ -118,12 +118,32 @@
 					},
 					"enabled": true,
 					"statistics": {
-						"count": 0,
-						"total_execution_time": 0,
-						"last_use": null,
+						"count": 1,
+						"total_execution_time": 4166,
+						"last_use": "27/07/2025 18:33:6",
 						"created": "27/07/2025 18:31:17",
-						"task_activations_breakdown": [],
-						"execution_instances": []
+						"task_activations_breakdown": [
+							{
+								"task_activation": {
+									"hotkey": [],
+									"key_sequence": [],
+									"mouse_gesture": [],
+									"phrases": [],
+									"variables": [],
+									"global_activation": {
+										"on_key_released": false,
+										"on_key_pressed": false
+									}
+								},
+								"count": 1
+							}
+						],
+						"execution_instances": [
+							{
+								"start": 1753655586161,
+								"end": 1753655590327
+							}
+						]
 					},
 					"source_history": {
 						"entries": [
