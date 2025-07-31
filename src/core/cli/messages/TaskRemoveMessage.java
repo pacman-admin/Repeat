@@ -27,7 +27,7 @@ import utilities.json.IJsonable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskRemoveMessage implements IJsonable {
+public class  TaskRemoveMessage implements IJsonable {
     private TaskIdentifier taskIdentifier;
 
     private TaskRemoveMessage() {

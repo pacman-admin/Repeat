@@ -1,3 +1,4 @@
+
 package frontEnd;
 
 import core.ipc.IIPCService;
@@ -63,12 +64,22 @@ public class MinimizedFrame extends TrayIcon {
         }
     }
 
-    protected void add() throws AWTException {
-        SystemTray.getSystemTray().add(this);
+    protected void add() throws AWTException, UnsupportedOperationException {
+        SystemTray tray = SystemTray.getSystemTray();
+        try {
+            tray.add(this);
+        } catch (UnsupportedOperationException e) {
+            throw new RuntimeException("Try icon error!\nThis error can usually be ignored.\n" + e, e);
+        }
     }
 
-    protected void remove() {
-        SystemTray.getSystemTray().remove(this);
+    protected void remove() throws UnsupportedOperationException {
+        SystemTray tray = SystemTray.getSystemTray();
+        try {
+            tray.remove(this);
+        } catch (UnsupportedOperationException e) {
+            throw new RuntimeException("Try icon error!\nThis error can usually be ignored.\n" + e, e);
+        }
     }
 
     private void exit() {

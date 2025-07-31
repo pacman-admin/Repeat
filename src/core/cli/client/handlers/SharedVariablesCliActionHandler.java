@@ -16,14 +16,16 @@
  * @author Langdon Staab
  * @author HP Truong
  */
+
+/*
 package core.cli.client.handlers;
 
 import core.cli.CliExitCodes;
 import core.cli.messages.SharedVariablesGetMessage;
 import core.cli.messages.SharedVariablesSetMessage;
-import net.sourceforge.argparse4j.inf.Namespace;
-import net.sourceforge.argparse4j.inf.Subparser;
-import net.sourceforge.argparse4j.inf.Subparsers;
+//import net.sourceforge.argparse4j.inf.Namespace;
+//import net.sourceforge.argparse4j.inf.Subparser;
+//import net.sourceforge.argparse4j.inf.Subparsers;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -83,4 +85,4 @@ public class SharedVariablesCliActionHandler extends CliActionProcessor {
         SharedVariablesSetMessage message = SharedVariablesSetMessage.of().setNamespace(space).setVariable(variable).setValue(value);
         sendRequest("/var/set", message);
     }
-}
+}*/
