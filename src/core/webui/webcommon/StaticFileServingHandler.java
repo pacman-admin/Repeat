@@ -18,7 +18,6 @@
  */
 package core.webui.webcommon;
 
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.HttpStatus;
@@ -46,7 +45,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
     }
 
     @Override
-    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         LOGGER.fine("Path is " + request.getRequestLine().getUri());
         if (!request.getRequestLine().getMethod().equalsIgnoreCase("GET")) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Only accept GET requests.");
@@ -78,16 +77,15 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
         response.addHeader("Cache-Control", "max-age=3600"); // Max age = 1 hour.
         String contentType = contentType(decodedPath);
         InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
-        if (inputStream == null)
-            throw new RuntimeException("Content could not be accessed!!!:\n" + path + ", " + decodedPath);
-        System.out.println("Accessing " + path + ", " + decodedPath + "...");
+        if (inputStream == null) LOGGER.warning("Content could not be accessed!!!:\n" + path + ", " + decodedPath);
+        LOGGER.info("Accessing " + path + ", " + decodedPath + "...");
         InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
         response.setEntity(body);
         exchange.submitResponse(new BasicAsyncResponseProducer(response));
         return null;
     }
 
-    private String contentType(String filePath) throws IOException {
+    private String contentType(String filePath) {
         if (filePath.endsWith(".js")) {
             return "application/javascript";
         }

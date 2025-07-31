@@ -1,3 +1,23 @@
+/**
+ * Copyright 2025 Langdon Staab
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author Langdon Staab
+ * @author HP Truong
+ *
+ * THIS CLASS SEEMS TO NON-FUNCTIONAL
+ */
 package utilities.swing;
 
 import core.config.Config;
@@ -13,10 +33,9 @@ import java.awt.event.MouseEvent;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.locks.ReentrantLock;
-
-@SuppressWarnings("serial")
+@Deprecated
 public class KeyChainInputPanel extends JPanel {
-
+    //seems to be broken
     private static final int MAX_KEY_CHAIN = 15;
 
     private static final ReentrantLock inUse = new ReentrantLock();
@@ -289,10 +308,7 @@ public class KeyChainInputPanel extends JPanel {
     }
 
     public static KeyChain getInputKeyChain(JFrame parent, Set<KeyChain> prepopulated) {
-        TaskActivation task = getInputKeyChains(
-                parent, 1,
-                TaskActivation.newBuilder().withHotKeys(prepopulated).build(),
-                Mode.KEYCHAIN_ONLY);
+        TaskActivation task = getInputKeyChains(parent, 1, TaskActivation.newBuilder().withHotKeys(prepopulated).build(), Mode.KEYCHAIN_ONLY);
         if (task == null) {
             return null;
         }
@@ -327,8 +343,7 @@ public class KeyChainInputPanel extends JPanel {
      */
     private static TaskActivation getInputKeyChains(JFrame parent, int limit, TaskActivation prepopulated, Mode mode) {
         KeyChainInputPanel input = new KeyChainInputPanel(prepopulated, limit, mode);
-        final JOptionPane optionPane = new JOptionPane(input, JOptionPane.INFORMATION_MESSAGE,
-                JOptionPane.OK_CANCEL_OPTION);
+        final JOptionPane optionPane = new JOptionPane(input, JOptionPane.INFORMATION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
 
         final JDialog dialog = new JDialog(parent, "Activation input", true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
@@ -336,8 +351,7 @@ public class KeyChainInputPanel extends JPanel {
 
         optionPane.addPropertyChangeListener(e -> {
             String prop = e.getPropertyName();
-            if (dialog.isVisible() && (e.getSource() == optionPane) &&
-                    (prop.equals(JOptionPane.VALUE_PROPERTY))) {
+            if (dialog.isVisible() && (e.getSource() == optionPane) && (prop.equals(JOptionPane.VALUE_PROPERTY))) {
                 dialog.setVisible(false);
             }
         });
@@ -387,11 +401,7 @@ public class KeyChainInputPanel extends JPanel {
                 if (!input.tfPhrase.getText().isEmpty()) {
                     phrases.add(ActivationPhrase.of(input.tfPhrase.getText()));
                 }
-                return TaskActivation.newBuilder()
-                        .withHotKeys(keyChains)
-                        .withKeySequence(keySequences)
-                        .withPhrases(phrases)
-                        .withMouseGestures(gestures).build();
+                return TaskActivation.newBuilder().withHotKeys(keyChains).withKeySequence(keySequences).withPhrases(phrases).withMouseGestures(gestures).build();
             }
 
             return null;
@@ -408,10 +418,6 @@ public class KeyChainInputPanel extends JPanel {
     }
 
     private static enum Mode {
-        ALL_ACTIVATION,
-        KEYCHAIN_ONLY,
-        MOUSE_GESTURE_ONLY,
-        KEY_SEQUENCE_ONLY,
-        PHRASE_ONLY;
+        ALL_ACTIVATION, KEYCHAIN_ONLY, MOUSE_GESTURE_ONLY, KEY_SEQUENCE_ONLY, PHRASE_ONLY;
     }
 }
