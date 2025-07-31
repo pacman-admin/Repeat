@@ -1,0 +1,13 @@
+version=1.0
+{"signature":"controller_delay","data":{"delay":1000}}
+{"signature":"keyboard_type_key","data":{"key":65}}
+{"signature":"controller_delay","data":{"delay":1000}}
+{"signature":"keyboard_type_key","data":{"key":65}}
+{"signature":"controller_delay","data":{"delay":1000}}
+{"signature":"keyboard_type_key","data":{"key":65}}
+{"signature":"controller_delay","data":{"delay":1000}}
+{"signature":"keyboard_type_key","data":{"key":9}}
+{"signature":"keyboard_type_key","data":{"key":9}}
+{"signature":"keyboard_type_key","data":{"key":71}}
+{"signature":"keyboard_type_key","data":{"key":71}}
+{"signature":"keyboard_type_key","data":{"key":65}}
