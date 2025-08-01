@@ -16,7 +16,7 @@
  * @author Langdon Staab
  * @author HP Truong
  *
- * THIS CLASS SEEMS TO NON-FUNCTIONAL
+ * THIS CLASS SEEMS TO BE NON-FUNCTIONAL
  */
 package utilities.swing;
 
