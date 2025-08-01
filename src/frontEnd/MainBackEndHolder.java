@@ -52,6 +52,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.*;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("DanglingJavadoc")
 public class MainBackEndHolder {
 
     private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
@@ -137,20 +138,7 @@ public class MainBackEndHolder {
         });
     }
 
-    protected void initializeLogging() {
-        // Change stdout and stderr to also copy content to the logHolder.
-        System.setOut(new PrintStream(CompositeOutputStream.of(logHolder, System.out)));
-        System.setErr(new PrintStream(CompositeOutputStream.of(logHolder, System.err)));
-
-        // Once we've updated stdout and stderr, we need to re-register the ConsoleHandler of the root
-        // logger because it was only logging to the old stderr which we just changed above.
-        Logger rootLogger = Logger.getLogger("");
-        Handler[] handlers = rootLogger.getHandlers();
-        for (Handler handler : handlers) {
-            if (handler.getClass().getName().equals(ConsoleHandler.class.getName())) {
-                Logger.getLogger("").removeHandler(handler);
-            }
-        }
+    private static Handler getNewHandler() {
         Handler newHandler = new ConsoleHandler();
         newHandler.setFormatter(new SimpleFormatter() {
             private static final String FORMAT = "[%s] %s %s: %s\n";
@@ -169,6 +157,24 @@ public class MainBackEndHolder {
                 return builder.toString();
             }
         });
+        return newHandler;
+    }
+
+    protected void initializeLogging() {
+        // Change stdout and stderr to also copy content to the logHolder.
+        System.setOut(new PrintStream(CompositeOutputStream.of(logHolder, System.out)));
+        System.setErr(new PrintStream(CompositeOutputStream.of(logHolder, System.err)));
+
+        // Once we've updated stdout and stderr, we need to re-register the ConsoleHandler of the root
+        // logger because it was only logging to the old stderr which we just changed above.
+        Logger rootLogger = Logger.getLogger("");
+        Handler[] handlers = rootLogger.getHandlers();
+        for (Handler handler : handlers) {
+            if (handler.getClass().getName().equals(ConsoleHandler.class.getName())) {
+                Logger.getLogger("").removeHandler(handler);
+            }
+        }
+        Handler newHandler = getNewHandler();
         Logger.getLogger("").addHandler(newHandler);
 
         // Update the logging level based on the config.
@@ -176,6 +182,7 @@ public class MainBackEndHolder {
     }
 
     /*************************************************************************************************************/
+
     /************************************************Config*******************************************************/
     protected void loadConfig(File file) {
         config.loadConfig(file);
@@ -190,10 +197,6 @@ public class MainBackEndHolder {
                 }
             }
         }
-
-		/*File pythonExecutable = ((PythonRemoteCompiler) (config.getCompilerFactory()).getNativeCompiler(Language.PYTHON)).getPath();
-		((PythonIPCClientService)IPCServiceManager.getIPCService(IPCServiceName.PYTHON)).setExecutingProgram(pythonExecutable);
-*/
         IPCServiceManager.setBackEnd(this);
     }
 
@@ -596,7 +599,7 @@ public class MainBackEndHolder {
         if (!conflict) {
             keysManager.registerTask(action);
         } else {
-            List<String> collisionNames = collisions.stream().map(t -> t.getName()).collect(Collectors.toList());
+            List<String> collisionNames = collisions.stream().map(UserDefinedAction::getName).collect(Collectors.toList());
             LOGGER.warning("Unable to register task " + action.getName() + ". Collisions are " + collisionNames);
         }
     }
@@ -1144,7 +1147,7 @@ public class MainBackEndHolder {
     /***************************************User Interface********************************************************/
     protected void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
-        LOGGER.info("\nIf the program runs, ignore everything above this line.\n*******************************************\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT+"\n*******************************************");
+        LOGGER.info("\nIf the program runs, ignore everything above this line.\n*******************************************\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
     }
 
     /*************************************************************************************************************/
