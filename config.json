@@ -1,0 +1,340 @@
+{
+	"version": "2.15",
+	"global_settings": {
+		"debug": {
+			"level": "INFO"
+		},
+		"tray_icon_enabled": true,
+		"enabled_halt_by_key": true,
+		"execute_on_key_released": true,
+		"use_clipboard_to_type_string": false,
+		"run_task_with_server_config": false,
+		"use_java_awt_for_mouse_position": false,
+		"global_hotkey": {
+			"mouse_gesture_activation": 192,
+			"record": [
+				{
+					"type": "key_stroke",
+					"key": 118,
+					"modifier": 0
+				}
+			],
+			"replay": [
+				{
+					"type": "key_stroke",
+					"key": 119,
+					"modifier": 0
+				}
+			],
+			"replay_compiled": [
+				{
+					"type": "key_stroke",
+					"key": 120,
+					"modifier": 0
+				}
+			]
+		},
+		"tools_config": [
+			"local"
+		],
+		"core_config": [
+			"local"
+		]
+	},
+	"ipc_settings": [
+		{
+			"name": "controller_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 9999
+			}
+		},
+		{
+			"name": "cli_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 65432
+			}
+		},
+		{
+			"name": "web_ui_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 8080
+			}
+		}
+	],
+	"remote_repeats_clients": {
+		"clients": []
+	},
+	"compilers": {
+		"local_compilers": [
+			{
+				"name": "manual",
+				"path": ".",
+				"compiler_specific_args": {}
+			},
+			{
+				"name": "java",
+				"path": "/home/langdon/.sdkman/candidates/java/21.0.7-tem",
+				"compiler_specific_args": {
+					"classpath": []
+				}
+			}
+		],
+		"remote_repeats_compilers": []
+	},
+	"task_groups": [
+		{
+			"group_id": "c36d7512-7066-4f23-ac99-3e8a8d8bfeca",
+			"name": "default",
+			"enabled": true,
+			"tasks": [
+				{
+					"action_id": "0854b278-b75f-4b24-bc1a-04be246acae4",
+					"source_path": "data/source/manual/MANUAL_1753917892691.manualbuild",
+					"compiler": "manual",
+					"name": "Test",
+					"execution_preconditions": {
+						"active_window_condition": {
+							"title": {
+								"type": "always_valid"
+							},
+							"process_name": {
+								"type": "always_valid"
+							}
+						}
+					},
+					"activation": {
+						"hotkey": [],
+						"key_sequence": [],
+						"mouse_gesture": [],
+						"phrases": [],
+						"variables": [],
+						"global_activation": {
+							"on_key_released": false,
+							"on_key_pressed": false
+						}
+					},
+					"enabled": true,
+					"statistics": {
+						"count": 21,
+						"total_execution_time": 40,
+						"last_use": "30/07/2025 19:26:48",
+						"created": "30/07/2025 19:24:52",
+						"task_activations_breakdown": [
+							{
+								"task_activation": {
+									"hotkey": [],
+									"key_sequence": [],
+									"mouse_gesture": [],
+									"phrases": [],
+									"variables": [],
+									"global_activation": {
+										"on_key_released": false,
+										"on_key_pressed": false
+									}
+								},
+								"count": 21
+							}
+						],
+						"execution_instances": [
+							{
+								"start": 1753917922840,
+								"end": 1753917922842
+							},
+							{
+								"start": 1753917966843,
+								"end": 1753917966843
+							},
+							{
+								"start": 1753917967843,
+								"end": 1753917967844
+							},
+							{
+								"start": 1753917968845,
+								"end": 1753917968848
+							},
+							{
+								"start": 1753917969849,
+								"end": 1753917969852
+							},
+							{
+								"start": 1753917970853,
+								"end": 1753917970856
+							},
+							{
+								"start": 1753917971857,
+								"end": 1753917971859
+							},
+							{
+								"start": 1753917972860,
+								"end": 1753917972860
+							},
+							{
+								"start": 1753917973862,
+								"end": 1753917973863
+							},
+							{
+								"start": 1753917974864,
+								"end": 1753917974865
+							},
+							{
+								"start": 1753917975866,
+								"end": 1753917975867
+							},
+							{
+								"start": 1753917999255,
+								"end": 1753917999258
+							},
+							{
+								"start": 1753918000260,
+								"end": 1753918000264
+							},
+							{
+								"start": 1753918001265,
+								"end": 1753918001267
+							},
+							{
+								"start": 1753918002269,
+								"end": 1753918002272
+							},
+							{
+								"start": 1753918003273,
+								"end": 1753918003275
+							},
+							{
+								"start": 1753918004276,
+								"end": 1753918004277
+							},
+							{
+								"start": 1753918005278,
+								"end": 1753918005278
+							},
+							{
+								"start": 1753918006280,
+								"end": 1753918006283
+							},
+							{
+								"start": 1753918007283,
+								"end": 1753918007285
+							},
+							{
+								"start": 1753918008286,
+								"end": 1753918008289
+							}
+						]
+					},
+					"source_history": {
+						"entries": [
+							{
+								"path": "data/source/manual/MANUAL_1753917892691.manualbuild",
+								"created_time": 1753917892694
+							}
+						]
+					}
+				},
+				{
+					"action_id": "29c52adf-b9a2-4f5a-a15e-9810e80f213b",
+					"source_path": "data/source/manual/MANUAL_1753918058530.manualbuild",
+					"compiler": "manual",
+					"name": "real test",
+					"execution_preconditions": {
+						"active_window_condition": {
+							"title": {
+								"type": "always_valid"
+							},
+							"process_name": {
+								"type": "always_valid"
+							}
+						}
+					},
+					"activation": {
+						"hotkey": [],
+						"key_sequence": [],
+						"mouse_gesture": [],
+						"phrases": [],
+						"variables": [],
+						"global_activation": {
+							"on_key_released": false,
+							"on_key_pressed": false
+						}
+					},
+					"enabled": true,
+					"statistics": {
+						"count": 10,
+						"total_execution_time": 5011,
+						"last_use": "30/07/2025 19:28:21",
+						"created": "30/07/2025 19:27:38",
+						"task_activations_breakdown": [
+							{
+								"task_activation": {
+									"hotkey": [],
+									"key_sequence": [],
+									"mouse_gesture": [],
+									"phrases": [],
+									"variables": [],
+									"global_activation": {
+										"on_key_released": false,
+										"on_key_pressed": false
+									}
+								},
+								"count": 10
+							}
+						],
+						"execution_instances": [
+							{
+								"start": 1753918088411,
+								"end": 1753918088912
+							},
+							{
+								"start": 1753918089913,
+								"end": 1753918090425
+							},
+							{
+								"start": 1753918091427,
+								"end": 1753918091937
+							},
+							{
+								"start": 1753918092939,
+								"end": 1753918093446
+							},
+							{
+								"start": 1753918094447,
+								"end": 1753918094949
+							},
+							{
+								"start": 1753918095950,
+								"end": 1753918096443
+							},
+							{
+								"start": 1753918097444,
+								"end": 1753918097935
+							},
+							{
+								"start": 1753918098936,
+								"end": 1753918099425
+							},
+							{
+								"start": 1753918100426,
+								"end": 1753918100921
+							},
+							{
+								"start": 1753918101922,
+								"end": 1753918102433
+							}
+						]
+					},
+					"source_history": {
+						"entries": [
+							{
+								"path": "data/source/manual/MANUAL_1753918058530.manualbuild",
+								"created_time": 1753918058534
+							}
+						]
+					}
+				}
+			]
+		}
+	]
+}

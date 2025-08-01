@@ -16,6 +16,8 @@
  * @author Langdon Staab
  * @author HP Truong
  */
+
+/*
 package frontEnd;
 
 import core.keyChain.KeyChain;
@@ -43,6 +45,8 @@ public class HotkeySetting extends JFrame {
     /**
      * Create the frame.
      */
+
+/*
     public HotkeySetting(final MainBackEndHolder backEnd) {
         addWindowListener(new WindowAdapter() {
             @Override
@@ -151,3 +155,4 @@ public class HotkeySetting extends JFrame {
         contentPane.setLayout(gl_contentPane);
     }
 }
+*/
