@@ -96,7 +96,7 @@ public class CliServer extends IPCServiceWithModifablePort {
         });
         server.start();
         mainThread.start();
-        getLogger().info("CLI server up and running...");
+        getLogger().fine("CLI server up and running...");
     }
 
     @Override

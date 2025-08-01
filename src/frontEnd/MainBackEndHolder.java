@@ -1,13 +1,31 @@
+/**
+ * Copyright 2025 Langdon Staab
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author Langdon Staab
+ * @author HP Truong
+ */
 package frontEnd;
 
 import core.background.loggers.ActiveWindowInfosLogger;
 import core.background.loggers.MousePositionLogger;
 import core.config.AbstractRemoteRepeatsClientsConfig;
 import core.config.Config;
+import core.config.WebUIConfig;
 import core.controller.Core;
 import core.controller.CoreProvider;
 import core.ipc.IPCServiceManager;
-import core.ipc.IPCServiceName;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.TaskActivation;
@@ -1125,12 +1143,8 @@ public class MainBackEndHolder {
     /*************************************************************************************************************/
     /***************************************User Interface********************************************************/
     protected void launchUI() {
-        int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
-        String url = "http://localhost:" + port;
-        String mainMessage = "Initialization finished. UI server is at " + url;
-
-        String logMessage = "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@\n" + mainMessage + "\n" + "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@";
-        LOGGER.info(logMessage);
+        //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
+        LOGGER.info("\n*******************************************\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT+"\n*******************************************");
     }
 
     /*************************************************************************************************************/

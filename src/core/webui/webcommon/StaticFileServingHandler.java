@@ -78,7 +78,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
         String contentType = contentType(decodedPath);
         InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
         if (inputStream == null) LOGGER.warning("Content could not be accessed!!!:\n" + path + ", " + decodedPath);
-        LOGGER.info("Accessing " + path + ", " + decodedPath + "...");
+        LOGGER.fine("Accessing " + path + ", " + decodedPath + "...");
         InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
         response.setEntity(body);
         exchange.submitResponse(new BasicAsyncResponseProducer(response));

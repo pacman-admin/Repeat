@@ -51,7 +51,7 @@ public class ControllerServer extends IPCServiceWithModifablePort {
             }
 
             try {
-                getLogger().info("Waiting for client connections...");
+                getLogger().fine("Awaiting client connections...");
                 while (!isStopped()) {
                     final Socket socket;
                     try {

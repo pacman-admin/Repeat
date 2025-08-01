@@ -27,19 +27,15 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 
 public class StaticTemplateLoader implements TemplateLoader {
-
     private static final StaticTemplateLoader INSTANCE = new StaticTemplateLoader();
 
-    private StaticTemplateLoader() {
-    }
-
+    //private StaticTemplateLoader() {}
     public static StaticTemplateLoader of() {
         return INSTANCE;
     }
 
     @Override
     public void closeTemplateSource(Object arg0) {
-
     }
 
     @Override
@@ -60,7 +56,7 @@ public class StaticTemplateLoader implements TemplateLoader {
     public Reader getReader(Object path, String locale) {
         InputStream content = BootStrapResources.getStaticContentStream(WebUIResources.TEMPLATES_RESOURCES_PREFIX + path);
         if (content == null) throw new RuntimeException("Content could not be accessed!!!:\n" + path);
-        System.out.println("Accessing " + path + "...");
+        //System.out.println("Accessing " + path + "...");
         return new InputStreamReader(content);
     }
 }

@@ -83,7 +83,7 @@ public final class IPCServiceManager {
             if (!service.isLaunchAtStartup()) {
                 continue;
             }
-            LOGGER.info("Starting ipc service " + service.getName());
+            LOGGER.fine("Starting ipc service " + service.getName());
             service.startRunning();
 
             try {
