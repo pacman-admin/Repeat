@@ -49,7 +49,8 @@ public class KeyChainInputPanel extends JPanel {
     private KeyChainInputPanel(TaskActivation prepopulated, final int limit, Mode mode) {
         keyStrokes = new ArrayList<>();
 
-        final JLabel instruction = new JLabel("Start pressing key chain.");
+        JOptionPane.showMessageDialog(null, "KeyChain input is broken. Please edit the config.json file manually.");
+
         final JTextField tfKeySeries = new JTextField();
         tfKeySeries.setEditable(false);
 
@@ -252,7 +253,7 @@ public class KeyChainInputPanel extends JPanel {
 
         final JPanel basicPanel = new JPanel();
         basicPanel.setLayout(new BoxLayout(basicPanel, BoxLayout.Y_AXIS));
-        basicPanel.add(instruction);
+        basicPanel.add(new JLabel("Start pressing key chain."););
         basicPanel.add(tfKeySeries);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

@@ -134,6 +134,7 @@ public class Config implements ILoggable {
             if (root == null||!root.isStringValue("version")) {
                 getLogger().warning("Could not read config file!\nCreating new config file from default settings...");
                 JOptionPane.showMessageDialog(null, "Could not read config file! Creating new config.");
+                defaultExtract();
                 writeConfig();
                 return;
             }

@@ -1147,7 +1147,7 @@ public class MainBackEndHolder {
     /***************************************User Interface********************************************************/
     protected void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
-        LOGGER.info("\nIf the program runs, ignore everything above this line.\n*******************************************\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
+        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
     }
 
     /*************************************************************************************************************/

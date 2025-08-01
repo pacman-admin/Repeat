@@ -1,1 +1,95 @@
-fdsjsdjflkdsjkfjkjigfjfghjfahgakfsgaksjgkj
+{
+	"version": "2.15",
+	"global_settings": {
+		"debug": {
+			"level": "INFO"
+		},
+		"tray_icon_enabled": true,
+		"enabled_halt_by_key": true,
+		"execute_on_key_released": true,
+		"use_clipboard_to_type_string": false,
+		"run_task_with_server_config": false,
+		"use_java_awt_for_mouse_position": false,
+		"global_hotkey": {
+			"mouse_gesture_activation": 192,
+			"record": [
+				{
+					"type": "key_stroke",
+					"key": 118,
+					"modifier": 0
+				}
+			],
+			"replay": [
+				{
+					"type": "key_stroke",
+					"key": 119,
+					"modifier": 0
+				}
+			],
+			"replay_compiled": [
+				{
+					"type": "key_stroke",
+					"key": 120,
+					"modifier": 0
+				}
+			]
+		},
+		"tools_config": [
+			"local"
+		],
+		"core_config": [
+			"local"
+		]
+	},
+	"ipc_settings": [
+		{
+			"name": "controller_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 9999
+			}
+		},
+		{
+			"name": "cli_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 65432
+			}
+		},
+		{
+			"name": "web_ui_server",
+			"config": {
+				"launch_at_startup": true,
+				"port": 8080
+			}
+		}
+	],
+	"remote_repeats_clients": {
+		"clients": []
+	},
+	"compilers": {
+		"local_compilers": [
+			{
+				"name": "manual",
+				"path": ".",
+				"compiler_specific_args": {}
+			},
+			{
+				"name": "java",
+				"path": "/home/langdon/.sdkman/candidates/java/21.0.7-tem",
+				"compiler_specific_args": {
+					"classpath": []
+				}
+			}
+		],
+		"remote_repeats_compilers": []
+	},
+	"task_groups": [
+		{
+			"group_id": "9eddabae-1a93-4e8e-bef5-526721e951b4",
+			"name": "default",
+			"enabled": true,
+			"tasks": []
+		}
+	]
+}
