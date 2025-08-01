@@ -131,11 +131,10 @@ public class Config implements ILoggable {
         if (FileUtility.fileExists(configFile)) {
             JsonRootNode root = JSONUtility.readJSON(configFile);
 
-            if (root == null) {
-                JOptionPane.showMessageDialog(null, "Config file is not in json format");
-                return;
-            } else if (!root.isStringValue("version")) {
-                JOptionPane.showMessageDialog(null, "Config file is in unknown version");
+            if (root == null||!root.isStringValue("version")) {
+                getLogger().warning("Could not read config file!\nCreating new config file from default settings...");
+                JOptionPane.showMessageDialog(null, "Could not read config file! Creating new config.");
+                writeConfig();
                 return;
             }
 
