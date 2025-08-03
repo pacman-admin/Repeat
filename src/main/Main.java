@@ -18,8 +18,6 @@
  */
 package main;
 
-//import core.cli.MainCli;
-
 import frontEnd.MainFrontEnd;
 
 public class Main {
@@ -31,5 +29,6 @@ public class Main {
         //String[] cliArgs = Arrays.copyOfRange(args, 1, args.length);
         //cli.process(cliArgs);
         //}
+        //KeyChainInputPanel.getInputKeyChain(new JFrame(), new KeyChain());
     }
 }

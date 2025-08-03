@@ -59,7 +59,7 @@
 
 
                 <div class="row col-xs-12">
-                    <span class="label label-warning">Moving tasks around when editting its activation may result in undefined behavior!</span>
+                    <span class="label label-warning">Moving tasks around when editing its activation may result in undefined behavior!</span>
                     <div><button id="button-save" type="button" class="btn btn-default btn-span">Save</button></div>
                 </div>
                 <@task_execution_preconditions_fragment.fragment/>
