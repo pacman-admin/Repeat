@@ -11,6 +11,9 @@ public class LogHolder extends OutputStream {
 	private StringBuffer content;
 	private LinkedList<LineEntry> lines;
 	private int offset;
+	private int currentIndex = 0;
+	private int lastIndex = 0;
+
 
 	public LogHolder() {
 		content = new StringBuffer();
@@ -45,21 +48,14 @@ public class LogHolder extends OutputStream {
 	public void clear() {
 		lines.clear();
 		offset = 0;
-		content.setLength(0); // Clear the content buffer.
+		content.setLength(0);// Clear the content buffer.
+		currentIndex = 0;
+		lastIndex = 0;
 	}
-
-	public String getContentSince(long time) {
-		int index = -1;
-
-		for (Iterator<LineEntry> it = lines.descendingIterator(); it.hasNext();) {
-			LineEntry entry = it.next();
-			if (entry.time < time) {
-				index = entry.position;
-				break;
-			}
-		}
-
-		return content.substring(index + 1);
+	public String getContent() {
+		currentIndex = lastIndex;
+		lastIndex = content.length();
+		return content.substring(currentIndex);
 	}
 
 	private static class LineEntry {

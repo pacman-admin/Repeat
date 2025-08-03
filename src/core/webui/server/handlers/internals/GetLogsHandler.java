@@ -21,7 +21,7 @@ public class GetLogsHandler extends AbstractSingleMethodHttpHandler {
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
 			throws HttpException, IOException {
-		Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
+		/*Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
 		if (params == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse GET parameters.");
 		}
@@ -33,9 +33,9 @@ public class GetLogsHandler extends AbstractSingleMethodHttpHandler {
 
 		if (!NumberUtility.isNonNegativeInteger(since)) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Since time must be non-negative integer.");
-		}
+		}*/
 
-		long time = Long.parseLong(since);
-		return HttpServerUtilities.prepareTextResponse(exchange, 200, backEndHolder.getLogsSince(time));
+		//long time = Long.parseLong(since);
+		return HttpServerUtilities.prepareTextResponse(exchange, 200, backEndHolder.getLogs());
 	}
 }

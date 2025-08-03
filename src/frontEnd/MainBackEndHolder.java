@@ -1192,8 +1192,8 @@ public class MainBackEndHolder {
         return peerServiceClientManager;
     }
 
-    public String getLogsSince(long time) {
-        return logHolder.getContentSince(time);
+    public String getLogs() {
+        return logHolder.getContent();
     }
 
     public void clearLogs() {
