@@ -2,7 +2,6 @@ package core.ipc;
 
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
-import core.cli.server.CliServer;
 import core.ipc.repeatServer.ControllerServer;
 import core.languageHandler.Language;
 import core.webui.server.UIServer;
@@ -26,7 +25,7 @@ public final class IPCServiceManager {
     static {
         ipcServices = new IIPCService[IPC_SERVICE_COUNT];
         ipcServices[IPCServiceName.CONTROLLER_SERVER.value()] = new ControllerServer();
-        ipcServices[IPCServiceName.CLI_SERVER.value()] = new CliServer();
+        //ipcServices[IPCServiceName.CLI_SERVER.value()] = new CliServer();
         ipcServices[IPCServiceName.WEB_UI_SERVER.value()] = new UIServer();
 
         ipcByLanugage = new HashMap<>();
@@ -69,10 +68,11 @@ public final class IPCServiceManager {
     public static void initiateServices(MainBackEndHolder backEndHolder) throws IOException {
         for (IPCServiceName name : IPCServiceName.values()) {
             IIPCService service = IPCServiceManager.getIPCService(name);
-            if (name == IPCServiceName.CLI_SERVER) {
+            /*if (name == IPCServiceName.CLI_SERVER) {
                 CliServer server = (CliServer) service;
                 server.setMainBackEndHolder(backEndHolder);
-            } else if (name == IPCServiceName.WEB_UI_SERVER) {
+            } else */
+            if (name == IPCServiceName.WEB_UI_SERVER) {
                 UIServer server = (UIServer) service;
                 server.setMainBackEndHolder(backEndHolder);
             }
@@ -84,7 +84,7 @@ public final class IPCServiceManager {
 
             try {
                 Thread.sleep(INTER_SERVICE_BOOT_TIME_MS);
-            } catch (InterruptedException e) {
+            } catch (InterruptedException ignored) {
             }
         }
     }
