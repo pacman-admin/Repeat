@@ -37,7 +37,6 @@ import java.util.logging.Logger;
 public class ControllerServer extends IPCServiceWithModifablePort {
 
     public static final int DEFAULT_TIMEOUT_MS = 10000;
-    protected static final Charset ENCODING = StandardCharsets.UTF_8;
     private static final int DEFAULT_PORT = 9999;
     private static final int DEFAULT_SHUTDOWN_TIMEOUT_MS = 10000;
     private static final int MAX_THREAD_COUNT = 10;
