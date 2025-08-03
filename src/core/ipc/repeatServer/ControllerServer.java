@@ -1,7 +1,6 @@
 package core.ipc.repeatServer;
 
 import core.ipc.IPCServiceWithModifablePort;
-import frontEnd.MainBackEndHolder;
 
 import java.io.IOException;
 import java.util.logging.Logger;
@@ -33,6 +32,6 @@ public class ControllerServer extends IPCServiceWithModifablePort {
         return Logger.getLogger(ControllerServer.class.getName());
     }
 
-    public void setBackEnd(MainBackEndHolder ignored) {
-    }
+    /*public void setBackEnd(MainBackEndHolder ignored) {
+    }*/
 }
