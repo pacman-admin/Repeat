@@ -12,6 +12,4 @@ public class RandomUtil {
 	public static String randomID() {
 		return System.currentTimeMillis() + "";
 	}
-
-	private RandomUtil() {}
 }

@@ -37,20 +37,17 @@ import utilities.json.JSONUtility;
 public class ServerMainProcessor implements ILoggable {
 
 	private final Map<IpcMessageType, AbstractMessageProcessor> messageProcesssors;
-	private final ControllerRequestProcessor actionProcessor;
-	private final TaskProcessor taskProcessor;
-	private final SystemRequestProcessor systemProcessor;
-	private final SharedMemoryProcessor sharedMemoryProcessor;
-	// Whether this processor is processing requests from local client.
+    private final TaskProcessor taskProcessor;
+    // Whether this processor is processing requests from local client.
 	private boolean localClientProcessor;
 
 	public ServerMainProcessor(MainBackEndHolder backEnd, MainMessageSender messageSender) {
 		messageProcesssors = new HashMap<>();
 
-		actionProcessor = new ControllerRequestProcessor(messageSender, backEnd.getCoreProvider(), this);
+        ControllerRequestProcessor actionProcessor = new ControllerRequestProcessor(messageSender, backEnd.getCoreProvider(), this);
 		taskProcessor = new TaskProcessor(backEnd, messageSender);
-		systemProcessor = new SystemRequestProcessor(messageSender, this);
-		sharedMemoryProcessor = new SharedMemoryProcessor(messageSender);
+        SystemRequestProcessor systemProcessor = new SystemRequestProcessor(messageSender, this);
+        SharedMemoryProcessor sharedMemoryProcessor = new SharedMemoryProcessor(messageSender);
 
 		messageProcesssors.put(IpcMessageType.ACTION, actionProcessor);
 		messageProcesssors.put(IpcMessageType.TASK, taskProcessor);
@@ -62,7 +59,6 @@ public class ServerMainProcessor implements ILoggable {
 	/**
 	 * Parse a request from client.
 	 * @param message request from client as JSON string
-	 * @param core Core controller that will execute the action
 	 * @return list of actions need to perform in order
 	 */
 	public boolean processRequest(String message) {
