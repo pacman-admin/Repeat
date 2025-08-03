@@ -78,9 +78,9 @@ public class Tools {
 		/**
 		 * Retrieves the CLI server service.
 		 */
-		public static IIPCService getCliService() {
+		/*public static IIPCService getCliService() {
 			return IPCServiceManager.getIPCService(IPCServiceName.CLI_SERVER);
-		}
+		}*/
 	}
 
 	private Tools() {}

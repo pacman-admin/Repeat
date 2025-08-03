@@ -154,8 +154,8 @@ public class Parser2_15 extends ConfigParser {
                 LOGGER.log(Level.WARNING, "IPC Service Manager failed to parse JSON metadata");
             }
 
-            CliServer cliServer = (CliServer) IPCServiceManager.getIPCService(IPCServiceName.CLI_SERVER);
-            config.setServerPort(cliServer.getPort());
+            //CliServer cliServer = (CliServer) IPCServiceManager.getIPCService(IPCServiceName.CLI_SERVER);
+            //config.setServerPort(cliServer.getPort());
             return true;
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Unable to parse json", e);

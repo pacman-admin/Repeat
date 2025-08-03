@@ -28,13 +28,9 @@ public final class IPCServiceManager {
         ipcServices[IPCServiceName.CONTROLLER_SERVER.value()] = new ControllerServer();
         ipcServices[IPCServiceName.CLI_SERVER.value()] = new CliServer();
         ipcServices[IPCServiceName.WEB_UI_SERVER.value()] = new UIServer();
-        //ipcServices[IPCServiceName.PYTHON.value()] = new PythonIPCClientService();
-        //ipcServices[IPCServiceName.CSHARP.value()] = new CSharpIPCClientService();
 
         ipcByLanugage = new HashMap<>();
         ipcByLanugage.put(Language.JAVA, -1);
-        //ipcByLanugage.put(Language.PYTHON, IPCServiceName.PYTHON.value());
-        //ipcByLanugage.put(Language.CSHARP, IPCServiceName.CSHARP.value());
         ipcByLanugage.put(Language.MANUAL_BUILD, -1);
     }
 
