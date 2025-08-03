@@ -1,5 +1,8 @@
 package core.ipc.repeatServer;
 
+import core.ipc.IPCServiceWithModifablePort;
+import frontEnd.MainBackEndHolder;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -13,36 +16,32 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import core.ipc.IPCServiceWithModifablePort;
-import frontEnd.MainBackEndHolder;
-
 public class ControllerServer extends IPCServiceWithModifablePort {
 
-	protected static final Charset ENCODING = StandardCharsets.UTF_8;
-	private static final int DEFAULT_PORT = 9999;
-	public static final int DEFAULT_TIMEOUT_MS = 10000;
-	private static final int DEFAULT_SHUTDOWN_TIMEOUT_MS = 10000;
-	private static final int MAX_THREAD_COUNT = 10;
-	private static final int MAX_SERVER_BACK_LOG = 50; // Default value of ServerSocket constructor.
+    public static final int DEFAULT_TIMEOUT_MS = 10000;
+    protected static final Charset ENCODING = StandardCharsets.UTF_8;
+    private static final int DEFAULT_PORT = 9999;
+    private static final int DEFAULT_SHUTDOWN_TIMEOUT_MS = 10000;
+    private static final int MAX_THREAD_COUNT = 10;
+    private static final int MAX_SERVER_BACK_LOG = 50; // Default value of ServerSocket constructor.
+    private final ScheduledThreadPoolExecutor threadPool;
+    private final LinkedList<ClientServingThread> clientServingThreads;
+    private MainBackEndHolder backEnd;
+    private boolean isStopped;
+    private ServerSocket listener;
+    private Thread mainThread;
 
-	private MainBackEndHolder backEnd;
-	private boolean isStopped;
-	private final ScheduledThreadPoolExecutor threadPool;
-	private final LinkedList<ClientServingThread> clientServingThreads;
-	private ServerSocket listener;
-	private Thread mainThread;
+    public ControllerServer() {
+        threadPool = new ScheduledThreadPoolExecutor(MAX_THREAD_COUNT);
+        clientServingThreads = new LinkedList<>();
+        this.setPort(DEFAULT_PORT);
+    }
 
-	public ControllerServer() {
-		threadPool = new ScheduledThreadPoolExecutor(MAX_THREAD_COUNT);
-		clientServingThreads = new LinkedList<>();
-		this.setPort(DEFAULT_PORT);
-	}
+    @Override
+    protected void start() throws IOException {
+        setStop(false);
 
-	@Override
-	protected void start() throws IOException {
-		setStop(false);
-
-		mainThread = new Thread(() -> {
+        mainThread = new Thread(() -> {
             try {
                 listener = new ServerSocket(port, MAX_SERVER_BACK_LOG, InetAddress.getByName("localhost"));
             } catch (IOException e) {
@@ -87,52 +86,52 @@ public class ControllerServer extends IPCServiceWithModifablePort {
             clientServingThreads.clear();
             getLogger().log(Level.INFO, "Controller server terminated!");
         });
-		mainThread.start();
-	}
+        mainThread.start();
+    }
 
-	@Override
-	public void stop() {
-		setStop(true);
-		if (listener != null) {
-			try {
-				listener.close();
-			} catch (IOException e) {
-				getLogger().log(Level.SEVERE, "Failed to close server socket", e);
-			}
-		}
+    @Override
+    public void stop() {
+        setStop(true);
+        if (listener != null) {
+            try {
+                listener.close();
+            } catch (IOException e) {
+                getLogger().log(Level.SEVERE, "Failed to close server socket", e);
+            }
+        }
 
-		threadPool.shutdown();
-		try {
-			threadPool.awaitTermination(DEFAULT_SHUTDOWN_TIMEOUT_MS, TimeUnit.MILLISECONDS);
-		} catch (InterruptedException e) {
-			getLogger().log(Level.SEVERE, "Waiting for server thread pool to close", e);
-		}
-	}
+        threadPool.shutdown();
+        try {
+            threadPool.awaitTermination(DEFAULT_SHUTDOWN_TIMEOUT_MS, TimeUnit.MILLISECONDS);
+        } catch (InterruptedException e) {
+            getLogger().log(Level.SEVERE, "Waiting for server thread pool to close", e);
+        }
+    }
 
-	public void setBackEnd(MainBackEndHolder backEnd) {
-		this.backEnd = backEnd;
-	}
+    public void setBackEnd(MainBackEndHolder backEnd) {
+        this.backEnd = backEnd;
+    }
 
-	private synchronized boolean isStopped() {
-		return isStopped;
-	}
+    private synchronized boolean isStopped() {
+        return isStopped;
+    }
 
-	private synchronized void setStop(boolean isStopped) {
-		this.isStopped = isStopped;
-	}
+    private synchronized void setStop(boolean isStopped) {
+        this.isStopped = isStopped;
+    }
 
-	@Override
-	public boolean isRunning() {
-		return mainThread != null && mainThread.isAlive();
-	}
+    @Override
+    public boolean isRunning() {
+        return mainThread != null && mainThread.isAlive();
+    }
 
-	@Override
-	public String getName() {
-		return "Controller server";
-	}
+    @Override
+    public String getName() {
+        return "Controller server";
+    }
 
-	@Override
-	public Logger getLogger() {
-		return Logger.getLogger(ControllerServer.class.getName());
-	}
+    @Override
+    public Logger getLogger() {
+        return Logger.getLogger(ControllerServer.class.getName());
+    }
 }
