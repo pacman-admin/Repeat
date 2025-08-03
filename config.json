@@ -45,14 +45,14 @@
 		{
 			"name": "controller_server",
 			"config": {
-				"launch_at_startup": true,
+				"launch_at_startup": false,
 				"port": 9999
 			}
 		},
 		{
 			"name": "cli_server",
 			"config": {
-				"launch_at_startup": true,
+				"launch_at_startup": false,
 				"port": 65432
 			}
 		},
