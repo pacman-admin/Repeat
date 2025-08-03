@@ -31,7 +31,4 @@ public class ControllerServer extends IPCServiceWithModifablePort {
     public Logger getLogger() {
         return Logger.getLogger(ControllerServer.class.getName());
     }
-
-    /*public void setBackEnd(MainBackEndHolder ignored) {
-    }*/
 }
