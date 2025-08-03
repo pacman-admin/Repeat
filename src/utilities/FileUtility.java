@@ -7,6 +7,7 @@ import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -81,7 +82,7 @@ public class FileUtility {
      */
     public static String getFileName(String path) {
         List<String> split = splitPath(path);
-        return split.get(split.size() - 1);
+        return split.getLast();
     }
 
     /**
@@ -210,9 +211,11 @@ public class FileUtility {
                 }
             } else {
                 try {
-                    dst.mkdirs();
+                    if (!dst.mkdirs()) {
+                        LOGGER.warning("Could not create destination directory.");
+                    }
                 } catch (SecurityException e) {
-                    LOGGER.log(Level.WARNING, "Failed to create necessary directories.", e);
+                    LOGGER.log(Level.WARNING, "No permission to create destination directory: " + name + "\n" + e, e);
                     return false;
                 }
                 result &= moveDirectory(f, dst);
@@ -241,7 +244,7 @@ public class FileUtility {
             Files.copy(source.toPath(), dest.toPath());
             return true;
         } catch (IOException e) {
-            e.printStackTrace();
+            LOGGER.log(Level.WARNING, "Encountered an IOException while copying" + e, e);
             return false;
         }
     }
@@ -261,7 +264,7 @@ public class FileUtility {
         }
 
         if (!toDelete.delete()) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, "Cannot delete file " + toDelete.getAbsolutePath());
+            LOGGER.log(Level.SEVERE, "Cannot delete file " + toDelete.getAbsolutePath());
             return false;
         }
 
@@ -276,24 +279,19 @@ public class FileUtility {
      */
     public static boolean createDirectory(String directory) {
         File theDir = new File(directory);
-
         // if the directory does not exist, create it
         if (!theDir.exists()) {
-            boolean result = false;
-
+            boolean result;
             try {
-                theDir.mkdirs();
-                result = true;
-            } catch (SecurityException se) {
-                se.printStackTrace();
+                result = theDir.mkdirs();
+            } catch (SecurityException e) {
+                LOGGER.log(Level.WARNING, "Could not create director(y/ies).\nPlease make sure you have permission to create directories\n" + e, e);
                 // handle it
                 return false;
             }
-
             return result;
-        } else {
-            return true;
         }
+        return true;
     }
 
     /**
@@ -303,33 +301,29 @@ public class FileUtility {
      * @return void
      */
     public static void readFromFile(File file, Function<String, Boolean> lineProcessing) {
-        FileInputStream fr = null;
 
-        try {
-            fr = new FileInputStream(file);
-            InputStreamReader char_input = new InputStreamReader(fr, Charset.forName("UTF-8").newDecoder());
-            BufferedReader br = new BufferedReader(char_input);
-
-            while (true) {
-                String in = br.readLine();
-                if (in == null) {
-                    break;
-                }
-
-                if (!lineProcessing.apply(in)) {
-                    break;
-                }
-            }
-
-            br.close();
-        } catch (IOException e) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, "IOException while reading file", e);
-        } finally {
+        try (FileInputStream fr = new FileInputStream(file)) {
             try {
-                fr.close();
+                InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
+                BufferedReader br = new BufferedReader(char_input);
+
+                while (true) {
+                    String in = br.readLine();
+                    if (in == null) {
+                        break;
+                    }
+
+                    if (!lineProcessing.apply(in)) {
+                        break;
+                    }
+                }
+
+                br.close();
             } catch (IOException e) {
-                Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, "IOException while closing file reader", e);
+                LOGGER.log(Level.SEVERE, "IOException while reading file", e);
             }
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "IOException while closing file reader", e);
         }
     }
 
@@ -340,13 +334,11 @@ public class FileUtility {
      * @return StringBuffer the read result.
      */
     public static StringBuffer readFromFile(File file) {
-        StringBuffer output = new StringBuffer("");
-        FileInputStream fr = null;
+        StringBuffer output = new StringBuffer();
 
-        try {
-            fr = new FileInputStream(file);
+        try (FileInputStream fr = new FileInputStream(file)) {
 
-            InputStreamReader char_input = new InputStreamReader(fr, Charset.forName("UTF-8").newDecoder());
+            InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
 
             BufferedReader br = new BufferedReader(char_input);
 
@@ -361,16 +353,8 @@ public class FileUtility {
             br.close();
 
         } catch (IOException e) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, null, e);
             return null;
-        } finally {
-            if (fr != null) {
-                try {
-                    fr.close();
-                } catch (IOException e) {
-                    Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
-                }
-            }
         }
         return output;
     }
@@ -397,7 +381,7 @@ public class FileUtility {
             return output;
         }
 
-        InputStreamReader char_input = new InputStreamReader(inputStream, Charset.forName("UTF-8").newDecoder());
+        InputStreamReader char_input = new InputStreamReader(inputStream, StandardCharsets.UTF_8.newDecoder());
         BufferedReader br = new BufferedReader(char_input);
         try {
             while (true) {
@@ -410,18 +394,18 @@ public class FileUtility {
             }
             return output;
         } catch (IOException e) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+            LOGGER.log(Level.SEVERE, null, e);
         } finally {
             try {
                 char_input.close();
             } catch (IOException e) {
-                Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, null, e);
             }
 
             try {
                 br.close();
             } catch (IOException e) {
-                Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, null, e);
             }
         }
 
@@ -447,30 +431,26 @@ public class FileUtility {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, e);
+                LOGGER.log(Level.SEVERE, null, e);
                 return false;
             }
         }
 
-        OutputStreamWriter fw = null;
-        try {
-            fw = new OutputStreamWriter(new FileOutputStream(file, append), "UTF-8");
-            Writer bw = new BufferedWriter(fw);
-
-
-            bw.write(content);
-            bw.flush();
-            bw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } finally {
+        try (OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file, append), StandardCharsets.UTF_8)) {
             try {
-                fw.close();
+                Writer bw = new BufferedWriter(fw);
+
+
+                bw.write(content);
+                bw.flush();
+                bw.close();
             } catch (IOException ex) {
-                Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, null, ex);
                 return false;
             }
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return false;
         }
         return true;
     }
@@ -484,24 +464,20 @@ public class FileUtility {
      * @return return if write successfully
      */
     public static boolean writeToFile(StringBuffer content, File file, boolean append) {
-        OutputStreamWriter fw = null;
-        try {
-            fw = new OutputStreamWriter(new FileOutputStream(file, append), "UTF-8");
-            Writer bw = new BufferedWriter(fw);
-
-            bw.write(content.toString());
-            bw.flush();
-            bw.close();
-        } catch (IOException ex) {
-            Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, ex);
-            return false;
-        } finally {
+        try (OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(file, append), StandardCharsets.UTF_8)) {
             try {
-                fw.close();
+                Writer bw = new BufferedWriter(fw);
+
+                bw.write(content.toString());
+                bw.flush();
+                bw.close();
             } catch (IOException ex) {
-                Logger.getLogger(FileUtility.class.getName()).log(Level.SEVERE, null, ex);
+                LOGGER.log(Level.SEVERE, null, ex);
                 return false;
             }
+        } catch (IOException ex) {
+            LOGGER.log(Level.SEVERE, null, ex);
+            return false;
         }
         return true;
     }
@@ -552,7 +528,7 @@ public class FileUtility {
                 int prefixIndex = (path + "/").length();
                 Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), name.substring(prefixIndex)));
                 if (entry.isDirectory()) {
-                    LOGGER.info("Creating " + destinationPath.toString());
+                    LOGGER.info("Creating " + destinationPath);
                     destinationPath.toFile().mkdirs();
                     continue;
                 }
@@ -562,7 +538,7 @@ public class FileUtility {
                 }
                 Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
                 if (!postProcessingFunction.apply(destinationPath.toString())) {
-                    LOGGER.warning("Failed to apply post processing function to path " + destination.toString());
+                    LOGGER.warning("Failed to apply post processing function to path " + destination);
                 }
             }
             jar.close();
@@ -592,11 +568,12 @@ public class FileUtility {
                         String relativeDir = rootPath.relativize(dir.toPath()).toString();
                         Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), relativeDir, app.getName()));
                         if (!destinationPath.getParent().toFile().exists()) {
-                            destinationPath.getParent().toFile().mkdirs();
+                            if (!destinationPath.getParent().toFile().mkdirs())
+                                LOGGER.warning("Could not create destination directory.");
                         }
                         Files.copy(app.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
                         if (!postProcessingFunction.apply(destinationPath.toString())) {
-                            LOGGER.warning("Failed to apply post processing function to path " + destination.toString());
+                            LOGGER.warning("Failed to apply post processing function to path " + destination);
                         }
                     }
                 }
