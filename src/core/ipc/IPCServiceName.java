@@ -1,8 +1,9 @@
 package core.ipc;
 
 public enum IPCServiceName {
-    CONTROLLER_SERVER(0, "controller_server"),
-    WEB_UI_SERVER(1, "web_ui_server")
+    WEB_UI_SERVER(0, "web_ui_server")
+    //CONTROLLER_SERVER(0, "controller_server"),
+    //WEB_UI_SERVER(1, "web_ui_server")
     //CLI_SERVER(1, "cli_server"),
     //WEB_UI_SERVER(2, "web_ui_server"),
     //PYTHON(3, Language.PYTHON.toString()),

@@ -24,7 +24,7 @@ public final class IPCServiceManager {
 
     static {
         ipcServices = new IIPCService[IPC_SERVICE_COUNT];
-        ipcServices[IPCServiceName.CONTROLLER_SERVER.value()] = new ControllerServer();
+        //ipcServices[IPCServiceName.CONTROLLER_SERVER.value()] = new ControllerServer();
         //ipcServices[IPCServiceName.CLI_SERVER.value()] = new CliServer();
         ipcServices[IPCServiceName.WEB_UI_SERVER.value()] = new UIServer();
 
@@ -37,8 +37,8 @@ public final class IPCServiceManager {
     }
 
     public static void setBackEnd(MainBackEndHolder backEnd) {
-        ControllerServer controllerServer = (ControllerServer) ipcServices[IPCServiceName.CONTROLLER_SERVER.value()];
-        controllerServer.setBackEnd(backEnd);
+        //ControllerServer controllerServer = (ControllerServer) ipcServices[IPCServiceName.CONTROLLER_SERVER.value()];
+        //controllerServer.setBackEnd(backEnd);
     }
 
     public static IIPCService getIPCService(Language name) {

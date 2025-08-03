@@ -1,154 +1,38 @@
-/**
- * Copyright 2025 Langdon Staab
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
- * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- *
- * @author Langdon Staab
- * @author HP Truong
- */
 package core.ipc.repeatServer;
 
 import core.ipc.IPCServiceWithModifablePort;
 import frontEnd.MainBackEndHolder;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.SocketException;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.LinkedList;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ControllerServer extends IPCServiceWithModifablePort {
 
     public static final int DEFAULT_TIMEOUT_MS = 10000;
-    private static final int DEFAULT_PORT = 9999;
-    private static final int DEFAULT_SHUTDOWN_TIMEOUT_MS = 10000;
-    private static final int MAX_THREAD_COUNT = 10;
-    private static final int MAX_SERVER_BACK_LOG = 50; // Default value of ServerSocket constructor.
-    private final ScheduledThreadPoolExecutor threadPool;
-    private final LinkedList<ClientServingThread> clientServingThreads;
-    private MainBackEndHolder backEnd;
-    private boolean isStopped;
-    private ServerSocket listener;
-    private Thread mainThread;
-
-    public ControllerServer() {
-        threadPool = new ScheduledThreadPoolExecutor(MAX_THREAD_COUNT);
-        clientServingThreads = new LinkedList<>();
-        this.setPort(DEFAULT_PORT);
-    }
 
     @Override
     protected void start() throws IOException {
-        setStop(false);
-
-        mainThread = new Thread(() -> {
-            try {
-                listener = new ServerSocket(port, MAX_SERVER_BACK_LOG, InetAddress.getByName("localhost"));
-            } catch (IOException e) {
-                getLogger().log(Level.SEVERE, "IO Exception when starting server", e);
-                return;
-            }
-
-            try {
-                getLogger().fine("Awaiting client connections...");
-                while (!isStopped()) {
-                    final Socket socket;
-                    try {
-                        socket = listener.accept();
-                        socket.setSoTimeout(DEFAULT_TIMEOUT_MS);
-                        getLogger().info("New client accepted: " + socket.getInetAddress().getHostAddress() + ":" + socket.getPort());
-                    } catch (SocketException e) {
-                        if (!listener.isClosed()) {
-                            getLogger().log(Level.SEVERE, "Socket exception when serving", e);
-                        }
-                        continue;
-                    } catch (IOException e) {
-                        getLogger().log(Level.SEVERE, "IO Exception when serving", e);
-                        continue;
-                    }
-
-                    ClientServingThread newClient = new ClientServingThread(backEnd, socket);
-                    clientServingThreads.add(newClient);
-                    threadPool.submit(newClient);
-                }
-            } finally {
-                try {
-                    listener.close();
-                } catch (IOException e) {
-                    getLogger().log(Level.SEVERE, "IO Exception when closing server", e);
-                }
-            }
-
-            getLogger().log(Level.INFO, "Controller server terminating...");
-            for (ClientServingThread clientThread : clientServingThreads) {
-                clientThread.stop();
-            }
-            clientServingThreads.clear();
-            getLogger().log(Level.INFO, "Controller server terminated!");
-        });
-        mainThread.start();
     }
 
     @Override
     public void stop() {
-        setStop(true);
-        if (listener != null) {
-            try {
-                listener.close();
-            } catch (IOException e) {
-                getLogger().log(Level.SEVERE, "Failed to close server socket", e);
-            }
-        }
-
-        threadPool.shutdown();
-        try {
-            threadPool.awaitTermination(DEFAULT_SHUTDOWN_TIMEOUT_MS, TimeUnit.MILLISECONDS);
-        } catch (InterruptedException e) {
-            getLogger().log(Level.SEVERE, "Waiting for server thread pool to close", e);
-        }
-    }
-
-    public void setBackEnd(MainBackEndHolder backEnd) {
-        this.backEnd = backEnd;
-    }
-
-    private synchronized boolean isStopped() {
-        return isStopped;
-    }
-
-    private synchronized void setStop(boolean isStopped) {
-        this.isStopped = isStopped;
     }
 
     @Override
     public boolean isRunning() {
-        return mainThread != null && mainThread.isAlive();
+        return false;
     }
 
     @Override
     public String getName() {
-        return "Controller server";
+        return "pretend Controller server";
     }
 
     @Override
     public Logger getLogger() {
         return Logger.getLogger(ControllerServer.class.getName());
+    }
+
+    public void setBackEnd(MainBackEndHolder ignored) {
     }
 }
