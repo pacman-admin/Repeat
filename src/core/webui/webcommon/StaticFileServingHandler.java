@@ -29,6 +29,7 @@ import org.apache.http.protocol.HttpContext;
 import staticResources.BootStrapResources;
 import staticResources.WebUIResources;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
@@ -69,19 +70,30 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
         String path = uriWithoutParamter.substring("/static/".length());
         String decodedPath = URLDecoder.decode(path, "UTF-8");
         if (decodedPath.contains("./") || decodedPath.contains("..") || decodedPath.endsWith("/")) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
+            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
         }
 
         HttpResponse response = exchange.getResponse();
         response.setStatusCode(HttpStatus.SC_OK);
         response.addHeader("Cache-Control", "max-age=3600"); // Max age = 1 hour.
         String contentType = contentType(decodedPath);
-        InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
-        if (inputStream == null) LOGGER.warning("Content could not be accessed!!!:\n" + path + ", " + decodedPath);
-        LOGGER.fine("Accessing " + path + ", " + decodedPath + "...");
-        InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
-        response.setEntity(body);
-        exchange.submitResponse(new BasicAsyncResponseProducer(response));
+        try {
+            InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
+            if (inputStream == null) {
+                LOGGER.warning("Content could not be accessed!!!:\n" + path + ", " + decodedPath);
+                return HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
+            }
+            LOGGER.fine("Accessing " + path + "...");
+            InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
+            response.setEntity(body);
+            exchange.submitResponse(new BasicAsyncResponseProducer(response));
+        } catch (FileNotFoundException e) {
+            LOGGER.warning("Not found:\n" + path);
+            return HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Content could not be accessed!!!:\n" + path, e);
+            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Could not access file." + path);
+        }
         return null;
     }
 
