@@ -1,70 +1,81 @@
+/**
+ * Copyright 2025 Langdon Staab
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author Langdon Staab
+ * @author HP Truong
+ */
 package utilities;
-
-import java.awt.Desktop.Action;
-import java.io.File;
-import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import utilities.SubprocessUttility.ExecutionException;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Logger;
+
 public class Desktop {
 
-	private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
+    //private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
 
-	public static boolean openFile(File file) {
-		if (java.awt.Desktop.isDesktopSupported() && java.awt.Desktop.getDesktop().isSupported(Action.OPEN)) {
-			try {
-				java.awt.Desktop.getDesktop().open(file);
-			} catch (IOException e) {
-				LOGGER.log(Level.WARNING, "IOException when opening file.", e);
-				return false;
-			}
-			return true;
-		}
+    private Desktop() {
+    }
 
-		if (OSIdentifier.IS_WINDOWS) {
-			return openFileWindows(file);
-		}
-		if (OSIdentifier.IS_LINUX) {
-			return openFileLinux(file);
-		}
-		if (OSIdentifier.IS_OSX) {
-			return openFileOSX(file);
-		}
+    public static boolean openFile(File file) {
+        try {
+            java.awt.Desktop.getDesktop().open(file);
+            return true;
+        } catch (IOException ignored) {
+        }
+        if (OSIdentifier.IS_WINDOWS) {
+            return openFileWindows(file);
+        }
+        if (OSIdentifier.IS_LINUX) {
+            return openFileLinux(file);
+        }
+        if (OSIdentifier.IS_OSX) {
+            return openFileOSX(file);
+        }
+        return false;
+    }
 
-		return false;
-	}
+    private static boolean openFileWindows(File file) {
+        return openWithCommand("explorer", file);
+    }
 
-	private static boolean openFileWindows(File file) {
-		return openWithCommand("explorer", file);
-	}
+    private static boolean openFileLinux(File file) {
+        if (openWithCommand("xdg-open", file)) {
+            return true;
+        }
+        if (openWithCommand("kde-open", file)) {
+            return true;
+        }
+        if (openWithCommand("gnome-open", file)) {
+            return true;
+        }
+        return false;
+    }
 
-	private static boolean openFileLinux(File file) {
-		if (openWithCommand("xdg-open", file)) {
-			return true;
-		}
-		if (openWithCommand("kde-open", file)) {
-			return true;
-		}
-		if (openWithCommand("gnome-open", file)) {
-			return true;
-		}
-		return false;
-	}
+    private static boolean openFileOSX(File file) {
+        return openWithCommand("open -e", file);
+    }
 
-	private static boolean openFileOSX(File file) {
-		return openWithCommand("open", file);
-	}
-
-	private static boolean openWithCommand(String cmd, File file) {
-		try {
-			SubprocessUttility.execute(cmd + " " + file.getAbsolutePath());
-		} catch (ExecutionException e) {
-			return false;
-		}
-		return true;
-	}
-
-	private Desktop() {}
+    private static boolean openWithCommand(String cmd, File file) {
+        try {
+            SubprocessUttility.execute(cmd + " " + file.getAbsolutePath());
+        } catch (ExecutionException e) {
+            return false;
+        }
+        return true;
+    }
 }
