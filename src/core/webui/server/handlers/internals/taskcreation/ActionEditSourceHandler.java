@@ -1,22 +1,23 @@
 package core.webui.server.handlers.internals.taskcreation;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-
-import org.apache.http.HttpException;
+import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
+import java.io.IOException;
 
 public class ActionEditSourceHandler extends AbstractSingleMethodHttpHandler {
 
-	public ActionEditSourceHandler() {
-		super(AbstractSingleMethodHttpHandler.POST_METHOD);
-	}
+    public ActionEditSourceHandler() {
+        super(AbstractSingleMethodHttpHandler.POST_METHOD);
+    }
 
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+        return HttpServerUtilities.prepareTextResponse(exchange, 501, "Not Implemented (yet)");
+    }
+/*
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
 			throws HttpException, IOException {
@@ -28,5 +29,5 @@ public class ActionEditSourceHandler extends AbstractSingleMethodHttpHandler {
 		String source = new String(content, StandardCharsets.UTF_8);
 		backEndHolder.editSourceCode(source);
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
-	}
+	}*/
 }

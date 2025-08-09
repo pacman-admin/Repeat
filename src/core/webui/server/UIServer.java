@@ -196,7 +196,7 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/repeats-remote-clients/stop", new StopRemoteClientHandler(objectRenderer));
         output.put("/internals/repeats-remote-clients/set-launch-at-startup", new SetLaunchAtStartupRemoteClientHandler(objectRenderer));
 
-        output.put("/internals/get/editted-source", new GetEdittedSourceHandler());
+        output.put("/internals/get/editted-source", new GetEditedSourceHandler());
         output.put("/internals/get/is-running-compiled-task", new GetIsRunningCompiledTaskHandler());
         output.put("/internals/get/is-recording", new GetIsRecordingHandler());
         output.put("/internals/get/is-replaying", new GetIsReplayingHandler());

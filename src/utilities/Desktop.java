@@ -32,9 +32,13 @@ public class Desktop {
     }
 
     public static boolean openFile(File file) {
+        //throw new RuntimeException("Does not work!");
+        LOGGER.info("Opening file...");
         try {
             java.awt.Desktop.getDesktop().open(file);
             return true;
+        } catch (IllegalArgumentException e) {
+            LOGGER.warning("File <"+file.getAbsolutePath()+"> does not exist!");
         } catch (IOException ignored) {
         }
         if (OSIdentifier.IS_WINDOWS) {

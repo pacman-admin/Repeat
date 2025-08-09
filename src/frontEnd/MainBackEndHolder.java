@@ -612,7 +612,7 @@ public class MainBackEndHolder {
      * This does not update the source code in the text area in the main GUI.
      */
     public void editSourceCode(String source) {
-        AbstractNativeCompiler currentCompiler = getCompiler();
+        /*AbstractNativeCompiler currentCompiler = getCompiler();
         // Create a temporary file
         try {
             tempSourceFile = File.createTempFile("source", currentCompiler.getExtension());
@@ -622,10 +622,10 @@ public class MainBackEndHolder {
         } catch (IOException e) {
             LOGGER.warning("Encountered error creating temporary source file.\n" + e.getMessage());
             return;
-        }
-
-        if (!Desktop.openFile(tempSourceFile)) {
-            LOGGER.warning("Unable to open file for editting.\n");
+        }*/
+        LOGGER.info(getCompiler().getExtension());
+        if (!Desktop.openFile(new File(source))) {
+            LOGGER.warning("Unable to open file for editing.\n");
         }
     }
 

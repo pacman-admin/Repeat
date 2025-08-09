@@ -85,7 +85,7 @@ public class ManualBuildNativeCompiler extends AbstractNativeCompiler {
 
             ManuallyBuildStep s = ManuallyBuildStep.parseJSON(node);
             if (s == null) {
-                getLogger().warning("Umable to parse step from JSON " + JSONUtility.jsonToString(node));
+                getLogger().warning("Unable to parse step from JSON " + JSONUtility.jsonToString(node));
                 return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILATION_ERROR, null);
             }
             steps.add(s);

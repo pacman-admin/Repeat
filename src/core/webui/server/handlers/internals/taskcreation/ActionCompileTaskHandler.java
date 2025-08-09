@@ -32,6 +32,7 @@ public class ActionCompileTaskHandler extends AbstractSingleMethodHttpHandler {
 		boolean result = backEndHolder.compileSourceAndSetCurrent(source, null);
 		if (!result) {
 			LOGGER.warning("Unable to compile source code.");
+			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Could not compile source code!");
 		}
 
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
