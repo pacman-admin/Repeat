@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public class Desktop {
 
-    //private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
 
     private Desktop() {
     }
@@ -46,7 +46,7 @@ public class Desktop {
         if (OSIdentifier.IS_OSX) {
             return openFileOSX(file);
         }
-        return false;
+        return openWithCommand("xedit", file);
     }
 
     private static boolean openFileWindows(File file) {
@@ -63,7 +63,8 @@ public class Desktop {
         if (openWithCommand("gnome-open", file)) {
             return true;
         }
-        return false;
+        LOGGER.info("No good text editor was found. Using xedit (sorry)");
+        return openWithCommand("xedit", file);
     }
 
     private static boolean openFileOSX(File file) {
