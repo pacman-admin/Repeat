@@ -31,6 +31,7 @@ import utilities.json.JSONUtility;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class ManualBuildNativeCompiler extends AbstractNativeCompiler {
@@ -55,6 +56,7 @@ public class ManualBuildNativeCompiler extends AbstractNativeCompiler {
      */
     @Override
     public DynamicCompilationResult compile(String source) {
+        LOGGER.log(Level.INFO,"Bla",new RuntimeException("compiler called"));
         String[] lines = source.split("\n");
         boolean foundVersion = false;
 

@@ -53,7 +53,7 @@ public class Config implements ILoggable {
     private static final List<ConfigParser> knownParsers;
 
     static {
-        knownParsers = Arrays.asList(new Parser1_0(), new Parser1_1(), new Parser1_2(), new Parser1_3(), new Parser1_4(), new Parser1_5(), new Parser1_6(), new Parser1_7(), new Parser1_8(), new Parser1_9(), new Parser2_0(), new Parser2_1(), new Parser2_2(), new Parser2_3(), new Parser2_4(), new Parser2_5(), new Parser2_6(), new Parser2_7(), new Parser2_8(), new Parser2_9(), new Parser2_10(), new Parser2_11(), new Parser2_12(), new Parser2_13(), new Parser2_14(), new Parser2_15());
+        knownParsers = List.of(new Parser2_15());
     }
 
     private final MainBackEndHolder backEnd;
