@@ -36,7 +36,6 @@ import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -131,7 +130,7 @@ public class Config implements ILoggable {
         if (FileUtility.fileExists(configFile)) {
             JsonRootNode root = JSONUtility.readJSON(configFile);
 
-            if (root == null||!root.isStringValue("version")) {
+            if (root == null || !root.isStringValue("version")) {
                 getLogger().warning("Could not read config file!\nCreating new config file from default settings...");
                 JOptionPane.showMessageDialog(null, "Could not read config file! Creating new config.");
                 defaultExtract();
@@ -162,11 +161,11 @@ public class Config implements ILoggable {
     }
 
     private void defaultExtract() {
-        toolsConfig = new ToolsConfig(Arrays.asList(ToolsConfig.LOCAL_CLIENT));
-        coreConfig = new CoreConfig(Arrays.asList(ToolsConfig.LOCAL_CLIENT));
+        toolsConfig = new ToolsConfig(List.of(ToolsConfig.LOCAL_CLIENT));
+        coreConfig = new CoreConfig(List.of(ToolsConfig.LOCAL_CLIENT));
         List<TaskGroup> taskGroups = backEnd.getTaskGroups();
         backEnd.addTaskGroup(new TaskGroup("default"));
-        backEnd.setCurrentTaskGroup(taskGroups.get(0));
+        backEnd.setCurrentTaskGroup(taskGroups.getFirst());
     }
 
     public boolean writeConfig() {
@@ -247,7 +246,7 @@ public class Config implements ILoggable {
     }
 
     public void setRECORD(int RECORD) {
-        setRECORD(new KeyChain(Arrays.asList(RECORD)));
+        setRECORD(new KeyChain(List.of(RECORD)));
     }
 
     public KeyChain getREPLAY() {
