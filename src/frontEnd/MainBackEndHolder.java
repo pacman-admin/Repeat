@@ -86,10 +86,9 @@ public class MainBackEndHolder {
 
         if (!SystemTray.isSupported()) {
             LOGGER.warning("System tray is not supported!");
-            trayIcon = null;
-        } else {
-            trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
         }
+        trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
+
         logHolder = new LogHolder();
 
         executor = new ScheduledThreadPoolExecutor(10);
@@ -357,8 +356,9 @@ public class MainBackEndHolder {
     }
 
     public synchronized void startReplay() {
-        if (isReplaying) {
-            return;
+        if (isRunningCompiledTask || isReplaying) {
+            stopReplay();
+            stopRunningCompiledAction();
         }
         switchReplay();
     }
@@ -395,8 +395,9 @@ public class MainBackEndHolder {
     }
 
     public synchronized void runCompiledAction() {
-        if (isRunningCompiledTask) {
-            return;
+        if (isRunningCompiledTask || isReplaying) {
+            stopReplay();
+            stopRunningCompiledAction();
         }
         switchRunningCompiledAction();
     }

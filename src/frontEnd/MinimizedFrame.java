@@ -52,8 +52,7 @@ public class MinimizedFrame extends TrayIcon {
 
     private void show() {
         if (!Desktop.isDesktopSupported()) {
-            LOGGER.warning("Cannot open browser to UI since Desktop module is not supported.");
-            return;
+            LOGGER.warning("Cannot open UI in browser; Desktop module is not supported.");
         }
 
         IIPCService server = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER);
