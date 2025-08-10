@@ -79,15 +79,17 @@ public class MainBackEndHolder {
     private RepeatsPeerServiceClientManager peerServiceClientManager;
     private boolean isRecording, isReplaying, isRunningCompiledTask;
 
-    private File tempSourceFile;
-
     public MainBackEndHolder() {
         config = new Config(this);
 
         if (!SystemTray.isSupported()) {
             LOGGER.warning("System tray is not supported!");
         }
-        trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
+        try {
+            trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
+        } catch (Exception e) {
+            LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
+        }
 
         logHolder = new LogHolder();
 
@@ -159,13 +161,20 @@ public class MainBackEndHolder {
         return newHandler;
     }
 
+    //private File tempSourceFile;
+    public boolean openCurrentTaskGroup() {
+        //LOGGER.info("Opening " + currentGroup.getSourceFilePath() + "...");
+        // return Desktop.openFile(new File(currentGroup.getSourceFilePath()));
+        return false;
+    }
+
     protected void initializeLogging() {
         // Change stdout and stderr to also copy content to the logHolder.
         System.setOut(new PrintStream(CompositeOutputStream.of(logHolder, System.out)));
         System.setErr(new PrintStream(CompositeOutputStream.of(logHolder, System.err)));
 
         // Once we've updated stdout and stderr, we need to re-register the ConsoleHandler of the root
-        // logger because it was only logging to the old stderr which we just changed above.
+        // logger because it wa s only logging to the old stderr which we just changed above.
         Logger rootLogger = Logger.getLogger("");
         Handler[] handlers = rootLogger.getHandlers();
         for (Handler handler : handlers) {
@@ -356,9 +365,8 @@ public class MainBackEndHolder {
     }
 
     public synchronized void startReplay() {
-        if (isRunningCompiledTask || isReplaying) {
-            stopReplay();
-            stopRunningCompiledAction();
+        if (isReplaying) {
+            return;
         }
         switchReplay();
     }
@@ -395,9 +403,8 @@ public class MainBackEndHolder {
     }
 
     public synchronized void runCompiledAction() {
-        if (isRunningCompiledTask || isReplaying) {
-            stopReplay();
-            stopRunningCompiledAction();
+        if (isRunningCompiledTask) {
+            return;
         }
         switchRunningCompiledAction();
     }
@@ -508,7 +515,7 @@ public class MainBackEndHolder {
         }
 
         if (getCurrentTaskGroup() == removed) {
-            setCurrentTaskGroup(taskGroups.get(0));
+            setCurrentTaskGroup(taskGroups.getFirst());
         }
 
         for (UserDefinedAction action : removed.getTasks()) {
@@ -634,7 +641,7 @@ public class MainBackEndHolder {
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
      */
     public String reloadSourceCode() {
-        if (tempSourceFile == null || !tempSourceFile.exists()) {
+        /*if (tempSourceFile == null || !tempSourceFile.exists()) {
             LOGGER.warning("Temp file not accessible.");
             return null;
         }
@@ -644,7 +651,8 @@ public class MainBackEndHolder {
             LOGGER.warning("Unable to read from temp file.");
             return null;
         }
-        return sourceCode.toString();
+        return sourceCode.toString();*/
+        return "";
     }
 
     private void unregisterTask(UserDefinedAction task) {

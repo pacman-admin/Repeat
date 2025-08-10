@@ -56,7 +56,7 @@ public class ManualBuildNativeCompiler extends AbstractNativeCompiler {
      */
     @Override
     public DynamicCompilationResult compile(String source) {
-        LOGGER.log(Level.INFO,"Bla",new RuntimeException("compiler called"));
+        //LOGGER.log(Level.INFO,"Bla",new RuntimeException("compiler called"));
         String[] lines = source.split("\n");
         boolean foundVersion = false;
 
