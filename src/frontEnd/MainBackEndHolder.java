@@ -638,20 +638,6 @@ public class MainBackEndHolder {
     /**
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
      */
-    public String reloadSourceCode() {
-        File f = new File(customFunction.getSourcePath());
-        if (!f.exists()) {
-            LOGGER.warning("Temp file not accessible.");
-            return null;
-        }
-        LOGGER.info("Reloading edits from file: " + f.getAbsolutePath());
-        StringBuffer sourceCode = FileUtility.readFromFile(f);
-        if (sourceCode == null) {
-            LOGGER.warning("Unable to read from temp file.");
-            return null;
-        }
-        return sourceCode.toString();
-    }
 
     private void unregisterTask(UserDefinedAction task) {
         keysManager.unregisterTask(task);

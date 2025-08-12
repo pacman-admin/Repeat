@@ -15,18 +15,7 @@ public class ActionEditSourceHandler extends AbstractSingleMethodHttpHandler {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);
     }
 
-    /*protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         return HttpServerUtilities.prepareTextResponse(exchange, 501, "Not Implemented (yet)");
-    }*/
-
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws IOException {
-		byte[] content = HttpServerUtilities.getPostContent(request);
-		if (content == null) {
-			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Failed to get POST content.");
-		}
-        backEndHolder.openCurrentAction();
-		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
-	}
+    }
 }
