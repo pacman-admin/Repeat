@@ -12,9 +12,8 @@ import staticResources.BootStrapResources;
 public class MainFrontEnd {
 
 	private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
-	private static MainBackEndHolder backEnd;
 
-	public static void run() {
+    public static void run() {
 		/*************************************************************************************/
 		/********************************Extracting resources*********************************/
 		try {
@@ -25,7 +24,7 @@ public class MainFrontEnd {
 		}
 		/*************************************************************************************/
 		/********************************Load configs****************************/
-		backEnd = new MainBackEndHolder();
+        MainBackEndHolder backEnd = new MainBackEndHolder();
 		backEnd.loadConfig(null);
 		/*************************************************************************************/
 		/********************************Initializing global hooks****************************/
