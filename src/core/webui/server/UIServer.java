@@ -313,7 +313,9 @@ public class UIServer extends IPCServiceWithModifablePort {
     public Logger getLogger() {
         return Logger.getLogger(UIServer.class.getName());
     }
-
+    public ManuallyBuildActionConstructorManager getManuallyBuildActionConstructorManager(){
+        return manuallyBuildActionConstructorManager;
+    }
     private boolean portFree() throws IOException {
         try {
             ServerSocket socket = new ServerSocket(port);

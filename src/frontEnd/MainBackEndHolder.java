@@ -54,7 +54,6 @@ import java.util.stream.Collectors;
 
 @SuppressWarnings("DanglingJavadoc")
 public class MainBackEndHolder {
-
     private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
     protected final List<TaskGroup> taskGroups;
     protected final GlobalEventsManager keysManager;
@@ -162,10 +161,9 @@ public class MainBackEndHolder {
     }
 
     //private File tempSourceFile;
-    public boolean openCurrentTaskGroup() {
-        //LOGGER.info("Opening " + currentGroup.getSourceFilePath() + "...");
-        // return Desktop.openFile(new File(currentGroup.getSourceFilePath()));
-        return false;
+    public boolean openCurrentAction() {
+        LOGGER.info("Opening " + customFunction.getSourcePath() + "...");
+        return Desktop.openFile(new File(customFunction.getSourcePath()));
     }
 
     protected void initializeLogging() {
@@ -484,7 +482,7 @@ public class MainBackEndHolder {
                 keysManager.registerTask(action);
             } else {
                 result = false;
-                String collisionNames = StringUtilities.join(collisions.stream().map(t -> t.getName()).collect(Collectors.toList()), ", ");
+                String collisionNames = StringUtilities.join(collisions.stream().map(UserDefinedAction::getName).collect(Collectors.toList()), ", ");
                 LOGGER.log(Level.WARNING, "Cannot register action " + action.getName() + ". There are collisions with " + collisionNames + " in hotkeys!");
             }
         }
@@ -641,18 +639,18 @@ public class MainBackEndHolder {
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
      */
     public String reloadSourceCode() {
-        /*if (tempSourceFile == null || !tempSourceFile.exists()) {
+        File f = new File(customFunction.getSourcePath());
+        if (!f.exists()) {
             LOGGER.warning("Temp file not accessible.");
             return null;
         }
-
-        StringBuffer sourceCode = FileUtility.readFromFile(tempSourceFile);
+        LOGGER.info("Reloading edits from file: " + f.getAbsolutePath());
+        StringBuffer sourceCode = FileUtility.readFromFile(f);
         if (sourceCode == null) {
             LOGGER.warning("Unable to read from temp file.");
             return null;
         }
-        return sourceCode.toString();*/
-        return "";
+        return sourceCode.toString();
     }
 
     private void unregisterTask(UserDefinedAction task) {

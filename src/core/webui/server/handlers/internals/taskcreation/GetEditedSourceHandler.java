@@ -17,10 +17,10 @@ public class GetEditedSourceHandler extends AbstractSingleMethodHttpHandler {
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         return HttpServerUtilities.prepareTextResponse(exchange, 503, "");
     }
-    /*
-    @Override
+
+    /*@Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-            throws HttpException, IOException {
+            throws IOException {
         try {
             String source = backEndHolder.reloadSourceCode();
             return HttpServerUtilities.prepareTextResponse(exchange, 200, source);

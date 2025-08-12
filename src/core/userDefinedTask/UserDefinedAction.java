@@ -98,7 +98,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
             File sourceFile = new File(sourcePath);
             StringBuffer sourceBuffer = FileUtility.readFromFile(sourceFile);
-            String source = null;
+            String source;
             if (sourceBuffer == null) {
                 JOptionPane.showMessageDialog(null, "Cannot get source at path " + sourcePath);
                 return null;

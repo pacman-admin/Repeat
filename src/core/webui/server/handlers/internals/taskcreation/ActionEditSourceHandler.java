@@ -7,6 +7,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 
 public class ActionEditSourceHandler extends AbstractSingleMethodHttpHandler {
 
@@ -14,20 +15,18 @@ public class ActionEditSourceHandler extends AbstractSingleMethodHttpHandler {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);
     }
 
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    /*protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         return HttpServerUtilities.prepareTextResponse(exchange, 501, "Not Implemented (yet)");
-    }
-/*
+    }*/
+
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		byte[] content = HttpServerUtilities.getPostContent(request);
 		if (content == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Failed to get POST content.");
 		}
-
-		String source = new String(content, StandardCharsets.UTF_8);
-		backEndHolder.editSourceCode(source);
+        backEndHolder.openCurrentAction();
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
-	}*/
+	}
 }
