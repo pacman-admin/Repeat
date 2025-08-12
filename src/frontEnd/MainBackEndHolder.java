@@ -39,7 +39,6 @@ import core.userDefinedTask.internals.*;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 import utilities.*;
-import utilities.Desktop;
 import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
@@ -160,12 +159,6 @@ public class MainBackEndHolder {
         return newHandler;
     }
 
-    //private File tempSourceFile;
-    public boolean openCurrentAction() {
-        LOGGER.info("Opening " + customFunction.getSourcePath() + "...");
-        return Desktop.openFile(new File(customFunction.getSourcePath()));
-    }
-
     protected void initializeLogging() {
         // Change stdout and stderr to also copy content to the logHolder.
         System.setOut(new PrintStream(CompositeOutputStream.of(logHolder, System.out)));
@@ -250,7 +243,7 @@ public class MainBackEndHolder {
     }
 
     public void scheduleExit(long delayMs) {
-        executor.schedule(() -> exit(), delayMs, TimeUnit.MILLISECONDS);
+        executor.schedule(this::exit, delayMs, TimeUnit.MILLISECONDS);
     }
 
     private void exit() {
@@ -617,23 +610,6 @@ public class MainBackEndHolder {
      * <p>
      * This does not update the source code in the text area in the main GUI.
      */
-    public void editSourceCode(String source) {
-        /*AbstractNativeCompiler currentCompiler = getCompiler();
-        // Create a temporary file
-        try {
-            tempSourceFile = File.createTempFile("source", currentCompiler.getExtension());
-            tempSourceFile.deleteOnExit();
-
-            FileUtility.writeToFile(source, tempSourceFile, false);
-        } catch (IOException e) {
-            LOGGER.warning("Encountered error creating temporary source file.\n" + e.getMessage());
-            return;
-        }*/
-        LOGGER.info(getCompiler().getExtension());
-        if (!Desktop.openFile(new File(source))) {
-            LOGGER.warning("Unable to open file for editing.\n");
-        }
-    }
 
     /**
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
@@ -1252,11 +1228,6 @@ public class MainBackEndHolder {
      */
     public List<TaskGroup> getTaskGroups() {
         return Collections.unmodifiableList(taskGroups);
-    }
-
-    public int getCurentTaskGroupIndex() {
-        TaskGroup current = getCurrentTaskGroup();
-        return getTaskGroupIndex(current.getGroupId());
     }
 
     public TaskGroup getCurrentTaskGroup() {
