@@ -22,3 +22,5 @@ hs_err_pid*
 *.xml
 .DS_Store
 *.DS_Store
+data/*
+core/*
