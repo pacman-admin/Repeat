@@ -1,6 +1,6 @@
 <#macro fragment>
      <!--   Core JS Files   -->
-    <script src="/static/js/jquery.3.7.1.min.js" type="text/javascript"></script>
+    <script src="/static/js/jquery-3.7.1.min.js" type="text/javascript"></script>
     <script src="/static/js/bootstrap.min.js" type="text/javascript"></script>
 
     <script src="/static/jquery-ui-1.14.1/jquery-ui.min.js" type="text/javascript"></script>
