@@ -1,0 +1,7 @@
+Repeat
+Copyright c.2015-2023 HP Truong, 2025 Langdon Staab
+
+The Initial Developer of the program, is HP Truong (http://www.adobe.com/).
+Copyright 2015 - 2023 HP Truong.
+
+This program utilizes the JAMA Matrix Package, a cooperative product of The MathWorks and the National Institute of Standards and Technology (NIST).
