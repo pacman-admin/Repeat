@@ -79,7 +79,7 @@ public final class GlobalEventsManager {
             }
         }.map(collisions), ", ");
 
-        LOGGER.warning("Newly registered keychains " + "will collide with previously registered task(s) " + taskNames + "\n" + "You cannot assign this key chain unless you remove the conflicting key chain...");
+        LOGGER.warning("Newly registered keychains will collide with previously registered task(s) " + taskNames + "\n" + "You cannot assign this key chain unless you remove the conflicting key chain...");
     }
 
     public void startGlobalListener() throws Exception {
@@ -88,7 +88,7 @@ public final class GlobalEventsManager {
             @Override
             public Boolean apply(NativeKeyEvent r) {
                 KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key pressed " + stroke.toString());
+                LOGGER.fine("Key pressed " + stroke);
 
                 if (!shouldDelegate(stroke)) {
                     return true;
@@ -105,7 +105,7 @@ public final class GlobalEventsManager {
             @Override
             public Boolean apply(NativeKeyEvent r) {
                 KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key released " + stroke.toString());
+                LOGGER.fine("Key released " + stroke);
                 if (!shouldDelegate(stroke)) {
                     return true;
                 }
@@ -151,10 +151,9 @@ public final class GlobalEventsManager {
         keyListener.startListening();
         mouseListener.startListening();
     }
+
     @Deprecated
-    public void setCurrentTaskGroup(TaskGroup currentTaskGroup) {
-        //this.currentTaskGroup = currentTaskGroup;
-        LOGGER.info("This method has been removed.");
+    public void setCurrentTaskGroup(TaskGroup ignored) {
     }
 
     /**
@@ -177,7 +176,7 @@ public final class GlobalEventsManager {
      * Map all key chains of the current task to the action. Kick out all colliding tasks.
      *
      * @param action action to register.
-     * @return List of currently registered tasks that collide with this newly registered task
+     * @return Set of currently registered tasks that collide with this newly registered task
      */
     public Set<UserDefinedAction> registerTask(UserDefinedAction action) {
         return taskActivationManager.registerAction(action);
