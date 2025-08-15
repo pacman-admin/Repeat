@@ -14,7 +14,7 @@
     <!-- Custom button CSS     -->
     <link rel="stylesheet" href="/static/css/custom-buttons.css"/>
     <!-- Source code text area CSS     -->
-    <link rel="stylesheet" href="/static/codemirror-5.65.20/lib/codemirror.css">
+    <link rel="stylesheet" href="/static/css/codemirror.css">
 </head>
 <body>
 
@@ -194,7 +194,8 @@
     <@common_js_fragment.fragment/>
 
     <!--  JavaScript for this page.    -->
-    <script src="/static/codemirror-5.65.20/lib/codemirror.js"></script>
+    <script src="/static/js/codemirror.js"></script>
+
     <script src="/static/js/repeat/menu-index-page.js"></script>
     <script src="/static/js/repeat/polling-common.js"></script>
     <script src="/static/js/repeat/button-index-page-actions.js"></script>

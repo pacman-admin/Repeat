@@ -20,3 +20,5 @@ hs_err_pid*
 *.manualbuild
 *.out
 *.xml
+.DS_Store
+*.DS_Store
