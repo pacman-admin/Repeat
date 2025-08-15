@@ -1,7 +1,6 @@
 package utilities;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class FuzzySearch {
@@ -30,7 +29,7 @@ public class FuzzySearch {
         }
 
         // Sort by edit distance
-        Collections.sort(output, (fs0, fs1) -> {
+        output.sort((fs0, fs1) -> {
             String s0 = fs0.getString();
             String s1 = fs1.getString();
 

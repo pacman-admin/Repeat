@@ -66,8 +66,8 @@ public abstract class ConfigParser {
                 return false;
             }
 
-            ConfigParser parser = latest.getA();
-            JsonRootNode latestData = latest.getB();
+            ConfigParser parser = latest.a();
+            JsonRootNode latestData = latest.b();
             return parser.extractData(config, latestData);
         } else {
             return internalExtractData(config, data);
@@ -148,8 +148,8 @@ public abstract class ConfigParser {
                 return false;
             }
 
-            ConfigParser parser = latest.getA();
-            JsonRootNode latestData = latest.getB();
+            ConfigParser parser = latest.a();
+            JsonRootNode latestData = latest.b();
             return parser.extractData(config, latestData);
         } else {
             return internalExtractData(config, data);

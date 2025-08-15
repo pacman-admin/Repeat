@@ -17,6 +17,28 @@ import java.util.concurrent.Semaphore;
 
 public class SwingUtil {
 
+    @SuppressWarnings("unused")
+    public static final class JFrameUtil {
+
+        private JFrameUtil() {
+        }
+
+        public static void focus(JFrame frame, Function<Void, Boolean> callBackRender) {
+            if (frame.getState() == Frame.ICONIFIED) {
+                frame.setState(Frame.NORMAL);
+            }
+
+            if (!frame.isVisible()) {
+                callBackRender.apply(null);
+                frame.setVisible(true);
+            }
+
+            frame.requestFocus();
+            frame.toFront();
+        }
+    }
+
+    @SuppressWarnings("unused")
     public static final class TableUtil {
 
         private TableUtil() {
@@ -85,9 +107,9 @@ public class SwingUtil {
             int[] columns = table.getSelectedColumns();
             int[] rows = table.getSelectedRows();
 
-            for (int i = 0; i < rows.length; i++) {
-                for (int j = 0; j < columns.length; j++) {
-                    table.setValueAt("", rows[i], columns[j]);
+            for (int row : rows) {
+                for (int column : columns) {
+                    table.setValueAt("", row, column);
                 }
             }
         }
@@ -158,7 +180,7 @@ public class SwingUtil {
                 boolean remove = true;
                 for (int i = 0; i < table.getColumnCount(); i++) {
                     String data = getStringValueTable(table, table.getRowCount() - 1, i);
-                    if (!data.equals("")) {
+                    if (!data.isEmpty()) {
                         remove = false;
                         break;
                     }
@@ -373,7 +395,7 @@ public class SwingUtil {
         /**
          * Get input from a number of fields from user
          *
-         * @param titles titles of the fields that requires input
+         * @param titles titles of the fields that require input
          * @return a list of input values entered by user, or null if user cancels input windows
          */
         public static String[] getInputs(String[] titles) {
@@ -420,7 +442,7 @@ public class SwingUtil {
         /**
          * Display a dialog to confirm an action.
          *
-         * @param parent  parent jframe hosting this dialog
+         * @param parent  parent JFrame hosting this dialog
          * @param title   title of the dialog shown
          * @param message confirmation message shown in the dialog
          * @return whether user selects confirm or cancel
@@ -429,7 +451,7 @@ public class SwingUtil {
             final JDialog dialog = new JDialog(parent, title, ModalityType.APPLICATION_MODAL);
             dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
-            final ModifableBoolean result = new ModifableBoolean(false);
+            final ModifiableBoolean result = new ModifiableBoolean(false);
 
             JButton bYes = new JButton("Yes");
             JButton bNo = new JButton("No");
@@ -437,19 +459,11 @@ public class SwingUtil {
             buttonPanel.add(bYes);
             buttonPanel.add(bNo);
 
-            bYes.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    result.value = true;
-                    dialog.dispose();
-                }
+            bYes.addActionListener(e -> {
+                result.value = true;
+                dialog.dispose();
             });
-            bNo.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    dialog.dispose();
-                }
-            });
+            bNo.addActionListener(e -> dialog.dispose());
 
             JPanel panel = new JPanel();
             panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -592,14 +606,11 @@ public class SwingUtil {
         private static final void getFocus(Window w) {
             Semaphore s = new Semaphore(0);
             if (!w.isVisible()) {
-                new Thread() {
-                    @Override
-                    public void run() {
-                        s.release();
-                        w.setVisible(true); // This call is blocking so it needs to be in a separate thread.
-                        s.release();
-                    }
-                }.start();
+                new Thread(() -> {
+                    s.release();
+                    w.setVisible(true); // This call is blocking so it needs to be in a separate thread.
+                    s.release();
+                }).start();
             } else {
                 s.release(2);
             }
@@ -641,7 +652,7 @@ public class SwingUtil {
          * @return true if the user chose the OK option, false otherwise (cancel, or close dialog).
          */
         public static boolean genericInput(String title, JPanel content) {
-            final ModifableBoolean result = new ModifableBoolean(false);
+            final ModifiableBoolean result = new ModifiableBoolean(false);
             final JDialog dialog = new JDialog(null, title, ModalityType.APPLICATION_MODAL);
             dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -656,20 +667,14 @@ public class SwingUtil {
             buttonPanel.add(bCancel);
             panel.add(buttonPanel);
 
-            bOK.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    result.setValue(true);
-                    dialog.dispose();
-                }
+            bOK.addActionListener(e -> {
+                result.setValue(true);
+                dialog.dispose();
             });
 
-            bCancel.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    result.setValue(false);
-                    dialog.dispose();
-                }
+            bCancel.addActionListener(e -> {
+                result.setValue(false);
+                dialog.dispose();
             });
 
             dialog.add(panel);
@@ -733,10 +738,10 @@ public class SwingUtil {
     /**
      * A wrapper for boolean primitive that allows modification of its value.
      */
-    private static final class ModifableBoolean {
+    private static final class ModifiableBoolean {
         private boolean value;
 
-        private ModifableBoolean(boolean init) {
+        private ModifiableBoolean(boolean init) {
             this.value = init;
         }
 

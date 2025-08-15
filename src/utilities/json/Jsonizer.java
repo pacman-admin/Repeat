@@ -146,11 +146,10 @@ public class Jsonizer {
 		if (isIterableType(objectClass)) {
     		Iterable<?> it = (Iterable<?>) o;
     		List<JsonNode> nodes = new ArrayList<>();
-    		for (Iterator<?> i = it.iterator(); i.hasNext(); ) {
-    			Object next = i.next();
-    			JsonNode node = internalJsonize(next);
-    			nodes.add(node);
-    		}
+            for (Object next : it) {
+                JsonNode node = internalJsonize(next);
+                nodes.add(node);
+            }
     		return JsonNodeFactories.array(nodes);
     	}
 

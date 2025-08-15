@@ -52,19 +52,17 @@ public class DataNormalizer {
 		}
 
 		ArrayList<Point.Float> centered = new ArrayList<>(input.size());
-		for (int i = 0; i < input.size(); i++) {
-			Point current = input.get(i);
-			centered.add(new Point.Float(current.x - subX, current.y - subY));
-		}
+        for (Point current : input) {
+            centered.add(new Point.Float(current.x - subX, current.y - subY));
+        }
 
 		ArrayList<Float> output = new ArrayList<>(input.size() * 2);
 		// Now make it into a unit square and flatten
 		float scale = Math.max(width, height);
-		for (int i = 0; i < centered.size(); i++) {
-			Point.Float current = centered.get(i);
-			output.add(current.x / scale);
-			output.add(current.y / scale);
-		}
+        for (Point.Float current : centered) {
+            output.add(current.x / scale);
+            output.add(current.y / scale);
+        }
 
 		return output;
 	}

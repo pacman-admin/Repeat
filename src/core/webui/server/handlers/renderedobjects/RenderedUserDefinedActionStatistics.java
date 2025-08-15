@@ -90,11 +90,11 @@ public class RenderedUserDefinedActionStatistics {
 	private static JsonNode prepareTaskActivationBreakdown(UsageStatistics statistics) {
 		List<Pair<String, Long>> sortedData = statistics.getTaskActivationBreakdown().entrySet().stream()
 			.map(e -> Pair.of(e.getKey().getRepresentativeString(), e.getValue()))
-			.sorted((e1, e2) -> e2.getB().compareTo(e1.getB())) // Largest one first.
+			.sorted((e1, e2) -> e2.b().compareTo(e1.b())) // Largest one first.
 			.collect(Collectors.toList());
 
 		if (sortedData.size() > BREAKDOWN_COLORS.size()) {
-			long otherCount = sortedData.stream().skip(BREAKDOWN_COLORS.size() - 1).map(e -> e.getB()).reduce(0L, Long::sum);
+			long otherCount = sortedData.stream().skip(BREAKDOWN_COLORS.size() - 1).map(e -> e.b()).reduce(0L, Long::sum);
 			sortedData = Stream.concat(
 						sortedData.stream().limit(BREAKDOWN_COLORS.size() - 1),
 						Stream.of(Pair.of("Other", otherCount)))
@@ -106,7 +106,7 @@ public class RenderedUserDefinedActionStatistics {
 			int i = iterator.nextIndex();
 			Pair<String, Long> e = iterator.next();
 
-			data.add(BreakdownPieChartEntry.of(e.getA(), formatColor(BREAKDOWN_COLORS.get(i)), e.getB()));
+			data.add(BreakdownPieChartEntry.of(e.a(), formatColor(BREAKDOWN_COLORS.get(i)), e.b()));
 		}
 
 		return taskActivationBreakdownFromData(data);

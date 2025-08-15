@@ -13,7 +13,7 @@ public class TaskSourceManager {
 
 	public static boolean submitTask(UserDefinedAction task, String source) {
 		String sourceFileName = null;
-		if (task.getSourcePath() == null || task.getSourcePath().equals("")) {
+		if (task.getSourcePath() == null || task.getSourcePath().isEmpty()) {
 			LOGGER.warning("Cannot submit task. No source file found...");
 			return false;
 		} else {
