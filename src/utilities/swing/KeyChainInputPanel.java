@@ -39,7 +39,6 @@ import core.keyChain.KeyStroke;
 import core.keyChain.MouseGesture;
 import core.keyChain.TaskActivation;
 
-@SuppressWarnings("serial")
 public class KeyChainInputPanel extends JPanel {
 
 	private static final int MAX_KEY_CHAIN = 15;
