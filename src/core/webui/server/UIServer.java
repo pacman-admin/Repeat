@@ -171,7 +171,7 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/action/compile-task", new ActionCompileTaskHandler());
         output.put("/internals/action/delete-task", new ActionDeleteTaskHandler(objectRenderer));
         output.put("/internals/action/delete-task-group", new ActionDeleteTaskGroupHandler(objectRenderer));
-        //output.put("/internals/action/edit-source", new ActionEditSourceHandler());
+        output.put("/internals/action/edit-source", new ActionEditSourceHandler());
         output.put("/internals/action/move-task-up", new ActionMoveTaskUpHandler(objectRenderer));
         output.put("/internals/action/move-task-group-up", new ActionMoveTaskGroupUpHandler(objectRenderer));
         output.put("/internals/action/move-task-down", new ActionMoveTaskDownHandler(objectRenderer));
@@ -196,7 +196,7 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/repeats-remote-clients/stop", new StopRemoteClientHandler(objectRenderer));
         output.put("/internals/repeats-remote-clients/set-launch-at-startup", new SetLaunchAtStartupRemoteClientHandler(objectRenderer));
 
-        //output.put("/internals/get/editted-source", new GetEditedSourceHandler());
+        output.put("/internals/get/editted-source", new GetEditedSourceHandler());
         output.put("/internals/get/is-running-compiled-task", new GetIsRunningCompiledTaskHandler());
         output.put("/internals/get/is-recording", new GetIsRecordingHandler());
         output.put("/internals/get/is-replaying", new GetIsReplayingHandler());

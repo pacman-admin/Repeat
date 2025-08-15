@@ -27,7 +27,7 @@ public class ActionCompileTaskHandler extends AbstractSingleMethodHttpHandler {
         }
 
         String source = new String(data, StandardCharsets.UTF_8);
-        LOGGER.info("POST data: " + source);
+        //LOGGER.info("POST data: " + source);
         boolean result = backEndHolder.compileSourceAndSetCurrent(source, null);
         if (!result) {
             LOGGER.warning("Unable to compile source code.");
