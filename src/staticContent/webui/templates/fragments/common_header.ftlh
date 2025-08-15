@@ -18,7 +18,7 @@
     <link href="/static/css/light-bootstrap-dashboard.css?v=1.4.0" rel="stylesheet"/>
 
     <!-- JQuery UI CSS     -->
-    <link rel="stylesheet" href="/static/jquery-ui-1.14.1/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css"/>
 
     <!-- Custom CSS     -->
     <link href="/static/css/custom.css" rel="stylesheet" />
