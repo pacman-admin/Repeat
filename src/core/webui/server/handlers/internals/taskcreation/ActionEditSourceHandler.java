@@ -13,12 +13,16 @@ package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
 
+import java.nio.charset.StandardCharsets;
+
 public final class ActionEditSourceHandler extends AbstractPOSTHandler {
     public ActionEditSourceHandler() {
         super("Could not open source code in editor");
     }
 
-    protected void handle(String code) {
-        backEndHolder.editSource(code);
+    protected void handle(byte[] data) {
+        //throw new IllegalArgumentException("Source code may not be null!");
+        if (data == null) throw new IllegalArgumentException("Source code may not be null!");
+        backEndHolder.editSource(new String(data, StandardCharsets.UTF_8));
     }
 }

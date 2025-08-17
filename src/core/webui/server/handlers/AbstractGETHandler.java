@@ -38,8 +38,11 @@ public abstract class AbstractGETHandler extends AbstractSingleMethodHttpHandler
         try {
             String data = handle();
             return HttpServerUtilities.prepareTextResponse(exchange, 200, data);
+        } catch (NullPointerException e) {
+            LOGGER.warning(errorMessage + "\n" + e.getMessage());
+            return HttpServerUtilities.prepareTextResponse(exchange, 404, errorMessage);
         } catch (Exception e) {
-            LOGGER.warning(errorMessage + e.getMessage());
+            LOGGER.warning(errorMessage + "\n" + e.getMessage());
         }
         return HttpServerUtilities.prepareTextResponse(exchange, 500, errorMessage);
     }

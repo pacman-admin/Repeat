@@ -18,7 +18,6 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.logging.Logger;
 
 public abstract class AbstractPOSTHandler extends AbstractSingleMethodHttpHandler {
@@ -32,18 +31,20 @@ public abstract class AbstractPOSTHandler extends AbstractSingleMethodHttpHandle
         errorMessage = errorMsg;
     }
 
-    protected abstract void handle(String data);
+    protected abstract void handle(byte[] data);
 
     @Override
     protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
 
         try {
             byte[] data = HttpServerUtilities.getPostContent(request);
-            if (data == null) return HttpServerUtilities.prepareTextResponse(exchange, 400, "Content may not be null.");
-            handle(new String(data, StandardCharsets.UTF_8));
+            handle(data);
             return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
+        } catch (IllegalArgumentException e) {
+            LOGGER.warning(errorMessage + "\n" + e.getMessage());
+            return HttpServerUtilities.prepareTextResponse(exchange, 400, errorMessage);
         } catch (Exception e) {
-            LOGGER.warning(errorMessage + e.getMessage());
+            LOGGER.warning(errorMessage + "\n" + e.getMessage());
         }
         return HttpServerUtilities.prepareTextResponse(exchange, 500, errorMessage);
     }
