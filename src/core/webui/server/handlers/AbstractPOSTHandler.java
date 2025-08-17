@@ -39,7 +39,7 @@ public abstract class AbstractPOSTHandler extends AbstractSingleMethodHttpHandle
         try {
             byte[] data = HttpServerUtilities.getPostContent(request);
             handle(data);
-            return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
+            return emptySuccessResponse(exchange);
         } catch (IllegalArgumentException e) {
             LOGGER.warning(errorMessage + "\n" + e.getMessage());
             return HttpServerUtilities.prepareTextResponse(exchange, 400, errorMessage);
