@@ -1,7 +1,20 @@
+/**
+ * Copyright 2025 Langdon Staab
+ * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the “Software”), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+ * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+ * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ *
+ * @author Langdon Staab
+ * @author HP Truong
+ */
 package core.webui.server.handlers.internals;
 
+import core.webui.server.handlers.AbstractComplexGETHandler;
+import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import utilities.json.JSONUtility;
+import utilities.json.Jsonizer;
+
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -11,71 +24,52 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
+    public GetPathSuggestionHandler() {
+        super(AbstractSingleMethodHttpHandler.GET_METHOD);
+    }
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
-import utilities.json.JSONUtility;
-import utilities.json.Jsonizer;
+    @Override
+    protected String handle(Map<String, String> params) {
+        if (params == null) {
+            throw new IllegalArgumentException("No parameters supplied!");
+        }
+        String path = params.get("path");
+        if (path == null) {
+            throw new IllegalArgumentException("A path must be provided.");
+        }
+        if (path.isBlank()) path = ".";
+        Path p = Paths.get(path);
+        if (!Files.exists(p)) {
+            return paths();
+        }
+        if (Files.isRegularFile(p)) {
+            return paths(p.toAbsolutePath().toString());
+        }
+        if (Files.isDirectory(p)) {
+            File[] files = p.toFile().listFiles();
+            List<String> suggested = Arrays.asList(files).stream().map(File::getAbsolutePath).collect(Collectors.toList());
+            return paths(suggested);
+        }
+        return paths();
+    }
 
-public class GetPathSuggestionHandler extends AbstractSingleMethodHttpHandler {
+    private String paths(String... paths) {
+        return paths(Arrays.asList(paths));
+    }
 
-	public GetPathSuggestionHandler() {
-		super(AbstractSingleMethodHttpHandler.GET_METHOD);
-	}
+    private String paths(Iterable<String> paths) {
+        return JSONUtility.jsonToString(Jsonizer.jsonize(SuggestedPaths.of(paths)).getRootNode());
+    }
 
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
-		Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
-		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse GET parameters.");
-		}
+    private static class SuggestedPaths {
+        private List<String> paths;
 
-		String path = params.get("path");
-		if (path == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path must be provided.");
-		}
-
-		if (path.isEmpty()) {
-			path = ".";
-		}
-
-		Path p = Paths.get(path);
-		if (!Files.exists(p)) {
-			return paths(exchange);
-		}
-		if (Files.isRegularFile(p)) {
-			return paths(exchange, p.toAbsolutePath().toString());
-		}
-		if (Files.isDirectory(p)) {
-			File[] files = p.toFile().listFiles();
-			List<String> suggested = Arrays.asList(files).stream().map(File::getAbsolutePath).collect(Collectors.toList());
-			return paths(exchange, suggested);
-		}
-
-		return paths(exchange);
-	}
-
-	private Void paths(HttpAsyncExchange exchange, String... paths) throws IOException {
-		return paths(exchange, Arrays.asList(paths));
-	}
-
-	private Void paths(HttpAsyncExchange exchange, Iterable<String> paths) throws IOException {
-		String data = JSONUtility.jsonToString(Jsonizer.jsonize(SuggestedPaths.of(paths)).getRootNode());
-		return HttpServerUtilities.prepareHttpResponse(exchange, 200, data);
-	}
-
-	private static class SuggestedPaths {
-		private List<String> paths;
-
-		private static SuggestedPaths of(Iterable<String> paths) {
-			SuggestedPaths output = new SuggestedPaths();
-			output.paths = new ArrayList<>();
-			paths.forEach(output.paths::add);
-			return output;
-		}
-	}
+        private static SuggestedPaths of(Iterable<String> paths) {
+            SuggestedPaths output = new SuggestedPaths();
+            output.paths = new ArrayList<>();
+            paths.forEach(output.paths::add);
+            return output;
+        }
+    }
 }
