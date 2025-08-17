@@ -21,7 +21,6 @@ package utilities;
 import utilities.SubprocessUttility.ExecutionException;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Desktop {
@@ -32,14 +31,13 @@ public class Desktop {
     }
 
     public static boolean openFile(File file) {
-        //throw new RuntimeException("Does not work!");
-        LOGGER.info("Opening file...");
+        LOGGER.info("Opening file " + file.getAbsolutePath());
         try {
             java.awt.Desktop.getDesktop().open(file);
             return true;
         } catch (IllegalArgumentException e) {
-            LOGGER.warning("File <"+file.getAbsolutePath()+"> does not exist!");
-        } catch (IOException ignored) {
+            LOGGER.warning("File <" + file.getAbsolutePath() + "> does not exist!");
+        } catch (Exception ignored) {
         }
         if (OSIdentifier.IS_WINDOWS) {
             return openFileWindows(file);
@@ -54,7 +52,7 @@ public class Desktop {
     }
 
     private static boolean openFileWindows(File file) {
-        return openWithCommand("explorer", file);
+        return openWithCommand("notepad", file);
     }
 
     private static boolean openFileLinux(File file) {

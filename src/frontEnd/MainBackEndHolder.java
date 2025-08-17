@@ -39,6 +39,7 @@ import core.userDefinedTask.internals.*;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 import utilities.*;
+import utilities.Desktop;
 import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
@@ -76,6 +77,7 @@ public class MainBackEndHolder {
     private TaskGroup currentGroup;
     private RepeatsPeerServiceClientManager peerServiceClientManager;
     private boolean isRecording, isReplaying, isRunningCompiledTask;
+    private File currentTempFile = null;
 
     public MainBackEndHolder() {
         config = new Config(this);
@@ -157,6 +159,23 @@ public class MainBackEndHolder {
             }
         });
         return newHandler;
+    }
+
+    public void editSource(String code) {
+        LOGGER.info("Opening source code in editor...");
+        try {
+            File f = File.createTempFile("source", getSelectedLanguage() == Language.JAVA ? ".java" : ".txt");
+            FileUtility.writeToFile(code, f, false);
+            if (Desktop.openFile(f)) currentTempFile = f;
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String reloadSource() {
+        LOGGER.info("Reloading edits...");
+        if (currentTempFile == null) throw new RuntimeException("Source code was never opened for editing!");
+        return FileUtility.readFromFile(currentTempFile).toString();
     }
 
     protected void initializeLogging() {

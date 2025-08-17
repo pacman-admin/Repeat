@@ -228,7 +228,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         if (source == null) {
             return null;
         }
-
         return source.toString();
     }
 
