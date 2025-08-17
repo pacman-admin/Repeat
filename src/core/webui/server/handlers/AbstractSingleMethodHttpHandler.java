@@ -11,10 +11,10 @@ import java.io.IOException;
 
 public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBackend {
 
-    public static final String GET_METHOD = "GET";
-    public static final String POST_METHOD = "POST";
+    protected static final String GET_METHOD = "GET";
+    protected static final String POST_METHOD = "POST";
 
-    private String allowedMethod;
+    private final String allowedMethod;
 
     public AbstractSingleMethodHttpHandler(String allowedMethod) {
         this.allowedMethod = allowedMethod;

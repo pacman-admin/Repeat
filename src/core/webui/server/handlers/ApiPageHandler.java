@@ -20,6 +20,7 @@ public class ApiPageHandler extends AbstractSingleMethodHttpHandler {
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
 		Language selected = backEndHolder.getSelectedLanguage();
+		System.out.println("API");
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, BootStrapResources.getAPI(selected));
 	}
 }
