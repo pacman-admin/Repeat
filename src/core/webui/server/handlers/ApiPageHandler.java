@@ -1,26 +1,19 @@
 package core.webui.server.handlers;
 
-import java.io.IOException;
-
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
-
 import core.languageHandler.Language;
-import core.webui.webcommon.HttpServerUtilities;
 import staticResources.BootStrapResources;
 
-public class ApiPageHandler extends AbstractSingleMethodHttpHandler {
+public class ApiPageHandler extends AbstractGETHandler {
 
-	public ApiPageHandler() {
-		super(AbstractSingleMethodHttpHandler.GET_METHOD);
-	}
+    public ApiPageHandler() {
+        super("Could not get API documentation for selected language!");
+    }
 
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
-		Language selected = backEndHolder.getSelectedLanguage();
-		System.out.println("API");
-		return HttpServerUtilities.prepareTextResponse(exchange, 200, BootStrapResources.getAPI(selected));
-	}
+    @Override
+    protected String handle() {
+        Language selected = backEndHolder.getSelectedLanguage();
+        if (selected == Language.MANUAL_BUILD) return "The manual build compiler has no API.";
+        //throw new IllegalArgumentException("The manual build compiler has no API.");
+        return BootStrapResources.getAPI(selected);
+    }
 }

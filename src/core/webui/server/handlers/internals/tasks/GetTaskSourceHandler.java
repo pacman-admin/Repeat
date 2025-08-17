@@ -1,53 +1,53 @@
+/**
+ * Copyright 2025 Langdon Staab
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ *
+ * @author Langdon Staab
+ * @author HP Truong
+ */
 package core.webui.server.handlers.internals.tasks;
 
-import java.io.IOException;
+import core.userDefinedTask.UserDefinedAction;
+import core.webui.server.handlers.AbstractComplexGETHandler;
+
 import java.util.Map;
 
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+public class GetTaskSourceHandler extends AbstractComplexGETHandler {
 
-import core.userDefinedTask.UserDefinedAction;
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
+    public GetTaskSourceHandler() {
+        super("Could not get source code for current Action.");
+    }
 
-public class GetTaskSourceHandler extends AbstractSingleMethodHttpHandler {
+    @Override
+    protected String handle(Map<String, String> params) {
 
-	public GetTaskSourceHandler() {
-		super(AbstractSingleMethodHttpHandler.GET_METHOD);
-	}
+        if (params == null) throw new IllegalArgumentException("Params must not be null!");
 
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
-		String uriString = request.getRequestLine().getUri();
-		Map<String, String>  params = HttpServerUtilities.parseGetParameters(uriString);
-		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse URL " + uriString);
-		}
+        String id = params.get("id");
+        if (id == null || id.isBlank()) throw new IllegalArgumentException("Task ID is empty or not provided.");
 
-		String id = params.get("id");
-		if (id == null || id.isEmpty()) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Task ID is empty or not provided.");
-		}
+        String timestampString = params.get("timestamp");
+        if (timestampString == null || timestampString.isBlank())
+            throw new IllegalArgumentException("Timestamp is empty or not provided.");
 
-		String timestampString = params.get("timestamp");
-		if (timestampString == null || timestampString.isEmpty()) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Timestamp is empty or not provided.");
-		}
+        UserDefinedAction action = backEndHolder.getTask(id);
+        if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
 
-		UserDefinedAction action = backEndHolder.getTask(id);
-		if (action == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 404, "No action for ID " + id + ".");
-		}
+        Long timestamp = Long.parseLong(timestampString);
+        String sourceCode = backEndHolder.getSourceForTask(action, timestamp);
+        if (sourceCode == null) throw new NullPointerException("Could not find source code for Action with ID: " + id);
 
-		Long timestamp = Long.parseLong(timestampString);
-		String sourceCode = backEndHolder.getSourceForTask(action, timestamp);
-		if (sourceCode == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "No source code found for task " + id + ".");
-		}
-
-		return HttpServerUtilities.prepareTextResponse(exchange, 200, sourceCode);
-	}
+        return sourceCode;
+    }
 }
