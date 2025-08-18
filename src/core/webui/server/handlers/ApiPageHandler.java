@@ -30,8 +30,7 @@ public class ApiPageHandler extends AbstractGETHandler {
     @Override
     protected String handle() {
         Language selected = backEndHolder.getSelectedLanguage();
-        if (selected == Language.MANUAL_BUILD) //return "The manual build compiler has no API.";
-            throw new NullPointerException("The manual build compiler has no API.");
+        if (selected == Language.MANUAL_BUILD) throw new NullPointerException("The manual build compiler has no API.");
         return BootStrapResources.getAPI(selected);
     }
 }
