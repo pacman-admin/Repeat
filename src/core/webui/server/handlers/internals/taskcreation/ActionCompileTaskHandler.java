@@ -18,41 +18,23 @@
  */
 package core.webui.server.handlers.internals.taskcreation;
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpException;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+import core.webui.server.handlers.AbstractPOSTHandler;
 
-import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Logger;
 
-public class ActionCompileTaskHandler extends AbstractSingleMethodHttpHandler {
-
-    private static final Logger LOGGER = Logger.getLogger(ActionCompileTaskHandler.class.getName());
-
+public class ActionCompileTaskHandler extends AbstractPOSTHandler {
     public ActionCompileTaskHandler() {
-        super(AbstractSingleMethodHttpHandler.POST_METHOD);
+        super("Could not compile custom Action!");
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
-        byte[] data = HttpServerUtilities.getPostContent(request);
-        if (data == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get POST request data.");
-        }
-
+    protected void handle(byte[] data) {
+        if (data == null) throw new IllegalArgumentException("Unable to get POST request data.");
         String source = new String(data, StandardCharsets.UTF_8);
-        //LOGGER.info("POST data: " + source);
+        if (source.isBlank()) throw new IllegalArgumentException("Nothing to compile!");
         boolean result = backEndHolder.compileSourceAndSetCurrent(source, null);
         if (!result) {
-            LOGGER.warning("Unable to compile source code.");
-            return HttpServerUtilities.prepareTextResponse(exchange, 500, "Could not compile source code!");
+            throw new RuntimeException("Source code could not be compiled, probably due to a syntax error.");
         }
-
-        return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }
-
 }
