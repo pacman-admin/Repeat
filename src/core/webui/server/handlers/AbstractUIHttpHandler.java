@@ -23,7 +23,6 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
 
     public AbstractUIHttpHandler(ObjectRenderer objectRenderer, String allowedMethod) {
         super(allowedMethod);
-        System.out.println("UIHandler: " + allowedMethod);
         this.objectRenderer = objectRenderer;
     }
 

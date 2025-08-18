@@ -22,5 +22,4 @@ public class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttpHandle
 		backEndHolder.runCompiledAction();
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
 	}
-
 }
