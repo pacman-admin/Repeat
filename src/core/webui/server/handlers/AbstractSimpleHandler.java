@@ -20,11 +20,11 @@ import java.util.logging.Logger;
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     private static final Logger LOGGER = Logger.getLogger(AbstractSimpleHandler.class.getName());
     private final String errorMessage;
-    private final String childName;
 
-    protected AbstractSimpleHandler(String type, String name, String errorMsg) {
+    protected AbstractSimpleHandler(String type, String errorMsg) {
         super(type);
-        childName = name;
+        if (errorMsg.isBlank() || errorMsg == null)
+            throw new IllegalArgumentException("Error message must be a String!");
         errorMessage = errorMsg;
     }
 
@@ -32,7 +32,7 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
 
     private String getErrorMsg(Exception e) {
         String msg = errorMessage + "\n" + e.getMessage();
-        LOGGER.warning(childName + ":\n" + msg);
+        LOGGER.warning(msg);
         return msg;
     }
 

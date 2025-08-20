@@ -10,23 +10,16 @@ package core.webui.server.handlers;
 
 import org.apache.http.HttpRequest;
 
-import java.util.logging.Logger;
-
 public abstract class AbstractGETHandler extends AbstractSimpleHandler {
-    private static final Logger LOGGER = Logger.getLogger(AbstractGETHandler.class.getName());
-    private final String errorMessage;
 
-    protected AbstractGETHandler(String errorMsg, String name) {
-        super(AbstractSingleMethodHttpHandler.GET_METHOD, name, errorMsg);
-        if (errorMsg.isBlank() || errorMsg == null)
-            throw new IllegalArgumentException("Error message must be a String!");
-        errorMessage = errorMsg;
+    protected AbstractGETHandler(String errorMsg) {
+        super(AbstractSingleMethodHttpHandler.GET_METHOD, errorMsg);
     }
 
     protected abstract String handle();
 
     @Override
-    String handle(HttpRequest r) {
-        return "";
+    String handle(HttpRequest ignored) {
+        return handle();
     }
 }

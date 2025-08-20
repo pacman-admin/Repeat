@@ -10,39 +10,20 @@
 package core.webui.server.handlers;
 
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
 import java.util.Map;
-import java.util.logging.Logger;
 
-public abstract class AbstractComplexGETHandler extends AbstractSingleMethodHttpHandler {
-    private static final Logger LOGGER = Logger.getLogger(AbstractComplexGETHandler.class.getName());
-    private final String errorMessage;
+public abstract class AbstractComplexGETHandler extends AbstractSimpleHandler {
 
     protected AbstractComplexGETHandler(String errorMsg) {
-        super(AbstractSingleMethodHttpHandler.GET_METHOD);
-        if (errorMsg.isBlank() || errorMsg == null)
-            throw new IllegalArgumentException("Error message must be a String!");
-        errorMessage = errorMsg;
+        super(AbstractSingleMethodHttpHandler.GET_METHOD, errorMsg);
     }
 
     protected abstract String handle(Map<String, String> params);
 
     @Override
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
-        try {
-            String data = handle(HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri()));
-            return HttpServerUtilities.prepareTextResponse(exchange, 200, data);
-        } catch (NullPointerException e) {
-            LOGGER.warning(errorMessage + "\n" + e.getMessage());
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, errorMessage);
-        } catch (Exception e) {
-            LOGGER.warning(errorMessage + "\n" + e.getMessage());
-        }
-        return HttpServerUtilities.prepareTextResponse(exchange, 500, errorMessage);
+    String handle(HttpRequest request) {
+        return handle(HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri()));
     }
 }
