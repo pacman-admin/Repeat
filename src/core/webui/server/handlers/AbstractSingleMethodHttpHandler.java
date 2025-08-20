@@ -13,7 +13,6 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
 
     protected static final String GET_METHOD = "GET";
     protected static final String POST_METHOD = "POST";
-
     private final String allowedMethod;
 
     public AbstractSingleMethodHttpHandler(String allowedMethod) {

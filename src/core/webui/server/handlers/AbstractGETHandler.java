@@ -8,21 +8,16 @@
  */
 package core.webui.server.handlers;
 
-import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
-public abstract class AbstractGETHandler extends AbstractSingleMethodHttpHandler {
+public abstract class AbstractGETHandler extends AbstractSimpleHandler {
     private static final Logger LOGGER = Logger.getLogger(AbstractGETHandler.class.getName());
     private final String errorMessage;
 
-    protected AbstractGETHandler(String errorMsg) {
-        super(AbstractSingleMethodHttpHandler.GET_METHOD);
+    protected AbstractGETHandler(String errorMsg, String name) {
+        super(AbstractSingleMethodHttpHandler.GET_METHOD, name, errorMsg);
         if (errorMsg.isBlank() || errorMsg == null)
             throw new IllegalArgumentException("Error message must be a String!");
         errorMessage = errorMsg;
@@ -31,16 +26,7 @@ public abstract class AbstractGETHandler extends AbstractSingleMethodHttpHandler
     protected abstract String handle();
 
     @Override
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
-        try {
-            String data = handle();
-            return HttpServerUtilities.prepareTextResponse(exchange, 200, data);
-        } catch (NullPointerException e) {
-            LOGGER.warning(errorMessage + "\n" + e.getMessage());
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, errorMessage);
-        } catch (Exception e) {
-            LOGGER.warning(errorMessage + "\n" + e.getMessage());
-        }
-        return HttpServerUtilities.prepareTextResponse(exchange, 500, errorMessage);
+    String handle(HttpRequest r) {
+        return "";
     }
 }
