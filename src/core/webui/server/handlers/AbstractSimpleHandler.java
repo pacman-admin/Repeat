@@ -15,10 +15,8 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
-import java.util.logging.Logger;
 
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
-    private static final Logger LOGGER = Logger.getLogger(AbstractSimpleHandler.class.getName());
     private final String errorMessage;
 
     protected AbstractSimpleHandler(String type, String errorMsg) {
@@ -31,9 +29,7 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     abstract String handle(HttpRequest r);
 
     private String getErrorMsg(Exception e) {
-        String msg = errorMessage + "\n" + e.getMessage();
-        LOGGER.warning(msg);
-        return msg;
+        return errorMessage + "\n" + e.getMessage();
     }
 
     protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
