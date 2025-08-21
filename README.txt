@@ -71,8 +71,18 @@ You can record your actions and replay those actions to save your wrists from re
         HOTKEYS
 ===========================================================================================================================
 
-To change the hotkeys, exit Repeat, open a keycode event tool (e.g. https://www.toptal.com/developers/keycode) to get the keycode for the key you want to use as the new hotkey
-the default hotkeys are:
+There are hotkeys to control Repeat; you can run your custom action by simply pressing F9, for example.
+The default hotkeys are:
 F7 -> Start/Stop recording your keypresses, mouse movements, etc.
 F8 -> Start/Stop replaying recorded keypresses, mouse movements, etc.
 F9 -> Run the current compiled Action in memory.
+
+Unfortunately, you cannot change these hotkeys through the menu option because it's broken for some reason.
+
+To change the hotkeys:
+0. Run Repeat if you have never run it before
+1. Exit Repeat using the "Exit" menu option
+2. Open a keycode event tool (e.g. https://www.toptal.com/developers/keycode) to get the keycode for the key you want to use as the new hotkey.
+3. Open the config.json file in the same directory as the Repeat jar file.
+4. Find the "global_hotkey" section and find the specific hotkey you want to change.
+5. Replace the number following the word "key" with the keycode detected by the keycode event tool.
