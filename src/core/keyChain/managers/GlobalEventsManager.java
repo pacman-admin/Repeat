@@ -24,7 +24,6 @@ import core.keyChain.ActivationEvent;
 import core.keyChain.KeyStroke;
 import core.keyChain.MouseKey;
 import core.keyChain.TaskActivation;
-import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.SharedVariablesPubSubManager;

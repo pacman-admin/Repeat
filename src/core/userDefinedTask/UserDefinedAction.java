@@ -293,7 +293,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
      * @deprecated use {@link #setInvoker(TaskActivation)} instead.
      */
     @Deprecated
-    private final void setInvokingKeyChain(KeyChain invokingKeyChain) {
+    private void setInvokingKeyChain(KeyChain invokingKeyChain) {
         if (invokingKeyChain == null) {
             return;
         }
