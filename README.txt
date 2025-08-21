@@ -51,16 +51,28 @@ Repeat cannot move the mouse on Wayland; mouse buttons and keypresses can be con
 Changing the hotkeys to record, replay, and run the compiled Action via the menu does not work;
 see the "HOTKEYS" section for more info.
 
-
-
-to change the hotkeys, exit Repeat, open a keycode event tool (e.g. https://www.toptal.com/developers/keycode) to get the keycode for the key you want to use as the new hotkey
-the default hotkeys are:
-F7 -> Start/Stop recording your keypresses, mouse movements, etc.
-F8 -> Start/Stop replaying recorded keypresses, mouse movements, etc.
-F9 -> Run the current compiled Action in memory.
-
-Additional Notes:
+ADDITIONAL NOTES:
 You may add RAM flags to increase performance, though is not at all necessary, as this program consumes almost no resources.
 java -XX:+AlwaysPreTouch -Xms64M -Xmx64M -jar Repeat.jar
 Hover your mouse over a button to see what it does.
 
+
+===========================================================================================================================
+        USING Repeat
+===========================================================================================================================
+
+Check out HP Truong's README for info on how to use Repeat.
+https://github.com/repeats/Repeat/blob/master/README.md
+
+You can record your actions and replay those actions to save your wrists from repetitive strain injuries.
+
+
+===========================================================================================================================
+        HOTKEYS
+===========================================================================================================================
+
+To change the hotkeys, exit Repeat, open a keycode event tool (e.g. https://www.toptal.com/developers/keycode) to get the keycode for the key you want to use as the new hotkey
+the default hotkeys are:
+F7 -> Start/Stop recording your keypresses, mouse movements, etc.
+F8 -> Start/Stop replaying recorded keypresses, mouse movements, etc.
+F9 -> Run the current compiled Action in memory.
