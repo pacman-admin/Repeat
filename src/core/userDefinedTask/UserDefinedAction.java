@@ -276,16 +276,13 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
      * This activation would contain only the activation element that triggered the event.
      */
     public void setInvoker(TaskActivation invoker) {
-        this.invoker = invoker;
-
-        // For legacy purpose.
-        setInvokingKeyChain(invoker.getFirstHotkey());
+               setInvokingKeyChain(invoker.getFirstHotkey());
         setInvokingMouseGesture(invoker.getFirstMouseGesture());
     }
 
     /**
-     * This method is called to dynamically allow the current task to determine which key chain activated it among
-     * its hotkeys. This will only change the key chain definition of the current key chain, not substituting the real object.
+     * This method is called to dynamically allow the current task to determine which KeyChain activated it among
+     * its hotkeys. This will only change the KeyChain definition of the current KeyChain, not substituting the real object.
      * <p>
      * This will also set {@link #invokingMouseGesture} to null.
      *
@@ -303,7 +300,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     /**
-     * This method is called to dynamically allow the current task to determine which key chain activated it among
+     * This method is called to dynamically allow the current task to determine which KeyChain activated it among
      * its mouse gestures.
      * <p>
      * This will also clear {@link #invokingKeyChain}.
@@ -312,7 +309,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
      * @deprecated use {@link #setInvoker(TaskActivation)} instead.
      */
     @Deprecated
-    private final void setInvokingMouseGesture(MouseGesture invokingMouseGesture) {
+    private void setInvokingMouseGesture(MouseGesture invokingMouseGesture) {
         if (invokingMouseGesture == null) {
             return;
         }
