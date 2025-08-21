@@ -91,7 +91,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
                     executionPreconditions = TaskExecutionPreconditions.defaultConditions();
                 }
             }
-            LOGGER.info("Action Name: " + name + "Action ID: " + actionId + ", Source Path: " + sourcePath);
+            LOGGER.info("Action Name: " + name + ", Action ID: " + actionId + ", Source Path: " + sourcePath);
 
             JsonNode activationJSONs = node.getNode("activation");
             TaskActivation activation = TaskActivation.parseJSON(activationJSONs);

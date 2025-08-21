@@ -53,8 +53,6 @@ public final class GlobalEventsManager {
     private final ExecutionPreconditionsChecker executionPreconditionsChecker;
     private final ActivationEventManager taskActivationManager;
     CoreProvider coreProvider;
-    //@SuppressWarnings("unused")
-    //private TaskGroup currentTaskGroup;
 
     public GlobalEventsManager(Config config, CoreProvider coreProvider, ActionExecutor actionExecutor) {
         this.config = config;
@@ -150,11 +148,6 @@ public final class GlobalEventsManager {
         taskActivationManager.startListening();
         keyListener.startListening();
         mouseListener.startListening();
-    }
-    @Deprecated
-    public void setCurrentTaskGroup(TaskGroup currentTaskGroup) {
-        //this.currentTaskGroup = currentTaskGroup;
-        LOGGER.info("This method has been removed.");
     }
 
     /**

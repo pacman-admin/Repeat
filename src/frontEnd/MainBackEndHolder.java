@@ -1254,9 +1254,6 @@ public class MainBackEndHolder {
     }
 
     public void setCurrentTaskGroup(TaskGroup currentTaskGroup) {
-        if (currentTaskGroup != this.currentGroup) {
-            this.currentGroup = currentTaskGroup;
-            keysManager.setCurrentTaskGroup(currentTaskGroup);
-        }
+        currentGroup = currentTaskGroup;
     }
 }
