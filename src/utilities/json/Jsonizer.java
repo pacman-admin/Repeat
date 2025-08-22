@@ -182,7 +182,7 @@ public class Jsonizer {
 	}
 
 	@SuppressWarnings("rawtypes")
-	private static Object toPrimitiveOrString(JsonNode node, Class clazz) throws IllegalArgumentException, IllegalAccessException {
+	private static Object toPrimitiveOrString(JsonNode node, Class clazz) throws IllegalArgumentException {
 		if (clazz == String.class) {
 			return node.getStringValue();
 		} else if (clazz == Boolean.TYPE || clazz == Boolean.class) {

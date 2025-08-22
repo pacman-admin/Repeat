@@ -155,7 +155,7 @@ public abstract class KeySeries implements IJsonable {
 
 	@Override
 	public String toString() {
-		return StringUtilities.join(keys.stream().map(s -> s.toString()).collect(Collectors.toList()), " + ");
+		return StringUtilities.join(keys.stream().map(Object::toString).collect(Collectors.toList()), " + ");
 	}
 
 	@Override

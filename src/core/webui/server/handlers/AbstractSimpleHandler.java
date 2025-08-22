@@ -31,7 +31,7 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
         return errorMessage + "\n" + e.getMessage();
     }
 
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         try {
             String data = handle(request);
             return HttpServerUtilities.prepareTextResponse(exchange, 200, data);

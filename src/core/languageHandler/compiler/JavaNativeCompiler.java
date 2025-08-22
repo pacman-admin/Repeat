@@ -294,8 +294,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
         classPaths = paths.toArray(classPaths);
         try {
             applyClassPath();
-        } catch (MalformedURLException | NoSuchMethodException | SecurityException | IllegalAccessException |
-                 IllegalArgumentException | InvocationTargetException e) {
+        } catch (SecurityException | IllegalArgumentException e) {
             getLogger().log(Level.WARNING, "Unable to apply class path.", e);
             return false;
         }
@@ -333,7 +332,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
      * so that the compiled task can load classes. However, it is not sure whether Java garbage collection can recycle
      * this temporary class loader once the compiled task is discarded.
      */
-    public void applyClassPath() throws MalformedURLException, NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    public void applyClassPath() throws SecurityException, IllegalArgumentException {
         // Hacky reflection solution to alter the global classpath.
         // This no longer works for JDK 9 since system class loader is no longer a URLClassLoader.
         // JDK 9 also emits warnings as reflection package tries to access addURL method.

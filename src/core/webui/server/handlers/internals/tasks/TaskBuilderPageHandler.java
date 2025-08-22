@@ -25,7 +25,7 @@ public class TaskBuilderPageHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		String id = manuallyBuildActionConstructorManager.addNew();
 		Map<String, Object> data = ManuallyBuildActionBuilderBody.bodyData(manuallyBuildActionConstructorManager, id);
 		return renderedPage(exchange, "task_builder", data);

@@ -21,7 +21,7 @@ public class LogsPageHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 
 		return renderedPage(exchange, "logs", data);

@@ -19,7 +19,7 @@ public class GetSourceTemplateHandler extends AbstractSingleMethodHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		String source = AbstractSourceGenerator.getReferenceSource(backEndHolder.getSelectedLanguage());
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, source);
 	}

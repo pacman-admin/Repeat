@@ -27,7 +27,7 @@ public class IPCPageHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		List<RenderedIPCService> services = new ArrayList<>(IPCServiceManager.IPC_SERVICE_COUNT);
 		for (int i = 0; i < IPCServiceManager.IPC_SERVICE_COUNT; i++) {

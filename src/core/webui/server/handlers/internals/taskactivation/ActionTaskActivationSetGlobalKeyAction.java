@@ -18,7 +18,7 @@ public class ActionTaskActivationSetGlobalKeyAction extends AbstractTaskActivati
 	}
 
 	@Override
-	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException {
+	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
 		if (!params.containsKey("pressed") && !params.containsKey("released")) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "At least one of pressed or released must be set.");
 		}

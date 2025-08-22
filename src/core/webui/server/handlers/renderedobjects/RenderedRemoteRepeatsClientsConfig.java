@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import core.config.AbstractRemoteRepeatsClientsConfig;
+import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClient;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.userDefinedTask.internals.ToolsConfig;
 
@@ -22,7 +23,7 @@ public class RenderedRemoteRepeatsClientsConfig {
 
 		List<RenderedConfigRemotePeerClient> clients = Stream.concat(
 				Stream.concat(config.getClients().stream(), Stream.of(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)),
-				manager.getClients().stream().map(c -> c.getClientId()))
+				manager.getClients().stream().map(RepeatsPeerServiceClient::getClientId))
 				.distinct()
 				.sorted((String o1, String o2) -> {
 					if (o1.equals(ToolsConfig.LOCAL_CLIENT)) {

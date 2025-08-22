@@ -20,7 +20,7 @@ public class MenuGetCompilerPathActionHandler extends AbstractSingleMethodHttpHa
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		if (!backEndHolder.getCompiler().canSetPath()) {
 			LOGGER.info("Current compiler does not support getting/setting path.");
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Current compiler does not support getting/setting path.");

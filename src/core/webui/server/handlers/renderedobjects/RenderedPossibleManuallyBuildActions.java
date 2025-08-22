@@ -10,7 +10,7 @@ public class RenderedPossibleManuallyBuildActions {
 
 	public static RenderedPossibleManuallyBuildActions of(List<String> possibleActions) {
 		RenderedPossibleManuallyBuildActions result = new RenderedPossibleManuallyBuildActions();
-		result.actions = possibleActions.stream().map(s -> StringUtilities.title(s)).collect(Collectors.toList());
+		result.actions = possibleActions.stream().map(StringUtilities::title).collect(Collectors.toList());
 		return result;
 	}
 

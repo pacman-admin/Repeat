@@ -19,7 +19,7 @@ public class ActionTaskActivationAddStrokesAsKeySequenceHandler extends Abstract
 
 	@Override
 	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange,
-			TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException {
+			TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
 		constructor.addAsKeySequence();
 		constructor.stopListening();
 

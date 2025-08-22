@@ -24,7 +24,7 @@ public class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		data.put("groups", backEndHolder.getTaskGroups()
 				.stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == backEndHolder.getCurrentTaskGroup()))

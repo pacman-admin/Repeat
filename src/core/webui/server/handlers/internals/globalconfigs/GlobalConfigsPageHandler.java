@@ -18,7 +18,7 @@ public class GlobalConfigsPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		return renderedPage(exchange, "global_configs", getGlobalConfigRenderingData());
 	}
 }

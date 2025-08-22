@@ -35,7 +35,7 @@ public abstract class HttpSimpleAsyncRequestHandler implements HttpAsyncRequestH
         handleRequest(request, exchange, context);
     }
 
-    public abstract Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException;
+    public abstract Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException;
 
     @Override
     public final HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest arg0, HttpContext arg1) {

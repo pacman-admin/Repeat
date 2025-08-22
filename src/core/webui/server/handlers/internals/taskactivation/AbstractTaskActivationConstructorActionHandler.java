@@ -53,5 +53,5 @@ public abstract class AbstractTaskActivationConstructorActionHandler extends Abs
 		return renderedPage(exchange, template, data);
 	}
 
-	protected abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException;
+	protected abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
 }

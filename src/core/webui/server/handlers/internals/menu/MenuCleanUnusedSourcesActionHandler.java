@@ -16,7 +16,7 @@ public class MenuCleanUnusedSourcesActionHandler extends AbstractSingleMethodHtt
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		backEndHolder.cleanUnusedSource();
 		return emptySuccessResponse(exchange);
 	}

@@ -92,7 +92,7 @@ public final class Config implements ILoggable {
         COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F9);
     }
 
-    protected static ConfigParser getConfigParser(String version) {
+    static ConfigParser getConfigParser(String version) {
         for (ConfigParser parser : knownParsers) {
             if (parser.getVersion().equals(version)) {
                 return parser;
@@ -108,7 +108,7 @@ public final class Config implements ILoggable {
      * @param version the version to consider
      * @return the config parser whose previous version is this version
      */
-    protected static ConfigParser getNextConfigParser(String version) {
+    static ConfigParser getNextConfigParser(String version) {
         for (ConfigParser parser : knownParsers) {
             String previousVersion = parser.getPreviousVersion();
             if (previousVersion != null && previousVersion.equals(version)) {
@@ -289,7 +289,7 @@ public final class Config implements ILoggable {
         this.nativeHookDebugLevel = nativeHookDebugLevel;
     }
 
-    protected MainBackEndHolder getBackEnd() {
+    MainBackEndHolder getBackEnd() {
         return backEnd;
     }
 

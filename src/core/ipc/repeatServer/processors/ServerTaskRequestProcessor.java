@@ -31,7 +31,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 	}
 
 	@Override
-	public boolean process(String type, long id, JsonNode content) throws InterruptedException {
+	public boolean process(String type, long id, JsonNode content) {
 		if (!verifyMessageContent(content)) {
 			return false;
 		}

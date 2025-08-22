@@ -86,7 +86,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 		}
 
 		@Override
-		public void action(Core controller) throws InterruptedException {
+		public void action(Core controller) {
 			runTask(getActionId(), invoker);
 		}
 	}

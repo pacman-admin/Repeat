@@ -23,7 +23,7 @@ public class SetSelectedTaskHandler extends AbstractTaskSourceCodeHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Unable to parse GET request parameters.");

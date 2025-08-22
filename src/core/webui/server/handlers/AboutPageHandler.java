@@ -36,7 +36,7 @@ public class AboutPageHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("version", Config.RELEASE_VERSION);
         return renderedPage(exchange, "about", data);

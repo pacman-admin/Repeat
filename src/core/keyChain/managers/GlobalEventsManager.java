@@ -79,7 +79,7 @@ public final class GlobalEventsManager {
         LOGGER.warning("Newly registered keychains " + "will collide with previously registered task(s) " + taskNames + "\n" + "You cannot assign this key chain unless you remove the conflicting key chain...");
     }
 
-    public void startGlobalListener() throws Exception {
+    public void startGlobalListener() {
         AbstractGlobalKeyListener keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
         keyListener.setKeyPressed(new Function<>() {
             @Override

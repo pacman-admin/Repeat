@@ -39,8 +39,7 @@ public abstract class HttpHandlerWithBackend implements HttpAsyncRequestHandler<
 	}
 
 	@Override
-	public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest request, HttpContext context)
-			throws HttpException, IOException {
+	public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest request, HttpContext context) {
 		// Buffer request content in memory for simplicity.
 		return new BasicAsyncRequestConsumer();
 	}

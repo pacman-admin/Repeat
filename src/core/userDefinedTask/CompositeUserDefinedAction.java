@@ -156,7 +156,7 @@ public class CompositeUserDefinedAction extends UserDefinedAction {
 			}
 
 			@Override
-			public void action(Core controller) throws InterruptedException {
+			public void action(Core controller) {
 				LOGGER.warning("Remote action not yet compiled.");
 			}
 		};

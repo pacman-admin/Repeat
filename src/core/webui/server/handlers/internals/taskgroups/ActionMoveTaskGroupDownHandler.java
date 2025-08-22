@@ -22,7 +22,7 @@ public class ActionMoveTaskGroupDownHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data.");

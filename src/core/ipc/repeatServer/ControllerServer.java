@@ -10,7 +10,7 @@ public class ControllerServer extends IPCServiceWithModifablePort {
     public static final int DEFAULT_TIMEOUT_MS = 10000;
 
     @Override
-    protected void start() throws IOException {
+    protected void start() {
     }
 
     @Override

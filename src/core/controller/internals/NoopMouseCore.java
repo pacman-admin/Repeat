@@ -29,10 +29,10 @@ public class NoopMouseCore extends AbstractMouseCoreImplementation {
 	}
 
 	@Override
-	public void hold(int mask, int duration) throws InterruptedException {}
+	public void hold(int mask, int duration) {}
 
 	@Override
-	public void hold(int mask, int x, int y, int duration) throws InterruptedException {}
+	public void hold(int mask, int x, int y, int duration) {}
 
 	@Override
 	public void press(int mask) {}

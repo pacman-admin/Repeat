@@ -25,7 +25,7 @@ public class RepeatsRemoteClientPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		List<RenderedRepeatsRemoteClient> services = new ArrayList<>();
 		for (RepeatsPeerServiceClient client : this.backEndHolder.getPeerServiceClientManager().getClients()) {

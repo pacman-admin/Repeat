@@ -18,7 +18,7 @@ public class MenuGetCompilingLanguagesActionHandler extends AbstractUIHttpHandle
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		return renderedCompilingLanguages(exchange);
 	}
 }

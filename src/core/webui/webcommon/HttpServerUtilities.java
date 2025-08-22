@@ -128,7 +128,7 @@ public class HttpServerUtilities {
     }
 
 
-    public static Void prepareResponse(HttpAsyncExchange exchange, int code, byte[] data) throws IOException {
+    public static Void prepareResponse(HttpAsyncExchange exchange, int code, byte[] data) {
         HttpResponse response = exchange.getResponse();
         response.setStatusCode(code);
         response.setEntity(new ByteArrayEntity(data));
@@ -148,7 +148,7 @@ public class HttpServerUtilities {
         return prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data), "application/json; charset=utf-8");
     }
 
-    private static Void prepareStringResponse(HttpAsyncExchange exchange, int code, String data, String contentType) throws IOException {
+    private static Void prepareStringResponse(HttpAsyncExchange exchange, int code, String data, String contentType) {
         HttpResponse response = exchange.getResponse();
         response.setStatusCode(code);
         StringEntity entity = new StringEntity(data, "UTF-8");

@@ -19,7 +19,7 @@ public class ActionTaskActivationAddStrokesAsKeyChainHandler extends AbstractTas
 
 	@Override
 	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange,
-			TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException {
+			TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
 		constructor.addAsKeyChain();
 		constructor.stopListening();
 

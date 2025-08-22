@@ -17,7 +17,7 @@ public class MenuHaltAllTasksActionHandler extends AbstractSingleMethodHttpHandl
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		backEndHolder.haltAllTasks();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
 	}

@@ -48,7 +48,7 @@ class RepeatPeerServiceClientReader extends AbstractRepeatsClientStoppableThread
 		process(type, id, content);
 	}
 
-	public void process(String type, long id, JsonNode content) throws InterruptedException {
+	public void process(String type, long id, JsonNode content) {
 		String status = content.getStringValue("status");
 		JsonNode message = content.getNode("message");
 		responseManager.notifyFor(id, Reply.of(status, message));

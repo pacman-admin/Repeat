@@ -20,7 +20,7 @@ public class ActionTaskActivationStopListeningHandler extends AbstractTaskActiva
 
 	@Override
 	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange,
-			TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException {
+			TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
 		constructor.stopListening();
 		constructor.clearStrokes();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");

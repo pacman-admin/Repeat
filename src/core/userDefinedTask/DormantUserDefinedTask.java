@@ -19,7 +19,7 @@ public final class DormantUserDefinedTask extends UserDefinedAction implements I
 	}
 
 	@Override
-	public void action(Core controller) throws InterruptedException {
+	public void action(Core controller) {
 		getLogger().log(Level.WARNING, "Task " + name + " is dormant. Recompile to use it.");
 	}
 

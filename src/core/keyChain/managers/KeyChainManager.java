@@ -1,13 +1,7 @@
 package core.keyChain.managers;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 import core.config.Config;
@@ -57,7 +51,7 @@ public class KeyChainManager extends KeyStrokeManager {
 			action = considerTaskExecution(stroke);
 		}
 
-		return Arrays.asList(action).stream().filter(a -> a != null).collect(Collectors.toSet());
+		return Arrays.asList(action).stream().filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 
 	@Override
@@ -82,7 +76,7 @@ public class KeyChainManager extends KeyStrokeManager {
 		if (pressedKeyboardKeys.isEmpty() || pressedKeys.isEmpty()) {
 			UserDefinedAction toExecute = pendingAction;
 			pendingAction = null;
-			return Arrays.asList(toExecute).stream().filter(a -> a != null).collect(Collectors.toSet());
+			return Arrays.asList(toExecute).stream().filter(Objects::nonNull).collect(Collectors.toSet());
 		}
 
 		return Collections.emptySet();
@@ -96,7 +90,7 @@ public class KeyChainManager extends KeyStrokeManager {
 
 	@Override
 	public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
-		Set<KeyChain> keyChains = activations.stream().map(a -> a.getHotkeys()).flatMap(Set::stream).collect(Collectors.toSet());
+		Set<KeyChain> keyChains = activations.stream().map(TaskActivation::getHotkeys).flatMap(Set::stream).collect(Collectors.toSet());
 
 		Set<UserDefinedAction> collisions = new HashSet<>();
 		for (Entry<KeyChain, UserDefinedAction> entry : keyChainActions.entrySet()) {
@@ -115,7 +109,7 @@ public class KeyChainManager extends KeyStrokeManager {
 	@Override
 	public Set<UserDefinedAction> registerAction(UserDefinedAction action) {
 		Set<UserDefinedAction> toRemove = collision(action.getActivation());
-		toRemove.forEach(a -> unRegisterAction(a));
+		toRemove.forEach(this::unRegisterAction);
 
 		for (KeyChain key : action.getActivation().getHotkeys()) {
 			keyChainActions.put(key, action);
@@ -126,7 +120,7 @@ public class KeyChainManager extends KeyStrokeManager {
 
 	@Override
 	public Set<UserDefinedAction> unRegisterAction(UserDefinedAction action) {
-		return action.getActivation().getHotkeys().stream().map(k -> keyChainActions.remove(k)).filter(a -> a != null).collect(Collectors.toSet());
+		return action.getActivation().getHotkeys().stream().map(keyChainActions::remove).filter(Objects::nonNull).collect(Collectors.toSet());
 	}
 
 	/**

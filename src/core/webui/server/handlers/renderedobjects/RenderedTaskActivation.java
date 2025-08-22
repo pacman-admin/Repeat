@@ -35,7 +35,7 @@ public class RenderedTaskActivation {
     }
 
     private static List<SortedString> sortedStrings(List<String> vals) {
-        return IntStream.range(0, vals.size()).mapToObj(i -> SortedString.of(i, vals.get(i))).sorted(Comparator.comparing(s -> s.getValue())).collect(Collectors.toList());
+        return IntStream.range(0, vals.size()).mapToObj(i -> SortedString.of(i, vals.get(i))).sorted(Comparator.comparing(SortedString::getValue)).collect(Collectors.toList());
     }
 
     public List<SortedString> getKeyChains() {

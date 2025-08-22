@@ -20,7 +20,7 @@ public class UpAndRunningHandler implements HttpAsyncRequestHandler<HttpRequest>
 	private static final Logger LOGGER = Logger.getLogger(UpAndRunningHandler.class.getName());
 
 	@Override
-	public void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	public void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		LOGGER.info("Server is up and running.");
 
 		String responseText = "This is a sample response.";
@@ -28,8 +28,7 @@ public class UpAndRunningHandler implements HttpAsyncRequestHandler<HttpRequest>
 	}
 
 	@Override
-	public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest arg0, HttpContext arg1)
-			throws HttpException, IOException {
+	public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest arg0, HttpContext arg1) {
 		// Buffer request content in memory for simplicity.
 		return new BasicAsyncRequestConsumer();
 	}

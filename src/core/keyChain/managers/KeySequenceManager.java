@@ -128,7 +128,7 @@ public class KeySequenceManager extends KeyStrokeManager {
 	@Override
 	public final Set<UserDefinedAction> registerAction(UserDefinedAction action) {
 		Set<UserDefinedAction> toRemove = collision(action.getActivation());
-		toRemove.forEach(a -> unRegisterAction(a));
+		toRemove.forEach(this::unRegisterAction);
 
 		registeredActions.add(action);
 		return toRemove;

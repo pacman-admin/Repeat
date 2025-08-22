@@ -38,7 +38,7 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(backEndHolder.getReplayConfig()));
 		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(backEndHolder.getRunActionConfig()));

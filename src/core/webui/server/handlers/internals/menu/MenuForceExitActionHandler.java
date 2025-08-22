@@ -21,7 +21,7 @@ public class MenuForceExitActionHandler extends AbstractSingleMethodHttpHandler 
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		new Timer().schedule(new TimerTask() {
 			@Override
 			public void run() {

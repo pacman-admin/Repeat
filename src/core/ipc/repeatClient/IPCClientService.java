@@ -33,7 +33,7 @@ public abstract class IPCClientService extends IIPCService {
 	}
 
 	@Override
-	public final void start() throws IOException {
+	public final void start() {
 		if (executingProgram == null) {
 			getLogger().warning("Launcher does not exist. Doing nothing.");
 			return;
@@ -95,7 +95,7 @@ public abstract class IPCClientService extends IIPCService {
 	}
 
 	@Override
-	public final void stop() throws IOException {
+	public final void stop() {
 		if (forceDestroyThread != null) {
 			getLogger().info("Waiting for " + getName() + " to terminate...");
 			return;

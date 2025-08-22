@@ -15,7 +15,7 @@ public class KeyboardTypeStringStep extends ManuallyBuildStep {
 	}
 
 	@Override
-	public void execute(Core controller) throws InterruptedException {
+	public void execute(Core controller) {
 		controller.keyBoard().type(content);
 	}
 

@@ -20,7 +20,7 @@ public class ActionTaskActivationAddPhraseHandler extends AbstractTaskActivation
 
 	@Override
 	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange,
-			TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException {
+			TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
 		String phrase = params.get("phrase");
 		if (phrase == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No phrase provided.");

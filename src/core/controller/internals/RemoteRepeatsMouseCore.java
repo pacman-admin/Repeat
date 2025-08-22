@@ -29,12 +29,12 @@ public class RemoteRepeatsMouseCore extends AbstractMouseCoreImplementation {
 	}
 
 	@Override
-	public void hold(int mask, int duration) throws InterruptedException {
+	public void hold(int mask, int duration) {
 		api.mouse().hold(mask, duration);
 	}
 
 	@Override
-	public void hold(int mask, int x, int y, int duration) throws InterruptedException {
+	public void hold(int mask, int x, int y, int duration) {
 		api.mouse().hold(mask, x, y, duration);
 	}
 

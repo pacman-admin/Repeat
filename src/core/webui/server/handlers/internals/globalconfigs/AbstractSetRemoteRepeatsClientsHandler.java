@@ -22,7 +22,7 @@ public abstract class AbstractSetRemoteRepeatsClientsHandler extends AbstractUIH
 	}
 
 	@Override
-	protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		JsonNode params = HttpServerUtilities.parsePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST paramters.");
@@ -37,7 +37,7 @@ public abstract class AbstractSetRemoteRepeatsClientsHandler extends AbstractUIH
 
 		List<String> clientIds = new ArrayList<>();
 		try {
-			clientIds = clients.stream().map(c -> c.getStringValue()).distinct().collect(Collectors.toList());
+			clientIds = clients.stream().map(JsonNode::getStringValue).distinct().collect(Collectors.toList());
 		} catch(Exception e) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Clients need to be an array of strings.");
 		}

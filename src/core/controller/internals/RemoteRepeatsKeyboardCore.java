@@ -21,7 +21,7 @@ public class RemoteRepeatsKeyboardCore extends AbstractKeyboardCoreImplementatio
 	}
 
 	@Override
-	public void type(int... keys) throws InterruptedException {
+	public void type(int... keys) {
 		api.keyboard().type(keys);
 	}
 
@@ -31,7 +31,7 @@ public class RemoteRepeatsKeyboardCore extends AbstractKeyboardCoreImplementatio
 	}
 
 	@Override
-	public void hold(int key, int duration) throws InterruptedException {
+	public void hold(int key, int duration) {
 	}
 
 	@Override

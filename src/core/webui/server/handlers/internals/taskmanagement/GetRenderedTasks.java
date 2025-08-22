@@ -19,7 +19,7 @@ public class GetRenderedTasks extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		return renderedTaskForGroup(exchange);
 	}
 }

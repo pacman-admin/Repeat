@@ -17,7 +17,7 @@ public class MouseMoveByStep extends ManuallyBuildStep {
 	}
 
 	@Override
-	public void execute(Core controller) throws InterruptedException {
+	public void execute(Core controller) {
 		controller.mouse().moveBy(x, y);
 	}
 

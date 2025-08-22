@@ -17,7 +17,7 @@ public class MenuSaveConfigActionHandler extends AbstractSingleMethodHttpHandler
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		if (!backEndHolder.writeConfigFile()) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to save config...");
 		}

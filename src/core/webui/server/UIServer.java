@@ -257,7 +257,7 @@ public class UIServer extends IPCServiceWithModifablePort {
     }
 
     @Override
-    protected void stop() throws IOException {
+    protected void stop() {
         taskActivationConstructorManager.stop();
         manuallyBuildActionConstructorManager.stop();
         server.shutdown(TERMINATION_DELAY_SECOND, TimeUnit.SECONDS);
@@ -278,12 +278,7 @@ public class UIServer extends IPCServiceWithModifablePort {
 
         if (isRunning) {
             getLogger().info("Restarting UI server to change port to " + newPort);
-            try {
-                stop();
-            } catch (IOException e) {
-                getLogger().log(Level.WARNING, "IOException when stopping UI server.", e);
-                return false;
-            }
+            stop();
         }
         this.port = newPort;
 

@@ -27,7 +27,7 @@ public class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHttpHandl
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		TaskGroup group = backEndHolder.getCurrentTaskGroup();
 		List<TaskGroup> groups = backEndHolder.getTaskGroups();

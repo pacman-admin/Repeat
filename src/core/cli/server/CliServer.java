@@ -26,11 +26,11 @@ import java.util.logging.Logger;
 
 public class CliServer extends IPCServiceWithModifablePort {
     @Override
-    protected void start() throws IOException {
+    protected void start() {
     }
 
     @Override
-    protected void stop() throws IOException {
+    protected void stop() {
     }
 
     @Override

@@ -30,8 +30,8 @@ import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 import org.simplenativehooks.utilities.Function;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.*;
+import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.logging.Level;
@@ -84,7 +84,7 @@ public class MouseGestureManager extends KeyStrokeManager {
         if (stroke.getKey() == getConfig().getMouseGestureActivationKey()) {
             startRecording();
         }
-        return Collections.<UserDefinedAction>emptySet();
+        return Collections.emptySet();
     }
 
     @Override
@@ -92,7 +92,7 @@ public class MouseGestureManager extends KeyStrokeManager {
         if (stroke.getKey() == getConfig().getMouseGestureActivationKey()) {
             return finishRecording();
         }
-        return Collections.<UserDefinedAction>emptySet();
+        return Collections.emptySet();
     }
 
     @Override
@@ -108,7 +108,7 @@ public class MouseGestureManager extends KeyStrokeManager {
      */
     @Override
     public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
-        Set<MouseGesture> gestures = activations.stream().map(a -> a.getMouseGestures()).flatMap(Set::stream).collect(Collectors.toSet());
+        Set<MouseGesture> gestures = activations.stream().map(TaskActivation::getMouseGestures).flatMap(Set::stream).collect(Collectors.toSet());
 
         Set<MouseGesture> collisions = new HashSet<>(actionMap.keySet());
         collisions.retainAll(gestures);
@@ -163,7 +163,7 @@ public class MouseGestureManager extends KeyStrokeManager {
     /**
      * Start recording the gesture
      */
-    protected synchronized void startRecording() {
+    private synchronized void startRecording() {
         if (enabled) {
             return;
         }
@@ -188,7 +188,7 @@ public class MouseGestureManager extends KeyStrokeManager {
             }
 
             task.setInvoker(TaskActivation.newBuilder().withMouseGesture(gesture).build());
-            return new HashSet<>(Arrays.asList(task));
+            return new HashSet<>(List.of(task));
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Unable to classify recorded data", e);
         }
@@ -199,9 +199,8 @@ public class MouseGestureManager extends KeyStrokeManager {
      * Process currently stored points and detect any gesture
      *
      * @return the detected {@link MouseGesture}
-     * @throws IOException
      */
-    private MouseGesture processCurrentData() throws IOException {
+    private MouseGesture processCurrentData() {
         int size = coordinates.size();
         return mouseGestureRecognizer.classifyGesture(coordinates, size);
     }

@@ -18,7 +18,7 @@ public class GetIsReplayingHandler extends AbstractSingleMethodHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		boolean response = backEndHolder.isReplaying();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "" + response);
 	}

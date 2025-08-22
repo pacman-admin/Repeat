@@ -19,7 +19,7 @@ public class ActionAddTaskHandler extends AbstractUIHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		backEndHolder.addCurrentTask();
 		return renderedTaskForGroup(exchange);
 	}

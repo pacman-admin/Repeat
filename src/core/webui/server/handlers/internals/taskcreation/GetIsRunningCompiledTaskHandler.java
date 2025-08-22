@@ -18,7 +18,7 @@ public class GetIsRunningCompiledTaskHandler extends AbstractSingleMethodHttpHan
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		boolean response = backEndHolder.isRunningCompiledAction();
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, response + "");
 	}

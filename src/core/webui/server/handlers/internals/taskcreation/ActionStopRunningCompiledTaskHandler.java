@@ -18,7 +18,7 @@ public class ActionStopRunningCompiledTaskHandler extends AbstractSingleMethodHt
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		backEndHolder.stopRunningCompiledAction();
 		return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
 	}

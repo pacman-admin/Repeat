@@ -44,7 +44,7 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		String uriString = request.getRequestLine().getUri();
 		Map<String, String>  params = HttpServerUtilities.parseGetParameters(uriString);
 		if (params == null) {

@@ -20,7 +20,7 @@ public class ActionTaskActivationGetStrokesHandler extends AbstractTaskActivatio
 
 	@Override
 	protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange,
-			TaskActivationConstructor constructor, Map<String, String> params) throws HttpException, IOException {
+			TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
 		String strokes = constructor.getStrokes();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, strokes.isEmpty() ? "None" : strokes);
 	}

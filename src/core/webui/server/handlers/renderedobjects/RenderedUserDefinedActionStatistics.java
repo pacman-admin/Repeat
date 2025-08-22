@@ -94,7 +94,7 @@ public class RenderedUserDefinedActionStatistics {
 			.collect(Collectors.toList());
 
 		if (sortedData.size() > BREAKDOWN_COLORS.size()) {
-			long otherCount = sortedData.stream().skip(BREAKDOWN_COLORS.size() - 1).map(e -> e.b()).reduce(0L, Long::sum);
+			long otherCount = sortedData.stream().skip(BREAKDOWN_COLORS.size() - 1).map(Pair::b).reduce(0L, Long::sum);
 			sortedData = Stream.concat(
 						sortedData.stream().limit(BREAKDOWN_COLORS.size() - 1),
 						Stream.of(Pair.of("Other", otherCount)))

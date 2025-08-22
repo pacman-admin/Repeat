@@ -18,7 +18,7 @@ public class ActionStartReplayHandler extends AbstractSingleMethodHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
+			throws IOException {
 		backEndHolder.startReplay();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
 	}

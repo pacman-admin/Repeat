@@ -31,7 +31,7 @@ public class ManuallyBuildActionParametersParser {
 	}
 
 	public ManuallyBuildStep parse(String actor, String action, String paramsString) throws InvalidManuallyBuildComponentException {
-		List<String> params = Arrays.asList(paramsString.split(",")).stream().map(x -> x.trim()).collect(Collectors.toList());
+		List<String> params = Arrays.asList(paramsString.split(",")).stream().map(String::trim).collect(Collectors.toList());
 
 		if (actor.equals(Actor.MOUSE.toString())) {
 			return parseMouseStep(action, params);
@@ -150,7 +150,7 @@ public class ManuallyBuildActionParametersParser {
 			}
 		}
 
-		private static int getCode(String value) throws InvalidManuallyBuildComponentException {
+		private static int getCode(String value) {
 			if (NumberUtility.isNonNegativeInteger(value)) {
 				return Integer.parseInt(value);
 			}
@@ -166,7 +166,7 @@ public class ManuallyBuildActionParametersParser {
 			}
 		}
 
-		private static int getCode(String value) throws InvalidManuallyBuildComponentException {
+		private static int getCode(String value) {
 			if (NumberUtility.isNonNegativeInteger(value)) {
 				return Integer.parseInt(value);
 			}

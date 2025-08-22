@@ -32,7 +32,7 @@ public class ActionManuallyBuildActionMoveUpHandler extends AbstractUIHttpHandle
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
 		JsonNode params = HttpServerUtilities.parsePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
@@ -60,7 +60,7 @@ public class ActionManuallyBuildActionMoveUpHandler extends AbstractUIHttpHandle
 
 		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
 		// Since the list of indices is sorted with the smallest one first, it's safe to move them sequentially.
-		indices.stream().forEach(i -> constructor.moveStepUp(i));
+		indices.stream().forEach(constructor::moveStepUp);
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));

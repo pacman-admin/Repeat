@@ -17,13 +17,13 @@ public class NoopKeyboardCore extends AbstractKeyboardCoreImplementation {
 	public void type(char... chars) {}
 
 	@Override
-	public void type(int... keys) throws InterruptedException {}
+	public void type(int... keys) {}
 
 	@Override
 	public void combination(int... keys) {}
 
 	@Override
-	public void hold(int key, int duration) throws InterruptedException {}
+	public void hold(int key, int duration) {}
 
 	@Override
 	public void press(int... keys) {}
