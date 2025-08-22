@@ -836,9 +836,7 @@ public class MainBackEndHolder {
     }
 
     public boolean changeHotkeyTask(UserDefinedAction action, TaskActivation newActivation) {
-        if (newActivation == null) {
-            return false;
-        }
+        if (newActivation == null) throw new IllegalArgumentException("Can't add null activation!");
 
         Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
         collisions.remove(action);

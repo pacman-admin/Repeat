@@ -63,7 +63,7 @@ public class MouseGestureModelResources {
      * without worrying about performance issue.
      *
      * @param labelCount number of label, which is the same as number of row for this matrix.
-     * @return the coefficients matrix.
+     * @return the coefficient matrix.
      */
     public static double[][] getCoefficients(int labelCount) {
         String content = BootStrapResources.getFile(COEFFICIENTS_FILE);
@@ -98,9 +98,6 @@ public class MouseGestureModelResources {
      */
     public static String[] getLabels() {
         String content = BootStrapResources.getFile(LABELS_FILE);
-        if (content == null) {
-            return null;
-        }
         return content.split("\n");
     }
 }

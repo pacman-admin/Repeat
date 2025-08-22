@@ -40,13 +40,13 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Config implements ILoggable {
+public final class Config implements ILoggable {
 
     public static final String RELEASE_VERSION = "6.0.0";
     public static final int HALT_TASK = KeyEvent.VK_ESCAPE; // This should be hardcoded, and must not be changed
-    protected static final String CONFIG_FILE_NAME = "config.json";
+    private static final String CONFIG_FILE_NAME = "config.json";
     public static final String EXPORTED_CONFIG_FILE_NAME = "exported_" + CONFIG_FILE_NAME;
-    protected static final String CURRENT_CONFIG_VERSION = "2.15";
+    static final String CURRENT_CONFIG_VERSION = "2.15";
     private static final Level DEFAULT_NATIVE_HOOK_DEBUG_LEVEL = Level.INFO;
     private static final boolean DEFAULT_TRAY_ICON_USE = true;
     private static final List<ConfigParser> knownParsers;
@@ -86,7 +86,7 @@ public class Config implements ILoggable {
         enabledHaltingKeyPressed = true;
         executeOnKeyReleased = true;
         nativeHookDebugLevel = DEFAULT_NATIVE_HOOK_DEBUG_LEVEL;
-        mouseGestureActivationKey = KeyEvent.VK_BACK_QUOTE;
+        //mouseGestureActivationKey = KeyEvent.VK_F4;
         RECORD = new KeyChain(KeyEvent.VK_F7);
         REPLAY = new KeyChain(KeyEvent.VK_F8);
         COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F9);
@@ -243,10 +243,6 @@ public class Config implements ILoggable {
         if (RECORD != null) {
             this.RECORD = RECORD;
         }
-    }
-
-    public void setRECORD(int RECORD) {
-        setRECORD(new KeyChain(List.of(RECORD)));
     }
 
     public KeyChain getREPLAY() {

@@ -1,53 +1,26 @@
 package core.keyChain;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import utilities.json.IJsonable;
 
+import java.util.*;
+
 /**
  * Enum representing classification categories
- *
  */
 public enum MouseGesture implements IJsonable {
-	ALPHA("alpha"),
-	CIRCLE_LEFT("circle_left"),
-	GAMMA("gamma"),
-	GREATER_THAN("greater_than"),
-	HAT("hat"),
-	HORIZONTAL("horizontal"),
-	LESS_THAN("less_than"),
-	N("N"),
-	RANDOM("random"),
-	SIX("six"),
-	SQUARE("square"),
-	SQUARE_ROOT("square_root"),
-	TILDA("tilda"),
-	TRIANGLE("triangle"),
-	U("u"),
-	VERTICAL("vertical"),
-	Z("z")
-	;
+    ALPHA("alpha"), CIRCLE_LEFT("circle_left"), GAMMA("gamma"), GREATER_THAN("greater_than"), HAT("hat"), HORIZONTAL("horizontal"), LESS_THAN("less_than"), N("N"), RANDOM("random"), SIX("six"), SQUARE("square"), SQUARE_ROOT("square_root"), TILDA("tilda"), TRIANGLE("triangle"), U("u"), VERTICAL("vertical"), Z("z");
 
-	public static final Set<MouseGesture> IGNORED_CLASSIFICATIONS = new HashSet<>(
-			Arrays.asList(HORIZONTAL,
-						  VERTICAL,
-						  SIX,
-						  U,
-						  RANDOM));
+    public static final Set<MouseGesture> IGNORED_CLASSIFICATIONS = new HashSet<>(Arrays.asList(HORIZONTAL, VERTICAL, SIX, U, RANDOM));
 
-	private final String text;
+    private final String text;
 
     /**
      * @param text human readable text form of this classification
      */
-    private MouseGesture(final String text) {
+    MouseGesture(final String text) {
         this.text = text;
     }
 
@@ -55,15 +28,15 @@ public enum MouseGesture implements IJsonable {
      * @return list of enabled mouse gestures that can be used to activate tasks.
      */
     public static List<MouseGesture> enabledGestures() {
-    	List<MouseGesture> output = new ArrayList<>();
+        List<MouseGesture> output = new ArrayList<>();
 
-		for (MouseGesture value : values()) {
-			if (!IGNORED_CLASSIFICATIONS.contains(value)) {
-				output.add(value);
-			}
-		}
+        for (MouseGesture value : values()) {
+            if (!IGNORED_CLASSIFICATIONS.contains(value)) {
+                output.add(value);
+            }
+        }
 
-    	return output;
+        return output;
     }
 
     /**
@@ -73,13 +46,13 @@ public enum MouseGesture implements IJsonable {
      * @return the found mouse gesture, or null if cannot find one
      */
     public static MouseGesture find(String name) {
-    	for (MouseGesture classification : MouseGesture.values()) {
-    		if (classification.text.equals(name)) {
-    			return classification;
-    		}
-    	}
+        for (MouseGesture classification : MouseGesture.values()) {
+            if (classification.text.equals(name)) {
+                return classification;
+            }
+        }
 
-    	return null;
+        return null;
     }
 
     /**
@@ -89,25 +62,25 @@ public enum MouseGesture implements IJsonable {
      * @return set of mouse gestures parsed.
      */
     public static Set<MouseGesture> parseJSON(List<JsonNode> nodes) {
-    	Set<MouseGesture> output = new HashSet<>();
-    	for (JsonNode node : nodes) {
-    		String name = node.getStringValue("name");
-    		MouseGesture gesture = find(name);
+        Set<MouseGesture> output = new HashSet<>();
+        for (JsonNode node : nodes) {
+            String name = node.getStringValue("name");
+            MouseGesture gesture = find(name);
 
-    		if (gesture != null) {
-    			output.add(gesture);
-    		}
-    	}
-    	return output;
+            if (gesture != null) {
+                output.add(gesture);
+            }
+        }
+        return output;
     }
 
     @Override
-	public String toString() {
-    	return text;
-	}
+    public String toString() {
+        return text;
+    }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(JsonNodeFactories.field("name", JsonNodeFactories.string(text)));
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("name", JsonNodeFactories.string(text)));
+    }
 }
