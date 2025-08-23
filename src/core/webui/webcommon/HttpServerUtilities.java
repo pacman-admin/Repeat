@@ -157,7 +157,7 @@ public class HttpServerUtilities {
         response.setEntity(entity);
         exchange.submitResponse(new BasicAsyncResponseProducer(response));
 
-        if (code != 200) {
+        if (code >= 400) {
             LOGGER.warning("HTTP response with code " + code + ": " + data);
         }
         return null;
