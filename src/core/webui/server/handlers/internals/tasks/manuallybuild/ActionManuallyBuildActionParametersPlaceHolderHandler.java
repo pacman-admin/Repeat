@@ -3,7 +3,6 @@ package core.webui.server.handlers.internals.tasks.manuallybuild;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;

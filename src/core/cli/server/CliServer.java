@@ -21,7 +21,6 @@ package core.cli.server;
 import core.ipc.IPCServiceWithModifablePort;
 import frontEnd.MainBackEndHolder;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class CliServer extends IPCServiceWithModifablePort {

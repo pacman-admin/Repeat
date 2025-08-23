@@ -2,7 +2,6 @@ package core.webui.server.handlers.internals.menu;
 
 import java.io.IOException;
 
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;

@@ -3,7 +3,6 @@ package core.webui.webcommon;
 import java.io.IOException;
 import java.util.logging.Logger;
 
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.BasicAsyncRequestConsumer;

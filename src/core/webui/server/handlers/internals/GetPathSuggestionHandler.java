@@ -19,7 +19,6 @@
 package core.webui.server.handlers.internals;
 
 import core.webui.server.handlers.AbstractComplexGETHandler;
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import utilities.json.JSONUtility;
 import utilities.json.Jsonizer;
 

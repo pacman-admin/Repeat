@@ -1,7 +1,6 @@
 package utilities.logging;
 
 import java.io.OutputStream;
-import java.util.Iterator;
 import java.util.LinkedList;
 
 public class LogHolder extends OutputStream {

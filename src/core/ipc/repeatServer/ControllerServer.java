@@ -2,7 +2,6 @@ package core.ipc.repeatServer;
 
 import core.ipc.IPCServiceWithModifablePort;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 public class ControllerServer extends IPCServiceWithModifablePort {
