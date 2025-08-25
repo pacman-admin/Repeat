@@ -20,7 +20,7 @@ public class ClientTask implements IJsonable {
 	private final String id;
 	private final String fileName;
 
-	protected ClientTask(String id, String fileName) {
+	private ClientTask(String id, String fileName) {
 		this.id = id;
 		this.fileName = fileName;
 	}

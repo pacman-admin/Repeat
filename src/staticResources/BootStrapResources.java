@@ -71,7 +71,7 @@ public class BootStrapResources {
         return BootStrapResources.class.getResourceAsStream(resource);
     }
 
-    protected static Image getImage(String resource) {
+    private static Image getImage(String resource) {
         try {
             return ImageIO.read(BootStrapResources.class.getResourceAsStream(resource));
         } catch (IOException e) {
@@ -79,7 +79,7 @@ public class BootStrapResources {
             return null;
         }
     }
-    protected static String getFile(String path) {
+    static String getFile(String path) {
         return FileUtility.readFromStream(BootStrapResources.class.getResourceAsStream(path)).toString();
     }
     public static String getAbout() {

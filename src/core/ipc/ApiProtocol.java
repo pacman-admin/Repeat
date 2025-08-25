@@ -7,7 +7,7 @@ public class ApiProtocol {
 	private ApiProtocol() {}
 
 	public static final String SUCCESS_STATUS = "Success";
-	public static final String FAILURE_STATUS = "Failure";
+	private static final String FAILURE_STATUS = "Failure";
 
 	public static JsonNode keepAliveMessage() {
 		return JsonNodeFactories.object(

@@ -18,7 +18,7 @@ import java.io.IOException;
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     private final String errorMessage;
 
-    protected AbstractSimpleHandler(String type, String errorMsg) {
+    AbstractSimpleHandler(String type, String errorMsg) {
         super(type);
         if (errorMsg.isBlank()) throw new IllegalArgumentException("Error message must be a String!");
         errorMessage = errorMsg;

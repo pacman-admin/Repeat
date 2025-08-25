@@ -22,7 +22,7 @@ import utilities.ExceptionsUtility;
 
 public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHandler {
 
-	protected ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public ActionManuallyBuildActionInsertStepHandler(ObjectRenderer objectRenderer, ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

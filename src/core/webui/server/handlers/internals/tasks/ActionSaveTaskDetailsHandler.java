@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
-    protected TaskActivationConstructorManager taskActivationConstructorManager;
+    private TaskActivationConstructorManager taskActivationConstructorManager;
 
     public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

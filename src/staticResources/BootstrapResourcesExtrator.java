@@ -21,6 +21,6 @@ package staticResources;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public interface BootstrapResourcesExtrator {
+interface BootstrapResourcesExtrator {
     void extractResources() throws IOException, URISyntaxException;
 }

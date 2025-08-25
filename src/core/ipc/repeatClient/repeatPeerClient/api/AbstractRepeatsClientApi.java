@@ -16,15 +16,15 @@ abstract class AbstractRepeatsClientApi {
 
 	private RepeatPeerServiceClientWriter repeatPeerServiceClientWriter;
 
-	protected AbstractRepeatsClientApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
+	AbstractRepeatsClientApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		this.repeatPeerServiceClientWriter = repeatPeerServiceClientWriter;
 	}
 
-	protected RepeatPeerServiceClientWriter getRepeatPeerServiceClientWriter() {
+	private RepeatPeerServiceClientWriter getRepeatPeerServiceClientWriter() {
 		return repeatPeerServiceClientWriter;
 	}
 
-	protected final String waitAndGetResponseIfSuccess(IpcMessageType type, IJsonable message) {
+	final String waitAndGetResponseIfSuccess(IpcMessageType type, IJsonable message) {
 		JsonNode node = waitAndGetJsonResponseIfSuccess(type, message);
 		if (node == null) {
 			return "";
@@ -32,7 +32,7 @@ abstract class AbstractRepeatsClientApi {
 		return node.getStringValue();
 	}
 
-	protected final JsonNode waitAndGetJsonResponseIfSuccess(IpcMessageType type, IJsonable message) {
+	final JsonNode waitAndGetJsonResponseIfSuccess(IpcMessageType type, IJsonable message) {
 		long id = getRepeatPeerServiceClientWriter().enqueueMessage(type, message);
 		Reply reply;
 		try {

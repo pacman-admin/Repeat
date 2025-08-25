@@ -18,9 +18,6 @@
  */
 package core.config;
 
+//No longer does anything
 public class CliConfig {
-    //public static final int DEFAULT_SERVER_PORT = 65432;
-    public CliConfig() {
-        //this.serverPort = DEFAULT_SERVER_PORT;
-    }
 }

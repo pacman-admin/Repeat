@@ -22,7 +22,7 @@ import core.webui.webcommon.HttpServerUtilities;
 
 public class ActionManuallyBuildActionRemoveStepsHandler extends AbstractUIHttpHandler {
 
-	protected ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public ActionManuallyBuildActionRemoveStepsHandler(ObjectRenderer objectRenderer, ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

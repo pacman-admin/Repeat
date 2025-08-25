@@ -4,14 +4,14 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class AbstractRepeatsClientStoppableThread implements Runnable {
+abstract class AbstractRepeatsClientStoppableThread implements Runnable {
 
 	private static final Logger LOGGER = Logger.getLogger(AbstractRepeatsClientStoppableThread.class.getName());
 
 	private boolean stopped;
-	protected ResponseManager responseManager;
+	ResponseManager responseManager;
 
-	protected AbstractRepeatsClientStoppableThread(ResponseManager responseManager) {
+	AbstractRepeatsClientStoppableThread(ResponseManager responseManager) {
 		this.responseManager = responseManager;
 	}
 
@@ -32,7 +32,7 @@ public abstract class AbstractRepeatsClientStoppableThread implements Runnable {
 
 	protected abstract void processLoop() throws IOException, InterruptedException;
 
-	protected final void stop() {
+	final void stop() {
 		stopped = true;
 	}
 }

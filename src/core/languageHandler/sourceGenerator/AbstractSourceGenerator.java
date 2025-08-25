@@ -12,12 +12,12 @@ public abstract class AbstractSourceGenerator {
 
 	private static final Logger LOGGER = Logger.getLogger(AbstractSourceGenerator.class.getName());
 
-	protected final StringBuffer source;
-	protected TaskSourceScheduler sourceScheduler;
+	private final StringBuffer source;
+	TaskSourceScheduler sourceScheduler;
 
-	protected static final String TAB = "    ";
-	protected static final String TWO_TAB = TAB + TAB;
-	protected static final String THREE_TAB = TWO_TAB + TAB;
+	private static final String TAB = "    ";
+	static final String TWO_TAB = TAB + TAB;
+	private static final String THREE_TAB = TWO_TAB + TAB;
 	protected static final String FOUR_TAB = THREE_TAB + TAB;
 
 	public enum Device {
@@ -53,10 +53,10 @@ public abstract class AbstractSourceGenerator {
 		return null;
 	}
 
-	protected AbstractKeyboardSourceCodeGenerator keyboardSourceCodeGenerator;
-	protected AbstractMouseSourceCodeGenerator mouseSourceCodeGenerator;
+	private AbstractKeyboardSourceCodeGenerator keyboardSourceCodeGenerator;
+	private AbstractMouseSourceCodeGenerator mouseSourceCodeGenerator;
 
-	public AbstractSourceGenerator() {
+	AbstractSourceGenerator() {
 		source = new StringBuffer();
 		sourceScheduler = new TaskSourceScheduler();
 
@@ -72,7 +72,7 @@ public abstract class AbstractSourceGenerator {
 		return internalSubmitTask(time, device, action, param);
 	}
 
-	protected boolean internalSubmitTask(long time, Device device, String action, int[] params) {
+	private boolean internalSubmitTask(long time, Device device, String action, int[] params) {
 		String mid = "";
 		if (device.equals(Device.MOUSE)) {
 			mid = mouseSourceCodeGenerator.getSourceCode(action, params);
@@ -85,7 +85,7 @@ public abstract class AbstractSourceGenerator {
 		return mid == null ? false : sourceScheduler.addTask(new SchedulingData<>(time, getSourceTab() + mid + "\n"));
 	}
 
-	protected final boolean verify(Device device, String action, int[] param) {
+	private boolean verify(Device device, String action, int[] param) {
 		return true;
 	}
 
@@ -116,7 +116,7 @@ public abstract class AbstractSourceGenerator {
 	/**
 	 * @return the amount of indentation required for the generated source code.
 	 */
-	public abstract String getSourceTab();
+	protected abstract String getSourceTab();
 
 	public String getSource(float speedup) {
 		String mainSource = sourceScheduler.getSource(speedup);
