@@ -6,7 +6,7 @@ import core.ipc.repeatServer.processors.IpcMessageType;
 
 public class RepeatsKeyboardControllerApi extends AbstractRepeatsClientApi {
 
-	protected RepeatsKeyboardControllerApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
+	RepeatsKeyboardControllerApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		super(repeatPeerServiceClientWriter);
 	}
 

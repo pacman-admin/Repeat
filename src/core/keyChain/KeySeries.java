@@ -18,9 +18,9 @@ import utilities.json.IJsonable;
 public abstract class KeySeries implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(KeySeries.class.getName());
-	protected List<ButtonStroke> keys;
+	List<ButtonStroke> keys;
 
-	public KeySeries(List<ButtonStroke> keys) {
+	KeySeries(List<ButtonStroke> keys) {
 		this.keys = new ArrayList<>(keys.size());
 
 		for (ButtonStroke key : keys) {
@@ -28,7 +28,7 @@ public abstract class KeySeries implements IJsonable {
 		}
 	}
 
-	public KeySeries(Iterable<Integer> keys) {
+	KeySeries(Iterable<Integer> keys) {
 		this.keys = new ArrayList<>();
 
 		for (Integer key : keys) {
@@ -36,11 +36,11 @@ public abstract class KeySeries implements IJsonable {
 		}
 	}
 
-	public KeySeries(int key) {
+	KeySeries(int key) {
 		this(Arrays.asList(key));
 	}
 
-	public KeySeries() {
+	KeySeries() {
 		this(new ArrayList<Integer>());
 	}
 
@@ -197,7 +197,7 @@ public abstract class KeySeries implements IJsonable {
 		return JsonNodeFactories.array(keyChain);
 	}
 
-	public static List<ButtonStroke> parseKeyStrokes(List<JsonNode> list) {
+	static List<ButtonStroke> parseKeyStrokes(List<JsonNode> list) {
 		try {
 			return list.stream().map(ButtonStroke::parseJSON).collect(Collectors.toList());
 		} catch (Exception e) {

@@ -79,7 +79,7 @@ public class TaskSourceCodeFragmentHandler {
 
 	@SuppressWarnings("serial")
 	public static class RenderException extends Exception {
-		public RenderException(String message){
+		RenderException(String message){
 	        super(message);
 	    }
 	}

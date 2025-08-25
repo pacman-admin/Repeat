@@ -34,14 +34,14 @@ public class RenderedUserDefinedAction {
 	public String getId() {
 		return id;
 	}
-	public void setId(String id) {
+	private void setId(String id) {
 		this.id = id;
 	}
 	public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
+	private void setName(String name) {
 		this.name = name;
 	}
 
@@ -49,7 +49,7 @@ public class RenderedUserDefinedAction {
 		return activation;
 	}
 
-	public void setActivation(String activation) {
+	private void setActivation(String activation) {
 		this.activation = activation;
 	}
 
@@ -57,7 +57,7 @@ public class RenderedUserDefinedAction {
 		return enabled;
 	}
 
-	public void setEnabled(String enabled) {
+	private void setEnabled(String enabled) {
 		this.enabled = enabled;
 	}
 
@@ -65,7 +65,7 @@ public class RenderedUserDefinedAction {
 		return useCount;
 	}
 
-	public void setUseCount(long useCount) {
+	private void setUseCount(long useCount) {
 		this.useCount = useCount;
 	}
 
@@ -73,7 +73,7 @@ public class RenderedUserDefinedAction {
 		return lastUsed;
 	}
 
-	public void setLastUsed(String lastUsed) {
+	private void setLastUsed(String lastUsed) {
 		this.lastUsed = lastUsed;
 	}
 }

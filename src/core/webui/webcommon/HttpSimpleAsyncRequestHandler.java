@@ -28,14 +28,14 @@ import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 
-public abstract class HttpSimpleAsyncRequestHandler implements HttpAsyncRequestHandler<HttpRequest> {
+abstract class HttpSimpleAsyncRequestHandler implements HttpAsyncRequestHandler<HttpRequest> {
 
     @Override
     public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
         handleRequest(request, exchange, context);
     }
 
-    public abstract Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException;
+    protected abstract Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException;
 
     @Override
     public final HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest arg0, HttpContext arg1) {

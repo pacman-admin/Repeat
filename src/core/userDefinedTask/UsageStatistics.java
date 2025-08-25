@@ -194,7 +194,7 @@ public class UsageStatistics implements IJsonable {
 		private long start;
 		private long end;
 
-		public static ExecutionInstance of(long start, long end) {
+		static ExecutionInstance of(long start, long end) {
 			return new ExecutionInstance(start, end);
 		}
 

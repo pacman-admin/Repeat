@@ -6,7 +6,7 @@ public class RenderedTaskGroupSimple {
 	private String id;
 	private String name;
 
-	protected static RenderedTaskGroupSimple fromTaskGroup(TaskGroup group) {
+	static RenderedTaskGroupSimple fromTaskGroup(TaskGroup group) {
 		RenderedTaskGroupSimple output =  new RenderedTaskGroupSimple();
 		output.id = group.getGroupId();
 		output.name = group.getName();

@@ -22,7 +22,7 @@ public class RegexStringMatchingCondition extends StringMatchingCondition {
 		return new RegexStringMatchingCondition(regex);
 	}
 
-	public static boolean isValidRegex(String regex) {
+	private static boolean isValidRegex(String regex) {
 		try {
 			Pattern.compile(regex);
 		} catch (PatternSyntaxException e) {

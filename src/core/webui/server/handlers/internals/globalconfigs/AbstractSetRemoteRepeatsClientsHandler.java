@@ -16,7 +16,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 
 public abstract class AbstractSetRemoteRepeatsClientsHandler extends AbstractUIHttpHandler {
-	public AbstractSetRemoteRepeatsClientsHandler(ObjectRenderer objectRenderer) {
+	AbstractSetRemoteRepeatsClientsHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
 	}
 
@@ -44,6 +44,6 @@ public abstract class AbstractSetRemoteRepeatsClientsHandler extends AbstractUIH
 		return renderResponse(exchange);
 	}
 
-	public abstract void setConfig(List<String> clientIds);
-	public abstract Void renderResponse(HttpAsyncExchange exchange) throws IOException;
+	protected abstract void setConfig(List<String> clientIds);
+	protected abstract Void renderResponse(HttpAsyncExchange exchange) throws IOException;
 }

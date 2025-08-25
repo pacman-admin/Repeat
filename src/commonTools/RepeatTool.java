@@ -24,16 +24,16 @@ import utilities.StringUtilities;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class RepeatTool {
+abstract class RepeatTool {
 
-    protected static final String TAB = "    ";
-    protected static final String TWO_TAB = TAB + TAB;
-    protected static final String THREE_TAB = TWO_TAB + TAB;
-    protected static final String FOUR_TAB = THREE_TAB + TAB;
+    private static final String TAB = "    ";
+    static final String TWO_TAB = TAB + TAB;
+    static final String THREE_TAB = TWO_TAB + TAB;
+    static final String FOUR_TAB = THREE_TAB + TAB;
 
-    protected List<String> imports;
+    List<String> imports;
 
-    public RepeatTool() {
+    RepeatTool() {
         imports = new LinkedList<>();
         imports.add("import core.UserDefinedAction;");
         imports.add("import core.controller.Core;");
@@ -47,7 +47,7 @@ public abstract class RepeatTool {
         }
     }
 
-    protected String getHeader(Language language) {
+    private String getHeader(Language language) {
         if (language == Language.JAVA) {
             return """
                     public class CustomAction extends UserDefinedAction {
@@ -58,7 +58,7 @@ public abstract class RepeatTool {
         }
     }
 
-    protected String getFooter(Language language) {
+    private String getFooter(Language language) {
         if (language == Language.JAVA) {
             return "    }\n}";
         } else {

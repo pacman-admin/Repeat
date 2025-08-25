@@ -16,14 +16,15 @@ import utilities.json.JSONUtility;
 public abstract class IPCClientService extends IIPCService {
 
 	private static final Logger LOGGER = Logger.getLogger(IPCClientService.class.getName());
-	protected static final long TIMEOUT_MS = 5000;
+	private static final long TIMEOUT_MS = 5000;
 
-	protected File executingProgram; // The program used to execute this ipc client
-	protected Thread mainThread, forceDestroyThread;
-	protected Process mainProcess;
-	protected BufferedReader input;
+	private File executingProgram; // The program used to execute this ipc client
+	private Thread mainThread;
+    private Thread forceDestroyThread;
+	private Process mainProcess;
+	private BufferedReader input;
 
-	public void setExecutingProgram(File executablePath) {
+	private void setExecutingProgram(File executablePath) {
 		if (!executablePath.canExecute()) {
 			LOGGER.warning("File is not executable: " + executablePath.getAbsolutePath());
 			return;

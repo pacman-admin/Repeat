@@ -4,10 +4,10 @@ import core.ipc.repeatClient.repeatPeerClient.RepeatPeerServiceClientWriter;
 
 public class RepeatsClientApi {
 
-	protected RepeatsActionsApi actions;
-	protected RepeatsMouseControllerApi mouse;
-	protected RepeatsKeyboardControllerApi keyboard;
-	protected RepeatsToolApi tool;
+	private RepeatsActionsApi actions;
+	private RepeatsMouseControllerApi mouse;
+	private RepeatsKeyboardControllerApi keyboard;
+	private RepeatsToolApi tool;
 
 	public RepeatsClientApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		actions = new RepeatsActionsApi(repeatPeerServiceClientWriter);

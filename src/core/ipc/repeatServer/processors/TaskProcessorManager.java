@@ -50,7 +50,7 @@ public final class TaskProcessorManager {
 		TaskProcessorManager.callBack = callBack;
 	}
 
-	public static Logger getLogger() {
+	private static Logger getLogger() {
 		return Logger.getLogger(TaskProcessorManager.class.getName());
 	}
 

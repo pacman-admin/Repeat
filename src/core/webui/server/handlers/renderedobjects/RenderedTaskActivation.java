@@ -98,7 +98,7 @@ public class RenderedTaskActivation {
         int originalIndex;
         String value;
 
-        public static SortedString of(int originalIndex, String value) {
+        static SortedString of(int originalIndex, String value) {
             SortedString result = new SortedString();
             result.originalIndex = originalIndex;
             result.value = value;
@@ -113,7 +113,7 @@ public class RenderedTaskActivation {
             this.originalIndex = originalIndex;
         }
 
-        public String getValue() {
+        String getValue() {
             return value;
         }
 
@@ -131,7 +131,7 @@ public class RenderedTaskActivation {
         private boolean disableMouseGesture;
         private boolean disableSharedVariable;
 
-        public static Config of(boolean modifiable) {
+        static Config of(boolean modifiable) {
             Config result = new Config();
             result.modifiable = modifiable;
             return result;
@@ -149,7 +149,7 @@ public class RenderedTaskActivation {
             return disableGlobalAction;
         }
 
-        public Config setDisableGlobalAction(boolean disableGlobalAction) {
+        Config setDisableGlobalAction(boolean disableGlobalAction) {
             this.disableGlobalAction = disableGlobalAction;
             return this;
         }
@@ -158,7 +158,7 @@ public class RenderedTaskActivation {
             return disableKeyChain;
         }
 
-        public Config setDisableKeyChain(boolean disableKeyChain) {
+        Config setDisableKeyChain(boolean disableKeyChain) {
             this.disableKeyChain = disableKeyChain;
             return this;
         }
@@ -167,7 +167,7 @@ public class RenderedTaskActivation {
             return disableKeySequence;
         }
 
-        public Config setDisableKeySequence(boolean disableKeySequence) {
+        Config setDisableKeySequence(boolean disableKeySequence) {
             this.disableKeySequence = disableKeySequence;
             return this;
         }
@@ -176,7 +176,7 @@ public class RenderedTaskActivation {
             return disablePhrase;
         }
 
-        public Config setDisablePhrase(boolean disablePhrase) {
+        Config setDisablePhrase(boolean disablePhrase) {
             this.disablePhrase = disablePhrase;
             return this;
         }
@@ -185,7 +185,7 @@ public class RenderedTaskActivation {
             return disableMouseGesture;
         }
 
-        public Config setDisableMouseGesture(boolean disableMouseGesture) {
+        Config setDisableMouseGesture(boolean disableMouseGesture) {
             this.disableMouseGesture = disableMouseGesture;
             return this;
         }
@@ -194,7 +194,7 @@ public class RenderedTaskActivation {
             return disableSharedVariable;
         }
 
-        public Config setDisableSharedVariable(boolean disableSharedVariable) {
+        Config setDisableSharedVariable(boolean disableSharedVariable) {
             this.disableSharedVariable = disableSharedVariable;
             return this;
         }

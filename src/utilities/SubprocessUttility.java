@@ -19,7 +19,7 @@ public class SubprocessUttility {
 	 * @return stdout and stderr of the command
 	 * @throws ExecutionException if there is any exception encountered.
 	 */
-	public static String[] execute(String command, String cwd) throws ExecutionException {
+	private static String[] execute(String command, String cwd) throws ExecutionException {
 		final File dir;
 		if (cwd != null && !cwd.isEmpty()) {
 			dir = new File(cwd);

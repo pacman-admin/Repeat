@@ -108,7 +108,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
     private final ServerMainProcessor holder;
     private final CoreProvider coreProvider;
 
-    protected ControllerRequestProcessor(MainMessageSender messageSender, CoreProvider coreProvider, ServerMainProcessor holder) {
+    ControllerRequestProcessor(MainMessageSender messageSender, CoreProvider coreProvider, ServerMainProcessor holder) {
         super(messageSender);
         this.holder = holder;
         this.coreProvider = coreProvider;

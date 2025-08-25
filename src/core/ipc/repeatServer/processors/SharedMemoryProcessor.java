@@ -31,7 +31,7 @@ public class SharedMemoryProcessor extends AbstractMessageProcessor {
 
 	private static final String DEVICE_NAME = "shared_memory";
 
-	protected SharedMemoryProcessor(MainMessageSender messageSender) {
+	SharedMemoryProcessor(MainMessageSender messageSender) {
 		super(messageSender);
 	}
 

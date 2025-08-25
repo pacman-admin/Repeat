@@ -16,7 +16,7 @@ public class KeyboardState {
 		return new KeyboardState(false, false, false, false);
 	}
 
-	public static KeyboardState of(boolean numlockLocked, boolean capslockLocked, boolean scrollLockLocked, boolean isShiftLocked) {
+	private static KeyboardState of(boolean numlockLocked, boolean capslockLocked, boolean scrollLockLocked, boolean isShiftLocked) {
 		return new KeyboardState(numlockLocked, capslockLocked, scrollLockLocked, isShiftLocked);
 	}
 

@@ -59,8 +59,8 @@ final class WindowsNativeProcessUtil {
 		}
 
 		// https://learn.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
-		public static int PROCESS_QUERY_INFORMATION = 0x0400;
-		public static int PROCESS_VM_READ = 0x0010;
+		static int PROCESS_QUERY_INFORMATION = 0x0400;
+		static int PROCESS_VM_READ = 0x0010;
 
 		// https://learn.microsoft.com/en-us/windows/win32/api/processthreadsapi/nf-processthreadsapi-openprocess
 		public static native Pointer OpenProcess(int dwDesiredAccess, boolean bInheritHandle, Pointer pointer);

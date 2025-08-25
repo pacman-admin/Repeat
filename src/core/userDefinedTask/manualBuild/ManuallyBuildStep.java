@@ -29,7 +29,7 @@ public abstract class ManuallyBuildStep implements IJsonable {
 
 	public abstract void execute(Core controller) throws InterruptedException;
 	public abstract String getDisplayString();
-	public abstract String getJsonSignature();
+	protected abstract String getJsonSignature();
 
 	protected boolean parse(JsonNode node) {
 		return Jsonizer.parse(node, this);

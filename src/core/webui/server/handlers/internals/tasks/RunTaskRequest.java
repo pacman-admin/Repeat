@@ -7,15 +7,15 @@ public class RunTaskRequest extends AutoJsonable {
 	private String id;
 	private RunConfig runConfig;
 
-	protected static RunTaskRequest of() {
+	static RunTaskRequest of() {
 		return new RunTaskRequest();
 	}
 
-	protected String getId() {
+	String getId() {
 		return id;
 	}
 
-	protected RunConfig getRunConfig() {
+	RunConfig getRunConfig() {
 		return runConfig;
 	}
 
@@ -34,11 +34,11 @@ public class RunTaskRequest extends AutoJsonable {
 			return result;
 		}
 
-		protected String getRepeatCount() {
+		String getRepeatCount() {
 			return repeatCount;
 		}
 
-		protected String getDelayMsBetweenRepeat() {
+		String getDelayMsBetweenRepeat() {
 			return delayMsBetweenRepeat;
 		}
 	}

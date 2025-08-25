@@ -30,13 +30,13 @@ import java.util.Base64;
 
 public class CliRpcCodec {
 
-    public static final Charset ENCODING = StandardCharsets.UTF_8;
+    private static final Charset ENCODING = StandardCharsets.UTF_8;
 
-    public static byte[] encode(byte[] input) {
+    private static byte[] encode(byte[] input) {
         return Base64.getEncoder().encode(input);
     }
 
-    public static String decode(byte[] data) {
+    private static String decode(byte[] data) {
         return new String(Base64.getDecoder().decode(data), CliRpcCodec.ENCODING);
     }
 

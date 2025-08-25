@@ -19,5 +19,5 @@
 package core.config;
 
 //No longer does anything
-public class CliConfig {
+class CliConfig {
 }

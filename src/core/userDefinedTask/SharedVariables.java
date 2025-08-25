@@ -24,7 +24,7 @@ public class SharedVariables {
 
 	private final String namespace;
 
-	public SharedVariables(String namespace) {
+	private SharedVariables(String namespace) {
 		this.namespace = namespace;
 	}
 

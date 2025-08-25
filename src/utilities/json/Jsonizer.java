@@ -233,7 +233,7 @@ public class Jsonizer {
         return Map.class.isAssignableFrom(clazz);
     }
 
-    public static boolean isPrimitiveOrString(Class<?> clazz) {
+    private static boolean isPrimitiveOrString(Class<?> clazz) {
         return isString(clazz)
                 || clazz == Boolean.class || clazz == Boolean.TYPE
                 || clazz == Byte.class || clazz == Byte.TYPE

@@ -38,7 +38,7 @@ public final class Core {
         this.keyboard = keyboard;
     }
 
-    protected static Core local(Config config) {
+    static Core local(Config config) {
         Robot controller = null;
         try {
             controller = new Robot();
@@ -60,7 +60,7 @@ public final class Core {
      * @param duration wait duration in milliseconds
      * @throws InterruptedException
      */
-    public void blockingWait(int duration) throws InterruptedException {
+    private void blockingWait(int duration) throws InterruptedException {
         Thread.sleep(duration);
     }
 

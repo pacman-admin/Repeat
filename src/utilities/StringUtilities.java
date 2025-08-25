@@ -122,7 +122,7 @@ public class StringUtilities {
      * @param input a string
      * @return the same string with first character capitalized
      */
-    public static String upperCaseFirstChar(String input) {
+    private static String upperCaseFirstChar(String input) {
         String[] temp = input.split(" ");
         for (int i = 0; i < temp.length; i++) {
             temp[i] = Character.toUpperCase(temp[i].charAt(0)) + temp[i].substring(1);

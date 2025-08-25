@@ -57,14 +57,14 @@ public class Tools {
 	 * @param cwd directory where the command should be executed in
 	 * @return stdout of the command
 	 */
-	public static String execute(String command, File cwd) {
+	private static String execute(String command, File cwd) {
 		return DefaultTools.get().execute(command, cwd);
 	}
 
 	/**
 	 * Contains utilities to access the system internals.
 	 */
-	public static class System {
+	private static class System {
 
 		private System() {}
 

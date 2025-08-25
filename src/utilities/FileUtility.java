@@ -51,7 +51,7 @@ public class FileUtility {
      * @param path path to split
      * @return list of directories representing the file path, ending with the file name
      */
-    public static List<String> splitPath(String path) {
+    private static List<String> splitPath(String path) {
         return splitPath(new File(path));
     }
 
@@ -61,7 +61,7 @@ public class FileUtility {
      * @param file file to split path
      * @return list of directories representing the file path, ending with the file name
      */
-    public static List<String> splitPath(File file) {
+    private static List<String> splitPath(File file) {
         List<String> output = new ArrayList<>();
         File current = file;
         while (current != null) {
@@ -91,7 +91,7 @@ public class FileUtility {
      * @param target        file whose path will be compared to that of the directory
      * @return relative path to the file from the directory. If no relative path exists, provide absolute path to file
      */
-    public static String getRelativePath(File workDirectory, File target) {
+    private static String getRelativePath(File workDirectory, File target) {
         if (target.getAbsolutePath().startsWith(workDirectory.getAbsolutePath())) {
             String relativePath = target.getAbsolutePath().substring(workDirectory.getAbsolutePath().length() + 1);
             relativePath = relativePath.replaceAll(Pattern.quote(File.separator), "/");

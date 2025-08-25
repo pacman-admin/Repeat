@@ -332,7 +332,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
      * so that the compiled task can load classes. However, it is not sure whether Java garbage collection can recycle
      * this temporary class loader once the compiled task is discarded.
      */
-    public void applyClassPath() throws SecurityException, IllegalArgumentException {
+    private void applyClassPath() throws SecurityException, IllegalArgumentException {
         // Hacky reflection solution to alter the global classpath.
         // This no longer works for JDK 9 since system class loader is no longer a URLClassLoader.
         // JDK 9 also emits warnings as reflection package tries to access addURL method.
@@ -353,7 +353,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
      * exposing addURL should not be a concern.
      */
     private static final class DynamicClassLoader extends URLClassLoader {
-        public DynamicClassLoader(URL[] urls, ClassLoader parent) {
+        DynamicClassLoader(URL[] urls, ClassLoader parent) {
             super(urls, parent);
         }
 

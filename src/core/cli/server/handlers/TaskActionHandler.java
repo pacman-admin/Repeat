@@ -59,7 +59,7 @@ public abstract class TaskActionHandler extends HttpHandlerWithBackend {
 
     protected abstract Void handleTaskActionWithBackend(HttpAsyncExchange exchange, JsonNode request) throws IOException;
 
-    protected UserDefinedAction getTask(TaskGroup group, TaskIdentifier taskIdentifier) {
+    UserDefinedAction getTask(TaskGroup group, TaskIdentifier taskIdentifier) {
         UserDefinedAction task = null;
         if (group != null) {
             task = group.getTask(taskIdentifier.getTask().getIndex());
@@ -72,11 +72,11 @@ public abstract class TaskActionHandler extends HttpHandlerWithBackend {
         return backEndHolder.getTaskByName(taskIdentifier.getTask().getName());
     }
 
-    protected TaskGroup getGroup(TaskIdentifier taskIdentifier) {
+    TaskGroup getGroup(TaskIdentifier taskIdentifier) {
         return getGroup(taskIdentifier.getGroup());
     }
 
-    protected TaskGroup getGroup(TaskGroupMessage taskGroup) {
+    TaskGroup getGroup(TaskGroupMessage taskGroup) {
         int index = taskGroup.getIndex();
         String name = taskGroup.getName();
         if (index == TaskGroupMessage.UNKNOWN_INDEX && name.isEmpty()) {

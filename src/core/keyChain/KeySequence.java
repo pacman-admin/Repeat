@@ -15,7 +15,7 @@ public class KeySequence extends KeySeries {
 
 	private static final Logger LOGGER = Logger.getLogger(KeySequence.class.getName());
 
-	public KeySequence() {
+	private KeySequence() {
 		super();
 	}
 

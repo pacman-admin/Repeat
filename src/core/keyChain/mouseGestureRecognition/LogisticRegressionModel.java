@@ -20,7 +20,7 @@ class LogisticRegressionModel {
      *
      * @return if operation was successful.
      */
-    protected boolean load() {
+    boolean load() {
         labels = MouseGestureModelResources.getLabels();
         if (labels == null) {
             return false;
@@ -38,7 +38,7 @@ class LogisticRegressionModel {
         return isLoaded();
     }
 
-    protected String predict(double[] featureValues) {
+    String predict(double[] featureValues) {
         if (!isLoaded()) {
             return null;
         }
@@ -65,7 +65,7 @@ class LogisticRegressionModel {
     /**
      * @return whether model was loaded successfully.
      */
-    protected boolean isLoaded() {
+    private boolean isLoaded() {
         return labels != null && w != null && c != null;
     }
 }

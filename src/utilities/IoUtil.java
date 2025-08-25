@@ -9,7 +9,7 @@ import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
 import java.nio.channels.WritableByteChannel;
 
-public class IoUtil {
+class IoUtil {
 
 	private static final int INPUT_STREAM_BUFFER_SIZE = 64;
 

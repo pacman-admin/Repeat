@@ -36,14 +36,14 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-public class URLEncodedUtils {
+class URLEncodedUtils {
     public static List<NameValuePair> parse(URI uri, Charset charset) {
         Args.notNull(uri, "URI");
         String query = uri.getRawQuery();
         return query != null && !query.isEmpty() ? parse(query, charset) : createEmptyList();
     }
 
-    public static List<NameValuePair> parse(String s, Charset charset) {
+    private static List<NameValuePair> parse(String s, Charset charset) {
         if (s == null) {
             return createEmptyList();
         } else {
@@ -63,7 +63,7 @@ public class URLEncodedUtils {
         }
     }
 
-    public static List<NameValuePair> parse(CharArrayBuffer buf, Charset charset, char... separators) {
+    private static List<NameValuePair> parse(CharArrayBuffer buf, Charset charset, char... separators) {
         Args.notNull(buf, "Char array buffer");
         TokenParser tokenParser = TokenParser.INSTANCE;
         BitSet delimSet = new BitSet();

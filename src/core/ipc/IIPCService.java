@@ -29,7 +29,7 @@ public abstract class IIPCService implements ILoggable {
     protected int port;
     private boolean launchAtStartup;
 
-    public IIPCService() {
+    protected IIPCService() {
         launchAtStartup = true;
     }
 

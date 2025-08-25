@@ -18,12 +18,12 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 	private Thread executeAgent;
 	private boolean isRunning;
 
-	protected TaskScheduler() {
+	TaskScheduler() {
 		super();
 	}
 
-	protected synchronized long runTasks(final long count, final long delay, final float speedup,
-											final Function<Void, Void> callBack, final long callBackDelay) {
+	synchronized long runTasks(final long count, final long delay, final float speedup,
+                               final Function<Void, Void> callBack, final long callBackDelay) {
 		if (isRunning) {
 			LOGGER.info("Cannot invoke two running instances");
 			return 0;
@@ -91,7 +91,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 		}
 	}
 
-	protected synchronized void halt() {
+	synchronized void halt() {
 		if (isRunning) {
 			if (Thread.currentThread() != executeAgent) {
 				while (executeAgent.isAlive()) {
@@ -105,7 +105,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 		}
 	}
 
-	protected synchronized boolean clearTasks() {
+	synchronized boolean clearTasks() {
 		if (isRunning) {
 			LOGGER.info("Stop task scheduler first before clearing tasks");
 			return false;

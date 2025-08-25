@@ -27,7 +27,7 @@ public class RollingKeySeries extends KeySeries {
 		this(keys, DEFAULT_LIMIT);
 	}
 
-	public RollingKeySeries(List<ButtonStroke> keys, int limit) {
+	private RollingKeySeries(List<ButtonStroke> keys, int limit) {
 		super();
 		super.keys = new LinkedList<>();
 		this.keys = (LinkedList<ButtonStroke>) super.keys;

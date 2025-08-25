@@ -287,7 +287,7 @@ public class KeyChainInputPanel extends JPanel {
         return getInputKeyChain(parent, prepopulatedSet);
     }
 
-    public static KeyChain getInputKeyChain(JFrame parent, Set<KeyChain> prepopulated) {
+    private static KeyChain getInputKeyChain(JFrame parent, Set<KeyChain> prepopulated) {
         TaskActivation task = getInputKeyChains(parent, 1, TaskActivation.newBuilder().withHotKeys(prepopulated).build(), Mode.KEYCHAIN_ONLY);
         if (task == null) {
             return null;

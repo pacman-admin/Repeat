@@ -13,7 +13,7 @@ public enum IpcMessageType {
 		this.value = value;
 	}
 
-	protected String getValue() {
+	String getValue() {
 		return value;
 	}
 
@@ -22,7 +22,7 @@ public enum IpcMessageType {
 		return value;
 	}
 
-	protected static IpcMessageType identify(String value) {
+	static IpcMessageType identify(String value) {
 		for (IpcMessageType type : IpcMessageType.values()) {
 			if (type.value.equals(value)) {
 				return type;

@@ -29,7 +29,7 @@ public class KeyboardCore extends AbstractKeyboardCoreImplementation {
 
     private final AbstractKeyboardCoreImplementation k;
 
-    protected KeyboardCore(AbstractKeyboardCoreImplementation k) {
+    KeyboardCore(AbstractKeyboardCoreImplementation k) {
         this.k = k;
     }
 

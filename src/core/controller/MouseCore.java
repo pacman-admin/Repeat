@@ -27,7 +27,7 @@ public class MouseCore extends AbstractMouseCoreImplementation {
 
     private AbstractMouseCoreImplementation m;
 
-    protected MouseCore(AbstractMouseCoreImplementation m) {
+    MouseCore(AbstractMouseCoreImplementation m) {
         this.m = m;
     }
 

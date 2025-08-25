@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.Writer;
 
-public final class ExceptionUtility {
+final class ExceptionUtility {
 
 	public static String getStackTrace(Exception e) {
 		final Writer result = new StringWriter();

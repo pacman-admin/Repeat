@@ -74,7 +74,7 @@ public class ZipUtility {
 	 * @param zipDirectory directory to be zipped
 	 * @param outputFile path to the output .zip file
 	 */
-	public static void zipDir(String zipDirectory, String outputFile) {
+	private static void zipDir(String zipDirectory, String outputFile) {
 		ZipOutputStream zip = null;
 		FileOutputStream fileWriter = null;
 		try {

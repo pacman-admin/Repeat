@@ -223,7 +223,7 @@ public class JSONUtility {
 	 * @param replacingChildren the map key: newNode to replace. Key must exist in parent node beforehand
 	 * @return an instance of JsonNode with all children in replacing children replaced.
 	 */
-	public static JsonNode replaceChildren(JsonNode parent, Map<String, JsonNode> replacingChildren) {
+	private static JsonNode replaceChildren(JsonNode parent, Map<String, JsonNode> replacingChildren) {
 		if (parent == null) {
 			return null;
 		}

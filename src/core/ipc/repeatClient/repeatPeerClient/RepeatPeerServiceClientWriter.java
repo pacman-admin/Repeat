@@ -25,7 +25,7 @@ public class RepeatPeerServiceClientWriter extends AbstractRepeatsClientStoppabl
 	private long currentId;
 	private LinkedBlockingQueue<String> messageQueue;
 
-	protected RepeatPeerServiceClientWriter(DataOutputStream writer, ResponseManager responseManager) {
+	RepeatPeerServiceClientWriter(DataOutputStream writer, ResponseManager responseManager) {
 		super(responseManager);
 		this.writer = writer;
 		this.messageQueue = new LinkedBlockingQueue<>();
@@ -46,7 +46,7 @@ public class RepeatPeerServiceClientWriter extends AbstractRepeatsClientStoppabl
 		return enqueueMessage(type.toString(), message);
 	}
 
-	public long enqueueMessage(String type, IJsonable message) {
+	private long enqueueMessage(String type, IJsonable message) {
 		return enqueueMessage(type, message.jsonize());
 	}
 
@@ -54,7 +54,7 @@ public class RepeatPeerServiceClientWriter extends AbstractRepeatsClientStoppabl
 		return enqueueMessage(type.toString(), message);
 	}
 
-	public long enqueueMessage(String type, JsonNode message) {
+	private long enqueueMessage(String type, JsonNode message) {
 		long newId = 0L;
 		synchronized (this) {
 			newId = ++currentId;
@@ -72,7 +72,7 @@ public class RepeatPeerServiceClientWriter extends AbstractRepeatsClientStoppabl
 		return responseManager.waitFor(id, REPLY_WAIT_TIMEOUT_MS);
 	}
 
-	protected void enqueueKeepAlive() {
+	void enqueueKeepAlive() {
 		enqueueMessage(IpcMessageType.SYSTEM_HOST, ApiProtocol.keepAliveMessage());
 	}
 }

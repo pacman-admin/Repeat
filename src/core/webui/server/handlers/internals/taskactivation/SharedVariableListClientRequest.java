@@ -4,7 +4,7 @@ import utilities.json.AutoJsonable;
 
 import java.util.List;
 
-public class SharedVariableListClientRequest extends AutoJsonable {
+class SharedVariableListClientRequest extends AutoJsonable {
     private List<SharedVariableClientRequest> vars;
 
     public List<SharedVariableClientRequest> getVars() {

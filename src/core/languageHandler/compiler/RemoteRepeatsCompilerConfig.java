@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class RemoteRepeatsCompilerConfig extends AbstractRemoteRepeatsClientsConfig {
-    protected RemoteRepeatsCompilerConfig(List<String> remoteClientIds) {
+    RemoteRepeatsCompilerConfig(List<String> remoteClientIds) {
         super(remoteClientIds);
     }
 

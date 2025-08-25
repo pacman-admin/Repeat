@@ -20,7 +20,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 
 	private static final Logger LOGGER = Logger.getLogger(RepeatsActionsApi.class.getName());
 
-	protected RepeatsActionsApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
+	RepeatsActionsApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		super(repeatPeerServiceClientWriter);
 	}
 
@@ -46,7 +46,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 		waitAndGetResponseIfSuccess(IpcMessageType.TASK, message);
 	}
 
-	public void runTask(String id, TaskActivation activation) {
+	private void runTask(String id, TaskActivation activation) {
 		IJsonable message = message(TaskProcessor.RUN_TASK_ACTION, JsonNodeFactories.array(
 				JsonNodeFactories.string(id),
 				activation.jsonize()
@@ -79,7 +79,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 	}
 
 	private class RepeatsRemoteUserDefinedAction extends UserDefinedAction {
-		protected RepeatsRemoteUserDefinedAction(String id, String sourcePath, Language language) {
+		RepeatsRemoteUserDefinedAction(String id, String sourcePath, Language language) {
 			super(id);
 			this.sourcePath = sourcePath;
 			this.compiler = language;

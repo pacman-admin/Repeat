@@ -28,7 +28,7 @@ public class ManuallyBuildActionFeModel {
 			return value;
 		}
 
-		public static Actor forValue(String s) {
+		static Actor forValue(String s) {
 			for (Actor actor : Actor.values()) {
 				if (actor.toString().equals(s)) {
 					return actor;
@@ -45,7 +45,7 @@ public class ManuallyBuildActionFeModel {
 		ACTORS_TO_ACTIONS.put(Actor.CONTROLLER, Arrays.asList(ControllerAction.values()));
 	}
 
-	public static interface Action {
+	static interface Action {
 		@Override
 		public abstract String toString();
 	}

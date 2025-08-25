@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class StringToAwtEventCode {
+class StringToAwtEventCode {
 
-	public static final int UNKNOWN_VALUE = -1;
+	private static final int UNKNOWN_VALUE = -1;
 
 	private static final Map<String, Integer> SUPPORTED_MASKS;
 	static {

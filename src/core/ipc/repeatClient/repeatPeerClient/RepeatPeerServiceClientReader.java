@@ -17,7 +17,7 @@ class RepeatPeerServiceClientReader extends AbstractRepeatsClientStoppableThread
 
 	private Reader reader;
 
-	protected RepeatPeerServiceClientReader(Reader reader, ResponseManager responseManager) {
+	RepeatPeerServiceClientReader(Reader reader, ResponseManager responseManager) {
 		super(responseManager);
 		this.reader = reader;
 	}
@@ -48,7 +48,7 @@ class RepeatPeerServiceClientReader extends AbstractRepeatsClientStoppableThread
 		process(type, id, content);
 	}
 
-	public void process(String type, long id, JsonNode content) {
+	private void process(String type, long id, JsonNode content) {
 		String status = content.getStringValue("status");
 		JsonNode message = content.getNode("message");
 		responseManager.notifyFor(id, Reply.of(status, message));

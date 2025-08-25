@@ -16,7 +16,7 @@ public class GlobalListenerHookController {
 			this.useJavaAwtForMousePosition = useJavaAwtForMousePosition;
 		}
 
-		public boolean useJavaAwtForMousePosition() {
+		boolean useJavaAwtForMousePosition() {
 			return useJavaAwtForMousePosition;
 		}
 

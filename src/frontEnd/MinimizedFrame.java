@@ -63,7 +63,7 @@ public class MinimizedFrame extends TrayIcon {
         }
     }
 
-    protected void add() throws AWTException, UnsupportedOperationException {
+    void add() throws AWTException, UnsupportedOperationException {
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(this);
@@ -72,7 +72,7 @@ public class MinimizedFrame extends TrayIcon {
         }
     }
 
-    protected void remove() throws UnsupportedOperationException {
+    void remove() throws UnsupportedOperationException {
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.remove(this);

@@ -29,7 +29,7 @@ public class MainMessageSender implements ILoggable {
 	private long idCount;
 	private DataOutputStream writer;
 
-	protected MainMessageSender() {
+	MainMessageSender() {
 		idCount = 1L;
 	}
 
@@ -70,7 +70,7 @@ public class MainMessageSender implements ILoggable {
 		return idCount;
 	}
 
-	protected void setWriter(DataOutputStream writer) {
+	void setWriter(DataOutputStream writer) {
 		this.writer = writer;
 	}
 

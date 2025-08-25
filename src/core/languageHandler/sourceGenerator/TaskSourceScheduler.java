@@ -12,7 +12,7 @@ class TaskSourceScheduler extends AbstractScheduler<String> {
 
 	private Function<Long, String> getSleepSource;
 
-	protected TaskSourceScheduler() {
+	TaskSourceScheduler() {
 		super();
 	}
 
@@ -23,7 +23,7 @@ class TaskSourceScheduler extends AbstractScheduler<String> {
 	 * @param speedup speedup for the task.
 	 * @return the generated source code as a string.
 	 */
-	protected String getSource(float speedup) {
+    String getSource(float speedup) {
 		if (!isLegalAddTask()) {
 			return null;
 		}
@@ -57,7 +57,7 @@ class TaskSourceScheduler extends AbstractScheduler<String> {
 		return true;
 	}
 
-	protected void setSleepSource(Function<Long, String> getSleepSource) {
+	void setSleepSource(Function<Long, String> getSleepSource) {
 		this.getSleepSource = getSleepSource;
 	}
 }

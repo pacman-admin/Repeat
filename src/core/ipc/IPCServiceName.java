@@ -10,7 +10,7 @@ public enum IPCServiceName {
         this.name = name;
     }
 
-    protected static IPCServiceName identifyService(String name) {
+    static IPCServiceName identifyService(String name) {
         for (IPCServiceName service : IPCServiceName.values()) {
             if (name.equals(service.name)) {
                 return service;

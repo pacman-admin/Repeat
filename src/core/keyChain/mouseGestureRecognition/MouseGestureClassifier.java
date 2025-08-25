@@ -17,7 +17,7 @@ public class MouseGestureClassifier {
 
 	private static final Logger LOGGER = Logger.getLogger(MouseGestureClassifier.class.getName());
 
-	LogisticRegressionModel logisticRegressionModel;
+	private LogisticRegressionModel logisticRegressionModel;
 
 	public MouseGestureClassifier() {
 		logisticRegressionModel = new LogisticRegressionModel();

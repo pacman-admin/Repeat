@@ -2,8 +2,12 @@ package utilities;
 
 public class OSIdentifier {
 
-	public static final String OS_NAME;
-	public static final boolean IS_WINDOWS, IS_UNIX, IS_LINUX, IS_OSX, IS_UNKNOWN;
+	private static final String OS_NAME;
+	public static final boolean IS_WINDOWS;
+    private static final boolean IS_UNIX;
+    public static final boolean IS_LINUX;
+    public static final boolean IS_OSX;
+    private static final boolean IS_UNKNOWN;
 
 	static {
 		// See http://lopica.sourceforge.net/os.html

@@ -13,7 +13,7 @@ final class OSXNativeProcessUtil {
 
 	private static final Logger LOGGER = Logger.getLogger(OSXNativeProcessUtil.class.getName());
 
-	static final String[] ACTIVE_WINDOW = new String[] {
+	private static final String[] ACTIVE_WINDOW = new String[] {
 			"osascript",
 			"-e", "global frontApp, frontAppName, windowTitle",
 			"-e", "set windowTitle to \"\"",

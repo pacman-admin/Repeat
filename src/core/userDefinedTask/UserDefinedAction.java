@@ -29,18 +29,18 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
     private static final Logger LOGGER = Logger.getLogger(UserDefinedAction.class.getName());
 
-    protected String actionId;
-    protected String name;
+    String actionId;
+    String name;
     protected String sourcePath;
     protected Language compiler;
-    protected boolean enabled;
+    private boolean enabled;
     protected TaskActivation invoker;
-    protected KeyChain invokingKeyChain;
-    protected MouseGesture invokingMouseGesture;
+    private KeyChain invokingKeyChain;
+    private MouseGesture invokingMouseGesture;
     // This is to enable invoking task programmatically.
-    protected TaskInvoker taskInvoker;
-    protected UsageStatistics statistics;
-    protected TaskSourceHistory sourceHistory;
+    private TaskInvoker taskInvoker;
+    private UsageStatistics statistics;
+    private TaskSourceHistory sourceHistory;
     private TaskExecutionPreconditions executionPreconditions;
     private TaskActivation activation;
 
@@ -67,7 +67,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         return parsePureJSON(factory, node, parseMode);
     }
 
-    protected static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
+    static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
         try {
             String actionId = node.getStringValue("action_id");
             if (parseMode == ConfigParsingMode.IMPORT_PARSING) {
@@ -326,7 +326,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         return this;
     }
 
-    public final void syncContent(UserDefinedAction other) {
+    final void syncContent(UserDefinedAction other) {
         sourcePath = other.sourcePath;
         compiler = other.compiler;
         name = other.name;

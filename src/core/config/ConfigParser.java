@@ -27,7 +27,7 @@ import utilities.json.JSONUtility;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class ConfigParser {
+abstract class ConfigParser {
 
     private static final Logger LOGGER = Logger.getLogger(ConfigParser.class.getName());
 
@@ -35,7 +35,7 @@ public abstract class ConfigParser {
 
     protected abstract String getPreviousVersion();
 
-    protected final JsonRootNode convertFromPreviousVersion(JsonRootNode previousVersion) {
+    private JsonRootNode convertFromPreviousVersion(JsonRootNode previousVersion) {
         if (previousVersion != null && previousVersion.isStringValue("version")) {
             if (previousVersion.getStringValue("version").equals(getPreviousVersion())) {
                 JsonRootNode output = internalConvertFromPreviousVersion(previousVersion);
@@ -55,7 +55,7 @@ public abstract class ConfigParser {
 
     protected abstract JsonRootNode internalConvertFromPreviousVersion(JsonRootNode previousVersion);
 
-    protected final boolean extractData(Config config, JsonRootNode data) {
+    final boolean extractData(Config config, JsonRootNode data) {
         if (!sanityCheck(data)) {
             return false;
         }
@@ -123,21 +123,21 @@ public abstract class ConfigParser {
         return Pair.of(parser, data);
     }
 
-    protected boolean internalExtractData(Config config, JsonRootNode data) {
+    boolean internalExtractData(Config config, JsonRootNode data) {
         throw new UnsupportedOperationException("Config version " + getVersion() + " does not support extracting data. " + "Convert to a later version.");
     }
 
-    protected boolean internalExtractData(CliConfig config, JsonRootNode data) {
+    boolean internalExtractData(CliConfig config, JsonRootNode data) {
         throw new UnsupportedOperationException("CLI config version " + getVersion() + " does not support extracting data. " + "Convert to a later version.");
     }
 
-    protected final boolean importData(Config config, JsonRootNode data) {
+    final boolean importData(Config config, JsonRootNode data) {
         return internalImportData(config, data);
     }
 
     protected abstract boolean internalImportData(Config config, JsonRootNode data);
 
-    protected boolean extractData(CliConfig config, JsonRootNode data) {
+    private boolean extractData(CliConfig config, JsonRootNode data) {
         if (!sanityCheck(data)) {
             return false;
         }

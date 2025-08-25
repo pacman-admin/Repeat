@@ -11,7 +11,7 @@ import core.userDefinedTask.UserDefinedAction;
 
 public abstract class KeyStrokeManager extends ActivationEventManager {
 
-	public KeyStrokeManager(Config config) {
+	KeyStrokeManager(Config config) {
 		super(config);
 	}
 
@@ -28,6 +28,6 @@ public abstract class KeyStrokeManager extends ActivationEventManager {
 		return onButtonStrokeReleased(buttonStroke);
 	}
 
-	public abstract Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke);
-	public abstract Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke);
+	protected abstract Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke);
+	protected abstract Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke);
 }

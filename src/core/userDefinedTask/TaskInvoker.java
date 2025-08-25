@@ -40,7 +40,7 @@ public class TaskInvoker {
      * @param taskIndex  the index of the task within the group.
      * @throws InterruptedException
      */
-    public void execute(int groupIndex, int taskIndex, TaskActivation activation) throws InterruptedException {
+    private void execute(int groupIndex, int taskIndex, TaskActivation activation) throws InterruptedException {
         if (groupIndex >= taskGroup.size()) {
             LOGGER.warning(String.format("Unable to execute task in group with index %d. There are only %d group(s).", groupIndex, taskGroup.size()));
             return;
@@ -71,7 +71,7 @@ public class TaskInvoker {
      * @param id         ID of the task.
      * @param activation task activation to associate with the execution.
      */
-    public void execute(String id, TaskActivation activation) throws InterruptedException {
+    private void execute(String id, TaskActivation activation) throws InterruptedException {
         for (TaskGroup group : taskGroup) {
             for (UserDefinedAction task : group.getTasks()) {
                 if (task.getActionId().equals(id)) {

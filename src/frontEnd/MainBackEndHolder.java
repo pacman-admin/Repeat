@@ -55,20 +55,22 @@ import java.util.stream.Collectors;
 @SuppressWarnings("DanglingJavadoc")
 public class MainBackEndHolder {
     private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
-    protected final List<TaskGroup> taskGroups;
-    protected final GlobalEventsManager keysManager;
-    protected final Config config;
-    protected final UserDefinedAction switchRecord, switchReplay, switchReplayCompiled;
+    private final List<TaskGroup> taskGroups;
+    final GlobalEventsManager keysManager;
+    private final Config config;
+    private final UserDefinedAction switchRecord;
+    private final UserDefinedAction switchReplay;
+    private final UserDefinedAction switchReplayCompiled;
     private final ActiveWindowInfosLogger activeWindowInfosLogger;
     private final MousePositionLogger mousePositionLogger;
     // To allow executing other tasks programmatically.
     private final TaskInvoker taskInvoker;
     private final ActionExecutor actionExecutor;
     private final CoreProvider coreProvider;
-    protected MinimizedFrame trayIcon;
-    protected LogHolder logHolder;
-    protected ScheduledThreadPoolExecutor executor;
-    protected Recorder recorder;
+    private MinimizedFrame trayIcon;
+    private LogHolder logHolder;
+    private ScheduledThreadPoolExecutor executor;
+    private Recorder recorder;
     private Thread compiledExecutor;
     private Language compilingLanguage;
     private ReplayConfig replayConfig;
@@ -178,7 +180,7 @@ public class MainBackEndHolder {
         return FileUtility.readFromFile(currentTempFile).toString();
     }
 
-    protected void initializeLogging() {
+    void initializeLogging() {
         // Change stdout and stderr to also copy content to the logHolder.
         System.setOut(new PrintStream(CompositeOutputStream.of(logHolder, System.out)));
         System.setErr(new PrintStream(CompositeOutputStream.of(logHolder, System.err)));
@@ -202,7 +204,7 @@ public class MainBackEndHolder {
     /*************************************************************************************************************/
 
     /************************************************Config*******************************************************/
-    protected void loadConfig(File file) {
+    void loadConfig(File file) {
         config.loadConfig(file);
         setTaskInvoker();
 
@@ -220,7 +222,7 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
-    protected void initiateBackEndActivities() {
+    void initiateBackEndActivities() {
         try {
             IPCServiceManager.initiateServices(this);
         } catch (IOException e) {
@@ -238,7 +240,7 @@ public class MainBackEndHolder {
         recompileRemoteTasks();
     }
 
-    protected void stopBackEndActivities() {
+    private void stopBackEndActivities() {
         activeWindowInfosLogger.stop();
         mousePositionLogger.stop();
         executor.shutdown();
@@ -295,7 +297,7 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /****************************************Main hotkeys*********************************************************/
-    protected void configureMainHotkeys() {
+    void configureMainHotkeys() {
         reconfigureSwitchRecord();
         reconfigureSwitchReplay();
         reconfigureSwitchCompiledReplay();
@@ -347,7 +349,7 @@ public class MainBackEndHolder {
         switchRecord();
     }
 
-    protected synchronized void switchRecord() {
+    private synchronized void switchRecord() {
         if (isReplaying) { // Do not switch record when replaying.
             return;
         }
@@ -388,7 +390,7 @@ public class MainBackEndHolder {
         switchReplay();
     }
 
-    protected void switchReplay() {
+    private void switchReplay() {
         if (isRecording) { // Cannot switch replay when recording.
             return;
         }
@@ -426,7 +428,7 @@ public class MainBackEndHolder {
         switchRunningCompiledAction();
     }
 
-    protected synchronized void switchRunningCompiledAction() {
+    private synchronized void switchRunningCompiledAction() {
         if (isRunningCompiledTask) {
             isRunningCompiledTask = false;
             if (compiledExecutor != null) {
@@ -461,7 +463,7 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /*****************************************Task group related**************************************************/
-    protected void renderTaskGroup() {
+    void renderTaskGroup() {
         for (TaskGroup group : taskGroups) {
             if (!group.isEnabled()) {
                 continue;
@@ -651,7 +653,7 @@ public class MainBackEndHolder {
         }
     }
 
-    public void addTask(UserDefinedAction task, TaskGroup group) {
+    private void addTask(UserDefinedAction task, TaskGroup group) {
         if (task.getName() == null || task.getName().isEmpty()) {
             task.setName("New task");
         }
@@ -1131,7 +1133,7 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /***************************************User Interface********************************************************/
-    protected void launchUI() {
+    void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
         LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
     }

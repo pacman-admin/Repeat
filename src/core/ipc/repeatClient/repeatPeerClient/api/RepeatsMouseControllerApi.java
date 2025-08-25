@@ -10,7 +10,7 @@ import core.ipc.repeatServer.processors.IpcMessageType;
 
 public class RepeatsMouseControllerApi extends AbstractRepeatsClientApi {
 
-	protected RepeatsMouseControllerApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
+	RepeatsMouseControllerApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		super(repeatPeerServiceClientWriter);
 	}
 

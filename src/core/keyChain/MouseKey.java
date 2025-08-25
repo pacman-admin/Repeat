@@ -25,7 +25,7 @@ public class MouseKey implements ButtonStroke {
 		return new MouseKey(key, false);
 	}
 
-	public static MouseKey of(int key, boolean isPressed) {
+	private static MouseKey of(int key, boolean isPressed) {
 		return new MouseKey(key, isPressed);
 	}
 

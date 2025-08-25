@@ -3,10 +3,9 @@ package core.keyChain.mouseGestureRecognition;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class DataNormalizer {
+class DataNormalizer {
 
 	public static final int POINT_COUNT = 35;
-	public static final int FEATURE_COUNT = POINT_COUNT * 2;
 
 	/**
 	 * Trim down the list of points to have exactly {@link POINT_COUNT}.

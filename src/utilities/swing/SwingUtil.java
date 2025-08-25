@@ -18,7 +18,7 @@ import java.util.concurrent.Semaphore;
 public class SwingUtil {
 
     @SuppressWarnings("unused")
-    public static final class JFrameUtil {
+    private static final class JFrameUtil {
 
         private JFrameUtil() {
         }
@@ -39,7 +39,7 @@ public class SwingUtil {
     }
 
     @SuppressWarnings("unused")
-    public static final class TableUtil {
+    static final class TableUtil {
 
         private TableUtil() {
         }
@@ -54,7 +54,7 @@ public class SwingUtil {
             }
         }
 
-        public static void scrollToSelectedRow(JTable table) {
+        static void scrollToSelectedRow(JTable table) {
             int selectedRow = table.getSelectedRow();
             table.scrollRectToVisible(table.getCellRect(selectedRow, 0, true));
         }
@@ -76,7 +76,7 @@ public class SwingUtil {
             return false;
         }
 
-        public static void ensureRowNumber(JTable table, int maxSize) {
+        static void ensureRowNumber(JTable table, int maxSize) {
             // Make sure enough space
             if (maxSize > table.getRowCount()) {
                 int rowCount = table.getRowCount();
@@ -114,7 +114,7 @@ public class SwingUtil {
             }
         }
 
-        public static String getStringValueTable(JTable table, int row, int column) {
+        static String getStringValueTable(JTable table, int row, int column) {
             try {
                 Object value = table.getValueAt(row, column);
                 if (value == null) {
@@ -127,7 +127,7 @@ public class SwingUtil {
             }
         }
 
-        public static void focusRowTable(JTable table, int row) {
+        static void focusRowTable(JTable table, int row) {
             table.setRowSelectionInterval(row, row);
             table.setColumnSelectionInterval(0, table.getColumnCount() - 1);
             scrollToSelectedRow(table);
@@ -154,7 +154,7 @@ public class SwingUtil {
             }
         }
 
-        public static void removeLastRowTable(JTable table, int numberOfRow) {
+        static void removeLastRowTable(JTable table, int numberOfRow) {
             int toRemove = Math.min(numberOfRow, table.getRowCount());
 
             for (int i = 0; i < toRemove; i++) {
@@ -197,7 +197,7 @@ public class SwingUtil {
             return count;
         }
 
-        public static class TableSearcher {
+        static class TableSearcher {
             private final Function<Point, Void> action;
             private final List<Point> found;
             private int index;
@@ -244,7 +244,7 @@ public class SwingUtil {
         }
     }
 
-    public static final class OptionPaneUtil {
+    private static final class OptionPaneUtil {
 
         private OptionPaneUtil() {
         }
@@ -502,7 +502,7 @@ public class SwingUtil {
          * @param selected index of the selected element at start time. If set to -1 then nothing is selected
          * @return the index of selected field
          */
-        public static int getSelection(JFrame parent, String title, String[] choices, int selected, DialogSelectionOption option) {
+        static int getSelection(JFrame parent, String title, String[] choices, int selected, DialogSelectionOption option) {
             final JDialog dialog = new JDialog(parent, title, ModalityType.APPLICATION_MODAL);
             dialog.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 
@@ -694,7 +694,7 @@ public class SwingUtil {
             private DialogSelectionOption() {
             }
 
-            public static DialogSelectionOption create() {
+            static DialogSelectionOption create() {
                 return new DialogSelectionOption();
             }
 

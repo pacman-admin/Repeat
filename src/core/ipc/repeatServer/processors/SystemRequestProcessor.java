@@ -28,7 +28,7 @@ public class SystemRequestProcessor extends AbstractMessageProcessor {
 
 	private final ServerMainProcessor holder;
 
-	protected SystemRequestProcessor(MainMessageSender messageSender, ServerMainProcessor holder) {
+	SystemRequestProcessor(MainMessageSender messageSender, ServerMainProcessor holder) {
 		super(messageSender);
 		this.holder = holder;
 	}

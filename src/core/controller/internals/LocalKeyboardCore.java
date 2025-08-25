@@ -60,7 +60,7 @@ public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 		}
 	}
 
-	public static final int TYPE_DURATION_MS = 20;
+	private static final int TYPE_DURATION_MS = 20;
 	private final Config config;
 	private final Robot controller;
 
@@ -200,7 +200,7 @@ public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 		}
 	}
 
-	public void releaseSingleKey(int key) {
+	private void releaseSingleKey(int key) {
 		controller.keyRelease(key);
 		if (OSIdentifier.IS_OSX && OSX_FLAG_KEYS.contains(key)) {
 			controller.delay(OSX_KEY_FLAG_DELAY_MS);

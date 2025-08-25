@@ -5,7 +5,7 @@ import core.ipc.repeatServer.processors.IpcMessageType;
 
 public class RepeatsToolApi extends AbstractRepeatsClientApi {
 
-	protected RepeatsToolApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
+	RepeatsToolApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		super(repeatPeerServiceClientWriter);
 	}
 

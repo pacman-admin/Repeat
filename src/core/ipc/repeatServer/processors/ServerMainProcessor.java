@@ -89,11 +89,11 @@ public class ServerMainProcessor implements ILoggable {
 				messageProcesssors.containsKey(IpcMessageType.identify(message.getStringValue("type")));
 	}
 
-	protected void setLocalClientProcessor(boolean localClientProcessor) {
+	void setLocalClientProcessor(boolean localClientProcessor) {
 		this.localClientProcessor = localClientProcessor;
 	}
 
-	protected boolean isLocalClientProcessor() {
+	boolean isLocalClientProcessor() {
 		return localClientProcessor;
 	}
 

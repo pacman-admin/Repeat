@@ -49,7 +49,7 @@ public final class NumberUtility {
         return isInteger(input) && !input.startsWith("-");
     }
 
-    public static boolean isInteger(String input) {
+    private static boolean isInteger(String input) {
         if (input == null) {
             return false;
         }

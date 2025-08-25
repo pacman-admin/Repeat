@@ -10,7 +10,7 @@ public class ManuallyBuildAction extends UserDefinedAction {
 
 	private List<ManuallyBuildStep> steps;
 
-	protected ManuallyBuildAction(List<ManuallyBuildStep> steps) {
+	private ManuallyBuildAction(List<ManuallyBuildStep> steps) {
 		this.steps = steps;
 	}
 

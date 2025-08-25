@@ -18,7 +18,7 @@ public class KeyStroke implements ButtonStroke {
 
 	private static final Logger LOGGER = Logger.getLogger(KeyStroke.class.getName());
 
-	static final String TYPE_STRING = "key_stroke";
+	private static final String TYPE_STRING = "key_stroke";
 
 	public static enum Modifier {
 		KEY_MODIFIER_UNKNOWN(0), // Unknown is equal to both left and right.
@@ -27,9 +27,9 @@ public class KeyStroke implements ButtonStroke {
 
 		private final int value;
 		Modifier(int value) { this.value = value; }
-		public int getValue() { return this.value; }
+		int getValue() { return this.value; }
 
-		public static Modifier forValue(int value) {
+		static Modifier forValue(int value) {
 			for (Modifier m : Modifier.values()) {
 				if (m.getValue() == value) {
 					return m;
@@ -48,7 +48,7 @@ public class KeyStroke implements ButtonStroke {
 			return (this == KEY_MODIFIER_UNKNOWN) || (other == KEY_MODIFIER_UNKNOWN) || (this == other);
 		}
 
-		public org.simplenativehooks.events.NativeKeyEvent.Modifier toNativeModifier() {
+		org.simplenativehooks.events.NativeKeyEvent.Modifier toNativeModifier() {
 			switch (this) {
 			case KEY_MODIFIER_UNKNOWN:
 				return org.simplenativehooks.events.NativeKeyEvent.Modifier.KEY_MODIFIER_UNKNOWN;
@@ -71,7 +71,7 @@ public class KeyStroke implements ButtonStroke {
 		return new KeyStroke(key, modifier, false, LocalDateTime.now());
 	}
 
-	public static KeyStroke of(int key, Modifier modifier, boolean press, LocalDateTime invokedTime) {
+	private static KeyStroke of(int key, Modifier modifier, boolean press, LocalDateTime invokedTime) {
 		return new KeyStroke(key, modifier, press, invokedTime);
 	}
 
@@ -129,7 +129,7 @@ public class KeyStroke implements ButtonStroke {
 	 *
 	 * @return the modifier of the key stroke.
 	 */
-	public Modifier getModifier() {
+    private Modifier getModifier() {
 		return modifier;
 	}
 
