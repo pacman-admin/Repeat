@@ -11,8 +11,7 @@ public class TooltipsIndexPage {
 	private String run = "Run compiled source code.";
 	private String editCode = "Edit source code in default editor.";
 	private String reload = "Reload editted source code after editted in default editor.";
-	private String runSelected = "Run selected task.";
-	private String add = "Add the compiled action as a new task.";
+    private String add = "Add the compiled action as a new task.";
 	private String overwrite = "Overwrite selected task with the compiled action.";
 	private String delete = "Delete selected task.";
 	private String up = "Move selected task up.";
@@ -69,7 +68,8 @@ public class TooltipsIndexPage {
 		this.reload = reload;
 	}
 	public String getRunSelected() {
-		return runSelected;
+        String runSelected = "Run selected task.";
+        return runSelected;
 	}
 	public String getAdd() {
 		return add;

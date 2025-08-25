@@ -95,7 +95,7 @@ public class RenderedTaskActivation {
     }
 
     public static class SortedString {
-        int originalIndex;
+        public int originalIndex;
         String value;
 
         static SortedString of(int originalIndex, String value) {
@@ -103,14 +103,6 @@ public class RenderedTaskActivation {
             result.originalIndex = originalIndex;
             result.value = value;
             return result;
-        }
-
-        public int getOriginalIndex() {
-            return originalIndex;
-        }
-
-        public void setOriginalIndex(int originalIndex) {
-            this.originalIndex = originalIndex;
         }
 
         String getValue() {

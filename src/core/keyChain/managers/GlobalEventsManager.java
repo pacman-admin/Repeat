@@ -51,11 +51,9 @@ public final class GlobalEventsManager {
     private final ActionExecutor actionExecutor;
     private final ExecutionPreconditionsChecker executionPreconditionsChecker;
     private final ActivationEventManager taskActivationManager;
-    private CoreProvider coreProvider;
 
     public GlobalEventsManager(Config config, CoreProvider coreProvider, ActionExecutor actionExecutor) {
         this.config = config;
-        this.coreProvider = coreProvider;
         this.actionExecutor = actionExecutor;
 
         this.executionPreconditionsChecker = ExecutionPreconditionsChecker.of();

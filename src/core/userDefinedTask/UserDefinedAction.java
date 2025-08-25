@@ -37,8 +37,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     protected TaskActivation invoker;
     private KeyChain invokingKeyChain;
     private MouseGesture invokingMouseGesture;
-    // This is to enable invoking task programmatically.
-    private TaskInvoker taskInvoker;
     private UsageStatistics statistics;
     private TaskSourceHistory sourceHistory;
     private TaskExecutionPreconditions executionPreconditions;
@@ -252,7 +250,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     public void setTaskInvoker(TaskInvoker taskInvoker) {
-        this.taskInvoker = taskInvoker;
+        // This is to enable invoking task programmatically.
     }
 
     public final UsageStatistics getStatistics() {
