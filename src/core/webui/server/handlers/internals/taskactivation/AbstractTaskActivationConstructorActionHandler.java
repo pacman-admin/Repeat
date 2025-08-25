@@ -17,12 +17,12 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUIHttpHandler {
+abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUIHttpHandler {
 
-    private static final HTTPLogger LOGGER = new HTTPLogger("Could not create task activation modification page!");
-    protected TaskActivationConstructorManager taskActivationConstructorManager;
+    private static final HTTPLogger LOGGER = new HTTPLogger("Could not handle task activation modification action!");
+    private final TaskActivationConstructorManager taskActivationConstructorManager;
 
-    public AbstractTaskActivationConstructorActionHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
+    AbstractTaskActivationConstructorActionHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
         this.taskActivationConstructorManager = taskActivationConstructorManager;
     }
@@ -50,9 +50,11 @@ public abstract class AbstractTaskActivationConstructorActionHandler extends Abs
     }
 
     protected final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) throws IOException {
-        Map<String, Object> data = new HashMap<>();
-        data.put("task", RenderedDetailedUserDefinedAction.withEmptyTaskInfo(constructor));
-        return renderedPage(exchange, template, data);
+        return LOGGER.exec(() -> {
+            Map<String, Object> data = new HashMap<>();
+            data.put("task", RenderedDetailedUserDefinedAction.withEmptyTaskInfo(constructor));
+            return renderedPage(exchange, template, data);
+        }, exchange);
     }
 
     protected abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;

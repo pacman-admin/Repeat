@@ -1,5 +1,5 @@
 /**
- * Copyright 2025 Langdon Staab
+ * Copyright The Apache Foundation
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  * <p>
- * Code copied from decompiled code from the Apache HttpClient class of the same name and function
+ * Code copied from decompiled code from the Apache HttpClient class of the same name and function.
  * I, Langdon Staab, did not write any of this code.
  *
  * @author The Apache Foundation
@@ -73,7 +73,7 @@ public class URLEncodedUtils {
         }
 
         ParserCursor cursor = new ParserCursor(0, buf.length());
-        List<NameValuePair> list = new ArrayList();
+        List<NameValuePair> list = new ArrayList<>();
 
         while (!cursor.atEnd()) {
             delimSet.set(61);
@@ -100,10 +100,10 @@ public class URLEncodedUtils {
     }
 
     private static String decodeFormFields(String content, Charset charset) {
-        return content == null ? null : urlDecode(content, charset != null ? charset : Consts.UTF_8, true);
+        return content == null ? null : urlDecode(content, charset != null ? charset : Consts.UTF_8);
     }
 
-    private static String urlDecode(String content, Charset charset, boolean plusAsBlank) {
+    private static String urlDecode(String content, Charset charset) {
         if (content == null) {
             return null;
         } else {
@@ -124,7 +124,7 @@ public class URLEncodedUtils {
                         bb.put((byte) uc);
                         bb.put((byte) lc);
                     }
-                } else if (plusAsBlank && c == '+') {
+                } else if (c == '+') {
                     bb.put((byte) 32);
                 } else {
                     bb.put((byte) c);
@@ -137,7 +137,6 @@ public class URLEncodedUtils {
     }
 
     private static List<NameValuePair> createEmptyList() {
-        return new ArrayList(0);
+        return new ArrayList<>(0);
     }
 }
-
