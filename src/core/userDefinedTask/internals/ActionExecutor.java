@@ -14,6 +14,7 @@ import utilities.RandomUtil;
 public class ActionExecutor {
 
 	private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
+	private static final int MAX_SIMULTANEOUS_EXECUTIONS = 3;
 
 	private Map<String, Thread> executions;
 	private CoreProvider coreProvider;
@@ -46,8 +47,12 @@ public class ActionExecutor {
 	 * @return ID of the registered execution
 	 */
 	public String startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
-		if (action == null) {
+		if (executions.size() > MAX_SIMULTANEOUS_EXECUTIONS){
+			LOGGER.info("Cannot run more than "+MAX_SIMULTANEOUS_EXECUTIONS+" tasks simultanously.");
 			return null;
+		}
+		if (action == null) {
+			throw new IllegalArgumentException("Nothing to run!");
 		}
 		if (request.getActivation() != null) {
 			action.setInvoker(request.getActivation());

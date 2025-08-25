@@ -22,31 +22,27 @@ import argo.jdom.JsonNode;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutionRequest;
 import core.userDefinedTask.internals.RunActionConfig;
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 import utilities.NumberUtility;
 
-import java.io.IOException;
-
-public class RunTaskHandler extends AbstractSingleMethodHttpHandler {
+public class RunTaskHandler extends AbstractPOSTHandler {
 
     public RunTaskHandler() {
-        super(AbstractSingleMethodHttpHandler.POST_METHOD);
+        super("Could not run task!");
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected String handle(HttpRequest request) {
         JsonNode requestMessage = HttpServerUtilities.parsePostParameters(request);
         if (requestMessage == null) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse JSON from request parameter.");
+            throw new IllegalArgumentException("Unable to parse JSON from request parameter.");
         }
 
         RunTaskRequest requestData = RunTaskRequest.of();
         if (!requestData.parse(requestMessage)) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse POST request parameters.");
+            throw new IllegalArgumentException("Unable to parse POST request parameters.");
         }
         String id = requestData.getId();
         RunActionConfig runConfig = backEndHolder.getRunActionConfig();
@@ -55,13 +51,13 @@ public class RunTaskHandler extends AbstractSingleMethodHttpHandler {
         if (requestData.getRunConfig() != null) { // Custom run config is provided.
             String repeatCountString = requestData.getRunConfig().getRepeatCount();
             if (!NumberUtility.isPositiveInteger(repeatCountString)) {
-                return HttpServerUtilities.prepareTextResponse(exchange, 400, "Repeat count must be a positive integer.");
+                throw new IllegalArgumentException("Repeat count must be a positive integer.");
             }
             int repeatCount = Integer.parseInt(repeatCountString);
 
             String delayMsString = requestData.getRunConfig().getDelayMsBetweenRepeat();
             if (!NumberUtility.isNonNegativeInteger(delayMsString)) {
-                return HttpServerUtilities.prepareTextResponse(exchange, 400, "Delay in milliseconds must be a non-negative integer.");
+                throw new IllegalArgumentException("Delay in milliseconds must be a non-negative integer.");
             }
             long delayMs = Long.parseLong(delayMsString);
             executionRequest = ActionExecutionRequest.of(repeatCount, delayMs);
@@ -69,10 +65,9 @@ public class RunTaskHandler extends AbstractSingleMethodHttpHandler {
 
         UserDefinedAction action = backEndHolder.getTask(id);
         if (action == null) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, "No such task with ID " + id + ".");
+            throw new NullPointerException("No such task with ID " + id + ".");
         }
         backEndHolder.getActionExecutor().startExecutingAction(executionRequest, action);
-
-        return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
+        return id;
     }
 }

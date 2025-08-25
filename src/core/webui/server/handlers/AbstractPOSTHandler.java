@@ -18,10 +18,8 @@ public abstract class AbstractPOSTHandler extends AbstractSimpleHandler {
         super(AbstractSingleMethodHttpHandler.POST_METHOD, errorMsg);
     }
 
-    protected abstract void handle(byte[] data);
-
     @Override
-    String handle(HttpRequest request) {
+    protected String handle(HttpRequest request) {
         byte[] data = HttpServerUtilities.getPostContent(request);
         handle(data);
         return "Success!";

@@ -19,6 +19,7 @@ public class TaskInvoker {
     public TaskInvoker(CoreProvider coreProvider, List<TaskGroup> taskGroup) {
         this.coreProvider = coreProvider;
         this.taskGroup = taskGroup;
+        LOGGER.info("Created TaskInvoker");
     }
 
     /**
@@ -60,6 +61,7 @@ public class TaskInvoker {
      * @param id ID of the task.
      */
     public void execute(String id) throws InterruptedException {
+        LOGGER.info("Executing task: " + id);
         execute(id, TaskActivation.newBuilder().build());
     }
 
@@ -83,6 +85,7 @@ public class TaskInvoker {
     }
 
     private void execute(UserDefinedAction action, TaskActivation activation) throws InterruptedException {
+        LOGGER.info("Executing task: " + action.getName());
         action.setInvoker(activation);
         action.trackedAction(coreProvider.get());
     }
