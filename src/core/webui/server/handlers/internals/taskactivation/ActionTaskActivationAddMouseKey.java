@@ -32,7 +32,7 @@ public class ActionTaskActivationAddMouseKey extends AbstractTaskActivationConst
             case "RIGHT" -> mouseKey = InputEvent.BUTTON3_DOWN_MASK;
             case "MIDDLE" -> mouseKey = InputEvent.BUTTON2_DOWN_MASK;
             default -> {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400TestiTTeT, "Request 'key' must be either 'LEFT', 'RIGHT', or 'MIDDLE'.\n"+key);
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Request 'key' must be either 'LEFT', 'RIGHT', or 'MIDDLE'.\n" + key);
             }
         }
         constructor.addMouseKey(MouseKey.of(mouseKey));
