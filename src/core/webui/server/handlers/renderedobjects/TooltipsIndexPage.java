@@ -31,32 +31,16 @@ public class TooltipsIndexPage {
         return record;
     }
 
-    public void setRecord(String record) {
-        //this.record = record;
-    }
-
     public String getReplay() {
         return replay;
-    }
-
-    public void setReplay(String replay) {
-        //this.replay = replay;
     }
 
     public String getCompile() {
         return compile;
     }
 
-    public void setCompile(String compile) {
-        //this.compile = compile;
-    }
-
     public String getRun() {
         return run;
-    }
-
-    public void setRun(String run) {
-        //this.run = run;
     }
 
     public String getEditCode() {
@@ -71,10 +55,6 @@ public class TooltipsIndexPage {
         return reload;
     }
 
-    public void setReload(String reload) {
-        //this.reload = reload;
-    }
-
     public String getRunSelected() {
         return "Run selected task.";
     }
@@ -83,40 +63,20 @@ public class TooltipsIndexPage {
         return add;
     }
 
-    public void setAdd(String add) {
-        //this.add = add;
-    }
-
     public String getOverwrite() {
         return overwrite;
-    }
-
-    public void setOverwrite(String overwrite) {
-        //this.overwrite = overwrite;
     }
 
     public String getDelete() {
         return delete;
     }
 
-    public void setDelete(String delete) {
-        //this.delete = delete;
-    }
-
     public String getUp() {
         return up;
     }
 
-    public void setUp(String up) {
-        //this.up = up;
-    }
-
     public String getDown() {
         return down;
-    }
-
-    public void setDown(String down) {
-        //this.down = down;
     }
 
     public String getChangeGroup() {
