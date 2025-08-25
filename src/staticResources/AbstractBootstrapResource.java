@@ -28,14 +28,11 @@ public abstract class AbstractBootstrapResource implements BootstrapResourcesExt
         }, new Function<>() {
             @Override
             public Boolean apply(String name) {
-                return postProcessing(name);
+                return true;
             }
         });
 	}
 
-	protected boolean postProcessing(String name) {
-		return true;
-	}
 	protected abstract boolean correctExtension(String name);
 	protected abstract String getRelativeSourcePath();
 	protected abstract File getExtractingDest();

@@ -6,7 +6,7 @@ import java.awt.event.InputEvent;
 
 public abstract class AbstractMouseCoreImplementation {
 
-	public static final int CLICK_DURATION_MS = 100;
+	private static final int CLICK_DURATION_MS = 100;
 
 	/**
 	 * Get current position of the mouse
@@ -52,7 +52,7 @@ public abstract class AbstractMouseCoreImplementation {
 	 * @param delay delay in milliseconds
 	 * @throws InterruptedException
 	 */
-	public final void click(int mask, int delay) throws InterruptedException {
+    private void click(int mask, int delay) throws InterruptedException {
 		hold(mask, delay);
 	}
 
@@ -204,7 +204,7 @@ public abstract class AbstractMouseCoreImplementation {
 	 * Move mouse to a position on screen
 	 * @param p Point p represents position
 	 */
-	public final void move(Point p) {
+	protected final void move(Point p) {
 		move(p.x, p.y);
 	}
 

@@ -49,7 +49,7 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
         }, exchange);
     }
 
-    protected final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) throws IOException {
+    final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) throws IOException {
         return LOGGER.exec(() -> {
             Map<String, Object> data = new HashMap<>();
             data.put("task", RenderedDetailedUserDefinedAction.withEmptyTaskInfo(constructor));
@@ -57,5 +57,5 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
         }, exchange);
     }
 
-    protected abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
+    abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
 }

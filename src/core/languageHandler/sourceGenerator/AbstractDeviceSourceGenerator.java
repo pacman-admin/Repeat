@@ -1,6 +1,6 @@
 package core.languageHandler.sourceGenerator;
 
-public abstract class AbstractDeviceSourceGenerator {
+abstract class AbstractDeviceSourceGenerator {
 
 	/**
 	 * Generate source code for an action.
@@ -9,7 +9,7 @@ public abstract class AbstractDeviceSourceGenerator {
 	 * @param params parameters for this action.
 	 * @return the source code for this action, or null if error occurs.
 	 */
-	protected String getSourceCode(String action, int[] params) {
+    String getSourceCode(String action, int[] params) {
 		if (!isKnownAction(action)) {
 			return null;
 		}

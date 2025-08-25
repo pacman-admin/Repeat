@@ -28,7 +28,7 @@ import java.util.Map;
 
 public abstract class AbstractBooleanConfigHttpHandler extends AbstractSingleMethodHttpHandler {
 
-    public AbstractBooleanConfigHttpHandler() {
+    protected AbstractBooleanConfigHttpHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);
     }
 

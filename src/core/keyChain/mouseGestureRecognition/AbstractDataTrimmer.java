@@ -6,7 +6,7 @@ import java.util.ArrayList;
 /**
  * Remove points from the list using a certain strategy.
  */
-public abstract class AbstractDataTrimmer {
+abstract class AbstractDataTrimmer {
 
 	/**
 	 * Remove points from the list so that the list has at most {@link DataNormalizer.POINT_COUNT} points.

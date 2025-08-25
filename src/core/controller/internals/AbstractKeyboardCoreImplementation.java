@@ -27,7 +27,7 @@ public abstract class AbstractKeyboardCoreImplementation {
 	 * Almost every typeable character on ANSI keyboard is supported.
 	 * @param c character to be typed
 	 */
-	public final void type(char c) {
+	final void type(char c) {
 		type(new char[] {c});
 	}
 
