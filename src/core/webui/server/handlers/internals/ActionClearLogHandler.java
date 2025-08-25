@@ -1,6 +1,6 @@
 /**
  * Copyright 2025 Langdon Staab
- * <p>
+ * <p>v
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -19,6 +19,7 @@
 package core.webui.server.handlers.internals;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
+import org.apache.http.HttpRequest;
 
 public class ActionClearLogHandler extends AbstractPOSTHandler {
 
@@ -27,7 +28,8 @@ public class ActionClearLogHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected void handle(byte[] data) {
+    protected String handle(HttpRequest ignored) {
         backEndHolder.clearLogs();
+        return "Cleared logs.";
     }
 }

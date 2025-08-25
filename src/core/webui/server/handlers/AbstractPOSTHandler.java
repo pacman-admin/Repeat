@@ -9,19 +9,12 @@
  */
 package core.webui.server.handlers;
 
-import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 
 public abstract class AbstractPOSTHandler extends AbstractSimpleHandler {
-
     protected AbstractPOSTHandler(String errorMsg) {
         super(AbstractSingleMethodHttpHandler.POST_METHOD, errorMsg);
     }
 
-    @Override
-    protected String handle(HttpRequest request) {
-        byte[] data = HttpServerUtilities.getPostContent(request);
-        handle(data);
-        return "Success!";
-    }
+    protected abstract String handle(HttpRequest r);
 }
