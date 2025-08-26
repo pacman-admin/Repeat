@@ -210,11 +210,7 @@ public class MainBackEndHolder {
 
         if (trayIcon != null) {
             if (config.isUseTrayIcon()) {
-                try {
-                    trayIcon.add();
-                } catch (AWTException e) {
-                    LOGGER.log(Level.WARNING, "Exception when adding tray icon.", e);
-                }
+                trayIcon.add();
             }
         }
         IPCServiceManager.setBackEnd(this);

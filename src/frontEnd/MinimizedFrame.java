@@ -63,16 +63,16 @@ class MinimizedFrame extends TrayIcon {
         }
     }
 
-    void add() throws AWTException, UnsupportedOperationException {
+    void add(){
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(this);
-        } catch (UnsupportedOperationException e) {
+        } catch (UnsupportedOperationException | AWTException e) {
             throw new RuntimeException("Try icon error!\nThis error can usually be ignored.\n" + e, e);
         }
     }
 
-    void remove() throws UnsupportedOperationException {
+    void remove(){
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.remove(this);

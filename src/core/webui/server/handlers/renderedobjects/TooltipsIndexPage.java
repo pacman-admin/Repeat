@@ -47,10 +47,6 @@ public class TooltipsIndexPage {
         return editCode;
     }
 
-    public void setEditCode(String editCode) {
-        //this.editCode = editCode;
-    }
-
     public String getReload() {
         return reload;
     }
