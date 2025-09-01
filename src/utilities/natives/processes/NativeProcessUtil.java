@@ -8,16 +8,12 @@ import utilities.OSIdentifier;
 public class NativeProcessUtil {
 
 	public static NativeWindowInfo getActiveWindowInfo() {
-		if (OSIdentifier.IS_WINDOWS) {
-			return WindowsNativeProcessUtil.getActiveWindowInfo();
-		}
-		if (OSIdentifier.IS_LINUX) {
-			return X11NativeProcessUtil.getActiveWindowInfo();
-		}
-		if (OSIdentifier.IS_OSX) {
-			return OSXNativeProcessUtil.getActiveWindowInfo();
-		}
-		throw new IllegalStateException("OS is not supported.");
+        return switch (OSIdentifier.getCurrentOS()) {
+            case WINDOWS -> WindowsNativeProcessUtil.getActiveWindowInfo();
+            case LINUX -> X11NativeProcessUtil.getActiveWindowInfo();
+            case MAC -> OSXNativeProcessUtil.getActiveWindowInfo();
+            default -> throw new IllegalStateException("OS is not supported.");
+        };
 	}
 
 	/**

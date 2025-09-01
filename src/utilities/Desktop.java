@@ -39,16 +39,12 @@ public class Desktop {
             LOGGER.warning("File <" + file.getAbsolutePath() + "> does not exist!");
         } catch (Exception ignored) {
         }
-        if (OSIdentifier.IS_WINDOWS) {
-            return openFileWindows(file);
-        }
-        if (OSIdentifier.IS_LINUX) {
-            return openFileLinux(file);
-        }
-        if (OSIdentifier.IS_OSX) {
-            return openFileOSX(file);
-        }
-        return openWithCommand("xedit", file);
+        return switch (OSIdentifier.getCurrentOS()) {
+            case WINDOWS -> openFileWindows(file);
+            case LINUX -> openFileLinux(file);
+            case MAC -> openFileOSX(file);
+            default -> openWithCommand("xedit", file);
+        };
     }
 
     private static boolean openFileWindows(File file) {

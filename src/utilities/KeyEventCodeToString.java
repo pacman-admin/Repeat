@@ -16,20 +16,17 @@ public class KeyEventCodeToString {
 		case KeyEvent.VK_CONTROL:
 			return "Ctrl";
 		case KeyEvent.VK_ALT:
-			if (OSIdentifier.IS_OSX) {
-				return "Option";
+			if (OSIdentifier.isMac()) {
+				return "option";
 			}
 			return "Alt";
 		case KeyEvent.VK_WINDOWS:
 			return "Windows";
 		case KeyEvent.VK_META:
-			if (OSIdentifier.IS_LINUX) {
-				return "Meta";
+			if (OSIdentifier.isMac()) {
+				return "command";
 			}
-			if (OSIdentifier.IS_OSX) {
-				return "Command";
-			}
-			break;
+			return "Meta";
 		case KeyEvent.VK_SHIFT:
 			return "Shift";
 		case KeyEvent.VK_TAB:

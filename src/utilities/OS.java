@@ -6,22 +6,29 @@
  * THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  *
  * @author Langdon Staab
- * @author HP Truong
  */
 package utilities;
 
-public class OSIdentifier {
-    private static final OS THE_OS = OS.getCurrentOS();
+public enum OS {
+    WINDOWS(true), LINUX(false), MAC(true), OTHER(false);
+    public final boolean isClipboardSupported;
 
-    public static OS getCurrentOS() {
-        return THE_OS;
+    OS(boolean canUseClipboard) {
+        isClipboardSupported = canUseClipboard;
     }
 
-    public static boolean isMac() {
-        return THE_OS == OS.MAC;
-    }
-
-    public static boolean isWindows() {
-        return THE_OS == OS.WINDOWS;
+    static OS getCurrentOS() {
+        String OSName = System.getProperty("os.name").toLowerCase().trim();
+        //System.out.println("Your OS is: " + OSName);
+        if (OSName.startsWith("mac")) {
+            return OS.MAC;
+        }
+        if (OSName.startsWith("linux")) {
+            return OS.LINUX;
+        }
+        if (OSName.startsWith("windows")) {
+            return OS.WINDOWS;
+        }
+        return OS.OTHER;
     }
 }

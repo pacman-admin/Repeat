@@ -25,6 +25,7 @@ import com.sun.jna.platform.unix.X11.WindowByReference;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
 import utilities.Function;
+import utilities.OS;
 import utilities.OSIdentifier;
 
 import java.util.Collections;
@@ -136,7 +137,7 @@ public class X11NativeProcessUtil {
         X11Extended INSTANCE = new Function<Void, X11Extended>() {
             @Override
             public X11Extended apply(Void d) {
-                if (!OSIdentifier.IS_LINUX) {
+                if (OSIdentifier.getCurrentOS() != OS.LINUX) {
                     return null;
                 }
                 return Native.load("X11", X11Extended.class);
