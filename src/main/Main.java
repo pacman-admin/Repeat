@@ -23,5 +23,6 @@ import frontEnd.MainFrontEnd;
 class Main {
     public static void main(String[] args) {
         MainFrontEnd.run();
+        System.out.println(System.getenv("XDG_SESSION_TYPE"));
     }
 }
