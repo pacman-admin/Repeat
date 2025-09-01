@@ -15,14 +15,14 @@ public class ManuallyBuildActionFeModel {
 
 	private ManuallyBuildActionFeModel() {}
 
-	public static enum Actor {
+	public enum Actor {
 		MOUSE("mouse"),
 		KEYBOARD("keyboard"),
 		CONTROLLER("controller")
 		;
 
 		private String value;
-		private Actor(String s) { value = s; }
+		Actor(String s) { value = s; }
 		@Override
 		public String toString() {
 			return value;
@@ -45,9 +45,9 @@ public class ManuallyBuildActionFeModel {
 		ACTORS_TO_ACTIONS.put(Actor.CONTROLLER, Arrays.asList(ControllerAction.values()));
 	}
 
-	static interface Action {
+	interface Action {
 		@Override
-		public abstract String toString();
+        String toString();
 	}
 
 	public List<String> noAction() {
@@ -59,7 +59,7 @@ public class ManuallyBuildActionFeModel {
 		return ACTORS_TO_ACTIONS.getOrDefault(actor, Arrays.asList()).stream().map(Action::toString).collect(Collectors.toList());
 	}
 
-	public static enum MouseAction implements Action {
+	public enum MouseAction implements Action {
 		CLICK("click"),
 		CLICK_CURRENT_POSITION("click current position"),
 		MOVE_BY("move by"),
@@ -69,14 +69,14 @@ public class ManuallyBuildActionFeModel {
 		;
 
 		private String value;
-		private MouseAction(String s) { value = s; }
+		MouseAction(String s) { value = s; }
 		@Override
 		public String toString() {
 			return value;
 		}
 	}
 
-	public static enum KeyboardAction implements Action {
+	public enum KeyboardAction implements Action {
 		PRESS_KEY("press"),
 		RELEASE_KEY("release"),
 		TYPE_KEY("type"),
@@ -84,18 +84,18 @@ public class ManuallyBuildActionFeModel {
 		;
 
 		private String value;
-		private KeyboardAction(String s) { value = s; }
+		KeyboardAction(String s) { value = s; }
 		@Override
 		public String toString() {
 			return value;
 		}
 	}
 
-	public static enum ControllerAction implements Action {
+	public enum ControllerAction implements Action {
 		WAIT("blocking wait");
 
 		private String value;
-		private ControllerAction(String s) { value = s; }
+		ControllerAction(String s) { value = s; }
 		@Override
 		public String toString() {
 			return value;

@@ -26,7 +26,7 @@ public abstract class AbstractSourceGenerator {
 
 		private final String text;
 
-		private Device(final String text) {
+		Device(final String text) {
 	        this.text = text;
 	    }
 

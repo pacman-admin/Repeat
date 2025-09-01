@@ -34,7 +34,7 @@ public class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	synchronized public Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
+    public synchronized Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
 		if (stroke.getSource() != Source.KEYBOARD) {
 			return Collections.emptySet();
 		}
@@ -48,7 +48,7 @@ public class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	synchronized public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
+    public synchronized Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
 		if (stroke.getSource() != Source.KEYBOARD) {
 			return Collections.emptySet();
 		}
@@ -107,7 +107,7 @@ public class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	synchronized public final void clear() {
+    public final synchronized void clear() {
 		currentRollingKeySeries.clearKeys();
 	}
 

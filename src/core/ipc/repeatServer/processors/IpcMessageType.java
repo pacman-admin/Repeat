@@ -9,7 +9,7 @@ public enum IpcMessageType {
 
 	private final String value;
 
-	private IpcMessageType(String value) {
+	IpcMessageType(String value) {
 		this.value = value;
 	}
 

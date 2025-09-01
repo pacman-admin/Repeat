@@ -22,7 +22,7 @@ public class SharedVariablesSubscriber {
 		f.process(e);
 	}
 
-	public static interface ProcessingFunction {
-		public abstract void process(SharedVariablesEvent e);
+	public interface ProcessingFunction {
+		void process(SharedVariablesEvent e);
 	}
 }

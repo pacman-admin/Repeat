@@ -7,7 +7,7 @@ public class DefaultTools implements ITools {
 	private static final DefaultTools INSTANCE = new DefaultTools();
 	private ITools executor = LocalTools.of();
 
-	public synchronized static void setExecutor(ITools executor) {
+	public static synchronized void setExecutor(ITools executor) {
 		INSTANCE.executor = executor;
 	}
 

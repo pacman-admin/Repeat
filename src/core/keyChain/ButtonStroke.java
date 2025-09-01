@@ -7,9 +7,9 @@ import utilities.json.IJsonable;
  * Represents any input button stroke (e.g. mouse button, keyboard, joystick, ...)
  */
 public interface ButtonStroke extends IJsonable {
-	public int getKey();
+	int getKey();
 
-	public static enum Source {
+	enum Source {
 		KEYBOARD,
 		MOUSE;
 	}
@@ -17,23 +17,23 @@ public interface ButtonStroke extends IJsonable {
 	/**
 	 * Syntactic sugar for {@link #getKey()}.
 	 */
-	public default int k() {
+	default int k() {
 		return getKey();
 	}
 
-	public boolean isPressed();
-	public KeyboardResult getTypedString(KeyboardState keyboardState);
-	public ButtonStroke clone();
-	public Source getSource();
+	boolean isPressed();
+	KeyboardResult getTypedString(KeyboardState keyboardState);
+	ButtonStroke clone();
+	Source getSource();
 
-	public static ButtonStroke parseJSON(JsonNode n) {
+	static ButtonStroke parseJSON(JsonNode n) {
 		if (n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING)) {
 			return MouseKey.parseJSON(n);
 		}
 		return KeyStroke.parseJSON(n);
 	}
 
-	public static class KeyboardResult {
+	class KeyboardResult {
 		private KeyboardState keyboardState;
 		private String typedString;
 

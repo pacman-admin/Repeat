@@ -20,7 +20,7 @@ public class KeyStroke implements ButtonStroke {
 
 	private static final String TYPE_STRING = "key_stroke";
 
-	public static enum Modifier {
+	public enum Modifier {
 		KEY_MODIFIER_UNKNOWN(0), // Unknown is equal to both left and right.
 		KEY_MODIFIER_LEFT(1),
 		KEY_MODIFIER_RIGHT(2);

@@ -3,14 +3,14 @@ package core.keyChain;
 import core.userDefinedTask.internals.SharedVariablesEvent;
 
 public class ActivationEvent {
-	public static enum EventType {
+	public enum EventType {
 		UNKNOWN("unknown"),
 		BUTTON_STROKE("button_stroke"),
 		SHARED_VARIABLE("shared_variable");
 
 		private String value;
 
-		private EventType(String value) {
+		EventType(String value) {
 			this.value = value;
 		}
 

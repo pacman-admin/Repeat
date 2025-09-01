@@ -3,21 +3,21 @@ package core.webui.server.handlers.renderedobjects;
 import utilities.StringUtilities;
 
 public class TooltipsIndexPage {
-    private final static String mousePosition = StringUtilities.escapeHtml("If enabled, mouse position will be logged on every left control click (key down time).");
-    private final static String activeWindowInfosLogging = StringUtilities.escapeHtml("If enabled, active window will be logged on every mouse click (key up time).");
-    private final static String record = "Record mouse and keyboard activities.";
-    private final static String replay = "Replay recorded activities.";
-    private final static String compile = "Compile source code.";
-    private final static String run = "Run compiled source code.";
-    private final static String editCode = "Edit source code in default editor.";
-    private final static String reload = "Reload edited source code after edited in default editor.";
-    private final static String add = "Add the compiled action as a new task.";
-    private final static String overwrite = "Overwrite selected task with the compiled action.";
-    private final static String delete = "Delete selected task.";
-    private final static String up = "Move selected task up.";
-    private final static String down = "Move selected task down.";
-    private final static String changeGroup = "Change the select task's group.";
-    private final static String showActionId = "Show task ID.";
+    private static final String mousePosition = StringUtilities.escapeHtml("If enabled, mouse position will be logged on every left control click (key down time).");
+    private static final String activeWindowInfosLogging = StringUtilities.escapeHtml("If enabled, active window will be logged on every mouse click (key up time).");
+    private static final String record = "Record mouse and keyboard activities.";
+    private static final String replay = "Replay recorded activities.";
+    private static final String compile = "Compile source code.";
+    private static final String run = "Run compiled source code.";
+    private static final String editCode = "Edit source code in default editor.";
+    private static final String reload = "Reload edited source code after edited in default editor.";
+    private static final String add = "Add the compiled action as a new task.";
+    private static final String overwrite = "Overwrite selected task with the compiled action.";
+    private static final String delete = "Delete selected task.";
+    private static final String up = "Move selected task up.";
+    private static final String down = "Move selected task down.";
+    private static final String changeGroup = "Change the select task's group.";
+    private static final String showActionId = "Show task ID.";
 
     public String getMousePosition() {
         return mousePosition;

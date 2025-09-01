@@ -36,7 +36,7 @@ public class KeySequenceManager extends KeyStrokeManager {
 	}
 
 	@Override
-	synchronized public Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
+    public synchronized Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
 		if (stroke.getSource() == Source.KEYBOARD) {
 			currentKeyboardRollingKeySeries.addKeyStroke(stroke);
 		}
@@ -49,7 +49,7 @@ public class KeySequenceManager extends KeyStrokeManager {
 	}
 
 	@Override
-	synchronized public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
+    public synchronized Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
 		if (getConfig().isExecuteOnKeyReleased()) {
 			return considerTaskExecution(stroke);
 		}
@@ -96,7 +96,7 @@ public class KeySequenceManager extends KeyStrokeManager {
 	}
 
 	@Override
-	synchronized public final void clear() {
+    public final synchronized void clear() {
 		currentKeyboardRollingKeySeries.clearKeys();
 		currentRollingKeySeries.clearKeys();
 	}
