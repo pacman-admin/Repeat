@@ -117,8 +117,8 @@ public class TaskProcessor extends AbstractMessageProcessor {
 		if (reply != null && reply.status.equals(ApiProtocol.SUCCESS_STATUS)) {
 			ClientTask task = ClientTask.parseJSON(reply.message);
 			if (task != null) {
-				remoteTasks.put(task.getId(), task);
-				return task.getId();
+				remoteTasks.put(task.id(), task);
+				return task.id();
 			}
 		}
 		return "";
@@ -150,9 +150,9 @@ public class TaskProcessor extends AbstractMessageProcessor {
 		Reply reply = fullMessage(requestMessage, TASK_REMOVAL_TIMEOUT_MS);
 		if (reply.status.equals(ApiProtocol.SUCCESS_STATUS)) {
 			ClientTask task = ClientTask.parseJSON(reply.message);
-			if (task != null && task.getId().equals(id)) {
-				this.remoteTasks.put(task.getId(), task);
-				remoteTasks.remove(task.getId());
+			if (task != null && task.id().equals(id)) {
+				this.remoteTasks.put(task.id(), task);
+				remoteTasks.remove(task.id());
 				return true;
 			}
 		}

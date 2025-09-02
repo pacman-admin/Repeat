@@ -1,19 +1,11 @@
 package core.scheduler;
 
-public class SchedulingData<T> {
-	private long time;
-	private T data;
-	
-	public SchedulingData(long time, T data) {
-		this.time = time;
-		this.data = data;
-	}
-	
-	public long getTime() {
-		return time;
-	}
+public record SchedulingData<T>(long time, T data) {
+    public long getTime() {
+        return time;
+    }
 
-	public T getData() {
-		return data;
-	}
+    public T getData() {
+        return data;
+    }
 }
