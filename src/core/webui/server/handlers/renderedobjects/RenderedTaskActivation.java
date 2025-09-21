@@ -1,11 +1,15 @@
 package core.webui.server.handlers.renderedobjects;
 
-import core.keyChain.*;
-
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
+
+import core.keyChain.ActivationPhrase;
+import core.keyChain.KeyChain;
+import core.keyChain.KeySequence;
+import core.keyChain.TaskActivation;
+import core.keyChain.TaskActivationConstructor;
 
 public class RenderedTaskActivation {
     private List<SortedString> keyChains;
@@ -30,85 +34,40 @@ public class RenderedTaskActivation {
         output.sharedVariables = RenderedSharedVariablesActivation.fromActivation(constructor.getVariables());
         output.globalActivation = RenderedGlobalActivation.fromActivation(activation);
         TaskActivationConstructor.Config config = constructor.getConfig();
-        output.config = Config.of(true).setDisableGlobalAction(config.isDisabledGlobalKeyAction()).setDisableKeyChain(config.isDisableKeyChain()).setDisableKeySequence(config.isDisableKeySequence()).setDisablePhrase(config.isDisablePhrase()).setDisableMouseGesture(config.isDisableMouseGesture()).setDisableSharedVariable(config.isDisableVariablesActivation());
+        output.config = Config.of(true)
+                .setDisableGlobalAction(config.isDisabledGlobalKeyAction())
+                .setDisableKeyChain(config.isDisableKeyChain())
+                .setDisableKeySequence(config.isDisableKeySequence())
+                .setDisablePhrase(config.isDisablePhrase())
+                .setDisableMouseGesture(config.isDisableMouseGesture())
+                .setDisableSharedVariable(config.isDisableVariablesActivation());
         return output;
     }
 
     private static List<SortedString> sortedStrings(List<String> vals) {
-        return IntStream.range(0, vals.size()).mapToObj(i -> SortedString.of(i, vals.get(i))).sorted(Comparator.comparing(SortedString::getValue)).collect(Collectors.toList());
-    }
-
-    public List<SortedString> getKeyChains() {
-        return keyChains;
-    }
-
-    public void setKeyChains(List<SortedString> keyChains) {
-        this.keyChains = keyChains;
-    }
-
-    public List<SortedString> getKeySequences() {
-        return keySequences;
-    }
-
-    public void setKeySequences(List<SortedString> keySequences) {
-        this.keySequences = keySequences;
-    }
-
-    public List<SortedString> getPhrases() {
-        return phrases;
-    }
-
-    public void setPhrases(List<SortedString> phrases) {
-        this.phrases = phrases;
-    }
-
-    public RenderedMouseGestureActivation getMouseGestures() {
-        return mouseGestures;
-    }
-
-    public void setMouseGestures(RenderedMouseGestureActivation mouseGestures) {
-        this.mouseGestures = mouseGestures;
-    }
-
-    public RenderedSharedVariablesActivation getSharedVariables() {
-        return sharedVariables;
-    }
-
-    public void setSharedVariables(RenderedSharedVariablesActivation sharedVariables) {
-        this.sharedVariables = sharedVariables;
-    }
-
-    public RenderedGlobalActivation getGlobalActivation() {
-        return globalActivation;
-    }
-
-    public void setGlobalActivation(RenderedGlobalActivation globalActivation) {
-        this.globalActivation = globalActivation;
-    }
-
-    public Config getConfig() {
-        return config;
-    }
-
-    public void setConfig(Config config) {
-        this.config = config;
+        return IntStream.range(0, vals.size()).mapToObj(i -> SortedString.of(i, vals.get(i))).sorted(Comparator.comparing(s -> s.getValue())).collect(Collectors.toList());
     }
 
     public static class SortedString {
-        public int originalIndex;
+        int originalIndex;
         String value;
 
-        static SortedString of(int originalIndex, String value) {
+        public static SortedString of(int originalIndex, String value) {
             SortedString result = new SortedString();
             result.originalIndex = originalIndex;
             result.value = value;
             return result;
         }
 
-        String getValue() {
+        public int getOriginalIndex() {
+            return originalIndex;
+        }
+        public void setOriginalIndex(int originalIndex) {
+            this.originalIndex = originalIndex;
+        }
+        public String getValue() {
             return value;
         }
-
         public void setValue(String value) {
             this.value = value;
         }
@@ -123,7 +82,7 @@ public class RenderedTaskActivation {
         private boolean disableMouseGesture;
         private boolean disableSharedVariable;
 
-        static Config of(boolean modifiable) {
+        public static Config of(boolean modifiable) {
             Config result = new Config();
             result.modifiable = modifiable;
             return result;
@@ -141,7 +100,7 @@ public class RenderedTaskActivation {
             return disableGlobalAction;
         }
 
-        Config setDisableGlobalAction(boolean disableGlobalAction) {
+        public Config setDisableGlobalAction(boolean disableGlobalAction) {
             this.disableGlobalAction = disableGlobalAction;
             return this;
         }
@@ -150,7 +109,7 @@ public class RenderedTaskActivation {
             return disableKeyChain;
         }
 
-        Config setDisableKeyChain(boolean disableKeyChain) {
+        public Config setDisableKeyChain(boolean disableKeyChain) {
             this.disableKeyChain = disableKeyChain;
             return this;
         }
@@ -159,7 +118,7 @@ public class RenderedTaskActivation {
             return disableKeySequence;
         }
 
-        Config setDisableKeySequence(boolean disableKeySequence) {
+        public Config setDisableKeySequence(boolean disableKeySequence) {
             this.disableKeySequence = disableKeySequence;
             return this;
         }
@@ -168,7 +127,7 @@ public class RenderedTaskActivation {
             return disablePhrase;
         }
 
-        Config setDisablePhrase(boolean disablePhrase) {
+        public Config setDisablePhrase(boolean disablePhrase) {
             this.disablePhrase = disablePhrase;
             return this;
         }
@@ -177,7 +136,7 @@ public class RenderedTaskActivation {
             return disableMouseGesture;
         }
 
-        Config setDisableMouseGesture(boolean disableMouseGesture) {
+        public Config setDisableMouseGesture(boolean disableMouseGesture) {
             this.disableMouseGesture = disableMouseGesture;
             return this;
         }
@@ -186,9 +145,52 @@ public class RenderedTaskActivation {
             return disableSharedVariable;
         }
 
-        Config setDisableSharedVariable(boolean disableSharedVariable) {
+        public Config setDisableSharedVariable(boolean disableSharedVariable) {
             this.disableSharedVariable = disableSharedVariable;
             return this;
         }
+    }
+
+    public List<SortedString> getKeyChains() {
+        return keyChains;
+    }
+    public void setKeyChains(List<SortedString> keyChains) {
+        this.keyChains = keyChains;
+    }
+    public List<SortedString> getKeySequences() {
+        return keySequences;
+    }
+    public void setKeySequences(List<SortedString> keySequences) {
+        this.keySequences = keySequences;
+    }
+    public List<SortedString> getPhrases() {
+        return phrases;
+    }
+    public void setPhrases(List<SortedString> phrases) {
+        this.phrases = phrases;
+    }
+    public RenderedMouseGestureActivation getMouseGestures() {
+        return mouseGestures;
+    }
+    public void setMouseGestures(RenderedMouseGestureActivation mouseGestures) {
+        this.mouseGestures = mouseGestures;
+    }
+    public RenderedSharedVariablesActivation getSharedVariables() {
+        return sharedVariables;
+    }
+    public void setSharedVariables(RenderedSharedVariablesActivation sharedVariables) {
+        this.sharedVariables = sharedVariables;
+    }
+    public RenderedGlobalActivation getGlobalActivation() {
+        return globalActivation;
+    }
+    public void setGlobalActivation(RenderedGlobalActivation globalActivation) {
+        this.globalActivation = globalActivation;
+    }
+    public Config getConfig() {
+        return config;
+    }
+    public void setConfig(Config config) {
+        this.config = config;
     }
 }
