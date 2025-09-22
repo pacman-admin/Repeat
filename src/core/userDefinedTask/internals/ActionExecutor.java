@@ -1,5 +1,9 @@
 package core.userDefinedTask.internals;
 
+import core.controller.CoreProvider;
+import core.userDefinedTask.UserDefinedAction;
+import utilities.RandomUtil;
+
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -7,59 +11,57 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import core.controller.CoreProvider;
-import core.userDefinedTask.UserDefinedAction;
-import utilities.RandomUtil;
-
 public class ActionExecutor {
 
-	private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
-	private static final int MAX_SIMULTANEOUS_EXECUTIONS = 3;
+    private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
+    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 1;
 
-	private Map<String, Thread> executions;
-	private CoreProvider coreProvider;
+    private Map<String, Thread> executions;
+    private CoreProvider coreProvider;
 
-	public ActionExecutor(CoreProvider coreProvider) {
-		this.coreProvider = coreProvider;
-		this.executions = new HashMap<>();
-	}
+    public ActionExecutor(CoreProvider coreProvider) {
+        this.coreProvider = coreProvider;
+        this.executions = new HashMap<>();
+    }
 
-	/**
-	 * Start executing actions, each in a separate thread.
-	 *
-	 * @param actions actions to execute.
-	 */
-	public void startExecutingActions(Collection<UserDefinedAction> actions) {
-		for (UserDefinedAction action : actions) {
-			startExecutingAction(action);
-		}
-	}
+    /**
+     * Start executing actions, each in a separate thread.
+     *
+     * @param actions actions to execute.
+     */
+    public void startExecutingActions(Collection<UserDefinedAction> actions) {
+        for (UserDefinedAction action : actions) {
+            startExecutingAction(action);
+        }
+    }
 
 
-	private String startExecutingAction(UserDefinedAction action) {
-		return startExecutingAction(ActionExecutionRequest.of(), action);
-	}
-	/**
-	 * Start executing an action in a separate thread
-	 *
-	 * @param request request for execution of this action
-	 * @param action action to execute
-	 * @return ID of the registered execution
-	 */
-	public String startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
-		if (executions.size() > MAX_SIMULTANEOUS_EXECUTIONS){
-			LOGGER.info("Cannot run more than "+MAX_SIMULTANEOUS_EXECUTIONS+" tasks simultanously.");
-			return null;
-		}
-		if (action == null) {
-			throw new IllegalArgumentException("Nothing to run!");
-		}
-		if (request.getActivation() != null) {
-			action.setInvoker(request.getActivation());
-		}
+    private String startExecutingAction(UserDefinedAction action) {
+        return startExecutingAction(ActionExecutionRequest.of(), action);
+    }
 
-		final String id = RandomUtil.randomID();
-		Thread execution = new Thread(() -> {
+    /**
+     * Start executing an action in a separate thread
+     *
+     * @param request request for execution of this action
+     * @param action  action to execute
+     * @return ID of the registered execution
+     */
+    public String startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
+        if (executions.size() > MAX_SIMULTANEOUS_EXECUTIONS) {
+            //LOGGER.info("Cannot run more than " + MAX_SIMULTANEOUS_EXECUTIONS + " tasks simultaneously.");
+            return null;
+        }
+        if (action == null) {
+            throw new IllegalArgumentException("Nothing to run!");
+        }
+        if(request.getActivation() == null){
+            return null;
+        }
+        action.setInvoker(request.getActivation());
+
+        final String id = RandomUtil.randomID();
+        Thread execution = new Thread(() -> {
             try {
                 for (int i = 0; i < request.getRepeatCount(); i++) {
                     action.trackedAction(coreProvider.get());
@@ -68,31 +70,28 @@ public class ActionExecutor {
             } catch (InterruptedException e) {
                 LOGGER.info("Task ended prematurely");
             } catch (Exception e) {
-                String name = action.getName() == null ? "" : action.getName();
-                LOGGER.log(Level.WARNING, "Exception while executing task " + name, e);
+                LOGGER.log(Level.WARNING, "Exception while executing task " + action.getName(), e);
             }
-
             executions.remove(id);
-        });
+        }, "Execution thread for Action " + action.getName() + "ID: " + action.getActionId());
 
-		executions.put(id, execution);
-		execution.start();
-		return id;
-	}
+        executions.put(id, execution);
+        execution.start();
+        return id;
+    }
 
-	/**
-	 * Interrupt all currently executing tasks, and clear the record of all executing tasks
-	 */
-	public void haltAllTasks() {
-		LinkedList<Thread> endingThreads = new LinkedList<>();
-		endingThreads.addAll(executions.values());
+    /**
+     * Interrupt all currently executing tasks, and clear the record of all executing tasks
+     */
+    public void haltAllTasks() {
+        LinkedList<Thread> endingThreads = new LinkedList<>(executions.values());
 
-		for (Thread thread : endingThreads) {
-			while (thread.isAlive() && thread != Thread.currentThread()) {
-				LOGGER.info("Interrupting execution thread " + thread);
-				thread.interrupt();
-			}
-		}
-		executions.clear();
-	}
+        for (Thread thread : endingThreads) {
+            LOGGER.info("Halting execution thread " + thread.getName());
+            while (thread.isAlive() && thread != Thread.currentThread()) {
+                thread.interrupt();
+            }
+        }
+        executions.clear();
+    }
 }
