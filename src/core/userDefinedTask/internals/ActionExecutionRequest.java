@@ -17,7 +17,7 @@ public class ActionExecutionRequest {
 		ActionExecutionRequest result = new ActionExecutionRequest();
 		result.repeatCount = repeatCount;
 		result.delayMsBetweenRepeat = delay;
-		result.activation = null;
+		result.activation = TaskActivation.newBuilder().build();
 		return result;
 	}
 
