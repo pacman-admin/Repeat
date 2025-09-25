@@ -7,7 +7,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import core.controller.Core;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 
 public class AggregateUserDefinedAction extends UserDefinedAction {
 
@@ -63,7 +63,7 @@ public class AggregateUserDefinedAction extends UserDefinedAction {
 	}
 
 	@Override
-	public final void setInvoker(TaskActivation invoker) {
+	public final void setInvoker(ActionInvoker invoker) {
 		for (UserDefinedAction action : actions) {
 			action.setInvoker(invoker);
 		}

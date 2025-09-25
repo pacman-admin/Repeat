@@ -1,6 +1,6 @@
 package core.webui.server.handlers.renderedobjects;
 
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 
 public class RenderedGlobalActivation {
 	private boolean onKeyPressed;
@@ -11,7 +11,7 @@ public class RenderedGlobalActivation {
 		this.onKeyReleased = onKeyReleased;
 	}
 
-	public static RenderedGlobalActivation fromActivation(TaskActivation activation) {
+	public static RenderedGlobalActivation fromActivation(ActionInvoker activation) {
 		return new RenderedGlobalActivation(activation.getGlobalActivation().isOnKeyPressed(), activation.getGlobalActivation().isOnKeyReleased());
 	}
 

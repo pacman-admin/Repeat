@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationPhrase;
 import core.keyChain.ButtonStroke;
 import core.keyChain.ButtonStroke.Source;
 import core.keyChain.RollingKeySeries;
-import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
 public class PhraseManager extends KeyStrokeManager {
@@ -61,9 +61,9 @@ public class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public final Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
+	public final Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
 		Set<UserDefinedAction> output = new HashSet<>();
-		for (TaskActivation activation : activations) {
+		for (ActionInvoker activation : activations) {
 			for (UserDefinedAction action : registeredActions) {
 				if (collisionWithAction(action, activation)) {
 					output.add(action);
@@ -73,7 +73,7 @@ public class PhraseManager extends KeyStrokeManager {
 		return output;
 	}
 
-	private boolean collisionWithAction(UserDefinedAction action, TaskActivation activation) {
+	private boolean collisionWithAction(UserDefinedAction action, ActionInvoker activation) {
 		for (ActivationPhrase phrase : activation.getPhrases()) {
 			for (ActivationPhrase actionPhrase : action.getActivation().getPhrases()) {
 				if (phrase.collideWith(actionPhrase)) {
@@ -130,10 +130,10 @@ public class PhraseManager extends KeyStrokeManager {
 	private Set<UserDefinedAction> tasksToExecute() {
 		Set<UserDefinedAction> output = new HashSet<>();
 		for (UserDefinedAction action : registeredActions) {
-			TaskActivation activation = action.getActivation();
+			ActionInvoker activation = action.getActivation();
 			for (ActivationPhrase phrase : activation.getPhrases()) {
 				if (currentRollingKeySeries.collideWith(phrase)) {
-					action.setInvoker(TaskActivation.newBuilder().withPhrase(phrase.clone()).build());
+					action.setInvoker(ActionInvoker.newBuilder().withPhrase(phrase.clone()).build());
 					output.add(action);
 				}
 			}

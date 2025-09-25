@@ -42,11 +42,11 @@ public class TaskActivationConstructorManager extends AbstractBackgroundEntityMa
 		}
 	}
 
-	public synchronized String addNewConstructor(TaskActivation source) {
+	public synchronized String addNewConstructor(ActionInvoker source) {
 		return addNewConstructor(source, TaskActivationConstructor.Config.of());
 	}
 
-	public synchronized String addNewConstructor(TaskActivation source, TaskActivationConstructor.Config config) {
+	public synchronized String addNewConstructor(ActionInvoker source, TaskActivationConstructor.Config config) {
 		TaskActivationConstructor constructor = new TaskActivationConstructor(source, config);
 		return add(constructor);
 	}

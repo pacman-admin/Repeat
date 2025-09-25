@@ -10,7 +10,7 @@ import core.ipc.repeatClient.repeatPeerClient.RepeatPeerServiceClientWriter;
 import core.ipc.repeatServer.ClientTask;
 import core.ipc.repeatServer.processors.IpcMessageType;
 import core.ipc.repeatServer.processors.TaskProcessor;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
 import core.userDefinedTask.UserDefinedAction;
 import utilities.json.IJsonable;
@@ -46,7 +46,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 		waitAndGetResponseIfSuccess(IpcMessageType.TASK, message);
 	}
 
-	private void runTask(String id, TaskActivation activation) {
+	private void runTask(String id, ActionInvoker activation) {
 		IJsonable message = message(TaskProcessor.RUN_TASK_ACTION, JsonNodeFactories.array(
 				JsonNodeFactories.string(id),
 				activation.jsonize()

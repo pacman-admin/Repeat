@@ -9,11 +9,11 @@ import java.util.List;
 import java.util.Set;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.ButtonStroke.Source;
 import core.keyChain.KeySequence;
 import core.keyChain.RollingKeySeries;
-import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
 public class KeySequenceManager extends KeyStrokeManager {
@@ -83,10 +83,10 @@ public class KeySequenceManager extends KeyStrokeManager {
 	private Set<UserDefinedAction> tasksToExecute(RollingKeySeries keySeries) {
 		Set<UserDefinedAction> output = new HashSet<>();
 		for (UserDefinedAction action : registeredActions) {
-			TaskActivation activation = action.getActivation();
+			ActionInvoker activation = action.getActivation();
 			for (KeySequence sequence : activation.getKeySequences()) {
 				if (keySeries.collideWith(sequence)) {
-					action.setInvoker(TaskActivation.newBuilder().withKeySequence(sequence.clone()).build());
+					action.setInvoker(ActionInvoker.newBuilder().withKeySequence(sequence.clone()).build());
 					output.add(action);
 				}
 			}
@@ -102,9 +102,9 @@ public class KeySequenceManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public final Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
+	public final Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
 		Set<UserDefinedAction> output = new HashSet<>();
-		for (TaskActivation activation : activations) {
+		for (ActionInvoker activation : activations) {
 			for (UserDefinedAction action : registeredActions) {
 				if (collisionWithAction(action, activation)) {
 					output.add(action);
@@ -114,7 +114,7 @@ public class KeySequenceManager extends KeyStrokeManager {
 		return output;
 	}
 
-	private boolean collisionWithAction(UserDefinedAction action, TaskActivation activation) {
+	private boolean collisionWithAction(UserDefinedAction action, ActionInvoker activation) {
 		for (KeySequence sequence : activation.getKeySequences()) {
 			for (KeySequence actionSequence : action.getActivation().getKeySequences()) {
 				if (actionSequence.collideWith(sequence)) {

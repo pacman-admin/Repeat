@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import argo.jdom.JsonNode;
 import core.ipc.repeatServer.ClientTask;
 import core.ipc.repeatServer.MainMessageSender;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
 import core.languageHandler.compiler.AbstractNativeCompiler;
 import core.userDefinedTask.UserDefinedAction;
@@ -143,24 +143,24 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 		}
 
 		String taskId = parameterNodes.get(0).getStringValue();
-		TaskActivation activation = TaskActivation.newBuilder().build();
+		ActionInvoker activation = ActionInvoker.newBuilder().build();
 		if (parameterNodes.size() == 2) {
 			JsonNode activationNode = parameterNodes.get(1).getNode();
-			activation = TaskActivation.parseJSON(activationNode);
+			activation = ActionInvoker.parseJSON(activationNode);
 		}
 
 		runTask(taskId, activation);
 		return success(type, id);
 	}
 
-	private void runTask(String id, TaskActivation taskActivation) {
+	private void runTask(String id, ActionInvoker actionInvoker) {
 		UserDefinedAction action = backEnd.getTask(id);
 		if (action == null) {
 			LOGGER.warning("No server action with ID " + id + " found.");
 			return;
 		}
 
-		action.setInvoker(taskActivation);
+		action.setInvoker(actionInvoker);
 		try {
 			action.trackedAction(backEnd.getCoreProvider().getLocal());
 		} catch (InterruptedException e) {

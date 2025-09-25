@@ -1,10 +1,10 @@
 package core.keyChain.managers;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.ButtonStroke.Source;
 import core.keyChain.KeyChain;
-import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
 import java.util.*;
@@ -89,8 +89,8 @@ public class KeyChainManager extends KeyStrokeManager {
     }
 
     @Override
-    public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
-        Set<KeyChain> keyChains = activations.stream().map(TaskActivation::getHotkeys).flatMap(Set::stream).collect(Collectors.toSet());
+    public Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
+        Set<KeyChain> keyChains = activations.stream().map(ActionInvoker::getHotkeys).flatMap(Set::stream).collect(Collectors.toSet());
 
         Set<UserDefinedAction> collisions = new HashSet<>();
         for (Entry<KeyChain, UserDefinedAction> entry : keyChainActions.entrySet()) {
@@ -138,14 +138,14 @@ public class KeyChainManager extends KeyStrokeManager {
         if (stroke.getSource() == Source.KEYBOARD) {
             UserDefinedAction action = keyChainActions.get(currentKeyboardChain);
             if (action != null) {
-                action.setInvoker(TaskActivation.newBuilder().withHotKey(currentKeyboardChain.clone()).build());
+                action.setInvoker(ActionInvoker.newBuilder().withHotKey(currentKeyboardChain.clone()).build());
             }
             return action;
         }
 
         UserDefinedAction action = keyChainActions.get(currentKeyChain);
         if (action != null) {
-            action.setInvoker(TaskActivation.newBuilder().withHotKey(currentKeyChain.clone()).build());
+            action.setInvoker(ActionInvoker.newBuilder().withHotKey(currentKeyChain.clone()).build());
         }
 
         return action;

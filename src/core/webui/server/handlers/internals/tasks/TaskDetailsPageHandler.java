@@ -9,7 +9,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
 import core.keyChain.KeyChain;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.UserDefinedAction;
@@ -73,19 +73,19 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
 		String activationConstructorId = "";
 		if (taskString.equals(RECORD_TASK_NAME)) {
 			KeyChain recordKeyChain = backEndHolder.getConfig().getRECORD();
-			activationConstructorId = taskActivationConstructorManager.addNewConstructor(TaskActivation.newBuilder().withHotKey(recordKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
+			activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(recordKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
 		}
 		if (taskString.equals(REPLAY_TASK_NAME)) {
 			KeyChain replayKeyChain = backEndHolder.getConfig().getREPLAY();
-			activationConstructorId = taskActivationConstructorManager.addNewConstructor(TaskActivation.newBuilder().withHotKey(replayKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
+			activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(replayKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
 		}
 		if (taskString.equals(RUN_COMPILED_TASK_NAME)) {
 			KeyChain runCompiledKeyChain = backEndHolder.getConfig().getCOMPILED_REPLAY();
-			activationConstructorId = taskActivationConstructorManager.addNewConstructor(TaskActivation.newBuilder().withHotKey(runCompiledKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
+			activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(runCompiledKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
 		}
 		if (taskString.equals(MOUSE_GESTURE_ACTIVATION_TASK_NAME)) {
 			KeyChain mouseGestureKeyChain = new KeyChain(backEndHolder.getConfig().getMouseGestureActivationKey());
-			activationConstructorId = taskActivationConstructorManager.addNewConstructor(TaskActivation.newBuilder().withHotKey(mouseGestureKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false).setMaxStrokes(1));
+			activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(mouseGestureKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false).setMaxStrokes(1));
 		}
 		if (activationConstructorId.isEmpty()) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString);

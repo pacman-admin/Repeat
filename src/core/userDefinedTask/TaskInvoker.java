@@ -1,7 +1,7 @@
 package core.userDefinedTask;
 
 import core.controller.CoreProvider;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -30,7 +30,7 @@ public class TaskInvoker {
      * @throws InterruptedException
      */
     public void execute(int groupIndex, int taskIndex) throws InterruptedException {
-        execute(groupIndex, taskIndex, TaskActivation.newBuilder().build());
+        execute(groupIndex, taskIndex, ActionInvoker.newBuilder().build());
     }
 
     /**
@@ -40,7 +40,7 @@ public class TaskInvoker {
      * @param taskIndex  the index of the task within the group.
      * @throws InterruptedException
      */
-    private void execute(int groupIndex, int taskIndex, TaskActivation activation) throws InterruptedException {
+    private void execute(int groupIndex, int taskIndex, ActionInvoker activation) throws InterruptedException {
         if (groupIndex >= taskGroup.size()) {
             LOGGER.warning(String.format("Unable to execute task in group with index %d. There are only %d group(s).", groupIndex, taskGroup.size()));
             return;
@@ -62,7 +62,7 @@ public class TaskInvoker {
      */
     public void execute(String id) throws InterruptedException {
         LOGGER.info("Executing task: " + id);
-        execute(id, TaskActivation.newBuilder().build());
+        execute(id, ActionInvoker.newBuilder().build());
     }
 
     /**
@@ -71,7 +71,7 @@ public class TaskInvoker {
      * @param id         ID of the task.
      * @param activation task activation to associate with the execution.
      */
-    private void execute(String id, TaskActivation activation) throws InterruptedException {
+    private void execute(String id, ActionInvoker activation) throws InterruptedException {
         for (TaskGroup group : taskGroup) {
             for (UserDefinedAction task : group.getTasks()) {
                 if (task.getActionId().equals(id)) {
@@ -84,7 +84,7 @@ public class TaskInvoker {
         LOGGER.warning("Cannot find task with ID " + id + ".");
     }
 
-    private void execute(UserDefinedAction action, TaskActivation activation) throws InterruptedException {
+    private void execute(UserDefinedAction action, ActionInvoker activation) throws InterruptedException {
         LOGGER.info("Executing task: " + action.getName());
         action.setInvoker(activation);
         action.trackedAction(coreProvider.get());

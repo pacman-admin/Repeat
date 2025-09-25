@@ -11,7 +11,7 @@ import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import core.config.ConfigParsingMode;
 import core.controller.Core;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.languageHandler.compiler.DynamicCompilerManager;
 import core.languageHandler.compiler.DynamicCompilerOutput;
 import core.languageHandler.compiler.RemoteRepeatsCompiler;
@@ -88,7 +88,7 @@ public class CompositeUserDefinedAction extends UserDefinedAction {
 	}
 
 	@Override
-	public final void setInvoker(TaskActivation invoker) {
+	public final void setInvoker(ActionInvoker invoker) {
 		super.setInvoker(invoker);
 		localAction.setInvoker(invoker);
 		remoteRepeatsAction.setInvoker(invoker);

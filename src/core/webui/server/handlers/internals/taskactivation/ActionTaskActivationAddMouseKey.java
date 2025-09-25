@@ -20,24 +20,19 @@ public class ActionTaskActivationAddMouseKey extends AbstractTaskActivationConst
     @Override
     protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
         if (!constructor.isListening()) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Enable key listening before adding mouse click.");
+            throw new IllegalStateException("Enable key listening before adding mouse click.");
         }
         if (!params.containsKey("key")) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Request missing the 'key' parameter.");
+            throw new IllegalArgumentException("Request missing the 'key' parameter.");
         }
-        String key = params.get("key");
         int mouseKey;
-        switch (key) {
+        switch (params.get("key")) {
             case "LEFT" -> mouseKey = InputEvent.BUTTON1_DOWN_MASK;
             case "RIGHT" -> mouseKey = InputEvent.BUTTON3_DOWN_MASK;
             case "MIDDLE" -> mouseKey = InputEvent.BUTTON2_DOWN_MASK;
-            default -> {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Request 'key' must be either 'LEFT', 'RIGHT', or 'MIDDLE'.\n" + key);
-            }
+            default -> throw new IllegalArgumentException("Invalid key in request.");
         }
         constructor.addMouseKey(MouseKey.of(mouseKey));
-
-        String strokes = constructor.getStrokes();
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, strokes.isEmpty() ? "None" : strokes);
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, constructor.getStrokes());
     }
 }

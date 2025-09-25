@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UsageStatistics;
 import utilities.DateUtility;
 import utilities.Pair;
@@ -41,7 +41,7 @@ public class RenderedUserDefinedActionStatistics {
 
 		List<String> activations = new ArrayList<>(statistics.getTaskActivationBreakdown().size());
 		List<Long> activationCount = new ArrayList<>(statistics.getTaskActivationBreakdown().size());
-		for (Entry<TaskActivation, Long> entry : statistics.getTaskActivationBreakdown().entrySet()) {
+		for (Entry<ActionInvoker, Long> entry : statistics.getTaskActivationBreakdown().entrySet()) {
 			activations.add(entry.getKey().getRepresentativeString());
 			activationCount.add(entry.getValue());
 		}

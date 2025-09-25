@@ -28,7 +28,7 @@ import core.controller.CoreProvider;
 import core.ipc.IPCServiceManager;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.ipc.repeatServer.processors.TaskProcessorManager;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.Language;
 import core.languageHandler.compiler.*;
@@ -55,8 +55,8 @@ import java.util.stream.Collectors;
 @SuppressWarnings("DanglingJavadoc")
 public class MainBackEndHolder {
     private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
-    private final List<TaskGroup> taskGroups;
     final GlobalEventsManager keysManager;
+    private final List<TaskGroup> taskGroups;
     private final Config config;
     private final UserDefinedAction switchRecord;
     private final UserDefinedAction switchReplay;
@@ -300,15 +300,15 @@ public class MainBackEndHolder {
     }
 
     public void reconfigureSwitchRecord() {
-        keysManager.reRegisterTask(switchRecord, TaskActivation.newBuilder().withHotKey(config.getRECORD()).build());
+        keysManager.reRegisterTask(switchRecord, ActionInvoker.newBuilder().withHotKey(config.getRECORD()).build());
     }
 
     public void reconfigureSwitchReplay() {
-        keysManager.reRegisterTask(switchReplay, TaskActivation.newBuilder().withHotKey(config.getREPLAY()).build());
+        keysManager.reRegisterTask(switchReplay, ActionInvoker.newBuilder().withHotKey(config.getREPLAY()).build());
     }
 
     public void reconfigureSwitchCompiledReplay() {
-        keysManager.reRegisterTask(switchReplayCompiled, TaskActivation.newBuilder().withHotKey(config.getCOMPILED_REPLAY()).build());
+        keysManager.reRegisterTask(switchReplayCompiled, ActionInvoker.newBuilder().withHotKey(config.getCOMPILED_REPLAY()).build());
     }
 
     /*************************************************************************************************************/
@@ -621,12 +621,7 @@ public class MainBackEndHolder {
     }
 
 
-    /**
-     * Edit source code using the default program to open the source code file (with appropriate extension
-     * depending on the currently selected language).
-     * <p>
-     * This does not update the source code in the text area in the main GUI.
-     */
+
 
     /**
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
@@ -833,7 +828,7 @@ public class MainBackEndHolder {
         cleanUnusedSource();
     }
 
-    public boolean changeHotkeyTask(UserDefinedAction action, TaskActivation newActivation) {
+    public boolean changeHotkeyTask(UserDefinedAction action, ActionInvoker newActivation) {
         if (newActivation == null) throw new IllegalArgumentException("Can't add null activation!");
 
         Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
@@ -1036,20 +1031,11 @@ public class MainBackEndHolder {
         if (createdInstance == null) {
             return false;
         }
-
         if (config.getCompilerFactory().getRemoteRepeatsCompilerConfig().hasOnlyLocal()) {
             customFunction = createdInstance;
             return true;
         }
-
-        RemoteRepeatsCompiler remoteRepeatsCompiler = config.getCompilerFactory().getRemoteRepeatsCompiler(peerServiceClientManager);
-        RemoteRepeatsDyanmicCompilationResult remoteCompilationResult = remoteRepeatsCompiler.compile(source, getSelectedLanguage());
-        if (remoteCompilationResult.output() != DynamicCompilerOutput.COMPILATION_SUCCESS) {
-            return false;
-        }
-
-        customFunction = CompositeUserDefinedAction.of(createdInstance, config.getCompilerFactory().getRemoteRepeatsCompilerConfig(), remoteCompilationResult.clientIdToActionId(), remoteCompilationResult.action());
-        return true;
+        return false;
     }
 
     public UserDefinedAction compileSourceNatively(AbstractNativeCompiler compiler, String source, String taskName) {
@@ -1129,10 +1115,10 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /***************************************User Interface********************************************************/
-    void launchUI(){
+    void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
         LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
-        if (System.getenv("XDG_SESSION_TYPE").equalsIgnoreCase("wayland")){
+        if (System.getenv("XDG_SESSION_TYPE").equalsIgnoreCase("wayland")) {
             LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
             try {
                 Runtime.getRuntime().exec(new String[]{"xeyes"});

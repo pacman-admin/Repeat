@@ -7,9 +7,9 @@ import java.util.Iterator;
 import java.util.Set;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.KeyChain;
-import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
 public class GlobalKeyActionManager extends KeyStrokeManager {
@@ -31,7 +31,7 @@ public class GlobalKeyActionManager extends KeyStrokeManager {
 	@Override
 	public Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
 		for (UserDefinedAction action : onKeyStrokePressedTasks) {
-			action.setInvoker(TaskActivation.newBuilder().withHotKey(new KeyChain(Arrays.asList(stroke))).build());
+			action.setInvoker(ActionInvoker.newBuilder().withHotKey(new KeyChain(Arrays.asList(stroke))).build());
 		}
 
 		return new HashSet<>(onKeyStrokePressedTasks);
@@ -40,7 +40,7 @@ public class GlobalKeyActionManager extends KeyStrokeManager {
 	@Override
 	public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
 		for (UserDefinedAction action : onKeyReleasedTasks) {
-			action.setInvoker(TaskActivation.newBuilder().withHotKey(new KeyChain(Arrays.asList(stroke))).build());
+			action.setInvoker(ActionInvoker.newBuilder().withHotKey(new KeyChain(Arrays.asList(stroke))).build());
 		}
 
 		return new HashSet<>(onKeyReleasedTasks);
@@ -52,7 +52,7 @@ public class GlobalKeyActionManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
+	public Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
 		return new HashSet<>();
 	}
 

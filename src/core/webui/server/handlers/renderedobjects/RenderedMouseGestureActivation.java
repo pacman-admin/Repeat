@@ -1,7 +1,7 @@
 package core.webui.server.handlers.renderedobjects;
 
+import core.keyChain.ActionInvoker;
 import core.keyChain.MouseGesture;
-import core.keyChain.TaskActivation;
 
 import java.util.Set;
 
@@ -22,7 +22,7 @@ public class RenderedMouseGestureActivation {
     private boolean triangle;
     private boolean z;
 
-    public static RenderedMouseGestureActivation fromActivation(TaskActivation activation) {
+    public static RenderedMouseGestureActivation fromActivation(ActionInvoker activation) {
         Set<MouseGesture> gestures = activation.getMouseGestures();
         RenderedMouseGestureActivation output = new RenderedMouseGestureActivation();
         output.alpha = gestures.contains(MouseGesture.ALPHA);

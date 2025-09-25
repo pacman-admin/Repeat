@@ -35,6 +35,11 @@ public class ActionExecutor {
         }
     }
 
+
+    private String startExecutingAction(UserDefinedAction action) {
+        return startExecutingAction(ActionExecutionRequest.of(), action);
+    }
+
     /**
      * Start executing an action in a separate thread
      *
@@ -50,13 +55,7 @@ public class ActionExecutor {
         if (action == null) {
             throw new IllegalArgumentException("Nothing to run!");
         }
-        if (request.getActivation() == null) {
-            return null;
-        }
-        action.setInvoker(request.getActivation());
-
         final String id = RandomUtil.randomID();
-
         Thread execution = new Thread(() -> {
             try {
                 for (int i = 0; i < request.getRepeatCount(); i++) {

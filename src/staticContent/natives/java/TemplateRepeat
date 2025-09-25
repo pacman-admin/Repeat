@@ -10,7 +10,7 @@ import core.keyChain.KeyChain;
 import core.keyChain.KeySequence;
 import core.keyChain.ButtonStroke;
 import core.keyChain.MouseGesture;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.userDefinedTask.TaskInvoker;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 import java.util.List;

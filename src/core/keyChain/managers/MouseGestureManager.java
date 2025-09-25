@@ -19,9 +19,9 @@
 package core.keyChain.managers;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.MouseGesture;
-import core.keyChain.TaskActivation;
 import core.keyChain.mouseGestureRecognition.MouseGestureClassifier;
 import core.userDefinedTask.UserDefinedAction;
 import globalListener.GlobalListenerFactory;
@@ -107,8 +107,8 @@ public class MouseGestureManager extends KeyStrokeManager {
      * @return set of any collision occurs
      */
     @Override
-    public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
-        Set<MouseGesture> gestures = activations.stream().map(TaskActivation::getMouseGestures).flatMap(Set::stream).collect(Collectors.toSet());
+    public Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
+        Set<MouseGesture> gestures = activations.stream().map(ActionInvoker::getMouseGestures).flatMap(Set::stream).collect(Collectors.toSet());
 
         Set<MouseGesture> collisions = new HashSet<>(actionMap.keySet());
         collisions.retainAll(gestures);
@@ -187,7 +187,7 @@ public class MouseGestureManager extends KeyStrokeManager {
                 return Collections.emptySet();
             }
 
-            task.setInvoker(TaskActivation.newBuilder().withMouseGesture(gesture).build());
+            task.setInvoker(ActionInvoker.newBuilder().withMouseGesture(gesture).build());
             return new HashSet<>(List.of(task));
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Unable to classify recorded data", e);

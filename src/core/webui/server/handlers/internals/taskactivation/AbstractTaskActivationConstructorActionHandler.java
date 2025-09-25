@@ -34,21 +34,17 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             if (params == null) {
                 throw new IllegalArgumentException("Failed to get POST parameters.");
             }
-
             String id = params.get("id");
             if (id == null) {
                 throw new IllegalArgumentException("Failed to get task activation constructor ID.");
             }
-
             TaskActivationConstructor constructor = taskActivationConstructorManager.get(id);
             if (constructor == null) {
                 throw new NullPointerException("No constructor found for ID '" + id + "'.");
             }
-
             return handleRequestWithBackendAndConstructor(exchange, constructor, params);
         }, exchange);
     }
-
     final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) throws IOException {
         return LOGGER.exec(() -> {
             Map<String, Object> data = new HashMap<>();
@@ -56,6 +52,5 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             return renderedPage(exchange, template, data);
         }, exchange);
     }
-
     abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
 }

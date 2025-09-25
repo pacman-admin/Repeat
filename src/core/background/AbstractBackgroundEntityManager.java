@@ -64,11 +64,9 @@ public abstract class AbstractBackgroundEntityManager<T> {
     private synchronized void cleanup() {
         long now = System.currentTimeMillis();
         List<String> toRemove = new ArrayList<>();
-
         for (Entry<String, Long> entry : lastUsed.entrySet()) {
             String id = entry.getKey();
             Long lastUsed = entry.getValue();
-
             if (lastUsed - now > MAX_TIME_UNUSED_MS) {
                 toRemove.add(id);
             }
@@ -76,7 +74,6 @@ public abstract class AbstractBackgroundEntityManager<T> {
 
         toRemove.stream().forEach(this::remove);
     }
-
 
     public final T get(String id) {
         T output = entities.get(id);

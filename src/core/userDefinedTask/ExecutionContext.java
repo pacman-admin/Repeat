@@ -1,13 +1,13 @@
 package core.userDefinedTask;
 
 import core.controller.Core;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 
 public class ExecutionContext {
 	private Core controller;
-	private TaskActivation activation;
+	private ActionInvoker activation;
 
-	public TaskActivation getActivation() {
+	public ActionInvoker getActivation() {
 		return activation;
 	}
 
@@ -17,7 +17,7 @@ public class ExecutionContext {
 
 	public static class Builder {
 		private Core controller;
-		private TaskActivation activation;
+		private ActionInvoker activation;
 
 		public static Builder of() {
 			return new Builder();
@@ -28,7 +28,7 @@ public class ExecutionContext {
 			return this;
 		}
 
-		public Builder setActivation(TaskActivation activation) {
+		public Builder setActivation(ActionInvoker activation) {
 			this.activation = activation;
 			return this;
 		}

@@ -22,7 +22,7 @@ import core.config.Config;
 import core.keyChain.ActivationEvent;
 import core.keyChain.KeyStroke;
 import core.keyChain.MouseKey;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.SharedVariablesPubSubManager;
@@ -178,7 +178,7 @@ public final class GlobalEventsManager {
      * @param newActivation new activation to be associated with the action.
      * @return set of actions that collide with this action.
      */
-    public Set<UserDefinedAction> reRegisterTask(UserDefinedAction action, TaskActivation newActivation) {
+    public Set<UserDefinedAction> reRegisterTask(UserDefinedAction action, ActionInvoker newActivation) {
         unregisterTask(action);
         action.setActivation(newActivation);
         return registerTask(action);
@@ -211,7 +211,7 @@ public final class GlobalEventsManager {
      * @param activation
      * @return return set of actions that collide with this activation.
      */
-    public Set<UserDefinedAction> isActivationRegistered(TaskActivation activation) {
+    public Set<UserDefinedAction> isActivationRegistered(ActionInvoker activation) {
         return taskActivationManager.collision(activation);
     }
 }

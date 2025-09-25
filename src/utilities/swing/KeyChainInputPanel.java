@@ -26,7 +26,7 @@ public class KeyChainInputPanel extends JPanel {
     private JTextField tfPhrase;
     private List<ButtonStroke> keyStrokes;
 
-    private KeyChainInputPanel(TaskActivation prepopulated, final int limit, Mode mode) {
+    private KeyChainInputPanel(ActionInvoker prepopulated, final int limit, Mode mode) {
         keyStrokes = new ArrayList<>();
 
         final JLabel instruction = new JLabel("Start pressing key chain.");
@@ -267,13 +267,13 @@ public class KeyChainInputPanel extends JPanel {
     }
 
     public static void main(String[] args) {
-        TaskActivation.Builder ac = TaskActivation.newBuilder();
+        ActionInvoker.Builder ac = ActionInvoker.newBuilder();
         HashSet<MouseGesture> gs = new HashSet<MouseGesture>();
         gs.add(MouseGesture.ALPHA);
         gs.add(MouseGesture.HORIZONTAL);
         ac.withMouseGestures(gs);
 
-        TaskActivation x = getInputKeyChains(null, 1, ac.build());
+        ActionInvoker x = getInputKeyChains(null, 1, ac.build());
         if (x != null) {
             for (MouseGesture g : x.getMouseGestures()) {
                 System.out.println(g);
@@ -288,7 +288,7 @@ public class KeyChainInputPanel extends JPanel {
     }
 
     private static KeyChain getInputKeyChain(JFrame parent, Set<KeyChain> prepopulated) {
-        TaskActivation task = getInputKeyChains(parent, 1, TaskActivation.newBuilder().withHotKeys(prepopulated).build(), Mode.KEYCHAIN_ONLY);
+        ActionInvoker task = getInputKeyChains(parent, 1, ActionInvoker.newBuilder().withHotKeys(prepopulated).build(), Mode.KEYCHAIN_ONLY);
         if (task == null) {
             return null;
         }
@@ -300,7 +300,7 @@ public class KeyChainInputPanel extends JPanel {
         return null;
     }
 
-    public static TaskActivation getInputActivation(JFrame parent, TaskActivation prepopulated) {
+    public static ActionInvoker getInputActivation(JFrame parent, ActionInvoker prepopulated) {
         inUse.lock();
         try {
             return getInputKeyChains(parent, MAX_KEY_CHAIN, prepopulated);
@@ -309,7 +309,7 @@ public class KeyChainInputPanel extends JPanel {
         }
     }
 
-    private static TaskActivation getInputKeyChains(JFrame parent, int limit, TaskActivation prepopulated) {
+    private static ActionInvoker getInputKeyChains(JFrame parent, int limit, ActionInvoker prepopulated) {
         return getInputKeyChains(parent, limit, prepopulated, Mode.ALL_ACTIVATION);
     }
 
@@ -319,9 +319,9 @@ public class KeyChainInputPanel extends JPanel {
      * @param parent       parent frame, or null if there is none.
      * @param limit        maximum number of activation entities allowed.
      * @param prepopulated populate the panel with a set of activation (e.g. existing activation).
-     * @return a new {@link TaskActivation} object representing the user selection.
+     * @return a new {@link ActionInvoker} object representing the user selection.
      */
-    private static TaskActivation getInputKeyChains(JFrame parent, int limit, TaskActivation prepopulated, Mode mode) {
+    private static ActionInvoker getInputKeyChains(JFrame parent, int limit, ActionInvoker prepopulated, Mode mode) {
         KeyChainInputPanel input = new KeyChainInputPanel(prepopulated, limit, mode);
         final JOptionPane optionPane = new JOptionPane(input, JOptionPane.INFORMATION_MESSAGE, JOptionPane.OK_CANCEL_OPTION);
 
@@ -381,7 +381,7 @@ public class KeyChainInputPanel extends JPanel {
                 if (!input.tfPhrase.getText().isEmpty()) {
                     phrases.add(ActivationPhrase.of(input.tfPhrase.getText()));
                 }
-                return TaskActivation.newBuilder().withHotKeys(keyChains).withKeySequence(keySequences).withPhrases(phrases).withMouseGestures(gestures).build();
+                return ActionInvoker.newBuilder().withHotKeys(keyChains).withKeySequence(keySequences).withPhrases(phrases).withMouseGestures(gestures).build();
             }
 
             return null;

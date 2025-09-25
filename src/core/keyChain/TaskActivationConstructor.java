@@ -22,11 +22,11 @@ public class TaskActivationConstructor {
 
     private Config config;
 
-    public TaskActivationConstructor(TaskActivation reference) {
+    public TaskActivationConstructor(ActionInvoker reference) {
         this(reference, Config.of());
     }
 
-    public TaskActivationConstructor(TaskActivation reference, Config config) {
+    public TaskActivationConstructor(ActionInvoker reference, Config config) {
         strokes = new LinkedList<>();
         keyChains = new ArrayList<>(reference.getHotkeys());
         keySequences = new ArrayList<>(reference.getKeySequences());
@@ -46,8 +46,8 @@ public class TaskActivationConstructor {
         strokes.clear();
     }
 
-    public TaskActivation getActivation() {
-        return TaskActivation.newBuilder().withHotKeys(keyChains).withKeySequence(keySequences).withPhrases(phrases).withMouseGestures(mouseGestures).withVariables(variables).withGlobalActivation(globalActivation).build();
+    public ActionInvoker getActivation() {
+        return ActionInvoker.newBuilder().withHotKeys(keyChains).withKeySequence(keySequences).withPhrases(phrases).withMouseGestures(mouseGestures).withVariables(variables).withGlobalActivation(globalActivation).build();
     }
 
     public List<KeyChain> getKeyChains() {

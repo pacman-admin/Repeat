@@ -8,8 +8,8 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationEvent;
-import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
 public class AggregateActivationEventManager extends ActivationEventManager {
@@ -37,7 +37,7 @@ public class AggregateActivationEventManager extends ActivationEventManager {
 	}
 
 	@Override
-	public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
+	public Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
 		return flatten(managers.stream().map(m -> m.collision(activations)));
 	}
 

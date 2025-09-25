@@ -5,8 +5,8 @@ import java.util.Collection;
 import java.util.Set;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationEvent;
-import core.keyChain.TaskActivation;
 import core.userDefinedTask.UserDefinedAction;
 
 abstract class ActivationEventManager {
@@ -26,8 +26,8 @@ abstract class ActivationEventManager {
 
 	public abstract void clear();
 
-	protected abstract Set<UserDefinedAction> collision(Collection<TaskActivation> activations);
-	public final Set<UserDefinedAction> collision(TaskActivation activation) {
+	protected abstract Set<UserDefinedAction> collision(Collection<ActionInvoker> activations);
+	public final Set<UserDefinedAction> collision(ActionInvoker activation) {
 		return collision(Arrays.asList(activation));
 	}
 

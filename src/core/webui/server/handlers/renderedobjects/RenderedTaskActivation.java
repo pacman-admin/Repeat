@@ -5,11 +5,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import core.keyChain.ActivationPhrase;
-import core.keyChain.KeyChain;
-import core.keyChain.KeySequence;
-import core.keyChain.TaskActivation;
-import core.keyChain.TaskActivationConstructor;
+import core.keyChain.*;
+import core.keyChain.ActionInvoker;
 
 public class RenderedTaskActivation {
     private List<SortedString> keyChains;
@@ -21,11 +18,11 @@ public class RenderedTaskActivation {
     private Config config;
 
     public static RenderedTaskActivation fromActivation(TaskActivationConstructor constructor) {
-        TaskActivation activation = constructor.getActivation();
+        ActionInvoker activation = constructor.getActivation();
 
         RenderedTaskActivation output = new RenderedTaskActivation();
         // Since the lists below are ordered strings, we can't
-        // use the Set interface provided by TaskActivation because set
+        // use the Set interface provided by ActionInvoker because set
         // iteration does not have any specific order.
         output.keyChains = sortedStrings(constructor.getKeyChains().stream().map(KeyChain::toString).collect(Collectors.toList()));
         output.keySequences = sortedStrings(constructor.getKeySequences().stream().map(KeySequence::toString).collect(Collectors.toList()));

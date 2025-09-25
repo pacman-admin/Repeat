@@ -13,7 +13,7 @@ import argo.jdom.JsonRootNode;
 import core.ipc.ApiProtocol;
 import core.ipc.repeatServer.ClientTask;
 import core.ipc.repeatServer.MainMessageSender;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import frontEnd.MainBackEndHolder;
 
 /**
@@ -124,7 +124,7 @@ public class TaskProcessor extends AbstractMessageProcessor {
 		return "";
 	}
 
-	public boolean runTask(String id, TaskActivation invoker) {
+	public boolean runTask(String id, ActionInvoker invoker) {
 		JsonRootNode requestMessage = JsonNodeFactories.object(
 				JsonNodeFactories.field("task_action", JsonNodeFactories.string(RUN_TASK_ACTION)),
 				JsonNodeFactories.field("parameters",

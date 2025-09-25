@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import utilities.DateUtility;
 import utilities.json.AutoJsonable;
 import utilities.json.IJsonable;
@@ -30,7 +30,7 @@ public class UsageStatistics implements IJsonable {
 	private Calendar lastUse;
 	private Calendar created;
 	private long totalExecutionTime;
-	private Map<TaskActivation, Long> taskActivationBreakdown;
+	private Map<ActionInvoker, Long> taskActivationBreakdown;
 
 	private Map<String, ExecutionInstance> onGoingInstances;
 	private LinkedList<ExecutionInstance> executionInstances;
@@ -78,12 +78,12 @@ public class UsageStatistics implements IJsonable {
 				return null;
 			}
 
-			Map<TaskActivation, Long> taskActivationBreakdown = new HashMap<>();
+			Map<ActionInvoker, Long> taskActivationBreakdown = new HashMap<>();
 			if (node.isArrayNode("task_activations_breakdown")) {
 				List<JsonNode> nodes = node.getArrayNode("task_activations_breakdown");
 				for (JsonNode n : nodes) {
 					JsonNode activationNode = n.getNode("task_activation");
-					TaskActivation activation = TaskActivation.parseJSON(activationNode);
+					ActionInvoker activation = ActionInvoker.parseJSON(activationNode);
 					if (activation == null) {
 						LOGGER.warning("Unable to parse task activation.");
 						return null;
@@ -139,7 +139,7 @@ public class UsageStatistics implements IJsonable {
 		return totalExecutionTime;
 	}
 
-	public Map<TaskActivation, Long> getTaskActivationBreakdown() {
+	public Map<ActionInvoker, Long> getTaskActivationBreakdown() {
 		return Collections.unmodifiableMap(taskActivationBreakdown);
 	}
 

@@ -2,7 +2,7 @@ package core.webui.server.handlers.internals.tasks;
 
 import argo.jdom.JsonNode;
 import core.keyChain.KeyChain;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.UserDefinedAction;
@@ -73,7 +73,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareHttpResponse(exchange, 404, "Cannot get task from request.");
         }
 
-        TaskActivation activation = constructor.getActivation();
+        ActionInvoker activation = constructor.getActivation();
         if (!backEndHolder.changeHotkeyTask(task, activation)) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot change task activation.");
         }
@@ -120,7 +120,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         return true;
     }
 
-    private Void handleSaveHotkey(HttpAsyncExchange exchange, TaskActivation activation, String taskString) throws IOException {
+    private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) throws IOException {
         Set<KeyChain> hotKeys = activation.getHotkeys();
         if (hotKeys.isEmpty()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set!");

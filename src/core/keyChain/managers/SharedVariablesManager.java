@@ -11,7 +11,7 @@ import core.config.Config;
 import core.keyChain.ActivationEvent;
 import core.keyChain.ActivationEvent.EventType;
 import core.keyChain.SharedVariablesActivation;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.SharedVariablesEvent;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
@@ -46,7 +46,7 @@ public class SharedVariablesManager extends ActivationEventManager {
 		for (UserDefinedAction action : registeredActions) {
 			for (SharedVariablesActivation variableActivation : action.getActivation().getVariables()) {
 				if (variableActivation.getVariable().includes(variable)) {
-					action.setInvoker(TaskActivation.newBuilder().withVariable(SharedVariablesActivation.of(SharedVariablesSubscription.forVar(variable.getNamespace(),  variable.getName()))).build());
+					action.setInvoker(ActionInvoker.newBuilder().withVariable(SharedVariablesActivation.of(SharedVariablesSubscription.forVar(variable.getNamespace(),  variable.getName()))).build());
 					output.add(action);
 				}
 			}
@@ -55,7 +55,7 @@ public class SharedVariablesManager extends ActivationEventManager {
 	}
 
 	@Override
-	public Set<UserDefinedAction> collision(Collection<TaskActivation> activations) {
+	public Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
 		return new HashSet<>();
 	}
 

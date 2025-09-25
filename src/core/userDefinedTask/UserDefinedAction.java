@@ -5,9 +5,7 @@ import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import core.config.ConfigParsingMode;
 import core.controller.Core;
-import core.keyChain.KeyChain;
-import core.keyChain.MouseGesture;
-import core.keyChain.TaskActivation;
+import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
 import core.languageHandler.compiler.AbstractNativeCompiler;
 import core.languageHandler.compiler.DynamicCompilerManager;
@@ -28,19 +26,18 @@ import java.util.logging.Logger;
 public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
     private static final Logger LOGGER = Logger.getLogger(UserDefinedAction.class.getName());
-
-    String actionId;
-    String name;
     protected String sourcePath;
     protected Language compiler;
+    protected ActionInvoker invoker;
+    String actionId;
+    String name;
     private boolean enabled;
-    protected TaskActivation invoker;
-    private KeyChain invokingKeyChain;
-    private MouseGesture invokingMouseGesture;
+    //private KeyChain invokingKeyChain;
+    //private MouseGesture invokingMouseGesture;
     private UsageStatistics statistics;
     private TaskSourceHistory sourceHistory;
     private TaskExecutionPreconditions executionPreconditions;
-    private TaskActivation activation;
+    private ActionInvoker activation;
 
     public UserDefinedAction() {
         this(UUID.randomUUID().toString());
@@ -49,9 +46,8 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     protected UserDefinedAction(String actionId) {
         this.actionId = actionId;
         executionPreconditions = TaskExecutionPreconditions.defaultConditions();
-        activation = TaskActivation.newBuilder().build();
-        invoker = TaskActivation.newBuilder().build();
-        invokingKeyChain = new KeyChain();
+        activation = ActionInvoker.newBuilder().build();
+        invoker = ActionInvoker.newBuilder().build();
         statistics = new UsageStatistics();
         sourceHistory = new TaskSourceHistory();
         enabled = true;
@@ -92,7 +88,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
             LOGGER.info("Action Name: " + name + ", Action ID: " + actionId + ", Source Path: " + sourcePath);
 
             JsonNode activationJSONs = node.getNode("activation");
-            TaskActivation activation = TaskActivation.parseJSON(activationJSONs);
+            ActionInvoker activation = ActionInvoker.parseJSON(activationJSONs);
 
             File sourceFile = new File(sourcePath);
             StringBuffer sourceBuffer = FileUtility.readFromFile(sourceFile);
@@ -192,11 +188,11 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     /**
      * @return the activation entity associated with this action.
      */
-    public final TaskActivation getActivation() {
+    public final ActionInvoker getActivation() {
         return activation;
     }
 
-    public final void setActivation(TaskActivation activation) {
+    public final void setActivation(ActionInvoker activation) {
         this.activation = activation;
     }
 
@@ -273,9 +269,8 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
      * This method is called to dynamically allow the current task to determine which activation triggered it.
      * This activation would contain only the activation element that triggered the event.
      */
-    public void setInvoker(TaskActivation invoker) {
-               setInvokingKeyChain(invoker.getFirstHotkey());
-        setInvokingMouseGesture(invoker.getFirstMouseGesture());
+    public void setInvoker(ActionInvoker invoker) {
+        this.invoker = invoker;
     }
 
     /**
@@ -285,35 +280,8 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
      * This will also set {@link #invokingMouseGesture} to null.
      *
      * @param invokingKeyChain
-     * @deprecated use {@link #setInvoker(TaskActivation)} instead.
+     * @deprecated use {@link #setInvoker(ActionInvoker)} instead.
      */
-    @Deprecated
-    private void setInvokingKeyChain(KeyChain invokingKeyChain) {
-        if (invokingKeyChain == null) {
-            return;
-        }
-
-        this.invokingKeyChain.clearKeys();
-        this.invokingKeyChain.addFrom(invokingKeyChain);
-    }
-
-    /**
-     * This method is called to dynamically allow the current task to determine which KeyChain activated it among
-     * its mouse gestures.
-     * <p>
-     * This will also clear {@link #invokingKeyChain}.
-     *
-     * @param invokingMouseGesture
-     * @deprecated use {@link #setInvoker(TaskActivation)} instead.
-     */
-    @Deprecated
-    private void setInvokingMouseGesture(MouseGesture invokingMouseGesture) {
-        if (invokingMouseGesture == null) {
-            return;
-        }
-
-        this.invokingMouseGesture = invokingMouseGesture;
-    }
 
     /***********************************************************************/
     public UserDefinedAction recompileNative(AbstractNativeCompiler compiler) {
