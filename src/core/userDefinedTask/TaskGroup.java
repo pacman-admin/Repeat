@@ -132,7 +132,7 @@ public class TaskGroup implements IJsonable {
                         keyManager.registerTask(task);
                     } else { // Revert everything and exit
                         unregisterAll(keyManager);
-                        GlobalEventsManager.showCollisionWarning(null, collisions);
+                        GlobalEventsManager.showCollisionWarning(collisions);
                         return;
                     }
                 }

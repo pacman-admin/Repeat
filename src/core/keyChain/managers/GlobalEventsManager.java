@@ -19,7 +19,6 @@
 package core.keyChain.managers;
 
 import core.config.Config;
-import core.controller.CoreProvider;
 import core.keyChain.ActivationEvent;
 import core.keyChain.KeyStroke;
 import core.keyChain.MouseKey;
@@ -38,7 +37,6 @@ import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 import org.simplenativehooks.utilities.Function;
 import utilities.StringUtilities;
 
-import javax.swing.*;
 import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -52,7 +50,7 @@ public final class GlobalEventsManager {
     private final ExecutionPreconditionsChecker executionPreconditionsChecker;
     private final ActivationEventManager taskActivationManager;
 
-    public GlobalEventsManager(Config config, CoreProvider coreProvider, ActionExecutor actionExecutor) {
+    public GlobalEventsManager(Config config, ActionExecutor actionExecutor) {
         this.config = config;
         this.actionExecutor = actionExecutor;
 
@@ -63,10 +61,9 @@ public final class GlobalEventsManager {
     /**
      * Show a short notice that collision occurred.
      *
-     * @param parent     parent frame to show the notice in (null if there is none)
      * @param collisions set of colliding tasks.
      */
-    public static void showCollisionWarning(JFrame parent, Set<UserDefinedAction> collisions) {
+    public static void showCollisionWarning(Set<UserDefinedAction> collisions) {
         String taskNames = StringUtilities.join(new Function<UserDefinedAction, String>() {
             @Override
             public String apply(UserDefinedAction d) {
@@ -83,7 +80,7 @@ public final class GlobalEventsManager {
             @Override
             public Boolean apply(NativeKeyEvent r) {
                 KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key pressed " + stroke.toString());
+                LOGGER.fine("Key pressed " + stroke);
 
                 if (!shouldDelegate(stroke)) {
                     return true;

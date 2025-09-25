@@ -104,7 +104,7 @@ public class MainBackEndHolder {
         coreProvider = new CoreProvider(config, peerServiceClientManager);
         taskInvoker = new TaskInvoker(coreProvider, taskGroups);
         actionExecutor = new ActionExecutor(coreProvider);
-        keysManager = new GlobalEventsManager(config, coreProvider, actionExecutor);
+        keysManager = new GlobalEventsManager(config, actionExecutor);
         activeWindowInfosLogger = new ActiveWindowInfosLogger(coreProvider);
         mousePositionLogger = new MousePositionLogger(coreProvider);
         replayConfig = ReplayConfig.of();
@@ -839,7 +839,7 @@ public class MainBackEndHolder {
         Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
         collisions.remove(action);
         if (!collisions.isEmpty()) {
-            GlobalEventsManager.showCollisionWarning(null, collisions);
+            GlobalEventsManager.showCollisionWarning(collisions);
             return false;
         }
 
@@ -856,7 +856,7 @@ public class MainBackEndHolder {
         } else { // Then enable it
             Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
             if (!collisions.isEmpty()) {
-                GlobalEventsManager.showCollisionWarning(null, collisions);
+                GlobalEventsManager.showCollisionWarning(collisions);
                 return;
             }
 

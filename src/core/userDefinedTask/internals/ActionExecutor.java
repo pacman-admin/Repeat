@@ -7,7 +7,6 @@ import utilities.RandomUtil;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -16,12 +15,13 @@ public class ActionExecutor {
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
     private static final int MAX_SIMULTANEOUS_EXECUTIONS = 1;
 
-    private Map<String, Thread> executions;
-    private CoreProvider coreProvider;
+    private final HashMap<String, Thread> executions;
+    private final CoreProvider coreProvider;
+    //private static final ExecutorService actionHandler = newSingleThreadExecutor();
 
     public ActionExecutor(CoreProvider coreProvider) {
         this.coreProvider = coreProvider;
-        this.executions = new HashMap<>();
+        this.executions = new HashMap<>(1);
     }
 
     /**
@@ -33,11 +33,6 @@ public class ActionExecutor {
         for (UserDefinedAction action : actions) {
             startExecutingAction(action);
         }
-    }
-
-
-    private String startExecutingAction(UserDefinedAction action) {
-        return startExecutingAction(ActionExecutionRequest.of(), action);
     }
 
     /**
@@ -55,12 +50,13 @@ public class ActionExecutor {
         if (action == null) {
             throw new IllegalArgumentException("Nothing to run!");
         }
-        if(request.getActivation() == null){
+        if (request.getActivation() == null) {
             return null;
         }
         action.setInvoker(request.getActivation());
 
         final String id = RandomUtil.randomID();
+
         Thread execution = new Thread(() -> {
             try {
                 for (int i = 0; i < request.getRepeatCount(); i++) {
@@ -85,7 +81,6 @@ public class ActionExecutor {
      */
     public void haltAllTasks() {
         LinkedList<Thread> endingThreads = new LinkedList<>(executions.values());
-
         for (Thread thread : endingThreads) {
             LOGGER.info("Halting execution thread " + thread.getName());
             while (thread.isAlive() && thread != Thread.currentThread()) {
