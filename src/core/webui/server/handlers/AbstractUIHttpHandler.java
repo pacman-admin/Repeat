@@ -2,7 +2,6 @@ package core.webui.server.handlers;
 
 import core.ipc.IIPCService;
 import core.ipc.IPCServiceManager;
-import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClient;
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
 import core.webui.server.handlers.renderedobjects.*;
@@ -31,6 +30,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         List<RenderedIPCService> services = new ArrayList<>(IPCServiceManager.IPC_SERVICE_COUNT);
         for (int i = 0; i < IPCServiceManager.IPC_SERVICE_COUNT; i++) {
             IIPCService service = IPCServiceManager.getIPCService(i);
+            assert service != null;
             services.add(RenderedIPCService.fromIPCService(service));
         }
         data.put("ipcs", services);
@@ -70,6 +70,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         data.put("groups", backEndHolder.getTaskGroups().stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == backEndHolder.getCurrentTaskGroup())).collect(Collectors.toList()));
         return renderedPage(exchange, "fragments/task_groups", data);
     }
+
     protected final Void renderedCompilingLanguages(HttpAsyncExchange exchange) throws IOException {
         Language selected = backEndHolder.getSelectedLanguage();
         Map<String, Object> data = new HashMap<>();
@@ -80,6 +81,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         data.put("compilingLanguages", languages);
         return renderedPage(exchange, "fragments/compiling_languages", data);
     }
+
     protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) throws IOException {
         String page = objectRenderer.render(template, data);
         if (page == null) {

@@ -24,7 +24,6 @@ import core.controller.internals.AbstractKeyboardCoreImplementation;
 import core.controller.internals.AbstractMouseCoreImplementation;
 import core.controller.internals.AggregateKeyboardCore;
 import core.controller.internals.AggregateMouseCore;
-import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClient;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 
 import java.util.ArrayList;
@@ -35,11 +34,9 @@ import java.util.Set;
 public class CoreProvider {
 
     private final Config config;
-    private final RepeatsPeerServiceClientManager manager;
 
     public CoreProvider(Config config, RepeatsPeerServiceClientManager manager) {
         this.config = config;
-        this.manager = manager;
     }
 
     public Core getLocal() {

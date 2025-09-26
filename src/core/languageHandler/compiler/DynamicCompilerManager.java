@@ -21,7 +21,6 @@ package core.languageHandler.compiler;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.languageHandler.Language;
 import utilities.FileUtility;
 import utilities.json.IJsonable;
@@ -36,7 +35,7 @@ import java.util.logging.Logger;
 public class DynamicCompilerManager implements IJsonable {
     private static final Logger LOGGER = Logger.getLogger(DynamicCompilerManager.class.getName());
     private final Map<Language, AbstractNativeCompiler> compilers;
-    private RemoteRepeatsCompilerConfig remoteRepeatsCompilerConfig;
+    private final RemoteRepeatsCompilerConfig remoteRepeatsCompilerConfig;
 
     public DynamicCompilerManager() {
         compilers = new HashMap<>();
