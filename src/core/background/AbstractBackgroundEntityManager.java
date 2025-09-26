@@ -24,12 +24,10 @@ import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
 public abstract class AbstractBackgroundEntityManager<T> {
-
-    private static final long MAX_TIME_UNUSED_MS = 3600 * 1000;
+    //Clean up after 1 hour
+    private static final long MAX_TIME_UNUSED_MS = 60L * 60L * 1000L;
     private static final long CLEAN_UP_PERIOD_SECOND = 1;
-
     protected Map<String, T> entities;
-
     private ScheduledThreadPoolExecutor executor;
     private Map<String, Long> lastUsed;
 
@@ -40,7 +38,6 @@ public abstract class AbstractBackgroundEntityManager<T> {
 
     protected final String add(T entity) {
         String id = UUID.randomUUID().toString();
-
         entities.put(id, entity);
         lastUsed.put(id, System.currentTimeMillis());
         return id;
@@ -71,7 +68,6 @@ public abstract class AbstractBackgroundEntityManager<T> {
                 toRemove.add(id);
             }
         }
-
         toRemove.stream().forEach(this::remove);
     }
 
