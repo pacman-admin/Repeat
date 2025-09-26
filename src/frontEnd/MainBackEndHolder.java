@@ -31,7 +31,9 @@ import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.Language;
-import core.languageHandler.compiler.*;
+import core.languageHandler.compiler.AbstractNativeCompiler;
+import core.languageHandler.compiler.DynamicCompilationResult;
+import core.languageHandler.compiler.DynamicCompilerOutput;
 import core.recorder.Recorder;
 import core.recorder.ReplayConfig;
 import core.userDefinedTask.*;
@@ -101,7 +103,7 @@ public class MainBackEndHolder {
         taskGroups = new ArrayList<>();
 
         peerServiceClientManager = new RepeatsPeerServiceClientManager();
-        coreProvider = new CoreProvider(config, peerServiceClientManager);
+        coreProvider = new CoreProvider(config);
         taskInvoker = new TaskInvoker(coreProvider, taskGroups);
         actionExecutor = new ActionExecutor(coreProvider);
         keysManager = new GlobalEventsManager(config, actionExecutor);
@@ -204,8 +206,8 @@ public class MainBackEndHolder {
     /*************************************************************************************************************/
 
     /************************************************Config*******************************************************/
-    void loadConfig(File file) {
-        config.loadConfig(file);
+    void loadConfig() {
+        config.loadConfig();
         setTaskInvoker();
 
         if (trayIcon != null) {
@@ -594,8 +596,6 @@ public class MainBackEndHolder {
             LOGGER.warning("Unable to register task " + action.getName() + ". Collisions are " + collisionNames);
         }
     }
-
-
 
 
     /**

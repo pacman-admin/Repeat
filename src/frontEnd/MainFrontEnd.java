@@ -25,7 +25,7 @@ public class MainFrontEnd {
 		/*************************************************************************************/
 		/********************************Load configs****************************/
         MainBackEndHolder backEnd = new MainBackEndHolder();
-		backEnd.loadConfig(null);
+		backEnd.loadConfig();
 		/*************************************************************************************/
 		/********************************Initializing global hooks****************************/
 		GlobalListenerHookController.Config hookConfig = GlobalListenerHookController.Config.Builder.of().useJavaAwtForMousePosition(backEnd.getConfig().isUseJavaAwtToGetMousePosition()).build();
