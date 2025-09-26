@@ -9,7 +9,6 @@ import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
 import core.languageHandler.compiler.AbstractNativeCompiler;
 import core.languageHandler.compiler.DynamicCompilerManager;
-import core.languageHandler.compiler.RemoteRepeatsCompiler;
 import core.userDefinedTask.internals.TaskSourceHistory;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import core.userDefinedTask.internals.preconditions.TaskExecutionPreconditions;
@@ -32,8 +31,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     String actionId;
     String name;
     private boolean enabled;
-    //private KeyChain invokingKeyChain;
-    //private MouseGesture invokingMouseGesture;
     private UsageStatistics statistics;
     private TaskSourceHistory sourceHistory;
     private TaskExecutionPreconditions executionPreconditions;
@@ -54,10 +51,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     public static UserDefinedAction parseJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
-        if (node.isNode("composite_action")) {
-            return CompositeUserDefinedAction.parseJSON(factory, node, parseMode);
-        }
-
         return parsePureJSON(factory, node, parseMode);
     }
 
@@ -285,10 +278,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
     /***********************************************************************/
     public UserDefinedAction recompileNative(AbstractNativeCompiler compiler) {
-        return this;
-    }
-
-    public UserDefinedAction recompileRemote(RemoteRepeatsCompiler compiler) {
         return this;
     }
 

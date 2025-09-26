@@ -232,8 +232,6 @@ public class MainBackEndHolder {
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "Exception when launching clients connecting to peer services.", e);
         }
-
-        recompileRemoteTasks();
     }
 
     private void stopBackEndActivities() {
@@ -576,29 +574,6 @@ public class MainBackEndHolder {
                 tasks.set(i, recompiled);
 
                 if (recompiled.isEnabled()) {
-                    reRegisterTask(task, recompiled);
-                }
-            }
-        }
-    }
-
-    private void recompileRemoteTasks() {
-        for (TaskGroup group : taskGroups) {
-            List<UserDefinedAction> tasks = group.getTasks();
-            for (int i = 0; i < tasks.size(); i++) {
-                UserDefinedAction task = tasks.get(i);
-                RemoteRepeatsCompiler compiler = config.getCompilerFactory().getRemoteRepeatsCompiler(peerServiceClientManager);
-                UserDefinedAction recompiled = task.recompileRemote(compiler);
-                if (recompiled == null) {
-                    continue;
-                }
-
-                tasks.set(i, recompiled);
-
-                if (!recompiled.isEnabled()) {
-                    continue;
-                }
-                if (group.isEnabled()) {
                     reRegisterTask(task, recompiled);
                 }
             }
@@ -1104,7 +1079,7 @@ public class MainBackEndHolder {
             if (c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)) {
                 return Tools.local();
             }
-            return new RemoteRepeatsClientTools(peerServiceClientManager, c);
+            return null;
         }).collect(Collectors.toList());
         DefaultTools.setExecutor(AggregateTools.of(tools));
     }

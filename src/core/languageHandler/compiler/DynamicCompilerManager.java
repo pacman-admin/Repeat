@@ -57,10 +57,6 @@ public class DynamicCompilerManager implements IJsonable {
         return compilers.containsKey(name);
     }
 
-    public RemoteRepeatsCompiler getRemoteRepeatsCompiler(RepeatsPeerServiceClientManager peerServiceClientManager) {
-        return new RemoteRepeatsCompiler(remoteRepeatsCompilerConfig, peerServiceClientManager);
-    }
-
     public RemoteRepeatsCompilerConfig getRemoteRepeatsCompilerConfig() {
         return remoteRepeatsCompilerConfig;
     }

@@ -56,39 +56,20 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         return renderedPage(exchange, "fragments/core_clients", getGlobalConfigRenderingData());
     }
 
-    protected final Void renderedRemoteRepeatsCompilerClientsConfig(HttpAsyncExchange exchange) throws IOException {
-        return renderedPage(exchange, "fragments/remote_repeats_compiler_clients", getGlobalConfigRenderingData());
-    }
-
-    protected final Void renderedRepeatsRemoteClients(HttpAsyncExchange exchange) throws IOException {
-        Map<String, Object> data = new HashMap<>();
-        List<RenderedRepeatsRemoteClient> services = new ArrayList<>();
-        for (RepeatsPeerServiceClient client : this.backEndHolder.getPeerServiceClientManager().getClients()) {
-            services.add(RenderedRepeatsRemoteClient.fromRepeatsPeerServiceClient(client));
-        }
-        data.put("clients", services);
-        data.put("tooltips", new TooltipsRepeatsRemoteClientPage());
-
-        return renderedPage(exchange, "fragments/repeats_clients", data);
-    }
-
     protected final Void renderedTaskForGroup(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         TaskGroup group = backEndHolder.getCurrentTaskGroup();
         List<RenderedUserDefinedAction> taskList = group.getTasks().stream().map(RenderedUserDefinedAction::fromUserDefinedAction).collect(Collectors.toList());
         data.put("tooltips", new TooltipsIndexPage());
         data.put("tasks", taskList);
-
         return renderedPage(exchange, "fragments/tasks", data);
     }
 
     protected final Void renderedTaskGroups(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("groups", backEndHolder.getTaskGroups().stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == backEndHolder.getCurrentTaskGroup())).collect(Collectors.toList()));
-
         return renderedPage(exchange, "fragments/task_groups", data);
     }
-
     protected final Void renderedCompilingLanguages(HttpAsyncExchange exchange) throws IOException {
         Language selected = backEndHolder.getSelectedLanguage();
         Map<String, Object> data = new HashMap<>();
@@ -99,13 +80,11 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         data.put("compilingLanguages", languages);
         return renderedPage(exchange, "fragments/compiling_languages", data);
     }
-
     protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) throws IOException {
         String page = objectRenderer.render(template, data);
         if (page == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
         }
-
         return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
     }
 }

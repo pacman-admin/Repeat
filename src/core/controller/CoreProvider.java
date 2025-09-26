@@ -20,7 +20,10 @@ package core.controller;
 
 import core.config.AbstractRemoteRepeatsClientsConfig;
 import core.config.Config;
-import core.controller.internals.*;
+import core.controller.internals.AbstractKeyboardCoreImplementation;
+import core.controller.internals.AbstractMouseCoreImplementation;
+import core.controller.internals.AggregateKeyboardCore;
+import core.controller.internals.AggregateMouseCore;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClient;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 
@@ -53,16 +56,7 @@ public class CoreProvider {
                 Core local = Core.local(config);
                 mice.add(local.mouse());
                 keyboards.add(local.keyBoard());
-                continue;
             }
-
-            RepeatsPeerServiceClient client = manager.getClient(id);
-            if (client == null) {
-                continue;
-            }
-
-            mice.add(new RemoteRepeatsMouseCore(client.api()));
-            keyboards.add(new RemoteRepeatsKeyboardCore(client.api()));
         }
 
         MouseCore mouse = new MouseCore(AggregateMouseCore.of(mice));

@@ -28,13 +28,11 @@ import core.webui.server.handlers.IndexPageHandler;
 import core.webui.server.handlers.internals.*;
 import core.webui.server.handlers.internals.globalconfigs.GlobalConfigsPageHandler;
 import core.webui.server.handlers.internals.globalconfigs.SetCoreConfigClientsHandler;
-import core.webui.server.handlers.internals.globalconfigs.SetRemoteRepeatsCompilerConfigClientsHandler;
 import core.webui.server.handlers.internals.globalconfigs.SetToolsConfigClientsHandler;
 import core.webui.server.handlers.internals.ipcs.*;
 import core.webui.server.handlers.internals.logs.*;
 import core.webui.server.handlers.internals.menu.*;
 import core.webui.server.handlers.internals.recordsreplays.*;
-import core.webui.server.handlers.internals.repeatsclient.*;
 import core.webui.server.handlers.internals.taskactivation.*;
 import core.webui.server.handlers.internals.taskcreation.*;
 import core.webui.server.handlers.internals.taskgroups.*;
@@ -99,7 +97,6 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/logs", new LogsPageHandler(objectRenderer));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
-        output.put("/repeats-remote-clients", new RepeatsRemoteClientPageHandler(objectRenderer));
         output.put("/global-configs", new GlobalConfigsPageHandler(objectRenderer));
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
         output.put("/tasks/details", new TaskDetailsPageHandler(objectRenderer, taskActivationConstructorManager));
@@ -109,7 +106,6 @@ public class UIServer extends IPCServiceWithModifablePort {
 
         output.put("/internals/global-configs/tools-config/set-clients", new SetToolsConfigClientsHandler(objectRenderer));
         output.put("/internals/global-configs/core-config/set-clients", new SetCoreConfigClientsHandler(objectRenderer));
-        output.put("/internals/global-configs/remote-repeats-compiler-config/set-clients", new SetRemoteRepeatsCompilerConfigClientsHandler(objectRenderer));
 
         output.put("/internals/menu/file/save-config", new MenuSaveConfigActionHandler());
         output.put("/internals/menu/file/import-tasks", new MenuImportTaskActionHandler());
@@ -190,12 +186,6 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/action/stop-ipc-service", new ActionStopIPCServiceHandler(objectRenderer));
         output.put("/internals/action/stop-running-compiled-task", new ActionStopRunningCompiledTaskHandler());
         output.put("/internals/action/switch-task-group", new ActionSwitchTaskGroupHandler(objectRenderer));
-
-        output.put("/internals/repeats-remote-clients/add", new AddRemoteClientHandler(objectRenderer));
-        output.put("/internals/repeats-remote-clients/delete", new DeleteRemoteClientHandler(objectRenderer));
-        output.put("/internals/repeats-remote-clients/start", new StartRemoteClientHandler(objectRenderer));
-        output.put("/internals/repeats-remote-clients/stop", new StopRemoteClientHandler(objectRenderer));
-        output.put("/internals/repeats-remote-clients/set-launch-at-startup", new SetLaunchAtStartupRemoteClientHandler(objectRenderer));
 
         output.put("/internals/get/editted-source", new GetEditedSourceHandler());
         output.put("/internals/get/is-running-compiled-task", new GetIsRunningCompiledTaskHandler());
@@ -309,9 +299,11 @@ public class UIServer extends IPCServiceWithModifablePort {
     public Logger getLogger() {
         return Logger.getLogger(UIServer.class.getName());
     }
-    public ManuallyBuildActionConstructorManager getManuallyBuildActionConstructorManager(){
+
+    public ManuallyBuildActionConstructorManager getManuallyBuildActionConstructorManager() {
         return manuallyBuildActionConstructorManager;
     }
+
     private boolean portFree() throws IOException {
         try {
             ServerSocket socket = new ServerSocket(port);
