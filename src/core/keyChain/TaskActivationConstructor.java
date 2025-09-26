@@ -188,10 +188,6 @@ public class TaskActivationConstructor {
             return config;
         }
 
-        int getMaxStrokes() {
-            return maxStrokes;
-        }
-
         public Config setMaxStrokes(int maxStrokes) {
             if (maxStrokes < 0) {
                 throw new IllegalArgumentException("Max strokes can't be negative!");
@@ -213,45 +209,20 @@ public class TaskActivationConstructor {
             return disableKeySequence;
         }
 
-        Config setDisableKeySequence(boolean disableKeySequence) {
-            this.disableKeySequence = disableKeySequence;
-            return this;
-        }
-
         public boolean isDisablePhrase() {
             return disablePhrase;
-        }
-
-        Config setDisablePhrase(boolean disablePhrase) {
-            this.disablePhrase = disablePhrase;
-            return this;
         }
 
         public boolean isDisableMouseGesture() {
             return disableMouseGesture;
         }
 
-        Config setDisableMouseGesture(boolean disableMouseGesture) {
-            this.disableMouseGesture = disableMouseGesture;
-            return this;
-        }
-
         public boolean isDisableVariablesActivation() {
             return disableVariablesActivation;
         }
 
-        Config setDisableVariablesActivation(boolean disableVariablesActivation) {
-            this.disableVariablesActivation = disableVariablesActivation;
-            return this;
-        }
-
         public boolean isDisabledGlobalKeyAction() {
             return disableGlobalKeyActions;
-        }
-
-        Config setDisabledGlobalKeyAction(boolean disableGlobalKeyActions) {
-            this.disableGlobalKeyActions = disableGlobalKeyActions;
-            return this;
         }
     }
 }
