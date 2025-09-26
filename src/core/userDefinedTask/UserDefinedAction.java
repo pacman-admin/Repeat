@@ -266,16 +266,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         this.invoker = invoker;
     }
 
-    /**
-     * This method is called to dynamically allow the current task to determine which KeyChain activated it among
-     * its hotkeys. This will only change the KeyChain definition of the current KeyChain, not substituting the real object.
-     * <p>
-     * This will also set {@link #invokingMouseGesture} to null.
-     *
-     * @param invokingKeyChain
-     * @deprecated use {@link #setInvoker(ActionInvoker)} instead.
-     */
-
     /***********************************************************************/
     public UserDefinedAction recompileNative(AbstractNativeCompiler compiler) {
         return this;

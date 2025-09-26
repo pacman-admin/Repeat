@@ -9,6 +9,7 @@ import core.userDefinedTask.internals.SharedVariablesPubSubManager;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 
+@SuppressWarnings("DanglingJavadoc")
 public class MainFrontEnd {
 
 	private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
