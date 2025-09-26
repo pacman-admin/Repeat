@@ -45,6 +45,7 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             return handleRequestWithBackendAndConstructor(exchange, constructor, params);
         }, exchange);
     }
+
     final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) throws IOException {
         return LOGGER.exec(() -> {
             Map<String, Object> data = new HashMap<>();
@@ -52,5 +53,6 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             return renderedPage(exchange, template, data);
         }, exchange);
     }
+
     abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
 }
