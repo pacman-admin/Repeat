@@ -18,9 +18,8 @@
  */
 package utilities;
 
-import utilities.SubprocessUttility.ExecutionException;
-
 import java.io.File;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 public class Desktop {
@@ -71,10 +70,10 @@ public class Desktop {
 
     private static boolean openWithCommand(String cmd, File file) {
         try {
-            SubprocessUttility.execute(cmd + " " + file.getAbsolutePath());
-        } catch (ExecutionException e) {
+            Runtime.getRuntime().exec(cmd + " " + file.getAbsolutePath());
+            return true;
+        } catch (IOException e) {
             return false;
         }
-        return true;
     }
 }

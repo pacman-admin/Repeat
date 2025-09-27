@@ -1,39 +1,34 @@
 package core.webui.server.handlers.internals.menu;
 
+import core.webui.server.handlers.AbstractPOSTHandler;
+import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+public class MenuImportTaskActionHandler extends AbstractPOSTHandler {
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
+    public MenuImportTaskActionHandler() {
+        super("Could not import tasks!");
+    }
 
-public class MenuImportTaskActionHandler extends AbstractSingleMethodHttpHandler {
-
-	public MenuImportTaskActionHandler() {
-		super(AbstractSingleMethodHttpHandler.POST_METHOD);
-	}
-
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
-		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
-		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
-		}
-		String path = params.get("path");
-		if (path == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path must be provided.");
-		}
-		if (!Files.isRegularFile(Paths.get(path))) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path '" + path + "' is not a file.");
-		}
-
-		backEndHolder.importTasks(new File(path));
-		return emptySuccessResponse(exchange);
-	}
+    @Override
+    protected String handle(HttpRequest r) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(r);
+        if (params == null) {
+            throw new IllegalArgumentException("Request must not be empty.");
+        }
+        String path = params.get("path");
+        if (path == null) {
+            throw new IllegalArgumentException("A file path must be provided.");
+        }
+        if (!Files.isRegularFile(Paths.get(path))) {
+            throw new IllegalArgumentException("Path '" + path + "' is not a file.");
+        }
+        backEndHolder.importTasks(new File(path));
+        return "";
+    }
 }

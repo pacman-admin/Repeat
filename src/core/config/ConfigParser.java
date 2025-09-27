@@ -65,7 +65,6 @@ abstract class ConfigParser {
             if (latest == null) {
                 return false;
             }
-
             ConfigParser parser = latest.a();
             JsonRootNode latestData = latest.b();
             return parser.extractData(config, latestData);

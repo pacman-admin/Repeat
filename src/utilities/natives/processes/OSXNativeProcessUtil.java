@@ -1,10 +1,9 @@
 package utilities.natives.processes;
 
+import utilities.ExecUtil;
+
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import utilities.SubprocessUttility;
-import utilities.SubprocessUttility.ExecutionException;
 
 /**
  * Provides interaction with OSX processes via AppleScript.
@@ -48,12 +47,12 @@ final class OSXNativeProcessUtil {
 
 	private static String executeActiveWindowTitleCmd() {
 		try {
-			String[] outputs = SubprocessUttility.execute(ACTIVE_WINDOW, "");
+			String[] outputs = ExecUtil.execute(ACTIVE_WINDOW, "");
 			return outputs[1];
-		} catch (ExecutionException e) {
-			LOGGER.log(Level.WARNING, "Exception when fetching active window title.", e);
-		}
-		return "";
+		} catch (ExecUtil.ExecutionException e) {
+            LOGGER.log(Level.WARNING, "Exception when fetching active window title.", e);
+        }
+        return "";
 	}
 
 	private OSXNativeProcessUtil() {}

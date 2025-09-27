@@ -1,39 +1,35 @@
 package core.webui.server.handlers.internals.menu;
 
+import core.webui.server.handlers.AbstractPOSTHandler;
+import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+public class MenuExportTaskActionHandler extends AbstractPOSTHandler {
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
+    public MenuExportTaskActionHandler() {
+        super("Could not export tasks!");
+    }
 
-public class MenuExportTaskActionHandler extends AbstractSingleMethodHttpHandler {
+    @Override
+    protected String handle(HttpRequest r) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(r);
+        if (params == null) {
+            throw new IllegalArgumentException("Failed to get POST parameters.");
+        }
+        String path = params.get("path");
+        if (path == null) {
+            throw new IllegalArgumentException("Path must be provided.");
+        }
+        if (!Files.isDirectory(Paths.get(path))) {
+            throw new IllegalArgumentException("Path is not a directory.");
+        }
 
-	public MenuExportTaskActionHandler() {
-		super(AbstractSingleMethodHttpHandler.POST_METHOD);
-	}
-
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
-		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
-		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
-		}
-		String path = params.get("path");
-		if (path == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path must be provided.");
-		}
-		if (!Files.isDirectory(Paths.get(path))) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path is not a directory.");
-		}
-
-		backEndHolder.exportTasks(new File(path));
-		return emptySuccessResponse(exchange);
-	}
+        backEndHolder.exportTasks(new File(path));
+        return "Success!";
+    }
 }
