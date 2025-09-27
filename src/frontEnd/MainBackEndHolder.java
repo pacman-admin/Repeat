@@ -20,7 +20,6 @@ package frontEnd;
 
 import core.background.loggers.ActiveWindowInfosLogger;
 import core.background.loggers.MousePositionLogger;
-import core.config.AbstractRemoteRepeatsClientsConfig;
 import core.config.Config;
 import core.config.WebUIConfig;
 import core.controller.Core;
@@ -1006,11 +1005,11 @@ public class MainBackEndHolder {
         if (createdInstance == null) {
             return false;
         }
-        if (config.getCompilerFactory().getRemoteRepeatsCompilerConfig().hasOnlyLocal()) {
-            customFunction = createdInstance;
-            return true;
-        }
-        return false;
+        //if (config.getCompilerFactory().getRemoteRepeatsCompilerConfig().hasOnlyLocal()) {
+        customFunction = createdInstance;
+        return true;
+        //}
+        //return false;
     }
 
     public UserDefinedAction compileSourceNatively(AbstractNativeCompiler compiler, String source, String taskName) {
@@ -1076,10 +1075,10 @@ public class MainBackEndHolder {
     public void setToolsClients(List<String> clients) {
         config.getToolsConfig().setClients(clients);
         List<ITools> tools = clients.stream().map(c -> {
-            if (c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)) {
+            //if (c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)) {
                 return Tools.local();
-            }
-            return null;
+            //}
+            //return null;
         }).collect(Collectors.toList());
         DefaultTools.setExecutor(AggregateTools.of(tools));
     }
