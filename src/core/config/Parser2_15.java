@@ -143,21 +143,4 @@ public class Parser2_15 extends ConfigParser {
         }
         return result;
     }
-
-    @Override
-    protected boolean internalExtractData(CliConfig config, JsonRootNode root) {
-        try {
-            List<JsonNode> ipcSettings = root.getArrayNode("ipc_settings");
-            if (!IPCServiceManager.parseJSON(ipcSettings)) {
-                LOGGER.log(Level.WARNING, "IPC Service Manager failed to parse JSON metadata");
-            }
-
-            //CliServer cliServer = (CliServer) IPCServiceManager.getIPCService(IPCServiceName.CLI_SERVER);
-            //config.setServerPort(cliServer.getPort());
-            return true;
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Unable to parse json", e);
-            return false;
-        }
-    }
 }

@@ -127,32 +127,9 @@ abstract class ConfigParser {
         throw new UnsupportedOperationException("Config version " + getVersion() + " does not support extracting data. " + "Convert to a later version.");
     }
 
-    boolean internalExtractData(CliConfig config, JsonRootNode data) {
-        throw new UnsupportedOperationException("CLI config version " + getVersion() + " does not support extracting data. " + "Convert to a later version.");
-    }
-
     final boolean importData(Config config, JsonRootNode data) {
         return internalImportData(config, data);
     }
 
     protected abstract boolean internalImportData(Config config, JsonRootNode data);
-
-    private boolean extractData(CliConfig config, JsonRootNode data) {
-        if (!sanityCheck(data)) {
-            return false;
-        }
-
-        if (!Config.CURRENT_CONFIG_VERSION.equals(getVersion())) { // Then convert to latest version then parse
-            Pair<ConfigParser, JsonRootNode> latest = convertDataToLatest(data);
-            if (latest == null) {
-                return false;
-            }
-
-            ConfigParser parser = latest.a();
-            JsonRootNode latestData = latest.b();
-            return parser.extractData(config, latestData);
-        } else {
-            return internalExtractData(config, data);
-        }
-    }
 }
