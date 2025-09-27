@@ -1,6 +1,5 @@
 package core.userDefinedTask.internals;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -28,53 +27,5 @@ public record AggregateTools(Collection<ITools> tools) implements ITools {
             result &= tool.setClipboard(data);
         }
         return result;
-    }
-
-    /**
-     * Returns the first non-empty output.
-     * Note that the command is executed on all tools.
-     */
-    @Override
-    public String execute(String command) {
-        String output = "";
-        for (ITools tool : tools) {
-            String result = tool.execute(command);
-            if (output.isEmpty()) {
-                output = result;
-            }
-        }
-        return output;
-    }
-
-    /**
-     * Returns the first non-empty output.
-     * Note that the command is executed on all tools.
-     */
-    @Override
-    public String execute(String command, String cwd) {
-        String output = "";
-        for (ITools tool : tools) {
-            String result = tool.execute(command, cwd);
-            if (output.isEmpty()) {
-                output = result;
-            }
-        }
-        return output;
-    }
-
-    /**
-     * Returns the first non-empty output.
-     * Note that the command is executed on all tools.
-     */
-    @Override
-    public String execute(String command, File cwd) {
-        String output = "";
-        for (ITools tool : tools) {
-            String result = tool.execute(command, cwd);
-            if (output.isEmpty()) {
-                output = result;
-            }
-        }
-        return output;
     }
 }

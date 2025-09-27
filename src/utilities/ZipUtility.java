@@ -70,7 +70,7 @@ public class ZipUtility {
      * @param zipDirectory directory to be zipped
      * @param outputFile   path to the output .zip file
      */
-    private static void zipDir(File zipDirectory, File outputFile) {
+    public static void zipDir(File zipDirectory, File outputFile) {
         ZipOutputStream zip = null;
         FileOutputStream fileWriter = null;
         try {

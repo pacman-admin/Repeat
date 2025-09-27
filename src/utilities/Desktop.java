@@ -18,8 +18,14 @@
  */
 package utilities;
 
+import java.awt.*;
+import java.awt.datatransfer.Clipboard;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.io.File;
 import java.io.IOException;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class Desktop {
@@ -27,6 +33,22 @@ public class Desktop {
     private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
 
     private Desktop() {
+    }
+
+    public static String getClipboard() {
+        try {
+            return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+        } catch (HeadlessException | UnsupportedFlavorException | IOException e) {
+            LOGGER.log(Level.WARNING, "Unable to retrieve text from clipboard", e);
+            return "";
+        }
+    }
+
+    public static boolean setClipboard(String data) {
+        Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
+        StringSelection selection = new StringSelection(data);
+        clipboard.setContents(selection, null);
+        return true;
     }
 
     public static boolean openFile(File file) {
@@ -70,7 +92,7 @@ public class Desktop {
 
     private static boolean openWithCommand(String cmd, File file) {
         try {
-            Runtime.getRuntime().exec(cmd + " " + file.getAbsolutePath());
+            Runtime.getRuntime().exec(new String[]{cmd, file.getAbsolutePath()});
             return true;
         } catch (IOException e) {
             return false;
