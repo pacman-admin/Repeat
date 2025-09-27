@@ -35,13 +35,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BootStrapResources {
-
+    /*
     public static final String SOUND_POSITIVE1_PATH = "/staticContent/sounds/notifications/positive1.wav";
     public static final String SOUND_POSITIVE2_PATH = "/staticContent/sounds/notifications/positive2.wav";
     public static final String SOUND_POSITIVE3_PATH = "/staticContent/sounds/notifications/positive3.wav";
     public static final String SOUND_POSITIVE4_PATH = "/staticContent/sounds/notifications/positive4.wav";
     public static final String SOUND_NEGATIVE1_PATH = "/staticContent/sounds/notifications/negative1.wav";
-    public static final String SOUND_NEGATIVE2_PATH = "/staticContent/sounds/notifications/negative2.wav";
+    public static final String SOUND_NEGATIVE2_PATH = "/staticContent/sounds/notifications/negative2.wav";*/
     public static final Image TRAY_IMAGE;
     private static final Logger LOGGER = Logger.getLogger(BootStrapResources.class.getName());
     private static final Map<Language, String> LANGUAGE_API;
@@ -60,13 +60,16 @@ public class BootStrapResources {
         nativeHookResources = new NativeHookBootstrapResources();
         BOOTSTRAP_RESOURCES.add(nativeHookResources);
     }
+
     private BootStrapResources() {
     }
+
     public static void extractResources() throws IOException, URISyntaxException {
         for (BootstrapResourcesExtrator resource : BOOTSTRAP_RESOURCES) {
             resource.extractResources();
         }
     }
+
     public static InputStream getStaticContentStream(String resource) {
         return BootStrapResources.class.getResourceAsStream(resource);
     }
@@ -79,15 +82,19 @@ public class BootStrapResources {
             return null;
         }
     }
+
     static String getFile(String path) {
         return FileUtility.readFromStream(BootStrapResources.class.getResourceAsStream(path)).toString();
     }
+
     public static String getAbout() {
         return "Repeat " + Config.RELEASE_VERSION + "\n" + "A tool to repeat yourself with some intelligence.\n" + "Created by HP Truong. Contact me at hptruong93@gmail.com.";
     }
+
     public static String getAPI(Language language) {
         return LANGUAGE_API.getOrDefault(language, "");
     }
+
     public static String getNativeLanguageTemplate(Language language) {
         return NATIVE_LANGUAGE_TEMPLATES.getOrDefault(language, "");
     }

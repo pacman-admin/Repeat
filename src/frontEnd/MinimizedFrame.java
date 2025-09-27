@@ -1,4 +1,3 @@
-
 package frontEnd;
 
 import core.ipc.IIPCService;
@@ -63,7 +62,7 @@ class MinimizedFrame extends TrayIcon {
         }
     }
 
-    void add(){
+    void add() {
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(this);
@@ -72,7 +71,7 @@ class MinimizedFrame extends TrayIcon {
         }
     }
 
-    void remove(){
+    void remove() {
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.remove(this);

@@ -7,17 +7,17 @@ import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
 public class GlobalListenerFactory {
 
-	private GlobalListenerFactory() {}
+    private GlobalListenerFactory() {}
 
-	public static GlobalListenerFactory of() {
-		return new GlobalListenerFactory();
-	}
+    public static GlobalListenerFactory of() {
+        return new GlobalListenerFactory();
+    }
 
-	public AbstractGlobalKeyListener createGlobalKeyListener() {
-		return NativeKeyHook.of();
-	}
+    public AbstractGlobalKeyListener createGlobalKeyListener() {
+        return NativeKeyHook.of();
+    }
 
-	public AbstractGlobalMouseListener createGlobalMouseListener() {
-		return NativeMouseHook.of();
-	}
+    public AbstractGlobalMouseListener createGlobalMouseListener() {
+        return NativeMouseHook.of();
+    }
 }

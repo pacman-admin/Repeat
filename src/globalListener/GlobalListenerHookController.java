@@ -4,52 +4,51 @@ import org.simplenativehooks.NativeHookInitializer;
 
 public class GlobalListenerHookController {
 
-	private static final GlobalListenerHookController INSTANCE = new GlobalListenerHookController();
+    private static final GlobalListenerHookController INSTANCE = new GlobalListenerHookController();
 
-	private GlobalListenerHookController() {}
+    private GlobalListenerHookController() {
+    }
 
-	public static class Config {
-		// Only applicable for Windows.
-		private boolean useJavaAwtForMousePosition;
+    public static GlobalListenerHookController of() {
+        return INSTANCE;
+    }
 
-		private Config(boolean useJavaAwtForMousePosition) {
-			this.useJavaAwtForMousePosition = useJavaAwtForMousePosition;
-		}
+    public void initialize(Config config) {
+        NativeHookInitializer.Config nativeConfig = NativeHookInitializer.Config.Builder.of().useJnaForWindows(true).useJavaAwtToReportMousePositionOnWindows(config.useJavaAwtForMousePosition()).build();
+        NativeHookInitializer.of(nativeConfig).start();
+    }
 
-		boolean useJavaAwtForMousePosition() {
-			return useJavaAwtForMousePosition;
-		}
+    public void cleanup() {
+        NativeHookInitializer.of().stop();
+    }
 
-		public static class Builder {
-			private boolean useJavaAwtForMousePosition;
+    public static class Config {
+        // Only applicable for Windows.
+        private boolean useJavaAwtForMousePosition;
 
-			public static Builder of() {
-				return new Builder();
-			}
+        private Config(boolean useJavaAwtForMousePosition) {
+            this.useJavaAwtForMousePosition = useJavaAwtForMousePosition;
+        }
 
-			public Builder useJavaAwtForMousePosition(boolean use) {
-				this.useJavaAwtForMousePosition = use;
-				return this;
-			}
+        boolean useJavaAwtForMousePosition() {
+            return useJavaAwtForMousePosition;
+        }
 
-			public Config build() {
-				return new Config(useJavaAwtForMousePosition);
-			}
-		}
-	}
+        public static class Builder {
+            private boolean useJavaAwtForMousePosition;
 
-	public static GlobalListenerHookController of() {
-		return INSTANCE;
-	}
+            public static Builder of() {
+                return new Builder();
+            }
 
-	public void initialize(Config config) {
-		NativeHookInitializer.Config nativeConfig = NativeHookInitializer.Config.Builder.of().useJnaForWindows(true)
-				.useJavaAwtToReportMousePositionOnWindows(config.useJavaAwtForMousePosition())
-				.build();
-		NativeHookInitializer.of(nativeConfig).start();
-	}
+            public Builder useJavaAwtForMousePosition(boolean use) {
+                this.useJavaAwtForMousePosition = use;
+                return this;
+            }
 
-	public void cleanup() {
-		NativeHookInitializer.of().stop();
-	}
+            public Config build() {
+                return new Config(useJavaAwtForMousePosition);
+            }
+        }
+    }
 }
