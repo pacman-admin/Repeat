@@ -5,6 +5,7 @@ import core.ipc.IPCServiceManager;
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
 import core.webui.server.handlers.renderedobjects.*;
+import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
@@ -17,7 +18,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHandler {
-
+    private static final HTTPLogger LOGGER = new HTTPLogger("UI error!");
     protected ObjectRenderer objectRenderer;
 
     public AbstractUIHttpHandler(ObjectRenderer objectRenderer, String allowedMethod) {
@@ -83,10 +84,12 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
     }
 
     protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) throws IOException {
-        String page = objectRenderer.render(template, data);
-        if (page == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-        }
-        return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+        return LOGGER.exec(() -> {
+            String page = objectRenderer.render(template, data);
+            if (page == null) {
+                return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
+            }
+            return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+        }, exchange);
     }
 }

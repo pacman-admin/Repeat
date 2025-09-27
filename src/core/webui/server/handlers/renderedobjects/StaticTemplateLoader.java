@@ -55,7 +55,7 @@ public class StaticTemplateLoader implements TemplateLoader {
     @Override
     public Reader getReader(Object path, String locale) {
         InputStream content = BootStrapResources.getStaticContentStream(WebUIResources.TEMPLATES_RESOURCES_PREFIX + path);
-        if (content == null) throw new RuntimeException("Content could not be accessed!!!:\n" + path);
+        if (content == null) throw new NullPointerException("Content could not be accessed!!!:\n" + path);
         //System.out.println("Accessing " + path + "...");
         return new InputStreamReader(content);
     }
