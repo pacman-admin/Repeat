@@ -5,7 +5,10 @@ import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import utilities.json.IJsonable;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Enum representing classification categories
@@ -28,15 +31,7 @@ public enum MouseGesture implements IJsonable {
      * @return list of enabled mouse gestures that can be used to activate tasks.
      */
     public static List<MouseGesture> enabledGestures() {
-        List<MouseGesture> output = new ArrayList<>();
-
-        for (MouseGesture value : values()) {
-            if (!IGNORED_CLASSIFICATIONS.contains(value)) {
-                output.add(value);
-            }
-        }
-
-        return output;
+        return List.of(values());
     }
 
     /**

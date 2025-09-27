@@ -84,8 +84,7 @@ public class Parser2_15 extends ConfigParser {
 
             JsonNode globalHotkey = globalSettings.getNode("global_hotkey");
 
-            String mouseGestureActivation = globalHotkey.getNumberValue("mouse_gesture_activation");
-            config.setMouseGestureActivationKey(Integer.parseInt(mouseGestureActivation));
+            config.setMOUSE_GESTURE(KeyChain.parseJSON(globalHotkey.getArrayNode("mouse_gesture_activation")));
             config.setRECORD(KeyChain.parseJSON(globalHotkey.getArrayNode("record")));
             config.setREPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay")));
             config.setCOMPILED_REPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay_compiled")));

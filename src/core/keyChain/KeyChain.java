@@ -19,10 +19,6 @@ public class KeyChain extends KeySeries {
 		super(keys);
 	}
 
-	private KeyChain(Iterable<Integer> keys) {
-		super(keys);
-	}
-
 	public KeyChain(int key) {
 		super(key);
 	}

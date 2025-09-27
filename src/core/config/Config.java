@@ -62,7 +62,7 @@ public final class Config implements ILoggable {
     private KeyChain RECORD;
     private KeyChain REPLAY;
     private KeyChain COMPILED_REPLAY;
-    private int mouseGestureActivationKey;
+    private KeyChain MOUSE_GESTURE;
     private boolean useTrayIcon;
     private boolean enabledHaltingKeyPressed;
     /**
@@ -86,7 +86,7 @@ public final class Config implements ILoggable {
         enabledHaltingKeyPressed = true;
         executeOnKeyReleased = true;
         nativeHookDebugLevel = DEFAULT_NATIVE_HOOK_DEBUG_LEVEL;
-        //mouseGestureActivationKey = KeyEvent.VK_F4;
+        MOUSE_GESTURE = new KeyChain(KeyEvent.VK_F4);
         RECORD = new KeyChain(KeyEvent.VK_F7);
         REPLAY = new KeyChain(KeyEvent.VK_F8);
         COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F9);
@@ -173,7 +173,7 @@ public final class Config implements ILoggable {
             taskNodes.add(group.jsonize());
         }
 
-        JsonRootNode root = JsonNodeFactories.object(JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)), JsonNodeFactories.field("global_settings", JsonNodeFactories.object(JsonNodeFactories.field("debug", JsonNodeFactories.object(JsonNodeFactories.field("level", JsonNodeFactories.string(nativeHookDebugLevel.toString())))), JsonNodeFactories.field("tray_icon_enabled", JsonNodeFactories.booleanNode(useTrayIcon)), JsonNodeFactories.field("enabled_halt_by_key", JsonNodeFactories.booleanNode(enabledHaltingKeyPressed)), JsonNodeFactories.field("execute_on_key_released", JsonNodeFactories.booleanNode(executeOnKeyReleased)), JsonNodeFactories.field("use_clipboard_to_type_string", JsonNodeFactories.booleanNode(useClipboardToTypeString)), JsonNodeFactories.field("run_task_with_server_config", JsonNodeFactories.booleanNode(runTaskWithServerConfig)), JsonNodeFactories.field("use_java_awt_for_mouse_position", JsonNodeFactories.booleanNode(useJavaAwtToGetMousePosition)), JsonNodeFactories.field("global_hotkey", JsonNodeFactories.object(JsonNodeFactories.field("mouse_gesture_activation", JsonNodeFactories.number(mouseGestureActivationKey)), JsonNodeFactories.field("record", RECORD.jsonize()), JsonNodeFactories.field("replay", REPLAY.jsonize()), JsonNodeFactories.field("replay_compiled", COMPILED_REPLAY.jsonize()))), JsonNodeFactories.field("tools_config", toolsConfig.jsonize()), JsonNodeFactories.field("core_config", coreConfig.jsonize()))), JsonNodeFactories.field("ipc_settings", IPCServiceManager.jsonize()), JsonNodeFactories.field("remote_repeats_clients", backEnd.getPeerServiceClientManager().jsonize()), JsonNodeFactories.field("compilers", compilerFactory.jsonize()), JsonNodeFactories.field("task_groups", JsonNodeFactories.array(taskNodes)));
+        JsonRootNode root = JsonNodeFactories.object(JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)), JsonNodeFactories.field("global_settings", JsonNodeFactories.object(JsonNodeFactories.field("debug", JsonNodeFactories.object(JsonNodeFactories.field("level", JsonNodeFactories.string(nativeHookDebugLevel.toString())))), JsonNodeFactories.field("tray_icon_enabled", JsonNodeFactories.booleanNode(useTrayIcon)), JsonNodeFactories.field("enabled_halt_by_key", JsonNodeFactories.booleanNode(enabledHaltingKeyPressed)), JsonNodeFactories.field("execute_on_key_released", JsonNodeFactories.booleanNode(executeOnKeyReleased)), JsonNodeFactories.field("use_clipboard_to_type_string", JsonNodeFactories.booleanNode(useClipboardToTypeString)), JsonNodeFactories.field("run_task_with_server_config", JsonNodeFactories.booleanNode(runTaskWithServerConfig)), JsonNodeFactories.field("use_java_awt_for_mouse_position", JsonNodeFactories.booleanNode(useJavaAwtToGetMousePosition)), JsonNodeFactories.field("global_hotkey", JsonNodeFactories.object(JsonNodeFactories.field("mouse_gesture_activation", MOUSE_GESTURE.jsonize()), JsonNodeFactories.field("record", RECORD.jsonize()), JsonNodeFactories.field("replay", REPLAY.jsonize()), JsonNodeFactories.field("replay_compiled", COMPILED_REPLAY.jsonize()))), JsonNodeFactories.field("tools_config", toolsConfig.jsonize()), JsonNodeFactories.field("core_config", coreConfig.jsonize()))), JsonNodeFactories.field("ipc_settings", IPCServiceManager.jsonize()), JsonNodeFactories.field("remote_repeats_clients", backEnd.getPeerServiceClientManager().jsonize()), JsonNodeFactories.field("compilers", compilerFactory.jsonize()), JsonNodeFactories.field("task_groups", JsonNodeFactories.array(taskNodes)));
 
         return JSONUtility.writeJson(root, new File(CONFIG_FILE_NAME));
     }
@@ -227,15 +227,18 @@ public final class Config implements ILoggable {
     }
 
     public int getMouseGestureActivationKey() {
-        return mouseGestureActivationKey;
-    }
-
-    public void setMouseGestureActivationKey(int mouseGestureActivationKey) {
-        this.mouseGestureActivationKey = mouseGestureActivationKey;
+        return KeyEvent.VK_F4;
     }
 
     public KeyChain getRECORD() {
         return RECORD;
+    }
+
+    public void setMOUSE_GESTURE(KeyChain MOUSE_GESTURE) {
+        this.MOUSE_GESTURE = MOUSE_GESTURE;
+    }
+    public KeyChain getMOUSE_GESTURE() {
+        return MOUSE_GESTURE;
     }
 
     public void setRECORD(KeyChain RECORD) {

@@ -143,7 +143,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
             return emptySuccessResponse(exchange);
         }
         if (taskString.equals(TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME)) {
-            backEndHolder.getConfig().setMouseGestureActivationKey(hotKey.getButtonStrokes().iterator().next().getKey());
+            backEndHolder.getConfig().setMOUSE_GESTURE(hotKey);
             return emptySuccessResponse(exchange);
         }
         return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString + ".");

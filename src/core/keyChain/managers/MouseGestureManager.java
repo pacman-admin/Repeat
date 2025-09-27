@@ -178,9 +178,9 @@ public class MouseGestureManager extends KeyStrokeManager {
         enabled = false;
         try {
             MouseGesture gesture = processCurrentData();
-            if (MouseGesture.IGNORED_CLASSIFICATIONS.contains(gesture)) {
+            /*if (MouseGesture.IGNORED_CLASSIFICATIONS.contains(gesture)) {
                 return Collections.emptySet();
-            }
+            }*/
 
             UserDefinedAction task = actionMap.get(gesture);
             if (task == null) {
