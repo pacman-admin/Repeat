@@ -187,7 +187,7 @@ public class MainBackEndHolder {
         System.setErr(new PrintStream(CompositeOutputStream.of(logHolder, System.err)));
 
         // Once we've updated stdout and stderr, we need to re-register the ConsoleHandler of the root
-        // logger because it wa s only logging to the old stderr which we just changed above.
+        // logger because it was only logging to the old stderr which we just changed above.
         Logger rootLogger = Logger.getLogger("");
         Handler[] handlers = rootLogger.getHandlers();
         for (Handler handler : handlers) {

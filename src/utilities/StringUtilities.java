@@ -45,7 +45,7 @@ public class StringUtilities {
      * Returns whether a string is null or empty.
      */
     public static boolean isNullOrEmpty(String s) {
-        return s == null || s.isEmpty();
+        return s == null || s.isBlank();
     }
 
     /**
