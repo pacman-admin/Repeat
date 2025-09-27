@@ -11,16 +11,12 @@ public abstract class AbstractKeyboardSourceCodeGenerator extends AbstractDevice
 
 	@Override
 	protected final String internalGetSourceCode(String action, int[] params) {
-		switch (action) {
-		case "type":
-			return type(params);
-		case "press":
-			return press(params);
-		case "release":
-			return release(params);
-		default:
-			return null;
-		}
+        return switch (action) {
+            case "type" -> type(params);
+            case "press" -> press(params);
+            case "release" -> release(params);
+            default -> null;
+        };
 	}
 
 	/**

@@ -13,7 +13,6 @@ import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildAct
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionFeModel.KeyboardAction;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionFeModel.MouseAction;
 import core.webui.webcommon.HttpServerUtilities;
-import utilities.ExceptionsUtility;
 
 public class ActionManuallyBuildActionParametersPlaceHolderHandler extends AbstractSingleMethodHttpHandler {
 
@@ -42,7 +41,7 @@ public class ActionManuallyBuildActionParametersPlaceHolderHandler extends Abstr
 			String placeholder = placeHolderParametersText(actor, action);
 			return HttpServerUtilities.prepareHttpResponse(exchange, 200, placeholder);
 		} catch (InvalidManuallyBuildComponentException e) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, ExceptionsUtility.getStackTrace(e));
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, e.getMessage());
 		}
 	}
 

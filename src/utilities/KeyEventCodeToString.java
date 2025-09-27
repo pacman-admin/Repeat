@@ -12,28 +12,25 @@ public class KeyEventCodeToString {
 	 * not work properly.
 	 */
 	public static String codeToString(int code) {
-		switch (code) {
-		case KeyEvent.VK_CONTROL:
-			return "Ctrl";
-		case KeyEvent.VK_ALT:
-			if (OSIdentifier.isMac()) {
-				return "option";
-			}
-			return "Alt";
-		case KeyEvent.VK_WINDOWS:
-			return "Windows";
-		case KeyEvent.VK_META:
-			if (OSIdentifier.isMac()) {
-				return "command";
-			}
-			return "Meta";
-		case KeyEvent.VK_SHIFT:
-			return "Shift";
-		case KeyEvent.VK_TAB:
-			return "Tab";
-		case KeyEvent.VK_SPACE:
-			return "Space";
-		}
-		return KeyEvent.getKeyText(code);
-	}
+        return switch (code) {
+            case KeyEvent.VK_CONTROL -> "Ctrl";
+            case KeyEvent.VK_ALT -> {
+                if (OSIdentifier.isMac()) {
+                    yield "option";
+                }
+                yield "Alt";
+            }
+            case KeyEvent.VK_WINDOWS -> "Windows";
+            case KeyEvent.VK_META -> {
+                if (OSIdentifier.isMac()) {
+                    yield "command";
+                }
+                yield "Meta";
+            }
+            case KeyEvent.VK_SHIFT -> "Shift";
+            case KeyEvent.VK_TAB -> "Tab";
+            case KeyEvent.VK_SPACE -> "Space";
+            default -> KeyEvent.getKeyText(code);
+        };
+    }
 }

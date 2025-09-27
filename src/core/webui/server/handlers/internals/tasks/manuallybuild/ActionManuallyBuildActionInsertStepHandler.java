@@ -18,7 +18,6 @@ import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.webcommon.HttpServerUtilities;
-import utilities.ExceptionsUtility;
 
 public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHandler {
 
@@ -66,7 +65,7 @@ public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHa
 		try {
 			step = getStepFromRequest(params);
 		} catch (InvalidManuallyBuildComponentException e) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, ExceptionsUtility.getStackTrace(e));
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, e.getMessage());
 		}
 		if (step == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot parse step.");

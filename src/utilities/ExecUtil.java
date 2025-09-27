@@ -145,6 +145,11 @@ public class ExecUtil {
         return execute(command, "")[0];
     }
 
+    private static abstract class ExceptableFunction<D, R, E extends Exception> {
+
+        public abstract R apply(D d) throws E;
+    }
+
     public static class ExecutionException extends Exception {
         private static final long serialVersionUID = 6688739122137565700L;
 

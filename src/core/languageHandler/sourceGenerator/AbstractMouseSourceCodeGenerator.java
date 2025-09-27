@@ -11,20 +11,14 @@ public abstract class AbstractMouseSourceCodeGenerator extends AbstractDeviceSou
 
 	@Override
 	protected final String internalGetSourceCode(String action, int[] params) {
-		switch (action) {
-		case "move":
-			return move(params);
-		case "moveBy":
-			return moveBy(params);
-		case "click":
-			return click(params);
-		case "press":
-			return press(params);
-		case "release":
-			return release(params);
-		default:
-			return null;
-		}
+        return switch (action) {
+            case "move" -> move(params);
+            case "moveBy" -> moveBy(params);
+            case "click" -> click(params);
+            case "press" -> press(params);
+            case "release" -> release(params);
+            default -> null;
+        };
 	}
 
 	/**

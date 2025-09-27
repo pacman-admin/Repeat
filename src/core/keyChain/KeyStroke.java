@@ -49,16 +49,12 @@ public class KeyStroke implements ButtonStroke {
 		}
 
 		org.simplenativehooks.events.NativeKeyEvent.Modifier toNativeModifier() {
-			switch (this) {
-			case KEY_MODIFIER_UNKNOWN:
-				return org.simplenativehooks.events.NativeKeyEvent.Modifier.KEY_MODIFIER_UNKNOWN;
-			case KEY_MODIFIER_LEFT:
-				return org.simplenativehooks.events.NativeKeyEvent.Modifier.KEY_MODIFIER_LEFT;
-			case KEY_MODIFIER_RIGHT:
-				return org.simplenativehooks.events.NativeKeyEvent.Modifier.KEY_MODIFIER_RIGHT;
-			}
-			throw new IllegalArgumentException("Unknown modifier " + this);
-		}
+            return switch (this) {
+                case KEY_MODIFIER_UNKNOWN -> NativeKeyEvent.Modifier.KEY_MODIFIER_UNKNOWN;
+                case KEY_MODIFIER_LEFT -> NativeKeyEvent.Modifier.KEY_MODIFIER_LEFT;
+                case KEY_MODIFIER_RIGHT -> NativeKeyEvent.Modifier.KEY_MODIFIER_RIGHT;
+            };
+        }
 	}
 
 	private int key;
@@ -76,23 +72,14 @@ public class KeyStroke implements ButtonStroke {
 	}
 
 	public static KeyStroke of(NativeKeyEvent e) {
-		Modifier m = Modifier.KEY_MODIFIER_UNKNOWN;
-		switch (e.getModifier()) {
-		case KEY_MODIFIER_UNKNOWN:
-			m = Modifier.KEY_MODIFIER_UNKNOWN;
-			break;
-		case KEY_MODIFIER_LEFT:
-			m = Modifier.KEY_MODIFIER_LEFT;
-			break;
-		case KEY_MODIFIER_RIGHT:
-			m = Modifier.KEY_MODIFIER_RIGHT;
-			break;
-		default:
-			m = Modifier.KEY_MODIFIER_UNKNOWN;
-			break;
-		}
+		Modifier m = switch (e.getModifier()) {
+            case KEY_MODIFIER_UNKNOWN -> Modifier.KEY_MODIFIER_UNKNOWN;
+            case KEY_MODIFIER_LEFT -> Modifier.KEY_MODIFIER_LEFT;
+            case KEY_MODIFIER_RIGHT -> Modifier.KEY_MODIFIER_RIGHT;
+            default -> Modifier.KEY_MODIFIER_UNKNOWN;
+        };
 
-		return of(e.getKey(), m, e.isPressed(), e.getInvokedTime());
+        return of(e.getKey(), m, e.isPressed(), e.getInvokedTime());
 	}
 
 	public NativeKeyEvent toNativeKeyEvent() {

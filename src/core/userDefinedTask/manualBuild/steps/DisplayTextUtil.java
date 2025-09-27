@@ -9,16 +9,12 @@ class DisplayTextUtil {
 	}
 
 	public static String mouseMaskToString(int mask) {
-		switch (mask) {
-		case InputEvent.BUTTON1_DOWN_MASK:
-			return "left button";
-		case InputEvent.BUTTON3_DOWN_MASK:
-			return "right button";
-		case InputEvent.BUTTON2_DOWN_MASK:
-			return "middle";
-		default:
-			return "unknown button";
-		}
+        return switch (mask) {
+            case InputEvent.BUTTON1_DOWN_MASK -> "left button";
+            case InputEvent.BUTTON3_DOWN_MASK -> "right button";
+            case InputEvent.BUTTON2_DOWN_MASK -> "middle";
+            default -> "unknown button";
+        };
 	}
 
 	private DisplayTextUtil() {}
