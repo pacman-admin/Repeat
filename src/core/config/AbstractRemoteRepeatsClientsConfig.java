@@ -42,14 +42,6 @@ public class AbstractRemoteRepeatsClientsConfig implements IJsonable {
         return node.getArrayNode().stream().map(JsonNode::getStringValue).collect(Collectors.toList());
     }
 
-    public final boolean hasLocal() {
-        return enabledClients.contains(LOCAL_CLIENT);
-    }
-
-    public final boolean hasOnlyLocal() {
-        return enabledClients.isEmpty() || (enabledClients.size() == 1 && enabledClients.getFirst().equals(LOCAL_CLIENT));
-    }
-
     public final List<String> getClients() {
         return enabledClients;
     }

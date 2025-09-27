@@ -122,7 +122,7 @@ public class Parser2_15 extends ConfigParser {
             if (config.getBackEnd().getTaskGroups().isEmpty()) {
                 config.getBackEnd().addTaskGroup(new TaskGroup("default"));
             }
-            config.getBackEnd().setCurrentTaskGroup(config.getBackEnd().getTaskGroups().get(0));
+            config.getBackEnd().setCurrentTaskGroup(config.getBackEnd().getTaskGroups().getFirst());
             return true;
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Unable to parse json", e);

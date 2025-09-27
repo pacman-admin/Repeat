@@ -68,17 +68,17 @@ public class MainBackEndHolder {
     private final TaskInvoker taskInvoker;
     private final ActionExecutor actionExecutor;
     private final CoreProvider coreProvider;
+    private final LogHolder logHolder;
+    private final ScheduledThreadPoolExecutor executor;
+    private final Recorder recorder;
+    private final RepeatsPeerServiceClientManager peerServiceClientManager;
     private MinimizedFrame trayIcon;
-    private LogHolder logHolder;
-    private ScheduledThreadPoolExecutor executor;
-    private Recorder recorder;
     private Thread compiledExecutor;
     private Language compilingLanguage;
     private ReplayConfig replayConfig;
     private RunActionConfig runActionConfig;
     private UserDefinedAction customFunction;
     private TaskGroup currentGroup;
-    private RepeatsPeerServiceClientManager peerServiceClientManager;
     private boolean isRecording, isReplaying, isRunningCompiledTask;
     private File currentTempFile = null;
 
@@ -655,20 +655,6 @@ public class MainBackEndHolder {
         return null;
     }
 
-    /**
-     * Get first task with given name in the task group.
-     * Returning null if no task with given name exists.
-     */
-    public UserDefinedAction getTaskByName(String name) {
-        for (TaskGroup group : taskGroups) {
-            UserDefinedAction task = group.getTaskByName(name);
-            if (task != null) {
-                return task;
-            }
-        }
-        return null;
-    }
-
     public void removeCurrentTask(String id) {
         boolean found = false;
         for (ListIterator<UserDefinedAction> iterator = currentGroup.getTasks().listIterator(); iterator.hasNext(); ) {
@@ -1076,7 +1062,7 @@ public class MainBackEndHolder {
         config.getToolsConfig().setClients(clients);
         List<ITools> tools = clients.stream().map(c -> {
             //if (c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)) {
-                return Tools.local();
+            return Tools.local();
             //}
             //return null;
         }).collect(Collectors.toList());
@@ -1161,16 +1147,6 @@ public class MainBackEndHolder {
         taskGroups.clear();
     }
 
-    /**
-     * Get the task group with the index, returning null if index is out of range.
-     */
-    public TaskGroup getTaskGroup(int index) {
-        if (index < 0 || index >= taskGroups.size()) {
-            return null;
-        }
-        return taskGroups.get(index);
-    }
-
     private int getTaskGroupIndex(String id) {
         for (ListIterator<TaskGroup> iterator = taskGroups.listIterator(); iterator.hasNext(); ) {
             int index = iterator.nextIndex();
@@ -1188,19 +1164,6 @@ public class MainBackEndHolder {
     public TaskGroup getTaskGroup(String id) {
         for (TaskGroup group : taskGroups) {
             if (group.getGroupId().equals(id)) {
-                return group;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Get the first task group with the given name, or null if no such group
-     * exists.
-     */
-    public TaskGroup getTaskGroupFromName(String name) {
-        for (TaskGroup group : taskGroups) {
-            if (group.getName().equals(name)) {
                 return group;
             }
         }
