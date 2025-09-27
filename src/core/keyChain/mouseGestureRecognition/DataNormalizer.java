@@ -12,7 +12,7 @@ class DataNormalizer {
 	 * Then scale the points so that they fit into a unit square.
 	 *
 	 * @param input input list of points to normalize.
-	 * @return list of normalized points flattenned into (x1,y1,x2,y2,...).
+	 * @return list of normalized points flattened into (x1,y1,x2,y2,...).
 	 */
 	public ArrayList<Float> normalize(ArrayList<Point> input) {
 		input = new DataDefinitionTrimmer().trim(input);
