@@ -12,8 +12,8 @@ public class TaskSourceManager {
 	private static final Logger LOGGER = Logger.getLogger(TaskSourceManager.class.getName());
 
 	public static boolean submitTask(UserDefinedAction task, String source) {
-		String sourceFileName = null;
-		if (task.getSourcePath() == null || task.getSourcePath().isEmpty()) {
+		String sourceFileName;
+		if (task.getSourcePath() == null || task.getSourcePath().isBlank()) {
 			LOGGER.warning("Cannot submit task. No source file found...");
 			return false;
 		} else {
