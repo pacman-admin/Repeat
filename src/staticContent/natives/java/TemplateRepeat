@@ -26,7 +26,7 @@ public class CustomAction extends UserDefinedAction {
     public void action(final Core c) throws InterruptedException {
         KeyboardCore k = c.keyBoard();
         MouseCore m = c.mouse();
-        /*Begin generated code*/
+        // Begin generated code (this line must not be changed)
         //Write your macro code after this line
 
         k.type("Repeat can type Strings!");
