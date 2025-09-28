@@ -23,9 +23,8 @@ import org.simplenativehooks.staticResources.BootStrapResources;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
-public class NativeHookBootstrapResources implements BootstrapResourcesExtrator {
+public class NativeHookBootstrapResources{
 
-    @Override
     public void extractResources() throws IOException, URISyntaxException {
         BootStrapResources.extractResources();
     }

@@ -28,25 +28,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class BootStrapResources {
-    /*
-    public static final String SOUND_POSITIVE1_PATH = "/staticContent/sounds/notifications/positive1.wav";
-    public static final String SOUND_POSITIVE2_PATH = "/staticContent/sounds/notifications/positive2.wav";
-    public static final String SOUND_POSITIVE3_PATH = "/staticContent/sounds/notifications/positive3.wav";
-    public static final String SOUND_POSITIVE4_PATH = "/staticContent/sounds/notifications/positive4.wav";
-    public static final String SOUND_NEGATIVE1_PATH = "/staticContent/sounds/notifications/negative1.wav";
-    public static final String SOUND_NEGATIVE2_PATH = "/staticContent/sounds/notifications/negative2.wav";*/
     public static final Image TRAY_IMAGE;
     private static final Logger LOGGER = Logger.getLogger(BootStrapResources.class.getName());
     private static final Map<Language, String> LANGUAGE_API;
     private static final Map<Language, String> NATIVE_LANGUAGE_TEMPLATES;
-    private static final Set<BootstrapResourcesExtrator> BOOTSTRAP_RESOURCES;
     private static final NativeHookBootstrapResources nativeHookResources;
 
     static {
@@ -56,18 +46,14 @@ public class BootStrapResources {
         NATIVE_LANGUAGE_TEMPLATES = new HashMap<>();
         NATIVE_LANGUAGE_TEMPLATES.put(Language.JAVA, getFile("/staticContent/natives/java/TemplateRepeat"));
         NATIVE_LANGUAGE_TEMPLATES.put(Language.MANUAL_BUILD, getFile("/staticContent/natives/manual/TemplateRepeat.txt"));
-        BOOTSTRAP_RESOURCES = new HashSet<>();
         nativeHookResources = new NativeHookBootstrapResources();
-        BOOTSTRAP_RESOURCES.add(nativeHookResources);
     }
 
     private BootStrapResources() {
     }
 
     public static void extractResources() throws IOException, URISyntaxException {
-        for (BootstrapResourcesExtrator resource : BOOTSTRAP_RESOURCES) {
-            resource.extractResources();
-        }
+        nativeHookResources.extractResources();
     }
 
     public static InputStream getStaticContentStream(String resource) {

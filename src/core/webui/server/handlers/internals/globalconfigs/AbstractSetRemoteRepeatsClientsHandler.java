@@ -22,7 +22,7 @@ public abstract class AbstractSetRemoteRepeatsClientsHandler extends AbstractUIH
     protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         JsonNode params = HttpServerUtilities.parsePostParameters(request);
         if (params == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST paramters.");
+            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST parameters.");
         }
         if (!params.isArrayNode("clients")) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Clients need to be an array of strings.");

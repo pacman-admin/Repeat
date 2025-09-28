@@ -153,18 +153,6 @@ public class ActionInvoker implements IJsonable {
 		return phrases;
 	}
 
-	/**
-	 * @return an arbitrary phrase from the set of pharses, or null if the set is empty.
-	 */
-	public final ActivationPhrase getFirsPhrase() {
-		Set<ActivationPhrase> phrases = getPhrases();
-		if (phrases.isEmpty()) {
-			return null;
-		} else {
-			return phrases.iterator().next();
-		}
-	}
-
 	private void setVariables(Set<SharedVariablesActivation> variables) {
 		this.variables.clear();
 		this.variables.addAll(variables);

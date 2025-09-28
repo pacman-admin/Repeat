@@ -84,13 +84,13 @@ public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHa
 
 	private ManuallyBuildStep getStepFromRequest(JsonNode params) throws InvalidManuallyBuildComponentException {
 		if (!params.isStringValue("actor")) {
-			throw new InvalidManuallyBuildComponentException("Paramter 'actor' must be provided.");
+			throw new InvalidManuallyBuildComponentException("Parameter 'actor' must be provided.");
 		}
 		if (!params.isStringValue("action")) {
-			throw new InvalidManuallyBuildComponentException("Paramter 'action' must be provided.");
+			throw new InvalidManuallyBuildComponentException("Parameter 'action' must be provided.");
 		}
 		if (!params.isStringValue("parameters")) {
-			throw new InvalidManuallyBuildComponentException("Paramter 'parameters' must be provided.");
+			throw new InvalidManuallyBuildComponentException("Parameter 'parameters' must be provided.");
 		}
 
 		String actor = params.getStringValue("actor").toLowerCase();

@@ -39,7 +39,7 @@ public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodH
 		String source = constructor.generateSource();
 		backEndHolder.setCompilingLanguage(Language.MANUAL_BUILD);
 		if (!backEndHolder.compileSourceAndSetCurrent(source, null)) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to copmpile generated source code.");
+			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
 		}
 
 		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");
