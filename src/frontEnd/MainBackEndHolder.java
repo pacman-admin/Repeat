@@ -45,12 +45,17 @@ import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
 import java.awt.*;
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
 import java.util.*;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
-import java.util.logging.*;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("DanglingJavadoc")
@@ -142,28 +147,6 @@ public class MainBackEndHolder {
         });
     }
 
-    private static Handler getNewHandler() {
-        Handler newHandler = new ConsoleHandler();
-        newHandler.setFormatter(new SimpleFormatter() {
-            private static final String FORMAT = "[%s] %s %s: %s\n";
-
-            @Override
-            public synchronized String format(LogRecord lr) {
-                Calendar cal = DateUtility.calendarFromMillis(lr.getMillis());
-                String base = String.format(FORMAT, DateUtility.calendarToTimeString(cal), lr.getLoggerName(), lr.getLevel().getLocalizedName(), lr.getMessage());
-                StringBuilder builder = new StringBuilder(base);
-                if (lr.getThrown() != null) {
-                    StringWriter sw = new StringWriter();
-                    PrintWriter pw = new PrintWriter(sw);
-                    lr.getThrown().printStackTrace(pw);
-                    builder.append(sw);
-                }
-                return builder.toString();
-            }
-        });
-        return newHandler;
-    }
-
     public void editSource(String code) {
         LOGGER.info("Opening source code in editor...");
         try {
@@ -195,7 +178,7 @@ public class MainBackEndHolder {
                 Logger.getLogger("").removeHandler(handler);
             }
         }
-        Handler newHandler = getNewHandler();
+        Handler newHandler = Util.getNewHandler();
         Logger.getLogger("").addHandler(newHandler);
 
         // Update the logging level based on the config.
@@ -875,37 +858,41 @@ public class MainBackEndHolder {
     }
 
     public void importTasks(File inputFile) {
-        ZipUtility.unZipFile(inputFile.getAbsolutePath(), ".");
-        File src = new File("tmp");
-        File dst = new File(".");
-        boolean moved = FileUtility.moveDirectory(src, dst);
-        if (!moved) {
-            LOGGER.warning("Failed to move files from " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
-            return;
-        }
-        int existingGroupCount = taskGroups.size();
-        boolean result = config.importTaskConfig();
-        FileUtility.deleteFile(new File("tmp"));
-        FileUtility.deleteFile(new File(Config.EXPORTED_CONFIG_FILE_NAME));
+        try {
 
-        if (taskGroups.size() > existingGroupCount) {
-            currentGroup = taskGroups.get(existingGroupCount); // Take the new group with lowest index.
-            setTaskInvoker();
-        } else {
-            LOGGER.warning("No new task group found!");
-            return;
-        }
-        if (result) {
-            LOGGER.info("Successfully imported tasks. Switching to a new task group...");
-        } else {
-            LOGGER.warning("Encountered error(s) while importing tasks. Switching to a new task group...");
+
+            Util.unZipFile(inputFile.getAbsolutePath(), ".");
+            File src = new File("tmp");
+            File dst = new File(".");
+            boolean moved = FileUtility.moveDirectory(src, dst);
+            if (!moved) {
+                LOGGER.warning("Failed to move files from " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
+                return;
+            }
+            int existingGroupCount = taskGroups.size();
+            boolean result = config.importTaskConfig();
+            FileUtility.deleteFile(new File("tmp"));
+            FileUtility.deleteFile(new File(Config.EXPORTED_CONFIG_FILE_NAME));
+
+            if (taskGroups.size() > existingGroupCount) {
+                currentGroup = taskGroups.get(existingGroupCount); // Take the new group with lowest index.
+                setTaskInvoker();
+            } else {
+                LOGGER.warning("No new task group found!");
+                return;
+            }
+            if (result) {
+                LOGGER.info("Successfully imported tasks. Switching to a new task group...");
+            } else {
+                LOGGER.warning("Encountered error(s) while importing tasks. Switching to a new task group...");
+            }
+        } catch (Exception e) {
+            LOGGER.warning("Could not import task group!\n" + e);
         }
     }
 
     public void exportTasks(File outputDirectory) {
         File destination = new File(FileUtility.joinPath(outputDirectory.getAbsolutePath(), "tmp"));
-        String zipPath = FileUtility.joinPath(outputDirectory.getAbsolutePath(), "repeat_export.zip");
-
         FileUtility.createDirectory(destination.getAbsolutePath());
         config.exportTasksConfig(destination);
         // Now create a zip file containing all source codes together with the config file
@@ -917,11 +904,8 @@ public class MainBackEndHolder {
                 FileUtility.copyFile(sourceFile, destFile);
             }
         }
-
-        File zipFile = new File(zipPath);
-        ZipUtility.zipDir(destination, zipFile);
-        FileUtility.deleteFile(destination);
-
+        String zipPath = FileUtility.joinPath(outputDirectory.getAbsolutePath(), "repeat_export.zip");
+        Util.zipDir(destination, zipPath);
         LOGGER.info("Data exported to " + zipPath);
     }
 
