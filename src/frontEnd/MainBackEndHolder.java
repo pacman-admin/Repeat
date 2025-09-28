@@ -259,6 +259,7 @@ public class MainBackEndHolder {
     }
 
     public void scheduleExit(long delayMs) {
+        actionExecutor.haltAllTasks();
         executor.schedule(this::exit, delayMs, TimeUnit.MILLISECONDS);
     }
 

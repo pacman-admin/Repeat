@@ -16,6 +16,7 @@ public class ActionTaskActivationAddStrokesAsKeyChainHandler extends AbstractTas
 
     @Override
     protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+        //System.out.println("ActionTaskActivationAddStrokesAsKeyChainHandler");
         constructor.addAsKeyChain();
         constructor.stopListening();
         return renderedTaskActivationPage(exchange, "fragments/key_chains", constructor);

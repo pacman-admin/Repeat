@@ -126,7 +126,7 @@ public class X11NativeProcessUtil {
             X11.XTextProperty name = new X11.XTextProperty();
             x11.XGetWMName(display, window, name);
 
-            System.out.println("Depth=" + depth + " (" + id + "):" + String.join("", Collections.nCopies(depth, "  ")) + name.value);
+            //System.out.println("Depth=" + depth + " (" + id + "):" + String.join("", Collections.nCopies(depth, "  ")) + name.value);
             x11.XFree(name.getPointer());
 
             recurse(x11, display, window, depth + 1);
