@@ -24,21 +24,10 @@ import utilities.swing.SwingUtil.DialogUtil;
 
 public class CustomAction extends UserDefinedAction {
     public void action(final Core c) throws InterruptedException {
-        SharedVariables v = new SharedVariables(getNamespace());
-        KeyboardCore k = c.keyBoard(); MouseCore m = c.mouse();
-        TaskActivation activation = this.invoker; KeyChain invokingKeyChain = activation.getFirstHotkey(); KeySequence invokingKeySequence = activation.getFirstKeySequence(); SharedVariablesSubscription invokingVariable = activation.getFirstVariable() == null ? null : activation.getFirstVariable().getVariable();
-        List<ButtonStroke> kc = invokingKeyChain == null ? new ArrayList<ButtonStroke>() : invokingKeyChain.getButtonStrokes();
-        List<ButtonStroke> ks = invokingKeySequence == null ? new ArrayList<ButtonStroke>() : invokingKeySequence.getButtonStrokes();
-        String vns =  invokingVariable == null ? "" : invokingVariable.getNamespace();
-        String vn =  invokingVariable == null ? "" : invokingVariable.getName();
-        MouseGesture mg = activation.getFirstMouseGesture();
-        ActivationPhrase p = activation.getFirsPhrase();
-        /*Begin generated code*/
+        KeyboardCore k = c.keyBoard();
+        MouseCore m = c.mouse();
+        //Write your macro code after this line
 
-    }
-
-    @Override
-    public String getNamespace() {
-        return SharedVariables.GLOBAL_NAMESPACE;
+        //k.
     }
 }
