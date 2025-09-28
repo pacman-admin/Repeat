@@ -37,7 +37,7 @@ public class MainFrontEnd {
         try {
             backEnd.keysManager.startGlobalListener();
         } catch (Exception e) {
-            e.printStackTrace();
+            LOGGER.severe("Could not start global event listener!\n"+e);
         }
 
         backEnd.configureMainHotkeys();
