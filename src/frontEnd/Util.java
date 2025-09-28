@@ -110,7 +110,7 @@ final class Util {
         if (in == null || out == null) throw new IllegalArgumentException("File(s) may not be null!");
         if (!in.exists()) throw new IllegalArgumentException("Input directory does not not exist!");
         if (!in.isDirectory()) throw new IllegalArgumentException("Not a directory!");
-        FileZipper fz = new FileZipper(in, out);
+        new FileZipper(in, out);
     }
 
     private static final class FileZipper {
@@ -122,7 +122,6 @@ final class Util {
                 z = new ZipOutputStream(new FileOutputStream(out));
                 addFile(in, "");
                 //z.finish();
-                //z.flush();
                 z.close();
             } catch (FileNotFoundException e) {
                 throw new IllegalArgumentException("File not found!\n" + e);
