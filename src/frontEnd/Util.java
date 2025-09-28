@@ -35,7 +35,7 @@ import java.util.zip.ZipOutputStream;
  */
 final class Util {
     private Util() {
-        //Util is an uninstantiable class
+        //Util is uninstantiable
     }
 
     /**
@@ -76,31 +76,24 @@ final class Util {
         // Create output directory is not exists
         File folder = new File(outputFolder);
         if (!folder.exists()) if (folder.mkdir()) throw new RuntimeException("Could not create directory!");
-
-
         // Get the zip file content
         ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile));
         // Get the zipped file list entry
         ZipEntry zipEntry = zipInputStream.getNextEntry();
-
         while (zipEntry != null) {
             String fileName = zipEntry.getName();
             File newFile = new File(FileUtility.joinPath(outputFolder, fileName));
-
             // create all non exists folders
             // else you will hit FileNotFoundException for compressed folder
             new File(newFile.getParent()).mkdirs();
-
             FileOutputStream fileOutputStream = new FileOutputStream(newFile);
 
             int length;
             while ((length = zipInputStream.read(buffer)) > 0) {
                 fileOutputStream.write(buffer, 0, length);
             }
-
             fileOutputStream.close();
             zipEntry = zipInputStream.getNextEntry();
-
             zipInputStream.closeEntry();
             zipInputStream.close();
         }
@@ -118,10 +111,10 @@ final class Util {
 
         private FileZipper(File in, String out) {
             try {
-                System.out.println(in.getAbsolutePath());
                 z = new ZipOutputStream(new FileOutputStream(out));
                 addFile(in, "");
-                //z.finish();
+                z.flush();
+                z.finish();
                 z.close();
             } catch (FileNotFoundException e) {
                 throw new IllegalArgumentException("File not found!\n" + e);
@@ -133,9 +126,7 @@ final class Util {
         }
 
         private void addFile(File f, String pathPrefix) throws IOException {
-            System.out.println("Adding " + f.getName() + ", prefix:" + pathPrefix);
             if (f.isHidden() || !f.exists()) return;
-            System.out.println(f.getName() + " exists!");
             if (f.isDirectory()) {
                 z.putNextEntry(new ZipEntry(pathPrefix + f.getName() + "/"));
                 z.closeEntry();
