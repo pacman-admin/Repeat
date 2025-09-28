@@ -1,19 +1,12 @@
 package utilities;
 
-
-import main.BlankClass;
-
 import java.io.*;
-import java.net.URISyntaxException;
-import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
-import java.util.*;
-import java.util.jar.JarEntry;
-import java.util.jar.JarFile;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -46,45 +39,6 @@ public class FileUtility {
     }
 
     /**
-     * Split a path into a list of directories ending with the file name
-     *
-     * @param path path to split
-     * @return list of directories representing the file path, ending with the file name
-     */
-    private static List<String> splitPath(String path) {
-        return splitPath(new File(path));
-    }
-
-    /**
-     * Split a file into a list of directories ending with the file name
-     *
-     * @param file file to split path
-     * @return list of directories representing the file path, ending with the file name
-     */
-    private static List<String> splitPath(File file) {
-        List<String> output = new ArrayList<>();
-        File current = file;
-        while (current != null) {
-            output.add(current.getName());
-            current = current.getParentFile();
-        }
-        Collections.reverse(output);
-        return output;
-    }
-
-    /**
-     * Get the file name given a relative or absolute path to the file
-     * Path does not have to exist
-     *
-     * @param path path to the file
-     * @return file name (omitting the parent directories)
-     */
-    public static String getFileName(String path) {
-        List<String> split = splitPath(path);
-        return split.getLast();
-    }
-
-    /**
      * Get relative path of a file with respect to a working directory
      *
      * @param workDirectory the directory that will be reference
@@ -109,21 +63,6 @@ public class FileUtility {
      */
     public static String getRelativePwdPath(File target) {
         return getRelativePath(new File(""), target);
-    }
-
-    /**
-     * Change the name of the file
-     *
-     * @param file    file to rename
-     * @param newName new name for the file
-     * @return file with name renamed to newName
-     */
-    public static File renameFile(File file, String newName) {
-        String absolutePath = file.getAbsolutePath();
-        String fileName = file.getName();
-        String newAbsolutePath = absolutePath.substring(0, absolutePath.lastIndexOf(fileName)) + newName;
-
-        return new File(newAbsolutePath);
     }
 
     /**
@@ -294,39 +233,6 @@ public class FileUtility {
     }
 
     /**
-     * Read a plain text file and process it line by line
-     *
-     * @param file file that will be processed
-     * @return void
-     */
-    public static void readFromFile(File file, Function<String, Boolean> lineProcessing) {
-
-        try (FileInputStream fr = new FileInputStream(file)) {
-            try {
-                InputStreamReader char_input = new InputStreamReader(fr, StandardCharsets.UTF_8.newDecoder());
-                BufferedReader br = new BufferedReader(char_input);
-
-                while (true) {
-                    String in = br.readLine();
-                    if (in == null) {
-                        break;
-                    }
-
-                    if (!lineProcessing.apply(in)) {
-                        break;
-                    }
-                }
-
-                br.close();
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "IOException while reading file", e);
-            }
-        } catch (IOException e) {
-            LOGGER.log(Level.SEVERE, "IOException while closing file reader", e);
-        }
-    }
-
-    /**
      * Read a plain text file.
      *
      * @param file file that will be read
@@ -492,93 +398,6 @@ public class FileUtility {
             return file.delete();
         } else {
             return true;
-        }
-    }
-
-    /**
-     * Extracts content from this JAR to the destination.
-     *
-     * @param path                   path in this JAR to explore files.
-     * @param destination            the destination directory where files will be extracted to.
-     * @param filteringFunction      the function to filter files by. Only files with returned value true will be extracted.
-     * @param postProcessingFunction to perform any post processing of the extracted file.
-     * @throws IOException
-     * @throws URISyntaxException
-     */
-    public static void extractFromCurrentJar(String path, File destination, Function<String, Boolean> filteringFunction, Function<String, Boolean> postProcessingFunction) throws IOException, URISyntaxException {
-        final File jarFile = new File(BlankClass.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath());
-
-        if (jarFile.isFile()) {// Run with JAR file
-            final JarFile jar = new JarFile(jarFile);
-            final Enumeration<JarEntry> entries = jar.entries(); // Gives ALL entries in jar
-            while (entries.hasMoreElements()) {
-                JarEntry entry = entries.nextElement();
-                String name = entry.getName();
-
-                if (!name.startsWith(path + "/")) { // Filter according to the path
-                    continue;
-                }
-
-                if (!filteringFunction.apply(name)) {
-                    continue;
-                }
-
-                InputStream inputStream = jar.getInputStream(entry);
-                int prefixIndex = (path + "/").length();
-                Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), name.substring(prefixIndex)));
-                if (entry.isDirectory()) {
-                    LOGGER.info("Creating " + destinationPath);
-                    destinationPath.toFile().mkdirs();
-                    continue;
-                }
-
-                if (!destinationPath.getParent().toFile().exists()) {
-                    destinationPath.getParent().toFile().mkdirs();
-                }
-                Files.copy(inputStream, destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                if (!postProcessingFunction.apply(destinationPath.toString())) {
-                    LOGGER.warning("Failed to apply post processing function to path " + destination);
-                }
-            }
-            jar.close();
-        } else { // Run with IDE
-            final URL url = FileUtility.class.getResource("/" + path);
-            if (url == null) {
-                return;
-            }
-            try {
-                File root = new File(url.toURI());
-                Path rootPath = root.toPath();
-                Stack<File> dirs = new Stack<>();
-                dirs.push(root);
-
-                while (!dirs.isEmpty()) {
-                    File dir = dirs.pop();
-                    for (File app : dir.listFiles()) {
-                        if (app.isDirectory()) {
-                            dirs.push(app);
-                            continue;
-                        }
-
-                        if (!filteringFunction.apply(app.getAbsolutePath())) {
-                            continue;
-                        }
-
-                        String relativeDir = rootPath.relativize(dir.toPath()).toString();
-                        Path destinationPath = Paths.get(FileUtility.joinPath(destination.getAbsolutePath(), relativeDir, app.getName()));
-                        if (!destinationPath.getParent().toFile().exists()) {
-                            if (!destinationPath.getParent().toFile().mkdirs())
-                                LOGGER.warning("Could not create destination directory.");
-                        }
-                        Files.copy(app.toPath(), destinationPath, StandardCopyOption.REPLACE_EXISTING);
-                        if (!postProcessingFunction.apply(destinationPath.toString())) {
-                            LOGGER.warning("Failed to apply post processing function to path " + destination);
-                        }
-                    }
-                }
-            } catch (URISyntaxException ex) {
-                // never happens
-            }
         }
     }
 

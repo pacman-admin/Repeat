@@ -26,8 +26,17 @@ public class CustomAction extends UserDefinedAction {
     public void action(final Core c) throws InterruptedException {
         KeyboardCore k = c.keyBoard();
         MouseCore m = c.mouse();
+        /*Begin generated code*/
         //Write your macro code after this line
 
-        //k.
+        k.type("Repeat can type Strings!");
+
+        //You can use a Timer to schedule an action very precisely.
+        new Timer("Delayed mouse click Timer").schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        m.leftClick();
+                    }
+                },1000L);
     }
 }
