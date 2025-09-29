@@ -332,64 +332,6 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 
         return unsupportedAction(type, id, action);
     }
-
-	/*private boolean toolAction(String type, long id, final String action, final List<Object> parsedParams) throws InterruptedException {
-		ITools tools = getTools();
-
-		if (action.equals("get_clipboard")) {
-			return success(type, id, tools.getClipboard());
-		} else if (action.equals("set_clipboard")) {
-			List<String> params = toStringParams(parsedParams);
-			if (params == null) {
-				return false;
-			}
-
-			String data = params.get(0);
-			tools.setClipboard(data);
-			return success(type, id);
-		} else if (action.equals("execute")) {
-			List<String> params = toStringParams(parsedParams);
-			if (params == null) {
-				return false;
-			}
-
-			if (params.size() == 1) {
-				return success(type, id, tools.execute(params.get(0)));
-			} else if (params.size() == 2) {
-				return success(type, id, tools.execute(params.get(0), new File(params.get(1))));
-			} else {
-				return failure(type, id, "Unexpected number of parameter for execution");
-			}
-		} else if (action.equals("get_selection")) {
-			if (parsedParams.size() < 3) {
-				return failure(type, id, "Need at least 3 parameters to get selection (title, selected, choices)");
-			}
-
-			Iterator<Object> it = parsedParams.iterator();
-			String title = "";
-			int selected = 0;
-			try {
-				title = (String) it.next();
-				selected = (int) it.next();
-			} catch (ClassCastException e) {
-				return failure(type, id, "Need type string, int as first two paramters to get_selection");
-			}
-
-			List<Object> choiceObjects = new ArrayList<>();
-			while (it.hasNext()) {
-				choiceObjects.add(it.next());
-			}
-			final List<String> choices = toStringParams(choiceObjects);
-			if (choices == null) {
-				return failure(type, id, "Type of choices must be string");
-			}
-			int selection = SwingUtil.DialogUtil.getSelection(null, title, choices.toArray(new String[choices.size()]), selected);
-			return success(type, id, JsonNodeFactories.number(selection));
-		}
-
-		return unsupportedAction(type, id, action);
-	}*/
-
     private boolean unsupportedAction(String type, long id, final String action) {
         return failure(type, id, "Unsupported action " + action);
     }
@@ -400,14 +342,6 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
         }
 
         return coreProvider.getLocal();
-    }
-
-    private ITools getTools() {
-        if (holder.isLocalClientProcessor()) {
-            return DefaultTools.get();
-        }
-
-        return Tools.local();
     }
 
     private List<String> toStringParams(List<Object> params) {

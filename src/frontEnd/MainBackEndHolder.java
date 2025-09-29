@@ -238,7 +238,7 @@ public class MainBackEndHolder {
         GlobalListenerHookController.of().cleanup();
         SharedVariablesPubSubManager.get().stop();
 
-        LOGGER.info("All backend acitvities terminated!");
+        LOGGER.info("All backend activities terminated!");
     }
 
     public void scheduleExit(long delayMs) {
@@ -1065,12 +1065,12 @@ public class MainBackEndHolder {
         LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
         if (System.getenv("XDG_SESSION_TYPE").equalsIgnoreCase("wayland")) {
             LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
-            try {
+            /*try {
                 Runtime.getRuntime().exec(new String[]{"xeyes"});
                 LOGGER.info("If the eyes move, the Repeat will work when that window or app is active.");
             } catch (IOException e) {
                 LOGGER.warning("Please install xeyes;\nit is a useful tool to determine whether a window is Wayland.\nRepeat does not work in Wayland windows.");
-            }
+            }*/
         }
     }
 

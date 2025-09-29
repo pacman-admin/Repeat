@@ -53,7 +53,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
                     try {
                         Thread.sleep((long)((currentTime - time) / speedup));
                     } catch (InterruptedException e) {
-                        LOGGER.info("Ended prematuredly");
+                        LOGGER.info("Ended prematurely");
                         return; // Ended prematurely
                     }
 
@@ -65,7 +65,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
                     try {
                         Thread.sleep((long)(delay / speedup));
                     } catch (InterruptedException e) {
-                        LOGGER.info("Ended prematuredly");
+                        LOGGER.info("Ended prematurely");
                         return; // Ended prematurely
                     }
                 }

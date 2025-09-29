@@ -14,6 +14,7 @@ import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 
+@SuppressWarnings("SpellCheckingInspection")
 public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodHttpHandler {
 
 	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;

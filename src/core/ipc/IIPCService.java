@@ -52,7 +52,7 @@ public abstract class IIPCService implements ILoggable {
     /**
      * Specific configuration parameters for this ipc service.
      *
-     * @return the json node containing configuration parmeters for this ipc service.
+     * @return the json node containing configuration parameters for this ipc service.
      */
     protected JsonNode getSpecificConfig() {
         return JsonNodeFactories.object(JsonNodeFactories.field("launch_at_startup", JsonNodeFactories.booleanNode(isLaunchAtStartup())));

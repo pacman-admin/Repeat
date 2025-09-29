@@ -19,29 +19,21 @@ public final class IPCServiceManager {
     private static final Logger LOGGER = Logger.getLogger(IPCServiceManager.class.getName());
     private static final long INTER_SERVICE_BOOT_TIME_MS = 200;
     private static final IIPCService[] ipcServices;
-    private static final Map<Language, Integer> ipcByLanugage;
+    private static final Map<Language, Integer> ipcByLanguage;
 
     static {
         ipcServices = new IIPCService[IPC_SERVICE_COUNT];
-        //ipcServices[IPCServiceName.CONTROLLER_SERVER.value()] = new ControllerServer();
-        //ipcServices[IPCServiceName.CLI_SERVER.value()] = new CliServer();
         ipcServices[IPCServiceName.WEB_UI_SERVER.value()] = new UIServer();
-
-        ipcByLanugage = new HashMap<>();
-        ipcByLanugage.put(Language.JAVA, -1);
-        ipcByLanugage.put(Language.MANUAL_BUILD, -1);
+        ipcByLanguage = new HashMap<>();
+        ipcByLanguage.put(Language.JAVA, -1);
+        ipcByLanguage.put(Language.MANUAL_BUILD, -1);
     }
 
     private IPCServiceManager() {
     }
 
-    public static void setBackEnd(MainBackEndHolder backEnd) {
-        //ControllerServer controllerServer = (ControllerServer) ipcServices[IPCServiceName.CONTROLLER_SERVER.value()];
-        //controllerServer.setBackEnd(backEnd);
-    }
-
     public static IIPCService getIPCService(Language name) {
-        int index = ipcByLanugage.get(name);
+        int index = ipcByLanguage.get(name);
         if (index >= 0) {
             return ipcServices[index];
         } else {
@@ -67,10 +59,6 @@ public final class IPCServiceManager {
     public static void initiateServices(MainBackEndHolder backEndHolder) throws IOException {
         for (IPCServiceName name : IPCServiceName.values()) {
             IIPCService service = IPCServiceManager.getIPCService(name);
-            /*if (name == IPCServiceName.CLI_SERVER) {
-                CliServer server = (CliServer) service;
-                server.setMainBackEndHolder(backEndHolder);
-            } else */
             if (name == IPCServiceName.WEB_UI_SERVER) {
                 UIServer server = (UIServer) service;
                 server.setMainBackEndHolder(backEndHolder);

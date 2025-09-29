@@ -27,7 +27,7 @@ public class ModifyIPCServicePortHandler extends AbstractUIHttpHandler {
 			throws IOException {
 		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
 		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST paramters.");
+			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST parameters.");
 		}
 
 		IIPCService service = CommonTask.getIPCService(params);

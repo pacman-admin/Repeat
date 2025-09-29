@@ -44,14 +44,6 @@ public class KeyboardState {
 		return this;
 	}
 
-	public KeyboardState withNumslockOn() {
-		return clone().setNumslockLocked(true);
-	}
-
-	public KeyboardState withNumslockOff() {
-		return clone().setNumslockLocked(false);
-	}
-
 	private KeyboardState withNumslock(boolean state) {
 		return clone().setNumslockLocked(state);
 	}

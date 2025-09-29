@@ -187,6 +187,7 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/action/stop-running-compiled-task", new ActionStopRunningCompiledTaskHandler());
         output.put("/internals/action/switch-task-group", new ActionSwitchTaskGroupHandler(objectRenderer));
 
+        //noinspection SpellCheckingInspection
         output.put("/internals/get/editted-source", new GetEditedSourceHandler());
         output.put("/internals/get/is-running-compiled-task", new GetIsRunningCompiledTaskHandler());
         output.put("/internals/get/is-recording", new GetIsRecordingHandler());

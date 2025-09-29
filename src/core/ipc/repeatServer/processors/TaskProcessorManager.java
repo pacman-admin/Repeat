@@ -17,15 +17,6 @@ public final class TaskProcessorManager {
 	static {
 		taskManagers = Collections.synchronizedMap(new HashMap<>());
 	}
-
-	public static boolean hasProcessor(Language language) {
-		return taskManagers.containsKey(language);
-	}
-
-	public static TaskProcessor getProcessor(Language language) {
-		return taskManagers.get(language);
-	}
-
 	/**
 	 * @return whether the client was successfully identified and associated to a language.
 	 */
