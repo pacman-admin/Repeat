@@ -28,7 +28,7 @@ public class ActionChangeTaskGroupForTaskHandler extends AbstractUIHttpHandler {
         if (groupId == null || groupId.isEmpty()) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get group ID.");
         }
-        String taskId = CommonTask.getTaskIdFromRequest(backEndHolder, params);
+        String taskId = CommonTask.getTaskIdFromRequest(params);
         if (taskId == null || taskId.isEmpty()) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get task ID.");
         }

@@ -197,7 +197,7 @@ public class MainBackEndHolder {
                 trayIcon.add();
             }
         }
-        IPCServiceManager.setBackEnd(this);
+        //IPCServiceManager.setBackEnd(this);
     }
 
     /*************************************************************************************************************/

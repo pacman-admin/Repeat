@@ -28,14 +28,8 @@ public class IPCPageHandler extends AbstractUIHttpHandler {
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
-		List<RenderedIPCService> services = new ArrayList<>(IPCServiceManager.IPC_SERVICE_COUNT);
-		for (int i = 0; i < IPCServiceManager.IPC_SERVICE_COUNT; i++) {
-			IIPCService service = IPCServiceManager.getIPCService(i);
-			services.add(RenderedIPCService.fromIPCService(service));
-		}
-		data.put("ipcs", services);
+		data.put("ipcs", List.of(RenderedIPCService.fromIPCService(IPCServiceManager.getUIServer())));
 		data.put("tooltips", new TooltipsIPCPage());
-
 		return renderedPage(exchange, "ipcs", data);
 	}
 }

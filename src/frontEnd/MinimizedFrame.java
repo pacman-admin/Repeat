@@ -2,7 +2,6 @@ package frontEnd;
 
 import core.ipc.IIPCService;
 import core.ipc.IPCServiceManager;
-import core.ipc.IPCServiceName;
 
 import java.awt.*;
 import java.awt.event.MouseAdapter;
@@ -54,7 +53,7 @@ class MinimizedFrame extends TrayIcon {
             LOGGER.warning("Cannot open UI in browser; Desktop module is not supported.");
         }
 
-        IIPCService server = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER);
+        IIPCService server = IPCServiceManager.getUIServer();
         try {
             Desktop.getDesktop().browse(new URI("http://localhost:" + server.getPort()));
         } catch (IOException | URISyntaxException ex) {

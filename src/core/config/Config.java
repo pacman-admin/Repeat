@@ -234,17 +234,18 @@ public final class Config implements ILoggable {
         return RECORD;
     }
 
-    public void setMOUSE_GESTURE(KeyChain MOUSE_GESTURE) {
-        this.MOUSE_GESTURE = MOUSE_GESTURE;
-    }
-    public KeyChain getMOUSE_GESTURE() {
-        return MOUSE_GESTURE;
-    }
-
     public void setRECORD(KeyChain RECORD) {
         if (RECORD != null) {
             this.RECORD = RECORD;
         }
+    }
+
+    public KeyChain getMOUSE_GESTURE() {
+        return MOUSE_GESTURE;
+    }
+
+    public void setMOUSE_GESTURE(KeyChain MOUSE_GESTURE) {
+        this.MOUSE_GESTURE = MOUSE_GESTURE;
     }
 
     public KeyChain getREPLAY() {

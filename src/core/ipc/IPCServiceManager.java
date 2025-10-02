@@ -14,8 +14,6 @@ public final class IPCServiceManager {
     static {
         UI_SERVER = new UIServer();
     }
-
-
     private IPCServiceManager() {
     }
 
@@ -42,5 +40,9 @@ public final class IPCServiceManager {
         UIServer server = (UIServer) UI_SERVER;
         server.setMainBackEndHolder(backEndHolder);
         UI_SERVER.startRunning();
+    }
+
+    public static IIPCService getUIServer(){
+        return UI_SERVER;
     }
 }

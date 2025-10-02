@@ -1,6 +1,5 @@
 package core.webui.server.handlers;
 
-import core.ipc.IIPCService;
 import core.ipc.IPCServiceManager;
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
@@ -28,14 +27,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
 
     protected final Void renderedIpcServices(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        List<RenderedIPCService> services = new ArrayList<>(IPCServiceManager.IPC_SERVICE_COUNT);
-        for (int i = 0; i < IPCServiceManager.IPC_SERVICE_COUNT; i++) {
-            IIPCService service = IPCServiceManager.getIPCService(i);
-            assert service != null;
-            services.add(RenderedIPCService.fromIPCService(service));
-        }
-        data.put("ipcs", services);
-
+        data.put("ipcs", List.of(RenderedIPCService.fromIPCService(IPCServiceManager.getUIServer())));
         return renderedPage(exchange, "fragments/ipcs", data);
     }
 
@@ -45,7 +37,6 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         RenderedRemoteRepeatsClientsConfig coreConfig = RenderedRemoteRepeatsClientsConfig.of(backEndHolder.getPeerServiceClientManager(), backEndHolder.getConfig().getCoreConfig());
         RenderedRemoteRepeatsClientsConfig remoteRepeatsCompilerConfig = RenderedRemoteRepeatsClientsConfig.of(backEndHolder.getPeerServiceClientManager(), backEndHolder.getConfig().getCompilerFactory().getRemoteRepeatsCompilerConfig());
         data.put("globalConfigs", RenderedGlobalConfigs.of(toolsConfig, coreConfig, remoteRepeatsCompilerConfig));
-
         return data;
     }
 

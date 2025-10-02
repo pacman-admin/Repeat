@@ -17,24 +17,23 @@ public class CommonTask {
 	private CommonTask() {}
 
 	public static IIPCService getIPCService(Map<String, String> params) {
-		String indexString = params.get("ipc");
+		/*String indexString = params.get("ipc");
 		if (indexString == null || !NumberUtility.isNonNegativeInteger(indexString)) {
 			LOGGER.warning("IPC index must be non-negative integer. Got " + indexString + ".");
 			return null;
 		}
 
 		int index = Integer.parseInt(indexString);
-		if (index >= IPCServiceManager.IPC_SERVICE_COUNT) {
+		if (index != ) {
 			LOGGER.warning("IPC index out of bound: " + index);
 			return null;
-		}
-
-		return IPCServiceManager.getIPCService(index);
+		}*/
+		return IPCServiceManager.getUIServer();
 	}
 
 	public static UserDefinedAction getTaskFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params) {
-		String taskId = getTaskIdFromRequest(backEndHolder, params);
-		if (taskId == null || taskId.isEmpty()) {
+		String taskId = getTaskIdFromRequest(params);
+		if (taskId.isEmpty()) {
 			LOGGER.warning("Cannot find task ID.");
 			return null;
 		}
@@ -42,7 +41,7 @@ public class CommonTask {
 		return getTaskFromId(backEndHolder, taskId);
 	}
 
-	public static String getTaskIdFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params) {
+	public static String getTaskIdFromRequest(Map<String, String> params) {
 		String taskValue = params.get("task");
 		if (taskValue == null || taskValue.isEmpty()) {
 			LOGGER.warning("Missing task ID.");

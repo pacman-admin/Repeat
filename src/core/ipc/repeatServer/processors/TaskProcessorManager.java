@@ -27,7 +27,7 @@ public final class TaskProcessorManager {
 		}
 		getLogger().info("Identified remote compiler " + language);
 		taskManagers.put(identified, processor);
-		IPCServiceManager.getIPCService(identified).setPort(port);
+		//IPCServiceManager.getIPCService(identified).setPort(port);
 
 		if (callBack != null) {
 			// It is necessary to call back in a separate thread to not block the receiving

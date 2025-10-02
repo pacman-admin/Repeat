@@ -25,7 +25,7 @@ public class ActionOverwriteTaskHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data.");
         }
 
-        String taskId = CommonTask.getTaskIdFromRequest(backEndHolder, params);
+        String taskId = CommonTask.getTaskIdFromRequest(params);
         if (taskId == null || taskId.isEmpty()) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task from request data.");
         }
