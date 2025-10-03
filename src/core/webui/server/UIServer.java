@@ -95,17 +95,17 @@ public class UIServer extends IPCServiceWithModifablePort {
     private Map<String, HttpHandlerWithBackend> createHandlers() {
         Map<String, HttpHandlerWithBackend> output = new HashMap<>();
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
-        output.put("/logs", new LogsPageHandler(objectRenderer));
+        //output.put("/logs", new LogsPageHandler(objectRenderer));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
-        output.put("/global-configs", new GlobalConfigsPageHandler(objectRenderer));
+        //output.put("/global-configs", new GlobalConfigsPageHandler(objectRenderer));
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
         output.put("/tasks/details", new TaskDetailsPageHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/tasks/manually-build", new TaskBuilderPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/api", new ApiPageHandler());
         output.put("/about", new AboutPageHandler(objectRenderer));
 
-        output.put("/internals/global-configs/tools-config/set-clients", new SetToolsConfigClientsHandler(objectRenderer));
-        output.put("/internals/global-configs/core-config/set-clients", new SetCoreConfigClientsHandler(objectRenderer));
+        //output.put("/internals/global-configs/tools-config/set-clients", new SetToolsConfigClientsHandler(objectRenderer));
+        //output.put("/internals/global-configs/core-config/set-clients", new SetCoreConfigClientsHandler(objectRenderer));
 
         output.put("/internals/menu/file/save-config", new MenuSaveConfigActionHandler());
         output.put("/internals/menu/file/import-tasks", new MenuImportTaskActionHandler());
@@ -178,12 +178,12 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/action/run-config/save", new SaveRunTaskConfigHandler());
         output.put("/internals/action/run-config/get", new GetRunTaskConfigHandler(objectRenderer));
         output.put("/internals/action/run-compiled-task", new ActionRunCompiledTaskHandler());
-        output.put("/internals/action/run-ipc-service", new ActionRunIPCServiceHandler(objectRenderer));
+        //output.put("/internals/action/run-ipc-service", new ActionRunIPCServiceHandler(objectRenderer));
         output.put("/internals/action/start-record", new ActionStartRecordingHandler());
         output.put("/internals/action/start-replay", new ActionStartReplayHandler());
         output.put("/internals/action/stop-record", new ActionStopRecordingHandler());
         output.put("/internals/action/stop-replay", new ActionStopReplayHandler());
-        output.put("/internals/action/stop-ipc-service", new ActionStopIPCServiceHandler(objectRenderer));
+        //output.put("/internals/action/stop-ipc-service", new ActionStopIPCServiceHandler(objectRenderer));
         output.put("/internals/action/stop-running-compiled-task", new ActionStopRunningCompiledTaskHandler());
         output.put("/internals/action/switch-task-group", new ActionSwitchTaskGroupHandler(objectRenderer));
 
@@ -209,7 +209,7 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/modify/ipc-service-port", new ModifyIPCServicePortHandler(objectRenderer));
         output.put("/internals/modify/task-name", new ModifyTaskNameHandler(objectRenderer));
 
-        output.put("/internals/toggle/ipc-service-launch-at-startup", new ToggleIPCServiceLaunchAtStartupHandler(objectRenderer));
+        //output.put("/internals/toggle/ipc-service-launch-at-startup", new ToggleIPCServiceLaunchAtStartupHandler(objectRenderer));
         output.put("/internals/toggle/task-group-enabled", new ToggleTaskGroupEnabledHandler(objectRenderer));
         output.put("/internals/toggle/task-enabled", new ToggleTaskEnabledHandler(objectRenderer));
 
