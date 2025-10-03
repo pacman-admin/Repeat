@@ -4,12 +4,10 @@ import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import core.ipc.ApiProtocol;
-import core.ipc.repeatServer.ClientTask;
 import core.ipc.repeatServer.MainMessageSender;
 import core.keyChain.ActionInvoker;
 import frontEnd.MainBackEndHolder;
 
-import java.io.File;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -57,14 +55,12 @@ public class TaskProcessor extends AbstractMessageProcessor {
     private static final long TASK_CREATION_TIMEOUT_MS = 10000; // Compiling may take long time
     private static final long EXECUTION_TIMEOUT_MS = 500000; // Execution may also take long time
     private static final long TASK_REMOVAL_TIMEOUT_MS = 2000; // Removal should be fast
-    private final Map<String, ClientTask> remoteTasks;
     private final Map<Long, Reply> locks;
-    private ServerTaskRequestProcessor taskRequestProcessor;
+    private final ServerTaskRequestProcessor taskRequestProcessor;
 
     public TaskProcessor(MainBackEndHolder backEnd, MainMessageSender messageSender) {
         super(messageSender);
         this.taskRequestProcessor = new ServerTaskRequestProcessor(backEnd, messageSender);
-        this.remoteTasks = new HashMap<>();
         locks = new HashMap<>();
     }
 
@@ -100,26 +96,6 @@ public class TaskProcessor extends AbstractMessageProcessor {
         return true;
     }
 
-    public String createTask(File file) {
-        JsonRootNode requestMessage = JsonNodeFactories.object(
-                JsonNodeFactories.field("task_action", JsonNodeFactories.string(CREATE_TASK_ACTION)),
-                JsonNodeFactories.field("parameters",
-                        JsonNodeFactories.array(
-                                JsonNodeFactories.string(file.getAbsolutePath())
-                        )
-                )
-        );
-
-        Reply reply = fullMessage(requestMessage, TASK_CREATION_TIMEOUT_MS);
-        if (reply != null && reply.status.equals(ApiProtocol.SUCCESS_STATUS)) {
-            ClientTask task = ClientTask.parseJSON(reply.message);
-            if (task != null) {
-                remoteTasks.put(task.id(), task);
-                return task.id();
-            }
-        }
-        return "";
-    }
 
     public boolean runTask(String id, ActionInvoker invoker) {
         JsonRootNode requestMessage = JsonNodeFactories.object(
@@ -136,25 +112,6 @@ public class TaskProcessor extends AbstractMessageProcessor {
         return reply != null && reply.status.equals(ApiProtocol.SUCCESS_STATUS);
     }
 
-    public boolean removeTask(String id) {
-        JsonRootNode requestMessage = JsonNodeFactories.object(
-                JsonNodeFactories.field("task_action", JsonNodeFactories.string(REMOVE_TASK_ACTION)),
-                JsonNodeFactories.field("parameters",
-                        JsonNodeFactories.array(JsonNodeFactories.string(id))
-                )
-        );
-
-        Reply reply = fullMessage(requestMessage, TASK_REMOVAL_TIMEOUT_MS);
-        if (reply.status.equals(ApiProtocol.SUCCESS_STATUS)) {
-            ClientTask task = ClientTask.parseJSON(reply.message);
-            if (task != null && task.id().equals(id)) {
-                this.remoteTasks.put(task.id(), task);
-                remoteTasks.remove(task.id());
-                return true;
-            }
-        }
-        return false;
-    }
 
     private Reply fullMessage(JsonNode requestMessage, long timeoutMs) {
         if (!verifyMessageContent(requestMessage)) {

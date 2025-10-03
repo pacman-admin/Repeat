@@ -1,7 +1,6 @@
 package core.webui.server.handlers.internals.tasks;
 
 import argo.jdom.JsonNode;
-import core.keyChain.KeyChain;
 import core.keyChain.ActionInvoker;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
@@ -18,11 +17,10 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
-import java.util.Set;
 
-public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
+public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
-    private TaskActivationConstructorManager taskActivationConstructorManager;
+    private final TaskActivationConstructorManager taskActivationConstructorManager;
 
     public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
@@ -63,10 +61,9 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         }
 
         String taskString = params.getStringValue("task");
-        if (isHotkey(taskString)) {
-            //throw new RuntimeException("Setting hotkey through GUI is broken!\n" + taskString);
-            //return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
-        }
+        /*if (isHotkey(taskString)) {
+            return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
+        }*/
 
         UserDefinedAction task = CommonTask.getTaskFromId(backEndHolder, taskString);
         if (task == null) {
@@ -119,7 +116,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
         return true;
     }
-
+    /*
     private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) throws IOException {
         Set<KeyChain> hotKeys = activation.getHotkeys();
         if (hotKeys.isEmpty()) {
@@ -151,7 +148,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
     private boolean isHotkey(String taskString) {
         return taskString != null && (TaskDetailsPageHandler.HOTKEY_NAMES.containsKey(taskString));
-    }
+    }*/
 
     private TaskExecutionPreconditions getTaskExecutionPreconditions(JsonNode params) {
         JsonNode preconditions = params.getNode("preconditions");

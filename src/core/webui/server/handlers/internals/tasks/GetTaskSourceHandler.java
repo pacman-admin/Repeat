@@ -44,7 +44,7 @@ public class GetTaskSourceHandler extends AbstractComplexGETHandler {
         UserDefinedAction action = backEndHolder.getTask(id);
         if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
 
-        Long timestamp = Long.parseLong(timestampString);
+        long timestamp = Long.parseLong(timestampString);
         String sourceCode = backEndHolder.getSourceForTask(action, timestamp);
         if (sourceCode == null) throw new NullPointerException("Could not find source code for Action with ID: " + id);
 

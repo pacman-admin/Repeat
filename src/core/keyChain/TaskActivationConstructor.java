@@ -20,7 +20,7 @@ public class TaskActivationConstructor {
 
     private boolean listening;
 
-    private Config config;
+    private final Config config;
 
     public TaskActivationConstructor(ActionInvoker reference) {
         this(reference, Config.of());

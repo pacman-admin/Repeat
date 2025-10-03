@@ -36,8 +36,8 @@ public class ActionExecutor {
     }
 
 
-    private String startExecutingAction(UserDefinedAction action) {
-        return startExecutingAction(ActionExecutionRequest.of(), action);
+    private void startExecutingAction(UserDefinedAction action) {
+        startExecutingAction(ActionExecutionRequest.of(), action);
     }
 
     /**

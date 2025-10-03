@@ -53,13 +53,12 @@ public class KeySequence extends KeySeries {
 		try {
 			List<ButtonStroke> keys = KeySeries.parseKeyStrokes(list);
 			if (keys == null) {
-				LOGGER.warning("Failed to parse KeyChain.");
+				LOGGER.warning("Cannot parse KeySequence from null.");
 				return null;
 			}
-
 			return new KeySequence(keys);
 		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, "Unable to parse KeyChain", e);
+			LOGGER.log(Level.WARNING, "Unable to parse KeySequence", e);
 			return null;
 		}
 	}
