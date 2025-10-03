@@ -54,39 +54,6 @@ public class ServerMainProcessor implements ILoggable {
 		messageProcessors.put(IpcMessageType.SYSTEM_HOST, systemProcessor);
 		messageProcessors.put(IpcMessageType.SYSTEM_CLIENT, systemProcessor);
 	}
-
-	/**
-	 * Parse a request from client.
-	 * @param message request from client as JSON string
-	 */
-	public boolean processRequest(String message) {
-		JsonRootNode root = JSONUtility.jsonFromString(message);
-		if (root == null || !verifyMessage(root)) {
-			getLogger().warning("Invalid messaged received " + message);
-			return false;
-		}
-
-		getLogger().fine("Receive " + message);
-		IpcMessageType type = IpcMessageType.identify(root.getStringValue("type"));
-		long id = Long.parseLong(root.getNumberValue("id"));
-		JsonNode content = root.getNode("content");
-
-		try {
-			messageProcessors.get(type).process(type.getValue(), id, content);
-			return true;
-		} catch (InterruptedException e) {
-			getLogger().log(Level.WARNING, "Interrupted while processing message", e);
-			return false;
-		}
-	}
-
-	private boolean verifyMessage(JsonRootNode message) {
-		return message.isStringValue("type") &&
-				message.isNumberValue("id") &&
-				message.isObjectNode("content") &&
-				messageProcessors.containsKey(IpcMessageType.identify(message.getStringValue("type")));
-	}
-
 	void setLocalClientProcessor(boolean localClientProcessor) {
 		this.localClientProcessor = localClientProcessor;
 	}
