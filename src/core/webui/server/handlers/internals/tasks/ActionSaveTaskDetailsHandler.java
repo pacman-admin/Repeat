@@ -61,9 +61,11 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         }
 
         String taskString = params.getStringValue("task");
-        /*if (isHotkey(taskString)) {
-            return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
-        }*/
+        if (isHotkey(taskString)) {
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Changing a global hotkey is not possible. Please edit the config manually");
+            //Does not work at all for some reason.
+            //return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
+        }
 
         UserDefinedAction task = CommonTask.getTaskFromId(backEndHolder, taskString);
         if (task == null) {
@@ -116,39 +118,10 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
         return true;
     }
-    /*
-    private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) throws IOException {
-        Set<KeyChain> hotKeys = activation.getHotkeys();
-        if (hotKeys.isEmpty()) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set.");
-        }
-        KeyChain hotKey = hotKeys.iterator().next();
-
-        if (taskString.equals(TaskDetailsPageHandler.RECORD_TASK_NAME)) {
-            backEndHolder.getConfig().setRECORD(hotKey);
-            backEndHolder.reconfigureSwitchRecord();
-            return emptySuccessResponse(exchange);
-        }
-        if (taskString.equals(TaskDetailsPageHandler.REPLAY_TASK_NAME)) {
-            backEndHolder.getConfig().setREPLAY(hotKey);
-            backEndHolder.reconfigureSwitchReplay();
-            return emptySuccessResponse(exchange);
-        }
-        if (taskString.equals(TaskDetailsPageHandler.RUN_COMPILED_TASK_NAME)) {
-            backEndHolder.getConfig().setCOMPILED_REPLAY(hotKey);
-            backEndHolder.reconfigureSwitchCompiledReplay();
-            return emptySuccessResponse(exchange);
-        }
-        if (taskString.equals(TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME)) {
-            backEndHolder.getConfig().setMOUSE_GESTURE(hotKey);
-            return emptySuccessResponse(exchange);
-        }
-        return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString + ".");
-    }
 
     private boolean isHotkey(String taskString) {
         return taskString != null && (TaskDetailsPageHandler.HOTKEY_NAMES.containsKey(taskString));
-    }*/
+    }
 
     private TaskExecutionPreconditions getTaskExecutionPreconditions(JsonNode params) {
         JsonNode preconditions = params.getNode("preconditions");
