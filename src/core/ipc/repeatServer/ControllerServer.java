@@ -1,10 +1,10 @@
 package core.ipc.repeatServer;
 
-import core.ipc.IPCServiceWithModifablePort;
+import core.ipc.IPCServiceWithModifiablePort;
 
 import java.util.logging.Logger;
 
-public class ControllerServer extends IPCServiceWithModifablePort {
+public class ControllerServer extends IPCServiceWithModifiablePort {
 
     public static final int DEFAULT_TIMEOUT_MS = 10000;
 

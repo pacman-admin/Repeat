@@ -9,13 +9,13 @@ import utilities.json.JSONUtility;
 /**
  * IPC service with modifiable port to start at. E.g. a server.
  */
-public abstract class IPCServiceWithModifablePort extends IIPCService {
+public abstract class IPCServiceWithModifiablePort extends IIPCService {
 
 	@Override
 	protected boolean extractSpecificConfig(JsonNode node) {
 		boolean result = true;
 		if (!super.extractSpecificConfig(node)) {
-			getLogger().warning("Cannot parse parent config for " + IPCServiceWithModifablePort.class);
+			getLogger().warning("Cannot parse parent config for " + IPCServiceWithModifiablePort.class);
 			result = false;
 		}
 

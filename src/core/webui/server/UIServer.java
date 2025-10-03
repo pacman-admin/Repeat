@@ -19,7 +19,7 @@
 package core.webui.server;
 
 import core.config.WebUIConfig;
-import core.ipc.IPCServiceWithModifablePort;
+import core.ipc.IPCServiceWithModifiablePort;
 import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.AboutPageHandler;
@@ -28,10 +28,7 @@ import core.webui.server.handlers.IndexPageHandler;
 import core.webui.server.handlers.internals.*;
 import core.webui.server.handlers.internals.ipcs.IPCPageHandler;
 import core.webui.server.handlers.internals.ipcs.ModifyIPCServicePortHandler;
-import core.webui.server.handlers.internals.logs.GetIsActiveWindowInfosLoggingEnabledHandler;
-import core.webui.server.handlers.internals.logs.GetIsMousePositionLoggingEnabledHandler;
-import core.webui.server.handlers.internals.logs.SetActiveWindowInfosLoggingEnabledHandler;
-import core.webui.server.handlers.internals.logs.SetMousePositionLoggingEnabledHandler;
+import core.webui.server.handlers.internals.logs.*;
 import core.webui.server.handlers.internals.menu.*;
 import core.webui.server.handlers.internals.recordsreplays.*;
 import core.webui.server.handlers.internals.taskactivation.*;
@@ -60,22 +57,19 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-@SuppressWarnings("FieldMayBeFinal")
-public class UIServer extends IPCServiceWithModifablePort {
-
+public class UIServer extends IPCServiceWithModifiablePort {
     private static final int TERMINATION_DELAY_SECOND = 2;
     private final ObjectRenderer objectRenderer;
     private final TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler;
+    private final TaskActivationConstructorManager taskActivationConstructorManager;
+    private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
     private Map<String, HttpHandlerWithBackend> handlers;
     private MainBackEndHolder backEndHolder;
-    private TaskActivationConstructorManager taskActivationConstructorManager;
-    private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
     private Thread mainThread;
     private HttpServer server;
 
     public UIServer() {
         setPort(WebUIConfig.DEFAULT_SERVER_PORT);
-
         taskActivationConstructorManager = new TaskActivationConstructorManager();
         manuallyBuildActionConstructorManager = ManuallyBuildActionConstructorManager.of();
         objectRenderer = new ObjectRenderer();
@@ -87,7 +81,6 @@ public class UIServer extends IPCServiceWithModifablePort {
         if (handlers == null) {
             return;
         }
-
         for (HttpHandlerWithBackend handler : handlers.values()) {
             handler.setMainBackEndHolder(backEndHolder);
         }
@@ -96,17 +89,13 @@ public class UIServer extends IPCServiceWithModifablePort {
     private Map<String, HttpHandlerWithBackend> createHandlers() {
         Map<String, HttpHandlerWithBackend> output = new HashMap<>();
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
-        //output.put("/logs", new LogsPageHandler(objectRenderer));
+        output.put("/logs", new LogsPageHandler(objectRenderer));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
-        //output.put("/global-configs", new GlobalConfigsPageHandler(objectRenderer));
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
         output.put("/tasks/details", new TaskDetailsPageHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/tasks/manually-build", new TaskBuilderPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/api", new ApiPageHandler());
         output.put("/about", new AboutPageHandler(objectRenderer));
-
-        //output.put("/internals/global-configs/tools-config/set-clients", new SetToolsConfigClientsHandler(objectRenderer));
-        //output.put("/internals/global-configs/core-config/set-clients", new SetCoreConfigClientsHandler(objectRenderer));
 
         output.put("/internals/menu/file/save-config", new MenuSaveConfigActionHandler());
         output.put("/internals/menu/file/import-tasks", new MenuImportTaskActionHandler());
@@ -114,12 +103,10 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/menu/file/clean-unused-sources", new MenuCleanUnusedSourcesActionHandler());
         output.put("/internals/menu/file/force-exit", new MenuForceExitActionHandler());
         output.put("/internals/menu/file/exit", new MenuExitActionHandler());
-
         output.put("/internals/menu/tools/halt-all-tasks", new MenuHaltAllTasksActionHandler());
         output.put("/internals/menu/tools/generate-source", new MenuGetGeneratedSourceHandler(taskSourceCodeFragmentHandler));
         output.put("/internals/menu/tools/get-compiling-languages-options", new MenuGetCompilingLanguagesActionHandler(objectRenderer));
         output.put("/internals/menu/tools/set-compiling-language", new MenuSetCompilingLanguagesActionHandler(taskSourceCodeFragmentHandler));
-
         output.put("/internals/menu/settings/get-compiler-path", new MenuGetCompilerPathActionHandler());
         output.put("/internals/menu/settings/set-compiler-path", new MenuSetCompilerPathActionHandler());
         output.put("/internals/menu/settings/compiler-config-options", new MenuGetCompilerConfigOptionActionHandler(objectRenderer));
@@ -135,7 +122,6 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/menu/settings/use-java-awt-for-mouse-position", new MenuUseJavaAwtForMousePosition());
 
         output.put("/internals/action/task-details/save", new ActionSaveTaskDetailsHandler(objectRenderer, taskActivationConstructorManager));
-
         output.put("/internals/action/task-activation/start-listening", new ActionTaskActivationStartListeningHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/stop-listening", new ActionTaskActivationStopListeningHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/key-chain/remove", new ActionTaskActivationRemoveKeyChainHandler(objectRenderer, taskActivationConstructorManager));
@@ -179,12 +165,10 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/action/run-config/save", new SaveRunTaskConfigHandler());
         output.put("/internals/action/run-config/get", new GetRunTaskConfigHandler(objectRenderer));
         output.put("/internals/action/run-compiled-task", new ActionRunCompiledTaskHandler());
-        //output.put("/internals/action/run-ipc-service", new ActionRunIPCServiceHandler(objectRenderer));
         output.put("/internals/action/start-record", new ActionStartRecordingHandler());
         output.put("/internals/action/start-replay", new ActionStartReplayHandler());
         output.put("/internals/action/stop-record", new ActionStopRecordingHandler());
         output.put("/internals/action/stop-replay", new ActionStopReplayHandler());
-        //output.put("/internals/action/stop-ipc-service", new ActionStopIPCServiceHandler(objectRenderer));
         output.put("/internals/action/stop-running-compiled-task", new ActionStopRunningCompiledTaskHandler());
         output.put("/internals/action/switch-task-group", new ActionSwitchTaskGroupHandler(objectRenderer));
 
@@ -210,10 +194,8 @@ public class UIServer extends IPCServiceWithModifablePort {
         output.put("/internals/modify/ipc-service-port", new ModifyIPCServicePortHandler(objectRenderer));
         output.put("/internals/modify/task-name", new ModifyTaskNameHandler(objectRenderer));
 
-        //output.put("/internals/toggle/ipc-service-launch-at-startup", new ToggleIPCServiceLaunchAtStartupHandler(objectRenderer));
         output.put("/internals/toggle/task-group-enabled", new ToggleTaskGroupEnabledHandler(objectRenderer));
         output.put("/internals/toggle/task-enabled", new ToggleTaskEnabledHandler(objectRenderer));
-
         return output;
     }
 
@@ -223,18 +205,15 @@ public class UIServer extends IPCServiceWithModifablePort {
             getLogger().warning("Failed to initialize " + getName() + ". Port " + port + " is not free.");
             throw new IOException("Port " + port + " is not free.");
         }
-
         handlers = createHandlers();
         taskActivationConstructorManager.start();
         manuallyBuildActionConstructorManager.start();
         setMainBackEndHolder(backEndHolder);
-
         ServerBootstrap serverBootstrap = ServerBootstrap.bootstrap().setLocalAddress(InetAddress.getByName("localhost")).setIOReactorConfig(IOReactorConfig.custom().setSoReuseAddress(true).build()).setListenerPort(port).setServerInfo("Repeat").setExceptionLogger(new UIServerExceptionLogger()).registerHandler("/test", new UpAndRunningHandler()).registerHandler("/static/*", new StaticFileServingHandler());
         for (Entry<String, HttpHandlerWithBackend> entry : handlers.entrySet()) {
             serverBootstrap.registerHandler(entry.getKey(), entry.getValue());
         }
         server = serverBootstrap.create();
-
         mainThread = new Thread(() -> {
             try {
                 server.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
@@ -267,13 +246,11 @@ public class UIServer extends IPCServiceWithModifablePort {
     @Override
     public boolean setPort(int newPort) {
         boolean isRunning = isRunning();
-
         if (isRunning) {
             getLogger().info("Restarting UI server to change port to " + newPort);
             stop();
         }
         this.port = newPort;
-
         if (!isRunning) {
             return true;
         }
