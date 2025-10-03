@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-@SuppressWarnings("SpellCheckingInspection")
 class URLEncodedUtils {
     public static List<NameValuePair> parse(URI uri, Charset charset) {
         Args.notNull(uri, "URI");

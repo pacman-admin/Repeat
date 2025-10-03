@@ -23,9 +23,6 @@ import argo.jdom.JsonNodeFactories;
 import core.controller.Core;
 import core.controller.CoreProvider;
 import core.ipc.repeatServer.MainMessageSender;
-import core.userDefinedTask.Tools;
-import core.userDefinedTask.internals.DefaultTools;
-import core.userDefinedTask.internals.ITools;
 import utilities.IterableUtility;
 
 import java.awt.*;
@@ -332,6 +329,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 
         return unsupportedAction(type, id, action);
     }
+
     private boolean unsupportedAction(String type, long id, final String action) {
         return failure(type, id, "Unsupported action " + action);
     }

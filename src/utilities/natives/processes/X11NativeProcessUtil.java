@@ -34,7 +34,6 @@ import java.util.logging.Logger;
  * Provides interaction with Linux processes via X11 interface.
  * Reference C code: <a href="https://gist.github.com/kui/2622504">...</a>
  */
-@SuppressWarnings("SpellCheckingInspection")
 public class X11NativeProcessUtil {
 
     private static final Logger LOGGER = Logger.getLogger(X11NativeProcessUtil.class.getName());
