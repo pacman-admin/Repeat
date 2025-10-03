@@ -64,7 +64,7 @@ public class KeyChain extends KeySeries {
 		try {
 			List<ButtonStroke> keys = KeySeries.parseKeyStrokes(list);
 			if (keys == null) {
-				LOGGER.warning("Failed to parse KeyChain!");
+				LOGGER.warning("Failed to parse KeyChain.");
 				return null;
 			}
 			return new KeyChain(keys);

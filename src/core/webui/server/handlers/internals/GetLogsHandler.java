@@ -23,7 +23,7 @@ import core.webui.server.handlers.AbstractGETHandler;
 public class GetLogsHandler extends AbstractGETHandler {
 
     public GetLogsHandler() {
-        super("Could not get logs!");
+        super("Could not get logs.");
     }
 
     @Override

@@ -16,7 +16,7 @@ public class HTTPLogger {
     private final String errorMessage;
 
     public HTTPLogger(String errorMsg) {
-        if (errorMsg.isBlank()) throw new IllegalArgumentException("Error message must be a String!");
+        if (errorMsg.isBlank()) throw new IllegalArgumentException("Error message must be a String.");
         errorMessage = errorMsg;
     }
 

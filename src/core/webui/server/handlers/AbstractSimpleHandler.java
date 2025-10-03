@@ -20,7 +20,7 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
 
     AbstractSimpleHandler(String type, String errorMsg) {
         super(type);
-        if (errorMsg.isBlank()) throw new IllegalArgumentException("Error message must be a String!");
+        if (errorMsg.isBlank()) throw new IllegalArgumentException("Error message must be a String.");
         errorMessage = errorMsg;
     }
 

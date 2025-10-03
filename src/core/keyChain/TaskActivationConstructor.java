@@ -190,7 +190,7 @@ public class TaskActivationConstructor {
 
         public Config setMaxStrokes(int maxStrokes) {
             if (maxStrokes < 0) {
-                throw new IllegalArgumentException("Max strokes can't be negative!");
+                throw new IllegalArgumentException("Max strokes can't be negative.");
             }
             this.maxStrokes = maxStrokes;
             return this;

@@ -53,7 +53,7 @@ public class ActionExecutor {
             return null;
         }
         if (action == null) {
-            throw new IllegalArgumentException("Nothing to run!");
+            throw new IllegalArgumentException("Nothing to run.");
         }
         final String id = RandomUtil.randomID();
         Thread execution = new Thread(() -> {

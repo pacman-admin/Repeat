@@ -34,13 +34,13 @@ import java.util.stream.Collectors;
 
 public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
     public GetPathSuggestionHandler() {
-        super("Could not get path suggestions!");
+        super("Could not get path suggestions.");
     }
 
     @Override
     protected String handle(Map<String, String> params) {
         if (params == null) {
-            throw new IllegalArgumentException("No parameters supplied!");
+            throw new IllegalArgumentException("No parameters supplied.");
         }
         String path = params.get("path");
         if (path == null) {

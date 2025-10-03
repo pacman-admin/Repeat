@@ -164,7 +164,7 @@ public class SharedVariables {
 	 */
 	private static boolean isNullValue(String value, String valueMeaning) {
 		if (value == null) {
-			LOGGER.warning("Setting null " + valueMeaning + "!");
+			LOGGER.warning("Setting null " + valueMeaning + ".");
 			return true;
 		}
 

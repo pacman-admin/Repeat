@@ -21,7 +21,7 @@ public final class ActionEditSourceHandler extends AbstractPOSTHandler {
 
     protected String handle(HttpRequest request) {
         byte[] data = HttpServerUtilities.getPostContent(request);
-        if (data == null) throw new IllegalArgumentException("Source code may not be null!");
+        if (data == null) throw new IllegalArgumentException("Source code may not be null.");
         backEndHolder.editSource(new String(data, StandardCharsets.UTF_8));
         return "Opened source code in default editor.";
     }

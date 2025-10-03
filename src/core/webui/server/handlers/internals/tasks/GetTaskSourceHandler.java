@@ -32,7 +32,7 @@ public class GetTaskSourceHandler extends AbstractComplexGETHandler {
     @Override
     protected String handle(Map<String, String> params) {
 
-        if (params == null) throw new IllegalArgumentException("Params must not be null!");
+        if (params == null) throw new IllegalArgumentException("Params must not be null.");
 
         String id = params.get("id");
         if (id == null || id.isBlank()) throw new IllegalArgumentException("Task ID is empty or not provided.");

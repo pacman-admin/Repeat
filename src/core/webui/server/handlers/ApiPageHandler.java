@@ -24,7 +24,7 @@ import staticResources.BootStrapResources;
 public class ApiPageHandler extends AbstractGETHandler {
 
     public ApiPageHandler() {
-        super("Could not get API documentation for selected language!");
+        super("Could not get API documentation for selected language.");
     }
 
     @Override

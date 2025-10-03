@@ -12,7 +12,7 @@ import java.util.Map;
 public class MenuImportTaskActionHandler extends AbstractPOSTHandler {
 
     public MenuImportTaskActionHandler() {
-        super("Could not import tasks!");
+        super("Could not import tasks.");
     }
 
     @Override

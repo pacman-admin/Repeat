@@ -19,7 +19,7 @@ import java.util.Map;
 
 abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUIHttpHandler {
 
-    private static final HTTPLogger LOGGER = new HTTPLogger("Could not handle task activation modification action!");
+    private static final HTTPLogger LOGGER = new HTTPLogger("Could not handle task activation modification action.");
     private final TaskActivationConstructorManager taskActivationConstructorManager;
 
     AbstractTaskActivationConstructorActionHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {

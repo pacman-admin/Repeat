@@ -24,7 +24,7 @@ import org.apache.http.HttpRequest;
 public class ActionClearLogHandler extends AbstractPOSTHandler {
 
     public ActionClearLogHandler() {
-        super("Could not clear logs!");
+        super("Could not clear logs.");
     }
 
     @Override

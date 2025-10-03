@@ -224,7 +224,7 @@ public class UIServer extends IPCServiceWithModifiablePort {
         });
         server.start();
         mainThread.start();
-        getLogger().info("UI server started!");
+        getLogger().info("UI server started.");
     }
 
     @Override

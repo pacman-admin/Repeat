@@ -75,7 +75,7 @@ final class Util {
         byte[] buffer = new byte[1024];
         // Create output directory is not exists
         File folder = new File(outputFolder);
-        if (!folder.exists()) if (folder.mkdir()) throw new RuntimeException("Could not create directory!");
+        if (!folder.exists()) if (folder.mkdir()) throw new RuntimeException("Could not create directory.");
         // Get the zip file content
         ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile));
         // Get the zipped file list entry
@@ -100,9 +100,9 @@ final class Util {
     }
 
     static void zipDir(File in, String out) {
-        if (in == null || out == null) throw new IllegalArgumentException("File(s) may not be null!");
-        if (!in.exists()) throw new IllegalArgumentException("Input directory does not not exist!");
-        if (!in.isDirectory()) throw new IllegalArgumentException("Not a directory!");
+        if (in == null || out == null) throw new IllegalArgumentException("File(s) may not be null.");
+        if (!in.exists()) throw new IllegalArgumentException("Input directory does not not exist.");
+        if (!in.isDirectory()) throw new IllegalArgumentException("Not a directory.");
         new FileZipper(in, out);
     }
 

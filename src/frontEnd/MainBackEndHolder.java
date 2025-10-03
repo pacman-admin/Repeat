@@ -91,7 +91,7 @@ public class MainBackEndHolder {
         config = new Config(this);
 
         if (!SystemTray.isSupported()) {
-            LOGGER.warning("System tray is not supported!");
+            LOGGER.warning("System tray is not supported.");
         }
         try {
             trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
@@ -160,7 +160,7 @@ public class MainBackEndHolder {
 
     public String reloadSource() {
         LOGGER.info("Reloading edits...");
-        if (currentTempFile == null) throw new RuntimeException("Source code was never opened for editing!");
+        if (currentTempFile == null) throw new RuntimeException("Source code was never opened for editing.");
         return FileUtility.readFromFile(currentTempFile).toString();
     }
 
@@ -238,7 +238,7 @@ public class MainBackEndHolder {
         GlobalListenerHookController.of().cleanup();
         SharedVariablesPubSubManager.get().stop();
 
-        LOGGER.info("All backend activities terminated!");
+        LOGGER.info("All backend activities terminated.");
     }
 
     public void scheduleExit(long delayMs) {
@@ -476,7 +476,7 @@ public class MainBackEndHolder {
             } else {
                 result = false;
                 String collisionNames = StringUtilities.join(collisions.stream().map(UserDefinedAction::getName).collect(Collectors.toList()), ", ");
-                LOGGER.log(Level.WARNING, "Cannot register action " + action.getName() + ". There are collisions with " + collisionNames + " in hotkeys!");
+                LOGGER.log(Level.WARNING, "Cannot register action " + action.getName() + ". There are collisions with " + collisionNames + " in hotkeys.");
             }
         }
         return result;
@@ -773,7 +773,7 @@ public class MainBackEndHolder {
     }
 
     public boolean changeHotkeyTask(UserDefinedAction action, ActionInvoker newActivation) {
-        if (newActivation == null) throw new IllegalArgumentException("Can't add null activation!");
+        if (newActivation == null) throw new IllegalArgumentException("Can't add null activation.");
 
         Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
         collisions.remove(action);
@@ -878,7 +878,7 @@ public class MainBackEndHolder {
                 currentGroup = taskGroups.get(existingGroupCount); // Take the new group with lowest index.
                 setTaskInvoker();
             } else {
-                LOGGER.warning("No new task group found!");
+                LOGGER.warning("No new task group found.");
                 return;
             }
             if (result) {

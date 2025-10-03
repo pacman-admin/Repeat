@@ -57,7 +57,7 @@ public class Desktop {
             java.awt.Desktop.getDesktop().open(file);
             return true;
         } catch (IllegalArgumentException e) {
-            LOGGER.warning("File <" + file.getAbsolutePath() + "> does not exist!");
+            LOGGER.warning("File <" + file.getAbsolutePath() + "> does not exist.");
         } catch (Exception ignored) {
         }
         return switch (OSIdentifier.getCurrentOS()) {

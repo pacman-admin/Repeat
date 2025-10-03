@@ -101,7 +101,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 
 			isRunning = false;
 		} else {
-			LOGGER.warning("Failed attempting to halt scheduler while not running!");
+			LOGGER.warning("Failed attempting to halt scheduler while not running.");
 		}
 	}
 

@@ -25,7 +25,7 @@ import core.webui.server.handlers.AbstractGETHandler;
 public class GetMousePositionHandler extends AbstractGETHandler {
 
 	public GetMousePositionHandler() {
-		super("Could not get mouse pos!");
+		super("Could not get mouse pos.");
 	}
 
 	@Override

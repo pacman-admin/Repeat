@@ -29,7 +29,7 @@ public final class IPCServiceManager {
                 return UI_SERVER.extractSpecificConfig(language.getNode("config"));
             }
         }
-        throw new RuntimeException("UI Server not found!");
+        throw new RuntimeException("UI Server not found.");
     }
 
     public static JsonNode jsonize() {

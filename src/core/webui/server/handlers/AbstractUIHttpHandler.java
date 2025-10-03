@@ -17,7 +17,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHandler {
-    private static final HTTPLogger LOGGER = new HTTPLogger("UI error!");
+    private static final HTTPLogger LOGGER = new HTTPLogger("UI error.");
     protected ObjectRenderer objectRenderer;
 
     public AbstractUIHttpHandler(ObjectRenderer objectRenderer, String allowedMethod) {

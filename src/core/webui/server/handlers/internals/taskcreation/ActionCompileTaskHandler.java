@@ -26,7 +26,7 @@ import java.nio.charset.StandardCharsets;
 
 public class ActionCompileTaskHandler extends AbstractPOSTHandler {
     public ActionCompileTaskHandler() {
-        super("Could not compile custom Action!");
+        super("Could not compile custom Action.");
     }
 
     @Override
@@ -34,7 +34,7 @@ public class ActionCompileTaskHandler extends AbstractPOSTHandler {
         byte[] data = HttpServerUtilities.getPostContent(request);
         if (data == null) throw new IllegalArgumentException("Unable to get POST request data.");
         String source = new String(data, StandardCharsets.UTF_8);
-        if (source.isBlank()) throw new IllegalArgumentException("Nothing to compile!");
+        if (source.isBlank()) throw new IllegalArgumentException("Nothing to compile.");
         boolean result = backEndHolder.compileSourceAndSetCurrent(source, null);
         if (!result) {
             throw new RuntimeException("Source code could not be compiled, probably due to a syntax error.");
