@@ -66,4 +66,8 @@ public class RenderedConfigRemotePeerClient {
     public void setEnabled(String enabled) {
         this.enabled = enabled;
     }
+
+    public String getDefunc() {
+        return "";
+    }
 }
