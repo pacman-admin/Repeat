@@ -2,9 +2,9 @@ This software was originally coded, developed, and designed by HP Truong.
 
 I, Langdon Staab, fixed some issues, trimmed it down a bit, moved it to Java 21 (from Java 8).
 
-I removed many unnecessary dependencies and libraries, added proper licensing notices to source files I tweaked.
+I removed many unnecessary dependencies and libraries, added proper licensing notices to source files I tweaked, and trimmed down the code a lot by removing unused and unneeded code and files.
 
-I fixed some bugs, improved startup tie considerably, and added a standardized HTTP response code system.
+I fixed some bugs, improved startup time considerably, and added a standardized HTTP response code system.
 
 The project is licensed almost entirely under the Apache License, version 2.0.
 
