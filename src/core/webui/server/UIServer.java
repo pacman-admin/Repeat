@@ -129,8 +129,6 @@ public class UIServer extends IPCServiceWithModifiablePort {
         output.put("/internals/action/task-activation/mouse-gestures/set", new ActionTaskActivationSetMouseGesturesHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/phrase/add", new ActionTaskActivationAddPhraseHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/phrase/remove", new ActionTaskActivationRemovePhraseHandler(objectRenderer, taskActivationConstructorManager));
-        output.put("/internals/action/task-activation/shared-variables/add", new ActionTaskActivationAddSharedVariables(objectRenderer, taskActivationConstructorManager));
-        output.put("/internals/action/task-activation/shared-variables/remove", new ActionTaskActivationRemoveSharedVariables(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/strokes/add-mouse-key", new ActionTaskActivationAddMouseKey(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/strokes/add-as-key-chain", new ActionTaskActivationAddStrokesAsKeyChainHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/strokes/add-as-key-sequence", new ActionTaskActivationAddStrokesAsKeySequenceHandler(objectRenderer, taskActivationConstructorManager));

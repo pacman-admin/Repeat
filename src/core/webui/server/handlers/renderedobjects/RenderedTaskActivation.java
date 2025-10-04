@@ -28,7 +28,7 @@ public class RenderedTaskActivation {
         output.keySequences = sortedStrings(constructor.getKeySequences().stream().map(KeySequence::toString).collect(Collectors.toList()));
         output.phrases = sortedStrings(constructor.getPhrases().stream().map(ActivationPhrase::toString).collect(Collectors.toList()));
         output.mouseGestures = RenderedMouseGestureActivation.fromActivation(activation);
-        output.sharedVariables = RenderedSharedVariablesActivation.fromActivation(constructor.getVariables());
+        output.sharedVariables = RenderedSharedVariablesActivation.of();
         output.globalActivation = RenderedGlobalActivation.fromActivation(activation);
         TaskActivationConstructor.Config config = constructor.getConfig();
         output.config = Config.of(true)
