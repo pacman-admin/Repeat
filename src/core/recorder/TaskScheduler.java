@@ -12,7 +12,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 	private static final Logger LOGGER = Logger.getLogger(TaskScheduler.class.getName());
 
 	static {
-		LOGGER.setLevel(Level.ALL);
+		LOGGER.setLevel(Level.INFO);
 	}
 
 	private Thread executeAgent;
@@ -84,7 +84,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 		executeAgent.start();
 
 		if (tasks.isEmpty()) {
-			LOGGER.info("Nothing to run");
+			//LOGGER.info("Nothing to run");
 			return callBackDelay;
 		} else {
 			return tasks.getLast().getTime() + callBackDelay;
@@ -101,7 +101,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 
 			isRunning = false;
 		} else {
-			LOGGER.warning("Failed attempting to halt scheduler while not running.");
+			LOGGER.warning("Failed. Attempting to halt scheduler while not running.");
 		}
 	}
 
