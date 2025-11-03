@@ -57,6 +57,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class UIServer extends IPCServiceWithModifiablePort {
     private static final int TERMINATION_DELAY_SECOND = 2;
     private final ObjectRenderer objectRenderer;

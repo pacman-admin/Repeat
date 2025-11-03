@@ -14,6 +14,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+@SuppressWarnings("unused")
 public abstract class KeySeries implements IJsonable {
 
     private static final Logger LOGGER = Logger.getLogger(KeySeries.class.getName());
