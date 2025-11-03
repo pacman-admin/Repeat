@@ -139,9 +139,9 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
         switch (action) {
             case "hold" -> {
                 if (params.size() == 2) {
-                    core.mouse().hold(params.get(0), params.get(1));
+                    core.mouse().hold(params.getFirst(), params.get(1));
                 } else if (params.size() == 4) {
-                    core.mouse().hold(params.get(0), params.get(1), params.get(2), params.get(3));
+                    core.mouse().hold(params.getFirst(), params.get(1), params.get(2), params.get(3));
                 } else {
                     return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
                 }
@@ -149,7 +149,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             }
             case "press" -> {
                 if (params.size() == 1) {
-                    core.mouse().press(params.get(0));
+                    core.mouse().press(params.getFirst());
                 } else {
                     return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
                 }
@@ -157,7 +157,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             }
             case "release" -> {
                 if (params.size() == 1) {
-                    core.mouse().release(params.get(0));
+                    core.mouse().release(params.getFirst());
                 } else {
                     return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
                 }
@@ -167,11 +167,11 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
                 if (params.isEmpty()) {
                     core.mouse().leftClick();
                 } else if (params.size() == 1) {
-                    core.mouse().leftClick(params.get(0));
+                    core.mouse().leftClick(params.getFirst());
                 } else if (params.size() == 2) {
-                    core.mouse().leftClick(params.get(0), params.get(1));
+                    core.mouse().leftClick(params.getFirst(), params.get(1));
                 } else if (params.size() == 3) {
-                    core.mouse().leftClick(params.get(0), params.get(1), params.get(2));
+                    core.mouse().leftClick(params.getFirst(), params.get(1), params.get(2));
                 } else {
                     return failure(type, id, "Unable to left click with " + params.size() + " parameters.");
                 }
@@ -181,9 +181,9 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
                 if (params.isEmpty()) {
                     core.mouse().rightClick();
                 } else if (params.size() == 1) {
-                    core.mouse().rightClick(params.get(0));
+                    core.mouse().rightClick(params.getFirst());
                 } else if (params.size() == 2) {
-                    core.mouse().rightClick(params.get(0), params.get(1));
+                    core.mouse().rightClick(params.getFirst(), params.get(1));
                 } else {
                     return failure(type, id, "Unable to right click with " + params.size() + " parameters.");
                 }
@@ -191,7 +191,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             }
             case "move" -> {
                 if (params.size() == 2) {
-                    core.mouse().move(params.get(0), params.get(1));
+                    core.mouse().move(params.getFirst(), params.get(1));
                 } else {
                     return failure(type, id, "Unable to move mouse with " + params.size() + " parameters.");
                 }
@@ -199,7 +199,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             }
             case "move_by" -> {
                 if (params.size() == 2) {
-                    core.mouse().moveBy(params.get(0), params.get(1));
+                    core.mouse().moveBy(params.getFirst(), params.get(1));
                 } else {
                     return failure(type, id, "Unable to move mouse by with " + params.size() + " parameters.");
                 }
@@ -208,9 +208,9 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             case "drag" -> {
                 if (params.size() == 2) {
                     Point p = core.mouse().getPosition();
-                    core.mouse().drag(p.x, p.y, params.get(0), params.get(1));
+                    core.mouse().drag(p.x, p.y, params.getFirst(), params.get(1));
                 } else if (params.size() == 4) {
-                    core.mouse().drag(params.get(0), params.get(1), params.get(2), params.get(3));
+                    core.mouse().drag(params.getFirst(), params.get(1), params.get(2), params.get(3));
                 } else {
                     return failure(type, id, "Unable to drag mouse by with " + params.size() + " parameters.");
                 }
@@ -218,7 +218,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             }
             case "drag_by" -> {
                 if (params.size() == 2) {
-                    core.mouse().dragBy(params.get(0), params.get(1));
+                    core.mouse().dragBy(params.getFirst(), params.get(1));
                 } else {
                     return failure(type, id, "Unable to drag mouse by with " + params.size() + " parameters.");
                 }
@@ -233,7 +233,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
                 if (params.isEmpty()) {
                     p = core.mouse().getPosition();
                 } else if (params.size() == 2) {
-                    p = new Point(params.get(0), params.get(1));
+                    p = new Point(params.getFirst(), params.get(1));
                 }
                 Color color = core.mouse().getColor(p);
 
@@ -338,7 +338,7 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 
                 boolean result = false;
                 if (params.size() == 1) {
-                    result = core.keyBoard().isLocked(params.get(0));
+                    result = core.keyBoard().isLocked(params.getFirst());
                 } else {
                     return failure(type, id, "Unable to check key is locked with " + params.size() + " parameters.");
                 }

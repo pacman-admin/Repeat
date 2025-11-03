@@ -54,10 +54,7 @@ public class SharedVariablesSubscription implements IJsonable {
 			return true;
 		}
 
-		if (!e.getNamespace().equals(namespace)) {
-			return false;
-		}
-        return allForNamespace || e.getName().equals(name);
+        return e.getNamespace().equals(namespace) && (allForNamespace || e.getName().equals(name));
 
     }
 

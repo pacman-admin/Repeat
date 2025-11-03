@@ -81,14 +81,8 @@ public class GlobalActivation implements IJsonable {
 			return false;
 		}
 		GlobalActivation other = (GlobalActivation) obj;
-		if (onKeyPressed != other.onKeyPressed) {
-			return false;
-		}
-		if (onKeyReleased != other.onKeyReleased) {
-			return false;
-		}
-		return true;
-	}
+        return onKeyPressed == other.onKeyPressed && onKeyReleased == other.onKeyReleased;
+    }
 
 	@Override
 	public JsonRootNode jsonize() {

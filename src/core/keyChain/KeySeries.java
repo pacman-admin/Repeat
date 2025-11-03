@@ -183,13 +183,10 @@ public abstract class KeySeries implements IJsonable {
         }
         KeySeries other = (KeySeries) obj;
         if (keys == null) {
-            if (other.keys != null) {
-                return false;
-            }
+            return other.keys == null;
         } else {
             return this.keys.equals(other.keys);
         }
-        return true;
     }
 
     @Override
