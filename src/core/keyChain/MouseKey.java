@@ -57,7 +57,7 @@ public class MouseKey implements ButtonStroke {
 	public JsonRootNode jsonize() {
 		return JsonNodeFactories.object(
 				JsonNodeFactories.field("type", JsonNodeFactories.string(TYPE_STRING)),
-				JsonNodeFactories.field("key", JsonNodeFactories.number(getKey())));
+				JsonNodeFactories.field("key", JsonNodeFactories.number(key)));
 	}
 
 	public static MouseKey parseJSON(JsonNode n) {

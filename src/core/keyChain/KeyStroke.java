@@ -31,7 +31,7 @@ public class KeyStroke implements ButtonStroke {
 
 		static Modifier forValue(int value) {
 			for (Modifier m : Modifier.values()) {
-				if (m.getValue() == value) {
+				if (m.value == value) {
 					return m;
 				}
 			}
@@ -124,7 +124,7 @@ public class KeyStroke implements ButtonStroke {
 	 * Syntactic sugar for {@link #getModifier()}.
 	 */
 	public Modifier m() {
-		return getModifier();
+		return modifier;
 	}
 
 	public KeyStroke at(LocalDateTime invokedTime) {
@@ -156,13 +156,13 @@ public class KeyStroke implements ButtonStroke {
 		if (modifier == Modifier.KEY_MODIFIER_RIGHT) {
 			suffix = " (R)";
 		}
-		return KeyEventCodeToString.codeToString(getKey()) + suffix;
+		return KeyEventCodeToString.codeToString(key) + suffix;
 	}
 
 	@Override
 	public KeyboardResult getTypedString(KeyboardState keyboardState) {
 		keyboardState = keyboardState.changeWith(this);
-		String s = KeyCodeToChar.getCharForCode(getKey(), keyboardState);
+		String s = KeyCodeToChar.getCharForCode(key, keyboardState);
 
 		return KeyboardResult.of(keyboardState, s);
 	}
@@ -201,8 +201,8 @@ public class KeyStroke implements ButtonStroke {
 	public JsonRootNode jsonize() {
 		return JsonNodeFactories.object(
 				JsonNodeFactories.field("type", JsonNodeFactories.string(TYPE_STRING)),
-				JsonNodeFactories.field("key", JsonNodeFactories.number(getKey())),
-				JsonNodeFactories.field("modifier", JsonNodeFactories.number(getModifier().getValue()))
+				JsonNodeFactories.field("key", JsonNodeFactories.number(key)),
+				JsonNodeFactories.field("modifier", JsonNodeFactories.number(modifier.getValue()))
 				);
 	}
 

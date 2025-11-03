@@ -150,7 +150,7 @@ public class MainBackEndHolder {
     public void editSource(String code) {
         LOGGER.info("Opening source code in editor...");
         try {
-            File f = File.createTempFile("source", getSelectedLanguage() == Language.JAVA ? ".java" : ".txt");
+            File f = File.createTempFile("source", compilingLanguage == Language.JAVA ? ".java" : ".txt");
             FileUtility.writeToFile(code, f, false);
             if (Desktop.openFile(f)) currentTempFile = f;
         } catch (IOException e) {
@@ -505,7 +505,7 @@ public class MainBackEndHolder {
             taskGroups.add(new TaskGroup("default"));
         }
 
-        if (getCurrentTaskGroup() == removed) {
+        if (currentGroup == removed) {
             setCurrentTaskGroup(taskGroups.getFirst());
         }
 
@@ -852,7 +852,7 @@ public class MainBackEndHolder {
     public String generateSource() {
         String source = "";
         if (applySpeedup()) {
-            source = recorder.getGeneratedCode(getSelectedLanguage());
+            source = recorder.getGeneratedCode(compilingLanguage);
         }
         return source;
     }
@@ -955,7 +955,7 @@ public class MainBackEndHolder {
     }
 
     public AbstractNativeCompiler getCompiler() {
-        return config.getCompilerFactory().getNativeCompiler(getSelectedLanguage());
+        return config.getCompilerFactory().getNativeCompiler(compilingLanguage);
     }
 
     public void setCompilingLanguage(Language language) {

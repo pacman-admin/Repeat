@@ -33,10 +33,10 @@ abstract class AbstractRepeatsClientApi {
 	}
 
 	final JsonNode waitAndGetJsonResponseIfSuccess(IpcMessageType type, IJsonable message) {
-		long id = getRepeatPeerServiceClientWriter().enqueueMessage(type, message);
+		long id = repeatPeerServiceClientWriter.enqueueMessage(type, message);
 		Reply reply;
 		try {
-			reply = getRepeatPeerServiceClientWriter().waitForReply(id);
+			reply = repeatPeerServiceClientWriter.waitForReply(id);
 		} catch (InterruptedException e) {
 			LOGGER.log(Level.WARNING, "Interrupted when running command", e);
 			return null;

@@ -251,7 +251,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     public final void override(UserDefinedAction other) {
-        setName(other.getName());
+        setName(other.name);
         executionPreconditions = other.executionPreconditions.copy();
         activation.copy(other.activation);
         statistics = other.statistics;
