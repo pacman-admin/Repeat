@@ -1,10 +1,6 @@
 package core.webui.webcommon;
 
-import java.io.IOException;
-import java.util.logging.Logger;
-
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpEntityEnclosingRequest;
+import frontEnd.MainBackEndHolder;
 import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.BasicAsyncRequestConsumer;
@@ -12,9 +8,9 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.nio.protocol.HttpAsyncRequestConsumer;
 import org.apache.http.nio.protocol.HttpAsyncRequestHandler;
 import org.apache.http.protocol.HttpContext;
-import org.apache.http.util.EntityUtils;
 
-import frontEnd.MainBackEndHolder;
+import java.io.IOException;
+import java.util.logging.Logger;
 
 public abstract class HttpHandlerWithBackend implements HttpAsyncRequestHandler<HttpRequest> {
 

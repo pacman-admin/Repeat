@@ -1,6 +1,5 @@
 package core.controller.internals;
 
-import java.util.Arrays;
 import java.util.List;
 
 public class AggregateKeyboardCore extends AbstractKeyboardCoreImplementation {
@@ -13,7 +12,7 @@ public class AggregateKeyboardCore extends AbstractKeyboardCoreImplementation {
 
     public static AggregateKeyboardCore of(List<AbstractKeyboardCoreImplementation> keyboards) {
         if (keyboards == null || keyboards.isEmpty()) {
-            keyboards = Arrays.asList(NoopKeyboardCore.of());
+            keyboards = List.of(NoopKeyboardCore.of());
         }
         return new AggregateKeyboardCore(keyboards);
     }

@@ -1,13 +1,13 @@
 package core.userDefinedTask.internals;
 
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 public record AggregateTools(Collection<ITools> tools) implements ITools {
 
     public static AggregateTools of(Collection<ITools> tools) {
         if (tools.isEmpty()) {
-            return new AggregateTools(Arrays.asList(NoopTools.of()));
+            return new AggregateTools(List.of(NoopTools.of()));
         }
         return new AggregateTools(tools);
     }

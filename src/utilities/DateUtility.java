@@ -40,7 +40,7 @@ public class DateUtility {
      * Convert a string date/time into the according calendar.
      * The format used is the formats defined as constants above.
      *
-     * @param string to convert
+     * @param s String to convert
      * @return the according calendar object, or null if there is a parse exception occurred.
      */
     public static Calendar stringToCalendar(String s) {

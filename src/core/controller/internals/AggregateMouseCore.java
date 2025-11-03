@@ -1,7 +1,6 @@
 package core.controller.internals;
 
 import java.awt.*;
-import java.util.Arrays;
 import java.util.List;
 
 public class AggregateMouseCore extends AbstractMouseCoreImplementation {
@@ -14,7 +13,7 @@ public class AggregateMouseCore extends AbstractMouseCoreImplementation {
 
     public static AggregateMouseCore of(List<AbstractMouseCoreImplementation> mice) {
         if (mice == null || mice.isEmpty()) {
-            mice = Arrays.asList(NoopMouseCore.of());
+            mice = List.of(NoopMouseCore.of());
         }
 
         return new AggregateMouseCore(mice);
