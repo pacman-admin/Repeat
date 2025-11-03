@@ -1,141 +1,137 @@
 package core.ipc.repeatClient.repeatPeerClient;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import utilities.json.IJsonable;
 import utilities.json.JSONUtility;
 
+import java.io.IOException;
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+@SuppressWarnings("unused")
 public class RepeatsPeerServiceClientManager implements IJsonable {
 
-	private static final Logger LOGGER = Logger.getLogger(RepeatsPeerServiceClientManager.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(RepeatsPeerServiceClientManager.class.getName());
 
-	private final Map<String, RepeatsPeerServiceClient> clients;
+    private final Map<String, RepeatsPeerServiceClient> clients;
 
-	public RepeatsPeerServiceClientManager() {
-		this.clients = new HashMap<>();
-	}
+    public RepeatsPeerServiceClientManager() {
+        this.clients = new HashMap<>();
+    }
 
-	public void updateClients(Collection<RepeatsPeerServiceClient> clients) {
-		this.clients.clear();
-		for (RepeatsPeerServiceClient client : clients) {
-			this.clients.put(client.getClientId(), client);
-		}
-	}
+    public static RepeatsPeerServiceClientManager parseJSON(JsonNode node) {
+        List<RepeatsPeerServiceClient> clients = new ArrayList<>();
+        List<JsonNode> clientNodes = node.getArrayNode("clients");
+        for (JsonNode clientNode : clientNodes) {
+            RepeatsPeerServiceClient client = RepeatsPeerServiceClient.parseJSON(clientNode);
+            clients.add(client);
+        }
+        RepeatsPeerServiceClientManager manager = new RepeatsPeerServiceClientManager();
+        for (RepeatsPeerServiceClient client : clients) {
+            manager.clients.put(client.getClientId(), client);
+        }
 
-	public RepeatsPeerServiceClient getClient(String id) {
-		return clients.get(id);
-	}
+        return manager;
+    }
 
-	public Collection<RepeatsPeerServiceClient> getClients() {
-		return clients.values();
-	}
+    public void updateClients(Collection<RepeatsPeerServiceClient> clients) {
+        this.clients.clear();
+        for (RepeatsPeerServiceClient client : clients) {
+            this.clients.put(client.getClientId(), client);
+        }
+    }
 
-	/**
-	 * Starts all clients.
-	 *
-	 * @param onStartup
-	 *            this is a call on startup, only start clients that should be
-	 *            launched at startup.
-	 */
-	public void startAllClients(boolean onStartup) throws IOException {
-		for (RepeatsPeerServiceClient client : clients.values()) {
-			if (!onStartup || client.isLaunchAtStartup()) {
-				client.startRunning();
-				LOGGER.info("Started " + client.getName() + ".");
-			}
-		}
-	}
+    public RepeatsPeerServiceClient getClient(String id) {
+        return clients.get(id);
+    }
 
-	public void startClient(String id) {
-		if (!clients.containsKey(id)) {
-			LOGGER.log(Level.WARNING, "No client with ID " + id + " found.");
-			return;
-		}
+    public Collection<RepeatsPeerServiceClient> getClients() {
+        return clients.values();
+    }
 
-		RepeatsPeerServiceClient client = clients.get(id);
-		try {
-			client.startRunning();
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Exception when starting client.", e);
-		}
-	}
+    /**
+     * Starts all clients.
+     *
+     * @param onStartup this is a call on startup, only start clients that should be
+     *                  launched at startup.
+     */
+    public void startAllClients(boolean onStartup) throws IOException {
+        for (RepeatsPeerServiceClient client : clients.values()) {
+            if (!onStartup || client.isLaunchAtStartup()) {
+                client.startRunning();
+                LOGGER.info("Started " + client.getName() + ".");
+            }
+        }
+    }
 
-	public void addAndStartClient(String host, int port) {
-		RepeatsPeerServiceClient client = new RepeatsPeerServiceClient(host, port);
-		try {
-			client.startRunning();
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Failed to start client running at " + host + ":" + port + ".", e);
-		}
-		clients.put(client.getClientId(), client);
-	}
+    public void startClient(String id) {
+        if (!clients.containsKey(id)) {
+            LOGGER.log(Level.WARNING, "No client with ID " + id + " found.");
+            return;
+        }
 
-	public boolean stopClient(String id) {
-		if (!clients.containsKey(id)) {
-			LOGGER.log(Level.WARNING, "No client with ID " + id + " found.");
-			return false;
-		}
+        RepeatsPeerServiceClient client = clients.get(id);
+        try {
+            client.startRunning();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Exception when starting client.", e);
+        }
+    }
 
-		RepeatsPeerServiceClient client = clients.get(id);
-		try {
-			client.stopRunning();
-			return true;
-		} catch (IOException e) {
-			LOGGER.log(Level.WARNING, "Exception when stopping client.", e);
-			return false;
-		}
-	}
+    public void addAndStartClient(String host, int port) {
+        RepeatsPeerServiceClient client = new RepeatsPeerServiceClient(host, port);
+        try {
+            client.startRunning();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Failed to start client running at " + host + ":" + port + ".", e);
+        }
+        clients.put(client.getClientId(), client);
+    }
 
-	public void stopAndRemoveClient(String id) {
-		if (stopClient(id)) {
-			clients.remove(id);
-		}
-	}
+    public boolean stopClient(String id) {
+        if (!clients.containsKey(id)) {
+            LOGGER.log(Level.WARNING, "No client with ID " + id + " found.");
+            return false;
+        }
 
-	public void stopAllClients() throws IOException {
-		for (RepeatsPeerServiceClient client : clients.values()) {
-			client.stopRunning();
-		}
-	}
+        RepeatsPeerServiceClient client = clients.get(id);
+        try {
+            client.stopRunning();
+            return true;
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Exception when stopping client.", e);
+            return false;
+        }
+    }
 
-	public void setLaunchAtStartup(String id, boolean value) {
-		if (!clients.containsKey(id)) {
-			LOGGER.log(Level.WARNING, "No client with ID " + id + " found.");
-			return;
-		}
+    public void stopAndRemoveClient(String id) {
+        if (stopClient(id)) {
+            clients.remove(id);
+        }
+    }
 
-		clients.get(id).setLaunchAtStartup(value);
-	}
+    public void stopAllClients() throws IOException {
+        for (RepeatsPeerServiceClient client : clients.values()) {
+            client.stopRunning();
+        }
+    }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(
-				JsonNodeFactories.field("clients",
-						JsonNodeFactories.array(JSONUtility.listToJson(clients.values()))));
-	}
+    public void setLaunchAtStartup(String id, boolean value) {
+        if (!clients.containsKey(id)) {
+            LOGGER.log(Level.WARNING, "No client with ID " + id + " found.");
+            return;
+        }
 
-	public static RepeatsPeerServiceClientManager parseJSON(JsonNode node) {
-		List<RepeatsPeerServiceClient> clients = new ArrayList<>();
-		List<JsonNode> clientNodes = node.getArrayNode("clients");
-		for (JsonNode clientNode : clientNodes) {
-			RepeatsPeerServiceClient client = RepeatsPeerServiceClient.parseJSON(clientNode);
-			clients.add(client);
-		}
-		RepeatsPeerServiceClientManager manager = new RepeatsPeerServiceClientManager();
-		for (RepeatsPeerServiceClient client : clients) {
-			manager.clients.put(client.getClientId(), client);
-		}
+        clients.get(id).setLaunchAtStartup(value);
+    }
 
-		return manager;
-	}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(
+                JsonNodeFactories.field("clients",
+                        JsonNodeFactories.array(JSONUtility.listToJson(clients.values()))));
+    }
 }

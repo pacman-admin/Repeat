@@ -32,6 +32,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class BootStrapResources {
     public static final Image TRAY_IMAGE;
     private static final Logger LOGGER = Logger.getLogger(BootStrapResources.class.getName());

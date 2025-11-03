@@ -40,15 +40,14 @@ public class ActivationPhrase extends KeySeries {
 
 	@Override
 	public boolean collideWith(KeySeries series) {
-		if (!(series instanceof ActivationPhrase)) {
+		if (!(series instanceof ActivationPhrase other)) {
 			throw new IllegalStateException("Cannot check collision with class " + series.getClass());
 		}
 
-		ActivationPhrase other = (ActivationPhrase) series;
-		if (value.length() > other.value.length()) {
-			return value.indexOf(other.value) >= 0;
+        if (value.length() > other.value.length()) {
+			return value.contains(other.value);
 		} else {
-			return other.value.indexOf(value) >= 0;
+			return other.value.contains(value);
 		}
 	}
 

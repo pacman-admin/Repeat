@@ -23,13 +23,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.regex.Pattern;
 
-//import org.apache.commons.text.StringEscapeUtils;
-
 /**
  * Provide static interface to utilities
  *
  * @author HP
  */
+@SuppressWarnings("unused")
 public class StringUtilities {
 
     private static final Pattern CAMEL_CASE_TO_SNAKE = Pattern.compile("([a-z])([A-Z]+)");

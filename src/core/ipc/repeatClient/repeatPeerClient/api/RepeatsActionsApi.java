@@ -16,6 +16,7 @@ import utilities.json.ImmediateJsonable;
 import java.util.Base64;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 
     private static final Logger LOGGER = Logger.getLogger(RepeatsActionsApi.class.getName());
