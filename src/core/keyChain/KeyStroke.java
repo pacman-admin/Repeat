@@ -187,10 +187,7 @@ public class KeyStroke implements ButtonStroke {
 			return false;
 		}
 		KeyStroke other = (KeyStroke) obj;
-		if (key != other.key) {
-			return false;
-		}
-        return modifier.equivalent(other.modifier);
+        return key == other.key && modifier.equivalent(other.modifier);
     }
 
 	@Override

@@ -65,12 +65,9 @@ public abstract class AbstractSourceGenerator {
 	}
 
 	public final boolean submitTask(long time, Device device, String action, int[] param) {
-		if (!verify(device, action, param)) {
-			return false;
-		}
+        return verify(device, action, param) && internalSubmitTask(time, device, action, param);
 
-		return internalSubmitTask(time, device, action, param);
-	}
+    }
 
 	private boolean internalSubmitTask(long time, Device device, String action, int[] params) {
 		String mid = "";

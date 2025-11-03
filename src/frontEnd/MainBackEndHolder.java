@@ -567,10 +567,7 @@ public class MainBackEndHolder {
 
     private void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
         Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-        boolean conflict = false;
-        if (!collisions.isEmpty()) {
-            conflict = collisions.size() != 1 || !collisions.iterator().next().equals(original);
-        }
+        boolean conflict = !collisions.isEmpty() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
 
         if (!conflict) {
             keysManager.registerTask(action);

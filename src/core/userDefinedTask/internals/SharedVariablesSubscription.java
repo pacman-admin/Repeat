@@ -57,12 +57,9 @@ public class SharedVariablesSubscription implements IJsonable {
 		if (!e.getNamespace().equals(namespace)) {
 			return false;
 		}
-		if (allForNamespace) {
-			return true;
-		}
+        return allForNamespace || e.getName().equals(name);
 
-		return e.getName().equals(name);
-	}
+    }
 
 	@Override
 	public JsonRootNode jsonize() {

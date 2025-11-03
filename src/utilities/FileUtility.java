@@ -394,11 +394,7 @@ public class FileUtility {
      * @return if removal is successful. Throw IOException if encounters error
      */
     public static boolean removeFile(File file) {
-        if (fileExists(file)) {
-            return file.delete();
-        } else {
-            return true;
-        }
+        return !fileExists(file) || file.delete();
     }
 
     /**

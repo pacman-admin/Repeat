@@ -9,7 +9,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-abstract class ActivationEventManager {
+public abstract class ActivationEventManager {
 
     private final Config config;
 
