@@ -9,6 +9,7 @@ import frontEnd.MainBackEndHolder;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class CommonTask {
 
     private static final Logger LOGGER = Logger.getLogger(CommonTask.class.getName());

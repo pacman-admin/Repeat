@@ -13,8 +13,6 @@ public abstract class AbstractSourceGenerator {
     private static final Logger LOGGER = Logger.getLogger(AbstractSourceGenerator.class.getName());
     private static final String TAB = "    ";
     static final String TWO_TAB = TAB + TAB;
-    private static final String THREE_TAB = TWO_TAB + TAB;
-    protected static final String FOUR_TAB = THREE_TAB + TAB;
     private static final Map<Language, AbstractSourceGenerator> REFERENCE_SOURCES;
 
     static {
