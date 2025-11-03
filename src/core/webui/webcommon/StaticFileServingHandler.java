@@ -57,7 +57,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 500, "URI must start with '/static/'.");
         }
 
-        String uriWithoutParamter = "";
+        String uriWithoutParamter;
         try {
             URI uri = new URI(requestUri);
             uriWithoutParamter = new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, // Ignore the query part of the input url.

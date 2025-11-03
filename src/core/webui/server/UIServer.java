@@ -214,7 +214,7 @@ public class UIServer extends IPCServiceWithModifiablePort {
         server = serverBootstrap.create();
         mainThread = new Thread(() -> {
             try {
-                server.awaitTermination(Long.MAX_VALUE, TimeUnit.DAYS);
+                server.awaitTermination(1, TimeUnit.DAYS);
             } catch (InterruptedException e) {
                 getLogger().log(Level.SEVERE, "Interrupted when waiting for UI server.", e);
             }

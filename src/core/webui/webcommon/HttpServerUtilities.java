@@ -90,9 +90,7 @@ public class HttpServerUtilities {
         JsonNode node = JSONUtility.jsonFromString(postContent);
         if (node == null) {
             LOGGER.warning("Failed to parse content into JSON.");
-            return null;
         }
-
         return node;
     }
 
@@ -110,7 +108,7 @@ public class HttpServerUtilities {
                 LOGGER.warning("Value not is not a string node.");
                 return null;
             }
-            String value = null;
+            String value;
             if (valueNode.isStringValue()) {
                 value = valueNode.getStringValue();
             } else if (valueNode.isNumberValue()) {

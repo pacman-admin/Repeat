@@ -18,7 +18,6 @@ class UIServerExceptionLogger implements ExceptionLogger {
 				return;
 			}
 		}
-
 		arg0.printStackTrace();
 	}
 }
