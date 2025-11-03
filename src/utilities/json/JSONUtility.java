@@ -133,9 +133,8 @@ public class JSONUtility {
      * @param nodes  input list of json nodes
      * @param parser function to parse json node to the object
      * @param output the output collection where parsed objects will be added to
-     * @return true if all JSON objects were successfully parsed, and false otherwise
      */
-    public static <E> boolean addAllJson(Collection<JsonNode> nodes, Function<JsonNode, E> parser, Collection<E> output) {
+    public static <E> void addAllJson(Collection<JsonNode> nodes, Function<JsonNode, E> parser, Collection<E> output) {
         boolean success = true;
         for (JsonNode node : nodes) {
             E parsed = parser.apply(node);
@@ -145,7 +144,6 @@ public class JSONUtility {
             }
         }
 
-        return success;
     }
 
     /**

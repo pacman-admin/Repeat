@@ -45,12 +45,11 @@ public class ActionExecutor {
      *
      * @param request request for execution of this action
      * @param action  action to execute
-     * @return ID of the registered execution
      */
-    public String startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
+    public void startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
         if (executions.size() > MAX_SIMULTANEOUS_EXECUTIONS) {
             //LOGGER.info("Cannot run more than " + MAX_SIMULTANEOUS_EXECUTIONS + " tasks simultaneously.");
-            return null;
+            return;
         }
         if (action == null) {
             throw new IllegalArgumentException("Nothing to run.");
@@ -72,7 +71,6 @@ public class ActionExecutor {
 
         executions.put(id, execution);
         execution.start();
-        return id;
     }
 
     /**

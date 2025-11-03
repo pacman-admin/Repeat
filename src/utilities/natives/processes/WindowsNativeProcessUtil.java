@@ -42,6 +42,7 @@ final class WindowsNativeProcessUtil {
         return Native.toString(buffer);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     static class Psapi {
         static {
             if (OSIdentifier.isWindows()) {
@@ -69,6 +70,7 @@ final class WindowsNativeProcessUtil {
         public static native Pointer OpenProcess(int dwDesiredAccess, boolean bInheritHandle, Pointer pointer);
     }
 
+    @SuppressWarnings("UnusedReturnValue")
     static class User32DLL {
         static {
             if (OSIdentifier.isWindows()) {

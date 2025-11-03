@@ -31,9 +31,9 @@ public abstract class ManuallyBuildStep implements IJsonable {
 	public abstract String getDisplayString();
 	protected abstract String getJsonSignature();
 
-	protected boolean parse(JsonNode node) {
-		return Jsonizer.parse(node, this);
-	}
+	protected void parse(JsonNode node) {
+        Jsonizer.parse(node, this);
+    }
 
 	private final JsonNode jsonizeContent() {
 		return Jsonizer.jsonize(this);

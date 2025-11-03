@@ -175,7 +175,7 @@ public final class Config implements ILoggable {
         return JSONUtility.writeJson(root, new File(CONFIG_FILE_NAME));
     }
 
-    public boolean exportTasksConfig(File destination) {
+    public void exportTasksConfig(File destination) {
         List<JsonNode> taskNodes = new ArrayList<>();
         for (TaskGroup group : backEnd.getTaskGroups()) {
             taskNodes.add(group.jsonize());
@@ -183,7 +183,7 @@ public final class Config implements ILoggable {
 
         JsonRootNode root = JsonNodeFactories.object(JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)), JsonNodeFactories.field("task_groups", JsonNodeFactories.array(taskNodes)));
         String fullPath = FileUtility.joinPath(destination.getAbsolutePath(), EXPORTED_CONFIG_FILE_NAME);
-        return JSONUtility.writeJson(root, new File(fullPath));
+        JSONUtility.writeJson(root, new File(fullPath));
     }
 
     public boolean importTaskConfig() {

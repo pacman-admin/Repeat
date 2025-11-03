@@ -176,23 +176,20 @@ public final class GlobalEventsManager {
      *
      * @param action        action to be re-registered with new activation.
      * @param newActivation new activation to be associated with the action.
-     * @return set of actions that collide with this action.
      */
-    public Set<UserDefinedAction> reRegisterTask(UserDefinedAction action, ActionInvoker newActivation) {
+    public void reRegisterTask(UserDefinedAction action, ActionInvoker newActivation) {
         unregisterTask(action);
         action.setActivation(newActivation);
-        return registerTask(action);
+        registerTask(action);
     }
 
     /**
      * Remove all bindings to the task's activation.
      *
      * @param action action whose activation will be removed.
-     * @return if all activations are removed.
      */
-    public boolean unregisterTask(UserDefinedAction action) {
+    public void unregisterTask(UserDefinedAction action) {
         taskActivationManager.unRegisterAction(action);
-        return true;
     }
 
     /**

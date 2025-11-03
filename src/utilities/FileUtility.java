@@ -167,23 +167,20 @@ public class FileUtility {
      *
      * @param source source file
      * @param dest   destination file
-     * @return if copy succeeded
      */
-    public static boolean copyFile(File source, File dest) {
+    public static void copyFile(File source, File dest) {
         File parentDest = dest.getParentFile();
 
         if (!parentDest.exists()) {
             if (!createDirectory(parentDest.getAbsolutePath())) {
-                return false;
+                return;
             }
         }
 
         try {
             Files.copy(source.toPath(), dest.toPath());
-            return true;
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "Encountered an IOException while copying" + e, e);
-            return false;
         }
     }
 

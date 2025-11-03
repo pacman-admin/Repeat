@@ -105,15 +105,14 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 		}
 	}
 
-	synchronized boolean clearTasks() {
+	synchronized void clearTasks() {
 		if (isRunning) {
 			LOGGER.info("Stop task scheduler first before clearing tasks");
-			return false;
+			return;
 		}
 
 		tasks.clear();
-		return true;
-	}
+    }
 
 	@Override
 	protected synchronized boolean isLegalAddTask() {

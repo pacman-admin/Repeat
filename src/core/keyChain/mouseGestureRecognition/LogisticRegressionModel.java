@@ -17,13 +17,11 @@ class LogisticRegressionModel {
 
     /**
      * Load model data from static resources.
-     *
-     * @return if operation was successful.
      */
-    boolean load() {
+    void load() {
         labels = MouseGestureModelResources.getLabels();
         if (labels == null) {
-            return false;
+            return;
         }
 
         double[] intercepts = MouseGestureModelResources.getIntercepts();
@@ -35,7 +33,6 @@ class LogisticRegressionModel {
         twoDimensionalIntercept[0] = intercepts;
         c = new Matrix(twoDimensionalIntercept);
 
-        return isLoaded();
     }
 
     String predict(double[] featureValues) {

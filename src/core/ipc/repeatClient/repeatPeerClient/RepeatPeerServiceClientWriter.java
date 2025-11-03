@@ -50,9 +50,9 @@ public class RepeatPeerServiceClientWriter extends AbstractRepeatsClientStoppabl
 		return enqueueMessage(type, message.jsonize());
 	}
 
-	private long enqueueMessage(IpcMessageType type, JsonNode message) {
-		return enqueueMessage(type.toString(), message);
-	}
+	private void enqueueMessage(IpcMessageType type, JsonNode message) {
+        enqueueMessage(type.toString(), message);
+    }
 
 	private long enqueueMessage(String type, JsonNode message) {
 		long newId = 0L;

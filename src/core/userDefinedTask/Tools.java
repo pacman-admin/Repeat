@@ -27,9 +27,8 @@ public class Tools {
      * Set a text value into the system clipboard
      *
      * @param data string to copy to the system clipboard
-     * @return if action succeeds
      */
-    public static boolean setClipboard(String data) {
-        return DefaultTools.get().setClipboard(data);
+    public static void setClipboard(String data) {
+        DefaultTools.get().setClipboard(data);
     }
 }
