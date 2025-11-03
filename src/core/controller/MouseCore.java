@@ -23,6 +23,7 @@ import utilities.Function;
 
 import java.awt.*;
 
+@SuppressWarnings("unused")
 public class MouseCore extends AbstractMouseCoreImplementation {
 
     private final AbstractMouseCoreImplementation m;
