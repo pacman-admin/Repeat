@@ -15,7 +15,7 @@ import core.webui.webcommon.HttpServerUtilities;
 
 public class ActionManuallyBuildActionBuildHandler extends AbstractSingleMethodHttpHandler {
 
-	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public ActionManuallyBuildActionBuildHandler(ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(AbstractSingleMethodHttpHandler.POST_METHOD);

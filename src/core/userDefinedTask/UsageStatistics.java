@@ -32,7 +32,7 @@ public class UsageStatistics implements IJsonable {
 	private long totalExecutionTime;
 	private Map<ActionInvoker, Long> taskActivationBreakdown;
 
-	private Map<String, ExecutionInstance> onGoingInstances;
+	private final Map<String, ExecutionInstance> onGoingInstances;
 	private LinkedList<ExecutionInstance> executionInstances;
 
 	public UsageStatistics() {
@@ -191,7 +191,7 @@ public class UsageStatistics implements IJsonable {
 	public static class ExecutionInstance extends AutoJsonable {
 		public static final Long DID_NOT_END = -1L;
 
-		private long start;
+		private final long start;
 		private long end;
 
 		static ExecutionInstance of(long start, long end) {

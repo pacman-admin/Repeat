@@ -5,7 +5,7 @@ import argo.jdom.JsonRootNode;
 
 public class ImmediateJsonable implements IJsonable {
 
-	private JsonNode node;
+	private final JsonNode node;
 
 	private ImmediateJsonable(JsonNode node) {
 		this.node = node;

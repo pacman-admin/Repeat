@@ -57,8 +57,8 @@ public class KeyStroke implements ButtonStroke {
         }
 	}
 
-	private int key;
-	private Modifier modifier;
+	private final int key;
+	private final Modifier modifier;
 
 	private boolean pressed; // Press or release.
 	private LocalDateTime invokedTime;

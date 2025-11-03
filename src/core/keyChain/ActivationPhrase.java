@@ -9,7 +9,7 @@ import argo.jdom.JsonRootNode;
 public class ActivationPhrase extends KeySeries {
 
 	private static final Logger LOGGER = Logger.getLogger(ActivationPhrase.class.getName());
-	private String value;
+	private final String value;
 
 	private ActivationPhrase(String value) {
 		this.value = value;

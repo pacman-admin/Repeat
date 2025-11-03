@@ -32,7 +32,7 @@ public class AbstractRemoteRepeatsClientsConfig implements IJsonable {
 
     public static final String LOCAL_CLIENT = "local";
 
-    private List<String> enabledClients;
+    private final List<String> enabledClients;
 
     protected AbstractRemoteRepeatsClientsConfig(List<String> remoteClientIds) {
         this.enabledClients = new ArrayList<>(remoteClientIds);

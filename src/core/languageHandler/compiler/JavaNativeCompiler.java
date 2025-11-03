@@ -47,7 +47,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
 
     private final String[] packageTree;
     private final String defaultClassName;
-    private DynamicClassLoader classLoader;
+    private final DynamicClassLoader classLoader;
     private String className;
     private String[] classPaths;
 

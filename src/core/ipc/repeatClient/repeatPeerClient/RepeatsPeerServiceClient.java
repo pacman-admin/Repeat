@@ -21,10 +21,10 @@ public class RepeatsPeerServiceClient extends IIPCService implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(RepeatsPeerServiceClient.class.getName());
 
-	private String id;
-	private String host;
+	private final String id;
+	private final String host;
 	private Socket socket;
-	private ResponseManager responseManager;
+	private final ResponseManager responseManager;
 
 	private RepeatPeerServiceClientReader reader;
 	private RepeatPeerServiceClientWriter writer;

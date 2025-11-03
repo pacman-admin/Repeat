@@ -7,7 +7,7 @@ import core.userDefinedTask.internals.SharedVariablesSubscription;
 import utilities.json.IJsonable;
 
 public class SharedVariablesActivation implements IJsonable {
-	private SharedVariablesSubscription variable;
+	private final SharedVariablesSubscription variable;
 
 	private SharedVariablesActivation(SharedVariablesSubscription variable) {
 		this.variable = variable;

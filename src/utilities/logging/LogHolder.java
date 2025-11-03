@@ -7,8 +7,8 @@ public class LogHolder extends OutputStream {
 
     private static final int MAX_LINE_COUNT = 4096;
 
-    private StringBuffer content;
-    private LinkedList<LineEntry> lines;
+    private final StringBuffer content;
+    private final LinkedList<LineEntry> lines;
     private int offset;
     private int currentIndex = 0;
     private int lastIndex = 0;

@@ -10,8 +10,8 @@ import java.util.*;
 
 public class GlobalKeyActionManager extends KeyStrokeManager {
 
-    private Set<UserDefinedAction> onKeyStrokePressedTasks;
-    private Set<UserDefinedAction> onKeyReleasedTasks;
+    private final Set<UserDefinedAction> onKeyStrokePressedTasks;
+    private final Set<UserDefinedAction> onKeyReleasedTasks;
 
     public GlobalKeyActionManager(Config config) {
         super(config);

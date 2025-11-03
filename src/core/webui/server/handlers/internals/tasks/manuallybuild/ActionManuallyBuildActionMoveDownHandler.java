@@ -22,7 +22,7 @@ import core.webui.webcommon.HttpServerUtilities;
 
 public class ActionManuallyBuildActionMoveDownHandler extends AbstractUIHttpHandler {
 
-	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public ActionManuallyBuildActionMoveDownHandler(ObjectRenderer objectRenderer, ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

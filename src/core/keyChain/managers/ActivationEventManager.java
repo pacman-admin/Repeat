@@ -11,7 +11,7 @@ import java.util.Set;
 
 abstract class ActivationEventManager {
 
-    private Config config;
+    private final Config config;
 
     ActivationEventManager(Config config) {
         this.config = config;

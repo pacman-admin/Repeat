@@ -3,8 +3,8 @@ package core.webui.server.handlers.renderedobjects;
 import core.keyChain.ActionInvoker;
 
 public class RenderedGlobalActivation {
-    private boolean onKeyPressed;
-    private boolean onKeyReleased;
+    private final boolean onKeyPressed;
+    private final boolean onKeyReleased;
 
     private RenderedGlobalActivation(boolean onKeyPressed, boolean onKeyReleased) {
         this.onKeyPressed = onKeyPressed;

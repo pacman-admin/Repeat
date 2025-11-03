@@ -46,12 +46,12 @@ public class Recorder {
     private long startTime;
     private int mode;
 
-    private TaskScheduler taskScheduler;
+    private final TaskScheduler taskScheduler;
 
-    private AbstractGlobalKeyListener keyListener;
-    private AbstractGlobalMouseListener mouseListener;
+    private final AbstractGlobalKeyListener keyListener;
+    private final AbstractGlobalMouseListener mouseListener;
 
-    private HashMap<Language, AbstractSourceGenerator> sourceGenerators;
+    private final HashMap<Language, AbstractSourceGenerator> sourceGenerators;
 
     public Recorder(CoreProvider coreProvider) {
         final Core controller = coreProvider.getLocal();

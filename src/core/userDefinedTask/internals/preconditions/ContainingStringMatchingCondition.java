@@ -9,7 +9,7 @@ import argo.jdom.JsonRootNode;
  */
 public class ContainingStringMatchingCondition extends StringMatchingCondition {
 
-	private String substring;
+	private final String substring;
 
 	public static ContainingStringMatchingCondition of(String substring) {
 		return new ContainingStringMatchingCondition(substring);

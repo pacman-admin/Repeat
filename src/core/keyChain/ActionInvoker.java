@@ -28,8 +28,8 @@ public class ActionInvoker implements IJsonable {
 	private Set<KeyChain> hotkeys;
 	private Set<MouseGesture> mouseGestures;
 	private Set<KeySequence> keySequences;
-	private Set<ActivationPhrase> phrases;
-	private Set<SharedVariablesActivation> variables;
+	private final Set<ActivationPhrase> phrases;
+	private final Set<SharedVariablesActivation> variables;
 
 	private GlobalActivation globalActivation;
 
@@ -378,11 +378,11 @@ public class ActionInvoker implements IJsonable {
 	 * Builder for enclosing class.
 	 */
 	public static class Builder {
-		private Set<KeyChain> hotkeys;
-		private Set<MouseGesture> mouseGestures;
-		private Set<KeySequence> keySequences;
-		private Set<ActivationPhrase> phrases;
-		private Set<SharedVariablesActivation> variables;
+		private final Set<KeyChain> hotkeys;
+		private final Set<MouseGesture> mouseGestures;
+		private final Set<KeySequence> keySequences;
+		private final Set<ActivationPhrase> phrases;
+		private final Set<SharedVariablesActivation> variables;
 		private GlobalActivation globalActivation;
 
 		private Builder() {

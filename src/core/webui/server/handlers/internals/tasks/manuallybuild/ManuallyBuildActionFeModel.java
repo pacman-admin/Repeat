@@ -34,7 +34,7 @@ public class ManuallyBuildActionFeModel {
         KEYBOARD("keyboard"),
         CONTROLLER("controller");
 
-        private String value;
+        private final String value;
 
         Actor(String s) {
             value = s;
@@ -63,7 +63,7 @@ public class ManuallyBuildActionFeModel {
         PRESS_CURRENT_POSITION("press current position"),
         RELEASE_CURRENT_POSITION("release current position");
 
-        private String value;
+        private final String value;
 
         MouseAction(String s) {
             value = s;
@@ -81,7 +81,7 @@ public class ManuallyBuildActionFeModel {
         TYPE_KEY("type"),
         TYPE_STRING_KEY("type string");
 
-        private String value;
+        private final String value;
 
         KeyboardAction(String s) {
             value = s;
@@ -96,7 +96,7 @@ public class ManuallyBuildActionFeModel {
     public enum ControllerAction implements Action {
         WAIT("blocking wait");
 
-        private String value;
+        private final String value;
 
         ControllerAction(String s) {
             value = s;

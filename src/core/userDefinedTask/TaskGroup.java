@@ -16,7 +16,7 @@ public class TaskGroup implements IJsonable {
 
     public static final String REMOTE_TASK_GROUP_ID = "remote-tasks";
     private final List<UserDefinedAction> tasks;
-    private String groupId;
+    private final String groupId;
     private String name;
     private boolean enabled;
     //private static String sourceFilePath;

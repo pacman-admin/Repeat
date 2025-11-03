@@ -15,7 +15,7 @@ class RepeatPeerServiceClientReader extends AbstractRepeatsClientStoppableThread
 
 	private static final Logger LOGGER = Logger.getLogger(RepeatPeerServiceClientReader.class.getName());
 
-	private Reader reader;
+	private final Reader reader;
 
 	RepeatPeerServiceClientReader(Reader reader, ResponseManager responseManager) {
 		super(responseManager);

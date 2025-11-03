@@ -5,7 +5,8 @@ import java.io.OutputStream;
 
 public class CompositeOutputStream extends OutputStream {
 
-	private OutputStream out1, out2;
+	private final OutputStream out1;
+    private final OutputStream out2;
 
 	public static CompositeOutputStream of(OutputStream out1, OutputStream out2) {
 		return new CompositeOutputStream(out1, out2);

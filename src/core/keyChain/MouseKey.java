@@ -13,8 +13,8 @@ public class MouseKey implements ButtonStroke {
 
 	static final String TYPE_STRING = "mouse_key";
 
-	private int key;
-	private boolean isPressed;
+	private final int key;
+	private final boolean isPressed;
 
 	private MouseKey(int key, boolean isPressed) {
 		this.key = key;

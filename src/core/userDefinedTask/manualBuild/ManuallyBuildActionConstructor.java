@@ -11,7 +11,7 @@ import utilities.json.JSONUtility;
 
 public class ManuallyBuildActionConstructor {
 
-	private List<ManuallyBuildStep> steps;
+	private final List<ManuallyBuildStep> steps;
 
 	public static ManuallyBuildActionConstructor of() {
 		return new ManuallyBuildActionConstructor(new ArrayList<>());

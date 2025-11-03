@@ -67,7 +67,7 @@ public class RepeatsActionsApi extends AbstractRepeatsClientApi {
 
     public static class RepeatsRemoteCompilationHints {
 
-        private String previouslyCompiledActionId;
+        private final String previouslyCompiledActionId;
 
         private RepeatsRemoteCompilationHints(String previouslyCompiledActionId) {
             this.previouslyCompiledActionId = previouslyCompiledActionId == null ? "" : previouslyCompiledActionId;

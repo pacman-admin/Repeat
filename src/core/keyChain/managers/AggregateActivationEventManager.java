@@ -14,7 +14,7 @@ import core.userDefinedTask.UserDefinedAction;
 
 public class AggregateActivationEventManager extends ActivationEventManager {
 
-	private List<ActivationEventManager> managers;
+	private final List<ActivationEventManager> managers;
 
 	public AggregateActivationEventManager(Config config, ActivationEventManager... managers) {
 		super(config);

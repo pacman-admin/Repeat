@@ -14,7 +14,7 @@ public class TaskInvoker {
     private static final Logger LOGGER = Logger.getLogger(TaskInvoker.class.getName());
 
     private final CoreProvider coreProvider;
-    private List<TaskGroup> taskGroup;
+    private final List<TaskGroup> taskGroup;
 
     public TaskInvoker(CoreProvider coreProvider, List<TaskGroup> taskGroup) {
         this.coreProvider = coreProvider;

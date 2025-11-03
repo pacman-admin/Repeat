@@ -29,7 +29,7 @@ public abstract class AbstractBackgroundEntityManager<T> {
     private static final long CLEAN_UP_PERIOD_SECOND = 1;
     protected Map<String, T> entities;
     private ScheduledThreadPoolExecutor executor;
-    private Map<String, Long> lastUsed;
+    private final Map<String, Long> lastUsed;
 
     protected AbstractBackgroundEntityManager() {
         entities = new HashMap<>();

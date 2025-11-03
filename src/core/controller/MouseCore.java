@@ -25,7 +25,7 @@ import java.awt.*;
 
 public class MouseCore extends AbstractMouseCoreImplementation {
 
-    private AbstractMouseCoreImplementation m;
+    private final AbstractMouseCoreImplementation m;
 
     MouseCore(AbstractMouseCoreImplementation m) {
         this.m = m;

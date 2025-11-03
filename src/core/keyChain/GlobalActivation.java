@@ -16,8 +16,8 @@ public class GlobalActivation implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(GlobalActivation.class.getName());
 
-	private boolean onKeyReleased;
-	private boolean onKeyPressed;
+	private final boolean onKeyReleased;
+	private final boolean onKeyPressed;
 
 	private GlobalActivation(Builder builder) {
 		this.onKeyReleased = builder.onKeyReleased;

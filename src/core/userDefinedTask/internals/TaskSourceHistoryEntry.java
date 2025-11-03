@@ -4,8 +4,8 @@ import java.util.Calendar;
 
 /** Holds a single entry of source history. */
 public class TaskSourceHistoryEntry {
-	private String sourcePath;
-	private Calendar created;
+	private final String sourcePath;
+	private final Calendar created;
 
 	private TaskSourceHistoryEntry(String sourcePath, Calendar created) {
 		this.sourcePath = sourcePath;

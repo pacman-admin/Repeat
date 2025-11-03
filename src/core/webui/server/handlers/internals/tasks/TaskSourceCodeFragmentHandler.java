@@ -15,8 +15,8 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
 public class TaskSourceCodeFragmentHandler {
 
-	private ObjectRenderer objectRenderer;
-	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private final ObjectRenderer objectRenderer;
+	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public TaskSourceCodeFragmentHandler(ObjectRenderer objectRenderer, ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		this.objectRenderer = objectRenderer;

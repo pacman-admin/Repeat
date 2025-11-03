@@ -53,8 +53,8 @@ public abstract class AbstractSourceGenerator {
 		return null;
 	}
 
-	private AbstractKeyboardSourceCodeGenerator keyboardSourceCodeGenerator;
-	private AbstractMouseSourceCodeGenerator mouseSourceCodeGenerator;
+	private final AbstractKeyboardSourceCodeGenerator keyboardSourceCodeGenerator;
+	private final AbstractMouseSourceCodeGenerator mouseSourceCodeGenerator;
 
 	AbstractSourceGenerator() {
 		source = new StringBuffer();

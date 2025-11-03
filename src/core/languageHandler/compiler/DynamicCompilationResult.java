@@ -21,8 +21,8 @@ package core.languageHandler.compiler;
 import core.userDefinedTask.UserDefinedAction;
 
 public class DynamicCompilationResult {
-    private DynamicCompilerOutput output;
-    private UserDefinedAction action;
+    private final DynamicCompilerOutput output;
+    private final UserDefinedAction action;
 
     DynamicCompilationResult(DynamicCompilerOutput output, UserDefinedAction action) {
         this.output = output;

@@ -16,7 +16,7 @@ public class RollingKeySeries extends KeySeries {
     private static final int DEFAULT_LIMIT = 100;
 
     private final int limit;
-    private LinkedList<ButtonStroke> keys; // This is an alias for the underlying keys.
+    private final LinkedList<ButtonStroke> keys; // This is an alias for the underlying keys.
 
     public RollingKeySeries() {
         this(List.of(), DEFAULT_LIMIT);

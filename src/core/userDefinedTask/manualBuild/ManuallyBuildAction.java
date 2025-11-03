@@ -8,7 +8,7 @@ import core.userDefinedTask.UserDefinedAction;
 
 public class ManuallyBuildAction extends UserDefinedAction {
 
-	private List<ManuallyBuildStep> steps;
+	private final List<ManuallyBuildStep> steps;
 
 	private ManuallyBuildAction(List<ManuallyBuildStep> steps) {
 		this.steps = steps;

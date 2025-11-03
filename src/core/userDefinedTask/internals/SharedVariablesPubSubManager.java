@@ -15,8 +15,8 @@ public class SharedVariablesPubSubManager {
 	private static final long POLL_TIMEOUT_MS = 2000;
 	private static final SharedVariablesPubSubManager INSTANCE = new SharedVariablesPubSubManager();
 
-	private BlockingQueue<SharedVariablesEvent> eventQueues = new LinkedBlockingQueue<>();
-	private List<SharedVariablesSubscriber> subscribers = new LinkedList<>();
+	private final BlockingQueue<SharedVariablesEvent> eventQueues = new LinkedBlockingQueue<>();
+	private final List<SharedVariablesSubscriber> subscribers = new LinkedList<>();
 	private Thread processingThread;
 	private boolean stopped;
 

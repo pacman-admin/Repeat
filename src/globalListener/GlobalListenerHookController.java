@@ -24,7 +24,7 @@ public class GlobalListenerHookController {
 
     public static class Config {
         // Only applicable for Windows.
-        private boolean useJavaAwtForMousePosition;
+        private final boolean useJavaAwtForMousePosition;
 
         private Config(boolean useJavaAwtForMousePosition) {
             this.useJavaAwtForMousePosition = useJavaAwtForMousePosition;

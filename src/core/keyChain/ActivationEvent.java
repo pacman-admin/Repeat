@@ -8,7 +8,7 @@ public class ActivationEvent {
 		BUTTON_STROKE("button_stroke"),
 		SHARED_VARIABLE("shared_variable");
 
-		private String value;
+		private final String value;
 
 		EventType(String value) {
 			this.value = value;
@@ -20,7 +20,7 @@ public class ActivationEvent {
 		}
 	}
 
-	private EventType type;
+	private final EventType type;
 	private ButtonStroke buttonStroke;
 	private SharedVariablesEvent variable;
 

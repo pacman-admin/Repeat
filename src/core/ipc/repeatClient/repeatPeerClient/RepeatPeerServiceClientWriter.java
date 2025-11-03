@@ -21,9 +21,9 @@ public class RepeatPeerServiceClientWriter extends AbstractRepeatsClientStoppabl
 	private static final long REPLY_WAIT_TIMEOUT_MS = 10000;
 	private static final long MESSAGE_WAIT_TIMEOUT_MS = (long) (ControllerServer.DEFAULT_TIMEOUT_MS * 0.8);
 
-	private DataOutputStream writer;
+	private final DataOutputStream writer;
 	private long currentId;
-	private LinkedBlockingQueue<String> messageQueue;
+	private final LinkedBlockingQueue<String> messageQueue;
 
 	RepeatPeerServiceClientWriter(DataOutputStream writer, ResponseManager responseManager) {
 		super(responseManager);

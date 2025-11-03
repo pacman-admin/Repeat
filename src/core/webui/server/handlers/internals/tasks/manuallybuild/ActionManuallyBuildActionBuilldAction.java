@@ -17,7 +17,7 @@ import core.webui.webcommon.HttpServerUtilities;
 @SuppressWarnings("SpellCheckingInspection")
 public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodHttpHandler {
 
-	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public ActionManuallyBuildActionBuilldAction(ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(AbstractSingleMethodHttpHandler.POST_METHOD);

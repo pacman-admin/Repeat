@@ -16,7 +16,8 @@ public class KeyChainManager extends KeyStrokeManager {
 
     private final Set<ButtonStroke> pressedKeyboardKeys, pressedKeys;
     private final Map<KeyChain, UserDefinedAction> keyChainActions;
-    private KeyChain currentKeyboardChain, currentKeyChain;
+    private final KeyChain currentKeyboardChain;
+    private final KeyChain currentKeyChain;
     private UserDefinedAction pendingAction;
 
     public KeyChainManager(Config config) {

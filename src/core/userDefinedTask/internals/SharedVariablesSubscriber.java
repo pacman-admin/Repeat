@@ -2,8 +2,8 @@ package core.userDefinedTask.internals;
 
 public class SharedVariablesSubscriber {
 
-	private SharedVariablesSubscription subscription;
-	private ProcessingFunction f;
+	private final SharedVariablesSubscription subscription;
+	private final ProcessingFunction f;
 
 	private SharedVariablesSubscriber(SharedVariablesSubscription subscription, ProcessingFunction f) {
 		this.subscription = subscription;

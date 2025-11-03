@@ -15,7 +15,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
 public class TaskBuilderPageHandler extends AbstractUIHttpHandler {
 
-	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public TaskBuilderPageHandler(ObjectRenderer objectRenderer, ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

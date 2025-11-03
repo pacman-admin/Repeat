@@ -21,7 +21,7 @@ import core.webui.webcommon.HttpServerUtilities;
 
 public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHandler {
 
-	private ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
+	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 
 	public ActionManuallyBuildActionInsertStepHandler(ObjectRenderer objectRenderer, ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

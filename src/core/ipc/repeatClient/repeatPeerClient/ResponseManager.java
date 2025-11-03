@@ -14,9 +14,9 @@ public class ResponseManager {
 
 	private static final Logger LOGGER = Logger.getLogger(ResponseManager.class.getName());
 
-	private Lock lockMaster;
-	private Map<Long, Semaphore> locks;
-	private Map<Long, Reply> receivedReply;
+	private final Lock lockMaster;
+	private final Map<Long, Semaphore> locks;
+	private final Map<Long, Reply> receivedReply;
 
 	ResponseManager() {
 		lockMaster = new ReentrantLock();

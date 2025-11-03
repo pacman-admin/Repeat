@@ -34,7 +34,7 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
         HOTKEY_NAMES.put(MOUSE_GESTURE_ACTIVATION_TASK_NAME, "Mouse gesture recognition activation/de-activation");
     }
 
-    private TaskActivationConstructorManager taskActivationConstructorManager;
+    private final TaskActivationConstructorManager taskActivationConstructorManager;
 
     public TaskDetailsPageHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

@@ -15,8 +15,8 @@ public class RegexStringMatchingCondition extends StringMatchingCondition {
 
 	private static final Logger LOGGER = Logger.getLogger(RegexStringMatchingCondition.class.getName());
 
-	private String regex;
-	private Pattern pattern;
+	private final String regex;
+	private final Pattern pattern;
 
 	public static RegexStringMatchingCondition of(String regex) {
 		return new RegexStringMatchingCondition(regex);

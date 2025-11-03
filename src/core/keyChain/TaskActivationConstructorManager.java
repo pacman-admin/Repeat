@@ -9,7 +9,7 @@ import globalListener.GlobalListenerFactory;
 
 public class TaskActivationConstructorManager extends AbstractBackgroundEntityManager<TaskActivationConstructor> {
 
-	private AbstractGlobalKeyListener keyListener;
+	private final AbstractGlobalKeyListener keyListener;
 
 	public TaskActivationConstructorManager() {
 		keyListener = GlobalListenerFactory.of().createGlobalKeyListener();

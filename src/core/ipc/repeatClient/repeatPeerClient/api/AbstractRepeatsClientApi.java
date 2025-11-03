@@ -14,7 +14,7 @@ abstract class AbstractRepeatsClientApi {
 
 	private static final Logger LOGGER = Logger.getLogger(AbstractRepeatsClientApi.class.getName());
 
-	private RepeatPeerServiceClientWriter repeatPeerServiceClientWriter;
+	private final RepeatPeerServiceClientWriter repeatPeerServiceClientWriter;
 
 	AbstractRepeatsClientApi(RepeatPeerServiceClientWriter repeatPeerServiceClientWriter) {
 		this.repeatPeerServiceClientWriter = repeatPeerServiceClientWriter;

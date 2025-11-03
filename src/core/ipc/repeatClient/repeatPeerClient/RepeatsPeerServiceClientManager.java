@@ -19,7 +19,7 @@ public class RepeatsPeerServiceClientManager implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(RepeatsPeerServiceClientManager.class.getName());
 
-	private Map<String, RepeatsPeerServiceClient> clients;
+	private final Map<String, RepeatsPeerServiceClient> clients;
 
 	public RepeatsPeerServiceClientManager() {
 		this.clients = new HashMap<>();

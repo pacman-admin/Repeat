@@ -9,10 +9,10 @@ public class SharedVariablesSubscription implements IJsonable {
 
 	private static final SharedVariablesSubscription ALL = new SharedVariablesSubscription(null, null, true, true);
 
-	private boolean all;
-	private boolean allForNamespace;
-	private String namespace;
-	private String name;
+	private final boolean all;
+	private final boolean allForNamespace;
+	private final String namespace;
+	private final String name;
 
 	private SharedVariablesSubscription(String namespace, String name, boolean all, boolean allForNamespace) {
 		this.namespace = namespace;
