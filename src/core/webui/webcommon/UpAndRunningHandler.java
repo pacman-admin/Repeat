@@ -20,10 +20,9 @@ public class UpAndRunningHandler implements HttpAsyncRequestHandler<HttpRequest>
 
 	@Override
 	public void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
-		LOGGER.info("Server is up and running.");
-
-		String responseText = "This is a sample response.";
-		HttpServerUtilities.prepareTextResponse(exchange, HttpStatus.SC_OK, responseText);
+		String msg = "Server is up and running.";
+        LOGGER.info(msg);
+		HttpServerUtilities.prepareTextResponse(exchange, 200, msg);
 	}
 
 	@Override
