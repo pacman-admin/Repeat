@@ -10,8 +10,8 @@ public class LogHolder extends OutputStream {
     private final StringBuffer content;
     private final LinkedList<LineEntry> lines;
     private int offset;
-    private int currentIndex = 0;
-    private int lastIndex = 0;
+    private int currentIndex;
+    private int lastIndex;
 
 
     public LogHolder() {

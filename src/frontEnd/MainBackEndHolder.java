@@ -85,7 +85,7 @@ public class MainBackEndHolder {
     private UserDefinedAction customFunction;
     private TaskGroup currentGroup;
     private boolean isRecording, isReplaying, isRunningCompiledTask;
-    private File currentTempFile = null;
+    private File currentTempFile;
 
     public MainBackEndHolder() {
         config = new Config(this);

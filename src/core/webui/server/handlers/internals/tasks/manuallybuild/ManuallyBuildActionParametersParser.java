@@ -32,7 +32,7 @@ public class ManuallyBuildActionParametersParser {
     }
 
     public ManuallyBuildStep parse(String actor, String action, String paramsString) throws InvalidManuallyBuildComponentException {
-        List<String> params = Arrays.asList(paramsString.split(",")).stream().map(String::trim).collect(Collectors.toList());
+        List<String> params = Arrays.stream(paramsString.split(",")).map(String::trim).collect(Collectors.toList());
 
         if (actor.equals(Actor.MOUSE.toString())) {
             return parseMouseStep(action, params);

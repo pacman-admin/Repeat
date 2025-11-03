@@ -58,12 +58,8 @@ public class ResponseManager {
 			lockMaster.lock();
 			receivedReply.put(id, reply);
 
-			Semaphore s = locks.get(id);
-			if (s == null) {
-				s = new Semaphore(0);
-				locks.put(id, s);
-			}
-			s.release();
+            Semaphore s = locks.computeIfAbsent(id, k -> new Semaphore(0));
+            s.release();
 		} finally {
 			lockMaster.unlock();
 		}

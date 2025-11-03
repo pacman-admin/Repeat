@@ -118,16 +118,14 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
 
         List<Object> parsedParams = parseParams(content.getArrayNode("parameters"));
 
-        if (device.equals(DEVICE_MOUSE)) {
-            return mouseAction(type, id, action, parsedParams);
-        } else if (device.equals(DEVICE_KEYBOARD)) {
-            return keyboardAction(type, id, action, parsedParams);
-        } else if (device.equals(DEVICE_TOOL)) {
-            return unsupportedAction(type, id, action);
+        return switch (device) {
+            case DEVICE_MOUSE -> mouseAction(type, id, action, parsedParams);
+            case DEVICE_KEYBOARD -> keyboardAction(type, id, action, parsedParams);
+            case DEVICE_TOOL -> unsupportedAction(type, id, action);
             //return toolAction(type, id, action, parsedParams);
-        }
+            default -> failure(type, id, "Unknown device " + device);
+        };
 
-        return failure(type, id, "Unknown device " + device);
     }
 
     private boolean mouseAction(String type, long id, final String action, final List<Object> parsedParams) throws InterruptedException {
@@ -138,193 +136,214 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
             return false;
         }
 
-        if (action.equals("hold")) {
-            if (params.size() == 2) {
-                core.mouse().hold(params.get(0), params.get(1));
-            } else if (params.size() == 4) {
-                core.mouse().hold(params.get(0), params.get(1), params.get(2), params.get(3));
-            } else {
-                return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
+        switch (action) {
+            case "hold" -> {
+                if (params.size() == 2) {
+                    core.mouse().hold(params.get(0), params.get(1));
+                } else if (params.size() == 4) {
+                    core.mouse().hold(params.get(0), params.get(1), params.get(2), params.get(3));
+                } else {
+                    return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("press")) {
-            if (params.size() == 1) {
-                core.mouse().press(params.get(0));
-            } else {
-                return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
+            case "press" -> {
+                if (params.size() == 1) {
+                    core.mouse().press(params.get(0));
+                } else {
+                    return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("release")) {
-            if (params.size() == 1) {
-                core.mouse().release(params.get(0));
-            } else {
-                return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
+            case "release" -> {
+                if (params.size() == 1) {
+                    core.mouse().release(params.get(0));
+                } else {
+                    return failure(type, id, "Unable to press mouse with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("left_click")) {
-            if (params.isEmpty()) {
-                core.mouse().leftClick();
-            } else if (params.size() == 1) {
-                core.mouse().leftClick(params.get(0));
-            } else if (params.size() == 2) {
-                core.mouse().leftClick(params.get(0), params.get(1));
-            } else if (params.size() == 3) {
-                core.mouse().leftClick(params.get(0), params.get(1), params.get(2));
-            } else {
-                return failure(type, id, "Unable to left click with " + params.size() + " parameters.");
+            case "left_click" -> {
+                if (params.isEmpty()) {
+                    core.mouse().leftClick();
+                } else if (params.size() == 1) {
+                    core.mouse().leftClick(params.get(0));
+                } else if (params.size() == 2) {
+                    core.mouse().leftClick(params.get(0), params.get(1));
+                } else if (params.size() == 3) {
+                    core.mouse().leftClick(params.get(0), params.get(1), params.get(2));
+                } else {
+                    return failure(type, id, "Unable to left click with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("right_click")) {
-            if (params.isEmpty()) {
-                core.mouse().rightClick();
-            } else if (params.size() == 1) {
-                core.mouse().rightClick(params.get(0));
-            } else if (params.size() == 2) {
-                core.mouse().rightClick(params.get(0), params.get(1));
-            } else {
-                return failure(type, id, "Unable to right click with " + params.size() + " parameters.");
+            case "right_click" -> {
+                if (params.isEmpty()) {
+                    core.mouse().rightClick();
+                } else if (params.size() == 1) {
+                    core.mouse().rightClick(params.get(0));
+                } else if (params.size() == 2) {
+                    core.mouse().rightClick(params.get(0), params.get(1));
+                } else {
+                    return failure(type, id, "Unable to right click with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("move")) {
-            if (params.size() == 2) {
-                core.mouse().move(params.get(0), params.get(1));
-            } else {
-                return failure(type, id, "Unable to move mouse with " + params.size() + " parameters.");
+            case "move" -> {
+                if (params.size() == 2) {
+                    core.mouse().move(params.get(0), params.get(1));
+                } else {
+                    return failure(type, id, "Unable to move mouse with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("move_by")) {
-            if (params.size() == 2) {
-                core.mouse().moveBy(params.get(0), params.get(1));
-            } else {
-                return failure(type, id, "Unable to move mouse by with " + params.size() + " parameters.");
+            case "move_by" -> {
+                if (params.size() == 2) {
+                    core.mouse().moveBy(params.get(0), params.get(1));
+                } else {
+                    return failure(type, id, "Unable to move mouse by with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("drag")) {
-            if (params.size() == 2) {
+            case "drag" -> {
+                if (params.size() == 2) {
+                    Point p = core.mouse().getPosition();
+                    core.mouse().drag(p.x, p.y, params.get(0), params.get(1));
+                } else if (params.size() == 4) {
+                    core.mouse().drag(params.get(0), params.get(1), params.get(2), params.get(3));
+                } else {
+                    return failure(type, id, "Unable to drag mouse by with " + params.size() + " parameters.");
+                }
+                return success(type, id);
+            }
+            case "drag_by" -> {
+                if (params.size() == 2) {
+                    core.mouse().dragBy(params.get(0), params.get(1));
+                } else {
+                    return failure(type, id, "Unable to drag mouse by with " + params.size() + " parameters.");
+                }
+                return success(type, id);
+            }
+            case "get_position" -> {
                 Point p = core.mouse().getPosition();
-                core.mouse().drag(p.x, p.y, params.get(0), params.get(1));
-            } else if (params.size() == 4) {
-                core.mouse().drag(params.get(0), params.get(1), params.get(2), params.get(3));
-            } else {
-                return failure(type, id, "Unable to drag mouse by with " + params.size() + " parameters.");
+                return success(type, id, JsonNodeFactories.array(JsonNodeFactories.number(p.x), JsonNodeFactories.number(p.y)));
             }
-            return success(type, id);
-        } else if (action.equals("drag_by")) {
-            if (params.size() == 2) {
-                core.mouse().dragBy(params.get(0), params.get(1));
-            } else {
-                return failure(type, id, "Unable to drag mouse by with " + params.size() + " parameters.");
-            }
-            return success(type, id);
-        } else if (action.equals("get_position")) {
-            Point p = core.mouse().getPosition();
-            return success(type, id, JsonNodeFactories.array(JsonNodeFactories.number(p.x), JsonNodeFactories.number(p.y)));
-        } else if (action.equals("get_color")) {
-            Point p = null;
-            if (params.isEmpty()) {
-                p = core.mouse().getPosition();
-            } else if (params.size() == 2) {
-                p = new Point(params.get(0), params.get(1));
-            }
-            Color color = core.mouse().getColor(p);
+            case "get_color" -> {
+                Point p = null;
+                if (params.isEmpty()) {
+                    p = core.mouse().getPosition();
+                } else if (params.size() == 2) {
+                    p = new Point(params.get(0), params.get(1));
+                }
+                Color color = core.mouse().getColor(p);
 
-            return success(type, id, JsonNodeFactories.array(JsonNodeFactories.number(color.getRed()), JsonNodeFactories.number(color.getGreen()), JsonNodeFactories.number(color.getBlue())));
-        } else {
-            return unsupportedAction(type, id, action);
+                return success(type, id, JsonNodeFactories.array(JsonNodeFactories.number(color.getRed()), JsonNodeFactories.number(color.getGreen()), JsonNodeFactories.number(color.getBlue())));
+            }
+            default -> {
+                return unsupportedAction(type, id, action);
+            }
         }
     }
 
     private boolean keyboardAction(String type, long id, final String action, final List<Object> parsedParams) throws InterruptedException {
         Core core = getCore();
 
-        if (action.equals("press")) {
-            final List<Integer> params = toIntegerParams(parsedParams);
-            if (params == null) {
-                return false;
-            }
-
-            if (!params.isEmpty()) {
-                final int[] keys = new int[params.size()];
-                for (int i = 0; i < keys.length; i++) {
-                    keys[i] = params.get(i);
+        switch (action) {
+            case "press" -> {
+                final List<Integer> params = toIntegerParams(parsedParams);
+                if (params == null) {
+                    return false;
                 }
-                core.keyBoard().press(keys);
-            } else {
-                return failure(type, id, "Unable to press key with " + params.size() + " parameters.");
-            }
-            return success(type, id);
-        } else if (action.equals("release")) {
-            final List<Integer> params = toIntegerParams(parsedParams);
-            if (params == null) {
-                return false;
-            }
 
-            if (!params.isEmpty()) {
-                final int[] keys = new int[params.size()];
-                for (int i = 0; i < keys.length; i++) {
-                    keys[i] = params.get(i);
+                if (!params.isEmpty()) {
+                    final int[] keys = new int[params.size()];
+                    for (int i = 0; i < keys.length; i++) {
+                        keys[i] = params.get(i);
+                    }
+                    core.keyBoard().press(keys);
+                } else {
+                    return failure(type, id, "Unable to press key with " + params.size() + " parameters.");
                 }
-                core.keyBoard().release(keys);
-            } else {
-                return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                return success(type, id);
             }
-            return success(type, id);
-        } else if (action.equals("type")) {
-            final List<Integer> params = toIntegerParams(parsedParams);
-            if (params == null) {
-                return false;
-            }
-            final int[] keys = IterableUtility.toIntegerArray(params);
-            core.keyBoard().type(keys);
-            return success(type, id);
-        } else if (action.equals("type_string")) {
-            final List<String> params = toStringParams(parsedParams);
-            if (params == null) {
-                return false;
-            }
-            final String[] strings = params.toArray(new String[]{});
-
-            core.keyBoard().type(strings);
-            return success(type, id);
-        } else if (action.equals("type_characters")) {
-            final List<Integer> params = toIntegerParams(parsedParams);
-            if (params == null) {
-                return false;
-            }
-
-            if (!params.isEmpty()) {
-                final char[] chars = new char[params.size()];
-                for (int i = 0; i < chars.length; i++) {
-                    int v = params.get(i);
-                    chars[i] = (char) v;
+            case "release" -> {
+                final List<Integer> params = toIntegerParams(parsedParams);
+                if (params == null) {
+                    return false;
                 }
-                core.keyBoard().type(chars);
-            } else {
-                return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
-            }
-            return success(type, id);
-        } else if (action.equals("combination")) {
-            final List<Integer> params = toIntegerParams(parsedParams);
-            if (params == null) {
-                return false;
-            }
-            final int[] strings = IterableUtility.toIntegerArray(params);
 
-            core.keyBoard().combination(strings);
-            return success(type, id);
-        } else if (action.equals("is_locked")) {
-            final List<Integer> params = toIntegerParams(parsedParams);
-            if (params == null) {
-                return false;
+                if (!params.isEmpty()) {
+                    final int[] keys = new int[params.size()];
+                    for (int i = 0; i < keys.length; i++) {
+                        keys[i] = params.get(i);
+                    }
+                    core.keyBoard().release(keys);
+                } else {
+                    return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                }
+                return success(type, id);
             }
+            case "type" -> {
+                final List<Integer> params = toIntegerParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
+                final int[] keys = IterableUtility.toIntegerArray(params);
+                core.keyBoard().type(keys);
+                return success(type, id);
+            }
+            case "type_string" -> {
+                final List<String> params = toStringParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
+                final String[] strings = params.toArray(new String[]{});
 
-            boolean result = false;
-            if (params.size() == 1) {
-                result = core.keyBoard().isLocked(params.get(0));
-            } else {
-                return failure(type, id, "Unable to check key is locked with " + params.size() + " parameters.");
+                core.keyBoard().type(strings);
+                return success(type, id);
             }
-            return success(type, id, JsonNodeFactories.booleanNode(result));
+            case "type_characters" -> {
+                final List<Integer> params = toIntegerParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
+
+                if (!params.isEmpty()) {
+                    final char[] chars = new char[params.size()];
+                    for (int i = 0; i < chars.length; i++) {
+                        int v = params.get(i);
+                        chars[i] = (char) v;
+                    }
+                    core.keyBoard().type(chars);
+                } else {
+                    return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                }
+                return success(type, id);
+            }
+            case "combination" -> {
+                final List<Integer> params = toIntegerParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
+                final int[] strings = IterableUtility.toIntegerArray(params);
+
+                core.keyBoard().combination(strings);
+                return success(type, id);
+            }
+            case "is_locked" -> {
+                final List<Integer> params = toIntegerParams(parsedParams);
+                if (params == null) {
+                    return false;
+                }
+
+                boolean result = false;
+                if (params.size() == 1) {
+                    result = core.keyBoard().isLocked(params.get(0));
+                } else {
+                    return failure(type, id, "Unable to check key is locked with " + params.size() + " parameters.");
+                }
+                return success(type, id, JsonNodeFactories.booleanNode(result));
+            }
         }
 
         return unsupportedAction(type, id, action);

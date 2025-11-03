@@ -39,6 +39,7 @@ public class TaskGroup implements IJsonable {
     public static TaskGroup remoteTaskGroup() {
         return new TaskGroup("remote-tasks", REMOTE_TASK_GROUP_ID);
     }
+
     /*public static String getSourceFilePath(){
         return sourceFilePath;
     }*/
@@ -94,10 +95,7 @@ public class TaskGroup implements IJsonable {
 
     public UserDefinedAction getTask(String id) {
         Optional<UserDefinedAction> task = tasks.stream().filter(t -> t.getActionId().equals(id)).findFirst();
-        if (task.isPresent()) {
-            return task.get();
-        }
-        return null;
+        return task.orElse(null);
     }
 
     public String getGroupId() {
