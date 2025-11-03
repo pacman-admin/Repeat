@@ -261,10 +261,9 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
                         keys[i] = params.get(i);
                     }
                     core.keyBoard().press(keys);
-                } else {
-                    return failure(type, id, "Unable to press key with " + params.size() + " parameters.");
+                    return success(type, id);
                 }
-                return success(type, id);
+                return failure(type, id, "Unable to press key with empty params");
             }
             case "release" -> {
                 final List<Integer> params = toIntegerParams(parsedParams);
@@ -278,10 +277,9 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
                         keys[i] = params.get(i);
                     }
                     core.keyBoard().release(keys);
-                } else {
-                    return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                    return success(type, id);
                 }
-                return success(type, id);
+                return failure(type, id, "Unable to press key with empty params");
             }
             case "type" -> {
                 final List<Integer> params = toIntegerParams(parsedParams);
@@ -315,10 +313,9 @@ class ControllerRequestProcessor extends AbstractMessageProcessor {
                         chars[i] = (char) v;
                     }
                     core.keyBoard().type(chars);
-                } else {
-                    return failure(type, id, "Unable to release key with " + params.size() + " parameters.");
+                    return success(type, id);
                 }
-                return success(type, id);
+                return failure(type, id, "Unable to press key with empty params");
             }
             case "combination" -> {
                 final List<Integer> params = toIntegerParams(parsedParams);
