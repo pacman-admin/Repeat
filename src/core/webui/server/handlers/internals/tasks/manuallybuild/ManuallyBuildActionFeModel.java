@@ -26,7 +26,7 @@ public class ManuallyBuildActionFeModel {
 
     public List<String> actionsForActor(String actorValue) {
         Actor actor = Actor.forValue(actorValue);
-        return ACTORS_TO_ACTIONS.getOrDefault(actor, Arrays.asList()).stream().map(Action::toString).collect(Collectors.toList());
+        return ACTORS_TO_ACTIONS.getOrDefault(actor, List.of()).stream().map(Action::toString).collect(Collectors.toList());
     }
 
     public enum Actor {

@@ -143,7 +143,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
                     }
                     optionList.add(paths);
 
-                    Iterable<? extends JavaFileObject> compilationUnit = fileManager.getJavaFileObjectsFromFiles(Arrays.asList(compiling));
+                    Iterable<? extends JavaFileObject> compilationUnit = fileManager.getJavaFileObjectsFromFiles(List.of(compiling));
                     JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, optionList, null, compilationUnit);
                     /********************************************************************************************* Compilation Requirements **/
                     if (task.call()) {
