@@ -123,11 +123,11 @@ public class HttpServerUtilities {
         return output;
     }
 
-    public static Void prepareHttpResponse(HttpAsyncExchange exchange, int code, String data) throws IOException {
+    public static Void prepareHttpResponse(HttpAsyncExchange exchange, int code, String data) {
         return prepareStringResponse(exchange, code, data, "text/html");
     }
 
-    public static Void prepareTextResponse(HttpAsyncExchange exchange, int code, String data) throws IOException {
+    public static Void prepareTextResponse(HttpAsyncExchange exchange, int code, String data) {
         return prepareStringResponse(exchange, code, data, "text/plain; charset=utf-8");
     }
 

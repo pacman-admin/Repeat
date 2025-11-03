@@ -28,7 +28,7 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
     }
 
     @Override
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         return LOGGER.exec(() -> {
             Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
             if (params == null) {

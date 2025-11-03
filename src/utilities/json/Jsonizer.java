@@ -36,7 +36,7 @@ public class Jsonizer {
         }
     }
 
-    private static boolean internalParse(JsonNode node, Object dest) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException {
+    private static boolean internalParse(JsonNode node, Object dest) throws NoSuchFieldException, IllegalAccessException, InstantiationException, InvocationTargetException {
         Class<?> clazz = dest.getClass();
         if (isMapType(clazz)) {
             throw new IllegalArgumentException("Cannot parse the following JSON node as map since type information is not available.\n" + JSONUtility.jsonToString(node));
@@ -76,7 +76,7 @@ public class Jsonizer {
         return true;
     }
 
-    private static List<Object> parseIterableField(JsonNode valueNode, Field field) throws IllegalArgumentException, IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchFieldException, SecurityException {
+    private static List<Object> parseIterableField(JsonNode valueNode, Field field) throws IllegalAccessException, InstantiationException, InvocationTargetException, NoSuchFieldException {
         if (!valueNode.isArrayNode()) {
             throw new IllegalArgumentException("Expecting node to be array but is type " + valueNode.getType() + ". " + JSONUtility.jsonToString(valueNode));
         }
@@ -133,7 +133,7 @@ public class Jsonizer {
         }
     }
 
-    private static JsonNode internalJsonize(Object o) throws IllegalArgumentException, IllegalAccessException {
+    private static JsonNode internalJsonize(Object o) throws IllegalAccessException {
         Class<?> objectClass = o.getClass();
         if (isPrimitiveOrString(objectClass)) {
             return fromPrimitiveOrString(objectClass, o);
@@ -177,7 +177,7 @@ public class Jsonizer {
         return JsonNodeFactories.object(data);
     }
 
-    private static Object toPrimitiveOrString(JsonNode node, Class<?> clazz) throws IllegalArgumentException {
+    private static Object toPrimitiveOrString(JsonNode node, Class<?> clazz) {
         if (clazz == String.class) {
             return node.getStringValue();
         } else if (clazz == Boolean.TYPE || clazz == Boolean.class) {

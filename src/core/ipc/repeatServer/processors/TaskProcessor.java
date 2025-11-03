@@ -65,7 +65,7 @@ public class TaskProcessor extends AbstractMessageProcessor {
     }
 
     @Override
-    public boolean process(String type, long id, JsonNode content) throws InterruptedException {
+    public boolean process(String type, long id, JsonNode content) {
         if (ApiProtocol.isReplyMessage(content)) {
             return processReply(type, id, content);
         }

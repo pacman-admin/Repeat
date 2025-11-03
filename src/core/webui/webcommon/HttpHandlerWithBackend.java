@@ -40,5 +40,5 @@ public abstract class HttpHandlerWithBackend implements HttpAsyncRequestHandler<
     }
 
     protected abstract void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-            throws HttpException, IOException;
+            throws IOException;
 }

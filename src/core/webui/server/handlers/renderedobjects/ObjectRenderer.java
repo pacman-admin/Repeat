@@ -39,7 +39,7 @@ public class ObjectRenderer {
         }
     }
 
-    private String internalRender(String templateFile, Map<String, Object> data) throws TemplateNotFoundException, MalformedTemplateNameException, ParseException, IOException, TemplateException {
+    private String internalRender(String templateFile, Map<String, Object> data) throws IOException, TemplateException, TemplateNotFoundException, MalformedTemplateNameException, ParseException {
         if (!templateFile.endsWith(TEMPLATE_EXTENSION)) {
             templateFile += TEMPLATE_EXTENSION;
         }

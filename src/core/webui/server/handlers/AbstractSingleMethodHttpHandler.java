@@ -20,7 +20,7 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
     }
 
     @Override
-    protected final void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException {
+    protected final void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         if (allowedMethod != null && !request.getRequestLine().getMethod().equalsIgnoreCase(allowedMethod)) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Only " + allowedMethod + " requests are accepted.");
             return;
@@ -33,5 +33,5 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
         return HttpServerUtilities.prepareHttpResponse(exchange, 204, "");
     }
 
-    protected abstract Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws HttpException, IOException;
+    protected abstract Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException;
 }

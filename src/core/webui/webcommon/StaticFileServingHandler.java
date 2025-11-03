@@ -88,9 +88,6 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
             InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
             response.setEntity(body);
             exchange.submitResponse(new BasicAsyncResponseProducer(response));
-        } catch (FileNotFoundException e) {
-            LOGGER.warning("Not found:\n" + path);
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Content could not be accessed!!!:\n" + path, e);
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Could not access file." + path);

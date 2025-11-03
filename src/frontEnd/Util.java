@@ -71,7 +71,7 @@ final class Util {
      * @param zipFile
      * @param outputFolder
      */
-    public static void unZipFile(String zipFile, String outputFolder) throws IOException {
+    public static void unZipFile(String zipFile, String outputFolder) throws IOException, FileNotFoundException {
         byte[] buffer = new byte[1024];
         // Create output directory is not exists
         File folder = new File(outputFolder);
@@ -125,7 +125,7 @@ final class Util {
             }
         }
 
-        private void addFile(File f, String pathPrefix) throws IOException {
+        private void addFile(File f, String pathPrefix) throws IOException, FileNotFoundException {
             if (f.isHidden() || !f.exists()) return;
             if (f.isDirectory()) {
                 z.putNextEntry(new ZipEntry(pathPrefix + f.getName() + "/"));

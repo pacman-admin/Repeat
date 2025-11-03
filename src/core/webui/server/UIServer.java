@@ -199,7 +199,7 @@ public class UIServer extends IPCServiceWithModifiablePort {
     }
 
     @Override
-    protected void start() throws IOException {
+    protected void start() throws IOException, java.net.UnknownHostException {
         if (!portFree()) {
             getLogger().warning("Failed to initialize " + getName() + ". Port " + port + " is not free.");
             throw new IOException("Port " + port + " is not free.");

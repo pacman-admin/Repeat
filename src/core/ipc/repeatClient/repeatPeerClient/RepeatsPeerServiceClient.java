@@ -56,7 +56,7 @@ public class RepeatsPeerServiceClient extends IIPCService implements IJsonable {
     }
 
     @Override
-    protected void start() throws IOException {
+    protected void start() throws IOException, java.net.UnknownHostException {
         socket = new Socket(host, port);
 
         Reader r = new BufferedReader(new InputStreamReader(socket.getInputStream()));

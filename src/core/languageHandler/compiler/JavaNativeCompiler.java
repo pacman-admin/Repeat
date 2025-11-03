@@ -175,7 +175,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
         }
     }
 
-    private DynamicCompilationResult loadClass(String loadClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+    private DynamicCompilationResult loadClass(String loadClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
         classLoader.addURL(new File("./").toURI().toURL());
         Class<?> loadedClass = classLoader.loadClass(StringUtilities.join(packageTree, ".") + "." + loadClassName);
         Object object = null;
@@ -332,7 +332,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
      * so that the compiled task can load classes. However, it is not sure whether Java garbage collection can recycle
      * this temporary class loader once the compiled task is discarded.
      */
-    private void applyClassPath() throws SecurityException, IllegalArgumentException {
+    private void applyClassPath() {
         // Hacky reflection solution to alter the global classpath.
         // This no longer works for JDK 9 since system class loader is no longer a URLClassLoader.
         // JDK 9 also emits warnings as reflection package tries to access addURL method.

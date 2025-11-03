@@ -36,7 +36,7 @@ class RepeatPeerServiceClientReader extends AbstractRepeatsClientStoppableThread
         }
     }
 
-    private void processMessage(String message) throws InterruptedException {
+    private void processMessage(String message) {
         JsonRootNode root = JSONUtility.jsonFromString(message);
         if (root == null || !verifyMessage(root)) {
             LOGGER.warning("Invalid messaged received " + message);
