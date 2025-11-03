@@ -68,6 +68,6 @@ public class AggregateKeyboardCore extends AbstractKeyboardCoreImplementation {
 
     @Override
     public boolean isLocked(int key) {
-        return keyboards.iterator().next().isLocked(key);
+        return keyboards.getFirst().isLocked(key);
     }
 }

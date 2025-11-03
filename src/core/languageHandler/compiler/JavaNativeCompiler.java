@@ -287,7 +287,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
         JSONUtility.addAllJson(node.getArrayNode("classpath"), new Function<>() {
             @Override
             public String apply(JsonNode d) {
-                return d.getStringValue().toString();
+                return d.getStringValue();
             }
         }, paths);
         // Override current class paths

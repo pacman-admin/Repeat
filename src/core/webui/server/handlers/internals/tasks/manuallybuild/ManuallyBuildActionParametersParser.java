@@ -48,22 +48,22 @@ public class ManuallyBuildActionParametersParser {
     private ManuallyBuildStep parseMouseStep(String action, List<String> params) throws InvalidManuallyBuildComponentException {
         if (action.equals(MouseAction.CLICK.toString())) {
             verify(params, Arrays.asList(MouseMask.class, NonNegativeLong.class, NonNegativeLong.class));
-            return MouseClickStep.of(MouseMask.getCode(params.get(0)), Integer.parseInt(params.get(1)), Integer.parseInt(params.get(2)));
+            return MouseClickStep.of(MouseMask.getCode(params.getFirst()), Integer.parseInt(params.get(1)), Integer.parseInt(params.get(2)));
         } else if (action.equals(MouseAction.CLICK_CURRENT_POSITION.toString())) {
             verify(params, List.of(MouseMask.class));
-            return MouseClickCurrentPositionStep.of(MouseMask.getCode(params.get(0)));
+            return MouseClickCurrentPositionStep.of(MouseMask.getCode(params.getFirst()));
         } else if (action.equals(MouseAction.MOVE_BY.toString())) {
             verify(params, Arrays.asList(Long.class, Long.class));
-            return MouseMoveByStep.of(Integer.parseInt(params.get(0)), Integer.parseInt(params.get(1)));
+            return MouseMoveByStep.of(Integer.parseInt(params.getFirst()), Integer.parseInt(params.get(1)));
         } else if (action.equals(MouseAction.MOVE.toString())) {
             verify(params, Arrays.asList(NonNegativeLong.class, NonNegativeLong.class));
-            return MouseMoveStep.of(Integer.parseInt(params.get(0)), Integer.parseInt(params.get(1)));
+            return MouseMoveStep.of(Integer.parseInt(params.getFirst()), Integer.parseInt(params.get(1)));
         } else if (action.equals(MouseAction.PRESS_CURRENT_POSITION.toString())) {
             verify(params, List.of(MouseMask.class));
-            return MousePressCurrentPositionStep.of(MouseMask.getCode(params.get(0)));
+            return MousePressCurrentPositionStep.of(MouseMask.getCode(params.getFirst()));
         } else if (action.equals(MouseAction.RELEASE_CURRENT_POSITION.toString())) {
             verify(params, List.of(MouseMask.class));
-            return MouseReleaseCurrentPositionStep.of(MouseMask.getCode(params.get(0)));
+            return MouseReleaseCurrentPositionStep.of(MouseMask.getCode(params.getFirst()));
         } else {
             throw new InvalidManuallyBuildComponentException("Unknown mouse action " + action + ".");
         }
@@ -72,16 +72,16 @@ public class ManuallyBuildActionParametersParser {
     private ManuallyBuildStep parseKeyboardStep(String action, List<String> params) throws InvalidManuallyBuildComponentException {
         if (action.equals(KeyboardAction.PRESS_KEY.toString())) {
             verify(params, List.of(Key.class));
-            return KeyboardPressKeyStep.of(Key.getCode(params.get(0)));
+            return KeyboardPressKeyStep.of(Key.getCode(params.getFirst()));
         } else if (action.equals(KeyboardAction.RELEASE_KEY.toString())) {
             verify(params, List.of(Key.class));
-            return KeyboardReleaseKeyStep.of(Key.getCode(params.get(0)));
+            return KeyboardReleaseKeyStep.of(Key.getCode(params.getFirst()));
         } else if (action.equals(KeyboardAction.TYPE_KEY.toString())) {
             verify(params, List.of(Key.class));
-            return KeyboardTypeKeyStep.of(Key.getCode(params.get(0)));
+            return KeyboardTypeKeyStep.of(Key.getCode(params.getFirst()));
         } else if (action.equals(KeyboardAction.TYPE_STRING_KEY.toString())) {
             verify(params, List.of(String.class));
-            return KeyboardTypeStringStep.of(params.get(0));
+            return KeyboardTypeStringStep.of(params.getFirst());
         } else {
             throw new InvalidManuallyBuildComponentException("Unknown keyboard action " + action + ".");
         }
@@ -90,7 +90,7 @@ public class ManuallyBuildActionParametersParser {
     private ManuallyBuildStep parseControllerStep(String action, List<String> params) throws InvalidManuallyBuildComponentException {
         if (action.equals(ControllerAction.WAIT.toString())) {
             verify(params, List.of(NonNegativeLong.class));
-            return ControllerDelayStep.of(Integer.parseInt(params.get(0)));
+            return ControllerDelayStep.of(Integer.parseInt(params.getFirst()));
         }
         throw new InvalidManuallyBuildComponentException("Unknown controller action " + action + ".");
     }

@@ -34,11 +34,11 @@ public class RenderedActiveWindowInfosPreconditions {
         result.add(RenderedMatchingOptionSelection.REGEX_MATCH);
 
         if (condition == AlwaysMatchingStringCondition.INSTANCE) {
-            result.set(0, result.get(0).selected());
+            result.set(0, result.getFirst().selected());
             return result;
         }
         if (condition instanceof ContainingStringMatchingCondition) {
-            result.set(0, result.get(0).selected());
+            result.set(0, result.getFirst().selected());
             return result;
         }
         if (condition instanceof ExactStringMatchCondition) {
@@ -50,7 +50,7 @@ public class RenderedActiveWindowInfosPreconditions {
             return result;
         }
 
-        result.set(0, result.get(0).selected());
+        result.set(0, result.getFirst().selected());
         return result;
     }
 

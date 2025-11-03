@@ -73,7 +73,6 @@ public class KeyStroke implements ButtonStroke {
 
 	public static KeyStroke of(NativeKeyEvent e) {
 		Modifier m = switch (e.getModifier()) {
-            case KEY_MODIFIER_UNKNOWN -> Modifier.KEY_MODIFIER_UNKNOWN;
             case KEY_MODIFIER_LEFT -> Modifier.KEY_MODIFIER_LEFT;
             case KEY_MODIFIER_RIGHT -> Modifier.KEY_MODIFIER_RIGHT;
             default -> Modifier.KEY_MODIFIER_UNKNOWN;
@@ -191,11 +190,8 @@ public class KeyStroke implements ButtonStroke {
 		if (key != other.key) {
 			return false;
 		}
-		if (!modifier.equivalent(other.modifier)) {
-			return false;
-		}
-		return true;
-	}
+        return modifier.equivalent(other.modifier);
+    }
 
 	@Override
 	public JsonRootNode jsonize() {

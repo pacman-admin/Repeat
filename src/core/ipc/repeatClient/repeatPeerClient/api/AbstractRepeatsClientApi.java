@@ -20,10 +20,6 @@ abstract class AbstractRepeatsClientApi {
 		this.repeatPeerServiceClientWriter = repeatPeerServiceClientWriter;
 	}
 
-	private RepeatPeerServiceClientWriter getRepeatPeerServiceClientWriter() {
-		return repeatPeerServiceClientWriter;
-	}
-
 	final String waitAndGetResponseIfSuccess(IpcMessageType type, IJsonable message) {
 		JsonNode node = waitAndGetJsonResponseIfSuccess(type, message);
 		if (node == null) {

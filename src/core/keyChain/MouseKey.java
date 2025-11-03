@@ -108,11 +108,8 @@ public class MouseKey implements ButtonStroke {
 			return false;
 		}
 		MouseKey other = (MouseKey) obj;
-		if (key != other.key) {
-			return false;
-		}
-		return true;
-	}
+        return key == other.key;
+    }
 
 	@Override
 	public KeyboardResult getTypedString(KeyboardState keyboardState) {

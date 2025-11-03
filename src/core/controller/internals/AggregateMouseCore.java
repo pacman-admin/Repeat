@@ -21,17 +21,17 @@ public class AggregateMouseCore extends AbstractMouseCoreImplementation {
 
     @Override
     public Point getPosition() {
-        return mice.iterator().next().getPosition();
+        return mice.getFirst().getPosition();
     }
 
     @Override
     public Color getColor(int x, int y) {
-        return mice.iterator().next().getColor(x, y);
+        return mice.getFirst().getColor(x, y);
     }
 
     @Override
     public Color getColor() {
-        return mice.iterator().next().getColor();
+        return mice.getFirst().getColor();
     }
 
     @Override
