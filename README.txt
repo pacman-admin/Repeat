@@ -8,15 +8,23 @@ I fixed some bugs, improved startup time considerably, and added a standardized 
 
 The project is licensed almost entirely under the Apache License, version 2.0.
 
-Some libraries are MIT licensed, as are 6 source files I created myself (with inspiration from HP Truong's original code).
+Some libraries are MIT licensed, as are 10 source files I created myself (with inspiration from HP Truong's original code).
 
-The 6 source files licensed under the MIT license are:
+The 10 source files licensed under the MIT license are:
 AbstractSimpleHandler.java
 AbstractGETHandler.java
 AbstractPOSTHandler.java
 AbstractComplexGETHandler.java
+
 GetEditedSourceHandler.java
-ActionEditSourceCode.java
+ActionEditSourceHandler.java
+
+OSIdentifier.java
+OS.java
+
+HTTPLogger.java
+RunnableVoid.java
+
 
 Check the git commit history on the GitHub repo for details of who coded what.
 The source code is freely available, provided you comply with the terms of the license.
