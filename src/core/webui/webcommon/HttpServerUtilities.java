@@ -125,15 +125,6 @@ public class HttpServerUtilities {
         return output;
     }
 
-
-    public static Void prepareResponse(HttpAsyncExchange exchange, int code, byte[] data) {
-        HttpResponse response = exchange.getResponse();
-        response.setStatusCode(code);
-        response.setEntity(new ByteArrayEntity(data));
-        exchange.submitResponse(new BasicAsyncResponseProducer(response));
-        return null;
-    }
-
     public static Void prepareHttpResponse(HttpAsyncExchange exchange, int code, String data) throws IOException {
         return prepareStringResponse(exchange, code, data, "text/html");
     }
@@ -142,7 +133,7 @@ public class HttpServerUtilities {
         return prepareStringResponse(exchange, code, data, "text/plain; charset=utf-8");
     }
 
-    public static Void prepareJsonResponse(HttpAsyncExchange exchange, int code, JsonNode data) throws IOException {
+    public static Void prepareJsonResponse(HttpAsyncExchange exchange, int code, JsonNode data){
         return prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data), "application/json; charset=utf-8");
     }
 
@@ -154,7 +145,6 @@ public class HttpServerUtilities {
         entity.setContentType(contentType);
         response.setEntity(entity);
         exchange.submitResponse(new BasicAsyncResponseProducer(response));
-
         if (code >= 400) {
             LOGGER.warning("HTTP response with code " + code + ": " + data);
         }
