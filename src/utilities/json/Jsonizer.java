@@ -23,6 +23,7 @@ public class Jsonizer {
     private static final Logger LOGGER = Logger.getLogger(Jsonizer.class.getName());
 
     private Jsonizer() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static boolean parse(JsonNode node, IJsonable dest) {

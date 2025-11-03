@@ -13,7 +13,9 @@ public class IPCProtocol {
 
 	private static final Logger LOGGER = Logger.getLogger(IPCProtocol.class.getName());
 
-	private IPCProtocol() {}
+	private IPCProtocol() {
+        throw new InstantiationError("This class is uninstantiable.");
+    }
 
 	private static final int MESSAGE_DELIMITER = 0x02;
 	private static final long READ_LOOP_SLEEP_DURATION_MS = 200;

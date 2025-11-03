@@ -33,6 +33,7 @@ public class Desktop {
     private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
 
     private Desktop() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static String getClipboard() {

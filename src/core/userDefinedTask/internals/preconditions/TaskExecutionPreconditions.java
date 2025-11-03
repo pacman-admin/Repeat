@@ -10,42 +10,43 @@ import utilities.json.IJsonable;
  */
 public class TaskExecutionPreconditions implements IJsonable {
 
-	private static final TaskExecutionPreconditions NO_CONDITION = TaskExecutionPreconditions.of(ActiveWindowsInfoCondition.of(AlwaysMatchingStringCondition.INSTANCE, AlwaysMatchingStringCondition.INSTANCE));
+    private static final TaskExecutionPreconditions NO_CONDITION = TaskExecutionPreconditions.of(ActiveWindowsInfoCondition.of(AlwaysMatchingStringCondition.INSTANCE, AlwaysMatchingStringCondition.INSTANCE));
 
-	private ActiveWindowsInfoCondition activeWindowCondition;
+    private ActiveWindowsInfoCondition activeWindowCondition;
 
-	public static TaskExecutionPreconditions defaultConditions() {
-		return NO_CONDITION;
-	}
+    private TaskExecutionPreconditions() {
+    }
 
-	public static TaskExecutionPreconditions of(ActiveWindowsInfoCondition activeWindowCondition) {
-		TaskExecutionPreconditions result = new TaskExecutionPreconditions();
-		result.activeWindowCondition = activeWindowCondition;
-		return result;
-	}
+    public static TaskExecutionPreconditions defaultConditions() {
+        return NO_CONDITION;
+    }
 
-	public TaskExecutionPreconditions copy() {
-		return of(activeWindowCondition.copy());
-	}
+    public static TaskExecutionPreconditions of(ActiveWindowsInfoCondition activeWindowCondition) {
+        TaskExecutionPreconditions result = new TaskExecutionPreconditions();
+        result.activeWindowCondition = activeWindowCondition;
+        return result;
+    }
 
-	public ActiveWindowsInfoCondition getActiveWindowCondition() {
-		return activeWindowCondition;
-	}
+    public static TaskExecutionPreconditions parseJSON(JsonNode node) {
+        TaskExecutionPreconditions result = new TaskExecutionPreconditions();
+        ActiveWindowsInfoCondition activeWindowCondition = ActiveWindowsInfoCondition.parseJSON(node.getNode("active_window_condition"));
+        if (activeWindowCondition == null) {
+            return null;
+        }
+        result.activeWindowCondition = activeWindowCondition;
+        return result;
+    }
 
-	public static TaskExecutionPreconditions parseJSON(JsonNode node) {
-		TaskExecutionPreconditions result = new TaskExecutionPreconditions();
-		ActiveWindowsInfoCondition activeWindowCondition = ActiveWindowsInfoCondition.parseJSON(node.getNode("active_window_condition"));
-		if (activeWindowCondition == null) {
-			return null;
-		}
-		result.activeWindowCondition = activeWindowCondition;
-		return result;
-	}
+    public TaskExecutionPreconditions copy() {
+        return of(activeWindowCondition.copy());
+    }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(JsonNodeFactories.field("active_window_condition", activeWindowCondition.jsonize()));
-	}
+    public ActiveWindowsInfoCondition getActiveWindowCondition() {
+        return activeWindowCondition;
+    }
 
-	private TaskExecutionPreconditions() {}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("active_window_condition", activeWindowCondition.jsonize()));
+    }
 }

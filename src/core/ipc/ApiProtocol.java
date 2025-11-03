@@ -4,7 +4,9 @@ import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 
 public class ApiProtocol {
-	private ApiProtocol() {}
+	private ApiProtocol() {
+        throw new InstantiationError("This class is uninstantiable.");
+    }
 
 	public static final String SUCCESS_STATUS = "Success";
 	private static final String FAILURE_STATUS = "Failure";

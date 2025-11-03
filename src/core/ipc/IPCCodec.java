@@ -10,7 +10,9 @@ class IPCCodec {
 
 	private static final Charset ENCODING = StandardCharsets.UTF_8;
 
-	private IPCCodec() {}
+	private IPCCodec() {
+        throw new InstantiationError("This class is uninstantiable.");
+    }
 
 	/**
 	 * Encode a message to send.

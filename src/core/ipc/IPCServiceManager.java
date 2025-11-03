@@ -15,6 +15,7 @@ public final class IPCServiceManager {
         UI_SERVER = new UIServer();
     }
     private IPCServiceManager() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static void stopServices() throws IOException {

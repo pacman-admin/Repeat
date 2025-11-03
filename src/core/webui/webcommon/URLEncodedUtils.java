@@ -37,6 +37,9 @@ import java.util.BitSet;
 import java.util.List;
 
 class URLEncodedUtils {
+    private URLEncodedUtils(){
+        throw new InstantiationError("This class is uninstantiable.");
+    }
     public static List<NameValuePair> parse(URI uri, Charset charset) {
         Args.notNull(uri, "URI");
         String query = uri.getRawQuery();

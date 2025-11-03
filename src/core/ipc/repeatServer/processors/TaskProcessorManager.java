@@ -18,6 +18,7 @@ public final class TaskProcessorManager {
     }
 
     private TaskProcessorManager() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     /**

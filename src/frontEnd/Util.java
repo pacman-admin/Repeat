@@ -35,7 +35,7 @@ import java.util.zip.ZipOutputStream;
  */
 final class Util {
     private Util() {
-        //Util is uninstantiable
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     /**

@@ -1,57 +1,61 @@
 package utilities;
 
-import java.awt.event.KeyEvent;
-
 import core.keyChain.KeyboardState;
+
+import java.awt.event.KeyEvent;
 
 public class KeyCodeToChar {
 
-	public static boolean hasCharForCode(int code, KeyboardState state) {
-		return !getCharForCode(code, state).isEmpty();
-	}
+    private KeyCodeToChar() {
+        throw new InstantiationError("This class is uninstantiable.");
+    }
 
-	public static String getCharForCode(int code, KeyboardState state) {
-		String nonAlphaChar = getNonAlphaChar(code, state);
-		String alphaChar = getAlphaChar(code, state);
-		String numpadChar = getCharFromNumpadCode(code, state);
+    public static boolean hasCharForCode(int code, KeyboardState state) {
+        return !getCharForCode(code, state).isEmpty();
+    }
 
-		boolean isNonAlpha = !nonAlphaChar.isEmpty();
-		boolean isAlpha= !alphaChar.isEmpty();
-		boolean isNumpad = !numpadChar.isEmpty();
+    public static String getCharForCode(int code, KeyboardState state) {
+        String nonAlphaChar = getNonAlphaChar(code, state);
+        String alphaChar = getAlphaChar(code, state);
+        String numpadChar = getCharFromNumpadCode(code, state);
 
-		int trueCount = (isNonAlpha ? 1 : 0) + (isAlpha ? 1 : 0) + (isNumpad ? 1 : 0);
-		if (trueCount > 1) {
-			throw new IllegalArgumentException("Code " + code + " is ambiguous.");
-		}
+        boolean isNonAlpha = !nonAlphaChar.isEmpty();
+        boolean isAlpha = !alphaChar.isEmpty();
+        boolean isNumpad = !numpadChar.isEmpty();
 
-		if (isNonAlpha) {
-			return nonAlphaChar;
-		}
-		if (isAlpha) {
-			return alphaChar;
-		}
-		if (isNumpad) {
-			return numpadChar;
-		}
-		return "";
-	}
+        int trueCount = (isNonAlpha ? 1 : 0) + (isAlpha ? 1 : 0) + (isNumpad ? 1 : 0);
+        if (trueCount > 1) {
+            throw new IllegalArgumentException("Code " + code + " is ambiguous.");
+        }
 
-	private static String getNonAlphaChar(int code, KeyboardState state) {
-		if (state.isShiftLocked()) {
-			return getNonAlphaCharWithShift(code);
-		}
-		return getNonAlphaCharWithoutShift(code);
-	}
+        if (isNonAlpha) {
+            return nonAlphaChar;
+        }
+        if (isAlpha) {
+            return alphaChar;
+        }
+        if (isNumpad) {
+            return numpadChar;
+        }
+        return "";
+    }
 
-	private static String getAlphaChar(int code, KeyboardState state) {
-		boolean capitalized = state.isCapslockLocked() ^ state.isShiftLocked();
-		if (capitalized) {
-			return getUpperCaseAlphaChar(code);
-		}
-		return getLowerCaseAlphaChar(code);
-	}
+    private static String getNonAlphaChar(int code, KeyboardState state) {
+        if (state.isShiftLocked()) {
+            return getNonAlphaCharWithShift(code);
+        }
+        return getNonAlphaCharWithoutShift(code);
+    }
 
-	private static String getNonAlphaCharWithoutShift(int code) {
+    private static String getAlphaChar(int code, KeyboardState state) {
+        boolean capitalized = state.isCapslockLocked() ^ state.isShiftLocked();
+        if (capitalized) {
+            return getUpperCaseAlphaChar(code);
+        }
+        return getLowerCaseAlphaChar(code);
+    }
+
+    private static String getNonAlphaCharWithoutShift(int code) {
         return switch (code) {
             case KeyEvent.VK_BACK_QUOTE -> "`";
             case KeyEvent.VK_1 -> "1";
@@ -79,9 +83,9 @@ public class KeyCodeToChar {
             case KeyEvent.VK_SPACE -> " ";
             default -> "";
         };
-	}
+    }
 
-	private static String getNonAlphaCharWithShift(int code) {
+    private static String getNonAlphaCharWithShift(int code) {
         return switch (code) {
             case KeyEvent.VK_BACK_QUOTE -> "~";
             case KeyEvent.VK_1 -> "!";
@@ -109,9 +113,9 @@ public class KeyCodeToChar {
             case KeyEvent.VK_SPACE -> " ";
             default -> "";
         };
-	}
+    }
 
-	private static String getLowerCaseAlphaChar(int code) {
+    private static String getLowerCaseAlphaChar(int code) {
         return switch (code) {
             case KeyEvent.VK_Q -> "q";
             case KeyEvent.VK_W -> "w";
@@ -141,9 +145,9 @@ public class KeyCodeToChar {
             case KeyEvent.VK_M -> "m";
             default -> "";
         };
-	}
+    }
 
-	private static String getUpperCaseAlphaChar(int code) {
+    private static String getUpperCaseAlphaChar(int code) {
         return switch (code) {
             case KeyEvent.VK_Q -> "Q";
             case KeyEvent.VK_W -> "W";
@@ -173,12 +177,12 @@ public class KeyCodeToChar {
             case KeyEvent.VK_M -> "M";
             default -> "";
         };
-	}
+    }
 
-	private static String getCharFromNumpadCode(int code, KeyboardState state) {
-		if (!state.isNumslockLocked() && !OSIdentifier.isMac()) {
-			return "";
-		}
+    private static String getCharFromNumpadCode(int code, KeyboardState state) {
+        if (!state.isNumslockLocked() && !OSIdentifier.isMac()) {
+            return "";
+        }
 
         return switch (code) {
             case KeyEvent.VK_NUMPAD0 -> "0";
@@ -195,7 +199,5 @@ public class KeyCodeToChar {
             case KeyEvent.VK_MULTIPLY -> "*";
             default -> "";
         };
-	}
-
-	private KeyCodeToChar() {}
+    }
 }

@@ -16,7 +16,7 @@ public class KeySequence extends KeySeries {
 	private static final Logger LOGGER = Logger.getLogger(KeySequence.class.getName());
 
 	private KeySequence() {
-		super();
+        throw new InstantiationError("This class has no no-arg constructor.");
 	}
 
 	public KeySequence(List<ButtonStroke> keys) {

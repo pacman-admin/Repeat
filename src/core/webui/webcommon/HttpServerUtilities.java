@@ -4,7 +4,6 @@ import argo.jdom.JsonField;
 import argo.jdom.JsonNode;
 import org.apache.http.*;
 import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.ByteArrayEntity;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.nio.protocol.BasicAsyncResponseProducer;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
@@ -26,6 +25,7 @@ public class HttpServerUtilities {
     private static final Logger LOGGER = Logger.getLogger(HttpServerUtilities.class.getName());
 
     private HttpServerUtilities() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static Map<String, String> parseGetParameters(String url) {
@@ -133,7 +133,7 @@ public class HttpServerUtilities {
         return prepareStringResponse(exchange, code, data, "text/plain; charset=utf-8");
     }
 
-    public static Void prepareJsonResponse(HttpAsyncExchange exchange, int code, JsonNode data){
+    public static Void prepareJsonResponse(HttpAsyncExchange exchange, int code, JsonNode data) {
         return prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data), "application/json; charset=utf-8");
     }
 

@@ -7,6 +7,7 @@ import core.userDefinedTask.internals.LocalTools;
 public class Tools {
 
     private Tools() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static ITools local() {

@@ -50,6 +50,7 @@ public class BootStrapResources {
     }
 
     private BootStrapResources() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static void extractResources() throws IOException, URISyntaxException {

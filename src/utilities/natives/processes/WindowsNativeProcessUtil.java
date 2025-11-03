@@ -15,6 +15,7 @@ final class WindowsNativeProcessUtil {
 
 
     private WindowsNativeProcessUtil() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static NativeProcessUtil.NativeWindowInfo getActiveWindowInfo() {

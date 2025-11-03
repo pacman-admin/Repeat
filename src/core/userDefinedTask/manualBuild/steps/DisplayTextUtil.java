@@ -4,18 +4,20 @@ import java.awt.event.InputEvent;
 
 class DisplayTextUtil {
 
-	public static String coordinate(int x, int y) {
-		return String.format("(%d, %d)", x, y);
-	}
+    private DisplayTextUtil() {
+        throw new InstantiationError("This class is uninstantiable.");
+    }
 
-	public static String mouseMaskToString(int mask) {
+    public static String coordinate(int x, int y) {
+        return String.format("(%d, %d)", x, y);
+    }
+
+    public static String mouseMaskToString(int mask) {
         return switch (mask) {
             case InputEvent.BUTTON1_DOWN_MASK -> "left button";
             case InputEvent.BUTTON3_DOWN_MASK -> "right button";
             case InputEvent.BUTTON2_DOWN_MASK -> "middle";
             default -> "unknown button";
         };
-	}
-
-	private DisplayTextUtil() {}
+    }
 }

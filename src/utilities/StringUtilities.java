@@ -38,7 +38,7 @@ public class StringUtilities {
      * Private constructor so that no instance is created
      */
     private StringUtilities() {
-        throw new IllegalStateException("Cannot create an instance of static class Util");
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     /**

@@ -24,5 +24,6 @@ public class WebUIResources {
     public static final String TEMPLATES_RESOURCES_PREFIX = "/staticContent/webui/templates/";
 
     private WebUIResources() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 }

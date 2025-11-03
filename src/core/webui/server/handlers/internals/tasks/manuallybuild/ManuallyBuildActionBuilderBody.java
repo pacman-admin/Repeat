@@ -1,24 +1,26 @@
 package core.webui.server.handlers.internals.tasks.manuallybuild;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.server.handlers.renderedobjects.RenderedPossibleManuallyBuildActions;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class ManuallyBuildActionBuilderBody {
 
-	public static Map<String, Object> bodyData(ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager, String constructorId) {
-		Map<String, Object> data = new HashMap<>();
-		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(constructorId);
+    private ManuallyBuildActionBuilderBody() {
+        throw new InstantiationError("This class is uninstantiable.");
+    }
 
-		data.put("constructorId", constructorId);
-		data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));
-		data.put("possibleActions", RenderedPossibleManuallyBuildActions.of(ManuallyBuildActionFeModel.of().noAction()));
-		return data;
-	}
+    public static Map<String, Object> bodyData(ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager, String constructorId) {
+        Map<String, Object> data = new HashMap<>();
+        ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(constructorId);
 
-	private ManuallyBuildActionBuilderBody() {}
+        data.put("constructorId", constructorId);
+        data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));
+        data.put("possibleActions", RenderedPossibleManuallyBuildActions.of(ManuallyBuildActionFeModel.of().noAction()));
+        return data;
+    }
 }

@@ -25,7 +25,7 @@ public class FileUtility {
      * Private constructor so that no instance is created
      */
     private FileUtility() {
-        throw new IllegalStateException("Cannot create an instance of static class FileUtility");
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     /**

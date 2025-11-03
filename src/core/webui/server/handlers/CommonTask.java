@@ -14,6 +14,7 @@ public class CommonTask {
     private static final Logger LOGGER = Logger.getLogger(CommonTask.class.getName());
 
     private CommonTask() {
+        throw new InstantiationError("This class is uninstantiable.");
     }
 
     public static IIPCService getIPCService(Map<String, String> params) {

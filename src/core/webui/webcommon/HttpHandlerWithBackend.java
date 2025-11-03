@@ -18,40 +18,31 @@ import frontEnd.MainBackEndHolder;
 
 public abstract class HttpHandlerWithBackend implements HttpAsyncRequestHandler<HttpRequest> {
 
-	private static final Logger LOGGER = Logger.getLogger(HttpHandlerWithBackend.class.getName());
+    private static final Logger LOGGER = Logger.getLogger(HttpHandlerWithBackend.class.getName());
 
-	protected MainBackEndHolder backEndHolder;
+    protected MainBackEndHolder backEndHolder;
 
-	public synchronized void setMainBackEndHolder(MainBackEndHolder backEndHolder) {
-		this.backEndHolder = backEndHolder;
-	}
+    public synchronized void setMainBackEndHolder(MainBackEndHolder backEndHolder) {
+        this.backEndHolder = backEndHolder;
+    }
 
-	@Override
-	public void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException {
-		if (backEndHolder == null) {
-			LOGGER.warning("Missing backend...");
-			HttpServerUtilities.prepareTextResponse(exchange, 500, "");
-			return;
-		}
+    @Override
+    public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
+            throws HttpException, IOException {
+        if (backEndHolder == null) {
+            LOGGER.warning("Missing backend");
+            HttpServerUtilities.prepareTextResponse(exchange, 500, "Missing backend");
+            return;
+        }
+        handleWithBackend(request, exchange, context);
+    }
 
-		handleWithBackend(request, exchange, context);
-	}
+    @Override
+    public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest request, HttpContext context) {
+        // Buffer request content in memory for simplicity.
+        return new BasicAsyncRequestConsumer();
+    }
 
-	@Override
-	public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest request, HttpContext context) {
-		// Buffer request content in memory for simplicity.
-		return new BasicAsyncRequestConsumer();
-	}
-
-	protected abstract void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws HttpException, IOException;
-
-	protected final byte[] getRequestBody(HttpRequest request) throws IOException {
-		if (request instanceof HttpEntityEnclosingRequest) {
-			HttpEntity entity = ((HttpEntityEnclosingRequest) request).getEntity();
-			return EntityUtils.toByteArray(entity);
-		}
-		return new byte[] {};
-	}
+    protected abstract void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
+            throws HttpException, IOException;
 }
