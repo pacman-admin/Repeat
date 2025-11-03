@@ -64,17 +64,15 @@ public class HttpServerUtilities {
     }
 
     public static byte[] getPostContent(HttpRequest request) {
-        if (!(request instanceof HttpEntityEnclosingRequest)) {
+        if (!(request instanceof HttpEntityEnclosingRequest entityRequest)) {
             LOGGER.warning("Unknown request type for POST request " + request.getClass());
             return null;
         }
-        HttpEntityEnclosingRequest entityRequest = (HttpEntityEnclosingRequest) request;
         HttpEntity entity = entityRequest.getEntity();
-        if (!(entity instanceof BasicHttpEntity)) {
+        if (!(entity instanceof BasicHttpEntity basicEntity)) {
             LOGGER.warning("Unknown entity type for POST request " + entity.getClass());
             return null;
         }
-        BasicHttpEntity basicEntity = (BasicHttpEntity) entity;
         ByteArrayOutputStream buffer = new ByteArrayOutputStream();
         try {
             basicEntity.writeTo(buffer);

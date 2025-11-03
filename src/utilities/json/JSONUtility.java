@@ -126,32 +126,6 @@ public class JSONUtility {
     }
 
     /**
-     * Construct a JSON object from a string to string map.
-     *
-     * @param map a string to string map.
-     * @return the corresponding JSON object.
-     */
-    public static JsonNode stringMapToJson(Map<String, String> map) {
-        return JsonNodeFactories.object(map.entrySet().stream().map(x -> JsonNodeFactories.field(x.getKey(), JsonNodeFactories.string(x.getValue()))).collect(Collectors.toList()));
-    }
-
-    /**
-     * Construct a string to string map from a JSON node.
-     * The node must be a JSON object.
-     *
-     * @param node JSON node object to construct the map.
-     * @return the corresponding string to string map.
-     */
-    public static Map<String, String> jsonToStringMap(JsonNode node) {
-        Map<String, String> result = new HashMap<>();
-        for (Entry<JsonStringNode, JsonNode> entry : node.getObjectNode().entrySet()) {
-            result.put(entry.getKey().getStringValue(), entry.getValue().getStringValue());
-        }
-
-        return result;
-    }
-
-    /**
      * Attempt to parse JSON from a list, then add all results to an output collection. This does not add
      * nodes that cannot be parsed (returning null)
      *
@@ -183,10 +157,7 @@ public class JSONUtility {
      */
     public static JsonNode addChild(JsonNode original, String key, JsonNode value) {
         Map<JsonStringNode, JsonNode> existingFields = original.getFields();
-        Map<JsonStringNode, JsonNode> newMap = new HashMap<>();
-        for (Entry<JsonStringNode, JsonNode> entry : existingFields.entrySet()) {
-            newMap.put(entry.getKey(), entry.getValue());
-        }
+        Map<JsonStringNode, JsonNode> newMap = new HashMap<>(existingFields);
 
         newMap.put(JsonNodeFactories.string(key), value);
         return JsonNodeFactories.object(newMap);

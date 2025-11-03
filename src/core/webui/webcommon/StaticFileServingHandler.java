@@ -35,6 +35,7 @@ import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,7 +69,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
         }
 
         String path = uriWithoutParamter.substring("/static/".length());
-        String decodedPath = URLDecoder.decode(path, "UTF-8");
+        String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
         if (decodedPath.contains("./") || decodedPath.contains("..") || decodedPath.endsWith("/")) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
         }
