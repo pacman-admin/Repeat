@@ -8,7 +8,6 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedDetailedUserDefinedAction;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
