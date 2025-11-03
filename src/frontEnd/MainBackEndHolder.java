@@ -1063,14 +1063,17 @@ public class MainBackEndHolder {
     void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
         LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
-        if (System.getenv("XDG_SESSION_TYPE").equalsIgnoreCase("wayland")) {
+        String windowEnv = System.getenv("XDG_SESSION_TYPE");
+        if(windowEnv == null)
+            return;
+        if (windowEnv.equalsIgnoreCase("wayland")) {
             LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
-            /*try {
+            try {
                 Runtime.getRuntime().exec(new String[]{"xeyes"});
-                LOGGER.info("If the eyes move, the Repeat will work when that window or app is active.");
+                LOGGER.info("If the eyes look toward your mouse, Repeat will work;\nif the eyes do not, Repeat will not work in that window.");
             } catch (IOException e) {
-                LOGGER.warning("Please install xeyes;\nit is a useful tool to determine whether a window is Wayland.\nRepeat does not work in Wayland windows.");
-            }*/
+                LOGGER.warning("Please install xeyes so you will be able to tell when Repeat will work, and when it will not.");
+            }
         }
     }
 
