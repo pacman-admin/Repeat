@@ -8,9 +8,11 @@ I fixed some bugs, improved startup time considerably, and added a standardized 
 
 The project is licensed almost entirely under the Apache License, version 2.0.
 
-Some libraries are MIT licensed, as are 10 source files I created myself (with inspiration from HP Truong's original code).
+Some libraries are ISC licensed, as are 10 source files I created myself (with inspiration from HP Truong's original code).
 
-The 10 source files licensed under the MIT license are:
+See https://cvsweb.openbsd.org/src/share/misc/license.template?rev=HEAD for the license.
+
+The 10 source files licensed under the ISC license are:
 AbstractSimpleHandler.java
 AbstractGETHandler.java
 AbstractPOSTHandler.java
