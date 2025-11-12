@@ -15,13 +15,10 @@ AbstractSimpleHandler.java
 AbstractGETHandler.java
 AbstractPOSTHandler.java
 AbstractComplexGETHandler.java
-
 GetEditedSourceHandler.java
 ActionEditSourceHandler.java
-
 OSIdentifier.java
 OS.java
-
 HTTPLogger.java
 RunnableVoid.java
 
