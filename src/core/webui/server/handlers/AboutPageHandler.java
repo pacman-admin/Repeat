@@ -18,7 +18,6 @@
  */
 package core.webui.server.handlers;
 
-import core.config.Config;
 import core.config.Constants;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import org.apache.http.HttpRequest;

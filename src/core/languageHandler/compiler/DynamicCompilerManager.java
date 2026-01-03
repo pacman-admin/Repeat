@@ -32,6 +32,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public class DynamicCompilerManager implements IJsonable {
     private static final Logger LOGGER = Logger.getLogger(DynamicCompilerManager.class.getName());
     private final Map<Language, AbstractNativeCompiler> compilers;
