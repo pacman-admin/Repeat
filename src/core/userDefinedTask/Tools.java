@@ -5,10 +5,6 @@ package core.userDefinedTask;
  */
 @Deprecated
 public class Tools {
-    private Tools() {
-        //This class is uninstantiable
-    }
-
     /**
      * Get plain text (if possible) from system clipboard
      *

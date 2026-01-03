@@ -216,7 +216,7 @@ A list of all libraries used by this program can be found on the program's About
 
 *******************************************************************
 
-10 Source files written by me, Langdon Staab, are licensed under the ISC license, here is the license text:
+11 Source files written by me, Langdon Staab, are licensed under the ISC license, here is the license text:
 
 Copyright (c) 2025 Langdon Staab <langdon@langdonstaab.ca>
 

@@ -5,7 +5,7 @@ import java.awt.event.InputEvent;
 class DisplayTextUtil {
 
     private DisplayTextUtil() {
-        throw new InstantiationError("This class is uninstantiable.");
+        //This class is uninstantiable.
     }
 
     public static String coordinate(int x, int y) {

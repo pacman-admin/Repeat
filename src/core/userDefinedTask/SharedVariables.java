@@ -22,10 +22,8 @@ public class SharedVariables {
 	public static final String GLOBAL_NAMESPACE = "global";
 	private static final Map<String, Map<String, String>> variables = new HashMap<>();
 
-	private final String namespace;
-
-	private SharedVariables(String namespace) {
-		this.namespace = namespace;
+	private SharedVariables() {
+		//This class is uninstantiable
 	}
 	/**
 	 * Retrieve a variable value given namespace and variable name.

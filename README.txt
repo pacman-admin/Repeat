@@ -12,7 +12,7 @@ Some libraries are ISC licensed, as are 10 source files I created myself (with i
 
 See https://cvsweb.openbsd.org/src/share/misc/license.template?rev=HEAD for the license.
 
-The 10 source files licensed under the ISC license are:
+The 11 source files licensed under the ISC license are:
 AbstractSimpleHandler.java
 AbstractGETHandler.java
 AbstractPOSTHandler.java
@@ -23,6 +23,7 @@ OSIdentifier.java
 OS.java
 HTTPLogger.java
 RunnableVoid.java
+Clipboard.java
 
 
 Check the git commit history on the GitHub repo for details of who coded what.
