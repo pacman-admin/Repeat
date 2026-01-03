@@ -1042,17 +1042,6 @@ public class MainBackEndHolder {
         return true;
     }
 
-    public void setToolsClients(List<String> clients) {
-        config.getToolsConfig().setClients(clients);
-        List<ITools> tools = clients.stream().map(c -> {
-            //if (c.equals(AbstractRemoteRepeatsClientsConfig.LOCAL_CLIENT)) {
-            return Tools.local();
-            //}
-            //return null;
-        }).collect(Collectors.toList());
-        DefaultTools.setExecutor(AggregateTools.of(tools));
-    }
-
     public void setCoreClients(List<String> clients) {
         config.getCoreConfig().setClients(clients);
     }

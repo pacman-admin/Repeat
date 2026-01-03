@@ -26,7 +26,6 @@ import core.ipc.IPCServiceManager;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.keyChain.KeyChain;
 import core.userDefinedTask.TaskGroup;
-import core.userDefinedTask.internals.ToolsConfig;
 import utilities.json.JSONUtility;
 
 import java.util.List;
@@ -89,9 +88,9 @@ public class Parser2_15 extends ConfigParser {
             config.setREPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay")));
             config.setCOMPILED_REPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay_compiled")));
 
-            JsonNode toolsConfigNode = globalSettings.getNode("tools_config");
-            ToolsConfig toolsConfig = ToolsConfig.parseJSON(toolsConfigNode);
-            config.setToolsConfig(toolsConfig);
+//            JsonNode toolsConfigNode = globalSettings.getNode("tools_config");
+//            ToolsConfig toolsConfig = ToolsConfig.parseJSON(toolsConfigNode);
+//            config.setToolsConfig(toolsConfig);
 
             JsonNode coreConfigNode = globalSettings.getNode("core_config");
             CoreConfig coreConfig = CoreConfig.parseJSON(coreConfigNode);

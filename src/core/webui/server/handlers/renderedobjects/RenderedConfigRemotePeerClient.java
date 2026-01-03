@@ -1,8 +1,6 @@
 package core.webui.server.handlers.renderedobjects;
 
-import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClient;
 import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
-import core.userDefinedTask.internals.ToolsConfig;
 
 public class RenderedConfigRemotePeerClient {
     private String id;
@@ -15,13 +13,13 @@ public class RenderedConfigRemotePeerClient {
     public static RenderedConfigRemotePeerClient of(RepeatsPeerServiceClientManager manager, String clientId, boolean enabled) {
         RenderedConfigRemotePeerClient output = new RenderedConfigRemotePeerClient();
         output.enabled = enabled + "";
-        if (clientId.equals(ToolsConfig.LOCAL_CLIENT)) {
-            output.id = "local";
-            //output.host = "localhost";
-            output.port = "N/A";
-            return output;
-        }
-        output.id = clientId;
+        //if (clientId.equals(ToolsConfig.LOCAL_CLIENT)) {
+        output.id = "local";
+        //output.host = "localhost";
+        output.port = "N/A";
+        return output;
+        //}
+        /*output.id = clientId;
         RepeatsPeerServiceClient client = manager.getClient(clientId);
         if (client == null) {
             //output.host = "Unknown";
@@ -31,7 +29,7 @@ public class RenderedConfigRemotePeerClient {
             output.port = client.getPort() + "";
         }
 
-        return output;
+        return output;*/
     }
 
     public String getId() {

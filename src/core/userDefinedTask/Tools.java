@@ -1,17 +1,12 @@
 package core.userDefinedTask;
 
-import core.userDefinedTask.internals.DefaultTools;
-import core.userDefinedTask.internals.ITools;
-import core.userDefinedTask.internals.LocalTools;
-
+/**
+ * Use core.userDefinedTask.Clipboard instead
+ */
+@Deprecated
 public class Tools {
-
     private Tools() {
-        throw new InstantiationError("This class is uninstantiable.");
-    }
-
-    public static ITools local() {
-        return LocalTools.of();
+        //This class is uninstantiable
     }
 
     /**
@@ -19,8 +14,9 @@ public class Tools {
      *
      * @return the plain text in the clipboard, or empty string if encounter an error
      */
+    @Deprecated
     public static String getClipboard() {
-        return DefaultTools.get().getClipboard();
+        return Clipboard.get();
     }
 
     /**
@@ -28,7 +24,8 @@ public class Tools {
      *
      * @param data string to copy to the system clipboard
      */
+    @Deprecated
     public static void setClipboard(String data) {
-        DefaultTools.get().setClipboard(data);
+        Clipboard.set(data);
     }
 }
