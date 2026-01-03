@@ -44,7 +44,7 @@ III. KeyboardCore API: (variable key of type KeyboardCore)
     2) type(char c)
     3) type(int key)
     4) type(int...keys)
-    5) typeRepeat(int key, int count);
+    5) typeRepeat(int key, int count)
     6) combination(int...keys)
     7) hold(int key, int duration)
     8) press(int key)
@@ -52,3 +52,8 @@ III. KeyboardCore API: (variable key of type KeyboardCore)
     10) release(int key)
     11) release(int...keys)
     12) isLocked(int key)
+
+IV. Clipboard API: (allows clipboard manipulation and query)
+    Use these anywhere with Clipboard.<method_name>
+    1) get()
+    2) set(String string)

@@ -13,7 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  *
- * @author Langdon Staab
  * @author HP Truong
  */
 package core.webui.webcommon;
@@ -29,7 +28,6 @@ import org.apache.http.protocol.HttpContext;
 import staticResources.BootStrapResources;
 import staticResources.WebUIResources;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -46,10 +44,10 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
     }
 
     @Override
-    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context){
         LOGGER.fine("Path is " + request.getRequestLine().getUri());
         if (!request.getRequestLine().getMethod().equalsIgnoreCase("GET")) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Only accept GET requests.");
+            return HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");
         }
 
         String requestUri = request.getRequestLine().getUri();
@@ -57,17 +55,17 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 500, "URI must start with '/static/'.");
         }
 
-        String uriWithoutParamter;
+        String uriWithoutParameter;
         try {
             URI uri = new URI(requestUri);
-            uriWithoutParamter = new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, // Ignore the query part of the input url.
+            uriWithoutParameter = new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, // Ignore the query part of the input url.
                     uri.getFragment()).toString();
         } catch (URISyntaxException e) {
             LOGGER.log(Level.WARNING, "Encountered exception when trying to remove query parameters.", e);
             return HttpServerUtilities.prepareTextResponse(exchange, 500, "Encountered exception when trying to remove query parameters.");
         }
 
-        String path = uriWithoutParamter.substring("/static/".length());
+        String path = uriWithoutParameter.substring("/static/".length());
         String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
         if (decodedPath.contains("./") || decodedPath.contains("..") || decodedPath.endsWith("/")) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
@@ -80,7 +78,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
         try {
             InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
             if (inputStream == null) {
-                LOGGER.warning("Content could not be accessed!!!:\n" + path + ", " + decodedPath);
+                LOGGER.warning("Content could not be accessed:\n" + path + ", " + decodedPath);
                 return HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
             }
             LOGGER.fine("Accessing " + path + "...");
@@ -88,7 +86,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
             response.setEntity(body);
             exchange.submitResponse(new BasicAsyncResponseProducer(response));
         } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Content could not be accessed!!!:\n" + path, e);
+            LOGGER.log(Level.WARNING, "Content could not be accessed:\n" + path, e);
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Could not access file." + path);
         }
         return null;

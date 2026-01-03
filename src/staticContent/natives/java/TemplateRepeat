@@ -1,6 +1,6 @@
 package core;
 import core.userDefinedTask.UserDefinedAction;
-import core.userDefinedTask.Tools;
+import core.userDefinedTask.Clipboard;
 import core.controller.Core;
 import core.controller.MouseCore;
 import core.controller.KeyboardCore;
@@ -13,8 +13,10 @@ public class CustomAction extends UserDefinedAction {
         //Write your macro code after this line
 
         //This is example code, try it out!
-        Tools.setClipboard("Hello World!");
+        k.type(Clipboard.get());
+        //Repeat can read and change what is copied to your clipboard (only if you tell it to!)
+        Clipboard.set("Hello World!");
         k.type("Repeat can type Strings!");
-        k.type(Tools.getClipboard());
+        k.type(Clipboard.get());
     }
 }
