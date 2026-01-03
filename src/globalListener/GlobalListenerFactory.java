@@ -5,19 +5,16 @@ import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
-public class GlobalListenerFactory {
-
+public final class GlobalListenerFactory {
+    /**
+    This class is uninstantiable
+     */
     private GlobalListenerFactory() {}
-
-    public static GlobalListenerFactory of() {
-        return new GlobalListenerFactory();
-    }
-
-    public AbstractGlobalKeyListener createGlobalKeyListener() {
+    public static AbstractGlobalKeyListener createGlobalKeyListener() {
         return NativeKeyHook.of();
     }
 
-    public AbstractGlobalMouseListener createGlobalMouseListener() {
+    public static AbstractGlobalMouseListener createGlobalMouseListener() {
         return NativeMouseHook.of();
     }
 }

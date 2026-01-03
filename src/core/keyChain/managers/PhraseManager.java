@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import core.config.Config;
+import core.config.Constants;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationPhrase;
 import core.keyChain.ButtonStroke;
@@ -44,7 +45,7 @@ public class PhraseManager extends KeyStrokeManager {
 			return considerTaskExecution(stroke);
 		}
 
-		return Collections.<UserDefinedAction>emptySet();
+		return Collections.emptySet();
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class PhraseManager extends KeyStrokeManager {
 			return considerTaskExecution(stroke);
 		}
 
-		return Collections.<UserDefinedAction>emptySet();
+		return Collections.emptySet();
 	}
 
 	@Override
@@ -115,16 +116,16 @@ public class PhraseManager extends KeyStrokeManager {
 	 * Given a new key stroke coming in, consider start executing actions based on their activations.
 	 * @return set of actions to execute.
 	 */
-	private final Set<UserDefinedAction> considerTaskExecution(ButtonStroke key) {
-		if (key.getKey() == Config.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
+	private Set<UserDefinedAction> considerTaskExecution(ButtonStroke key) {
+		if (key.getKey() == Constants.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
 			clear();
-			return Collections.<UserDefinedAction>emptySet();
+			return Collections.emptySet();
 		}
 
 		if (key.equals(currentRollingKeySeries.getLast())) {
 			return tasksToExecute();
 		}
-		return Collections.<UserDefinedAction>emptySet();
+		return Collections.emptySet();
 	}
 
 	private Set<UserDefinedAction> tasksToExecute() {

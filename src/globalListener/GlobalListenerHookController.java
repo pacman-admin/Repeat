@@ -3,52 +3,16 @@ package globalListener;
 import org.simplenativehooks.NativeHookInitializer;
 
 public class GlobalListenerHookController {
+    private GlobalListenerHookController() {}
 
-    private static final GlobalListenerHookController INSTANCE = new GlobalListenerHookController();
-
-    private GlobalListenerHookController() {
+    public static void initialize(boolean useAWTForMousePos) {
+        NativeHookInitializer.Config.Builder confBuilder = NativeHookInitializer.Config.Builder.of();
+        confBuilder.useJnaForWindows(true);
+        confBuilder.useJavaAwtToReportMousePositionOnWindows(useAWTForMousePos);
+        NativeHookInitializer.of(confBuilder.build()).start();
     }
 
-    public static GlobalListenerHookController of() {
-        return INSTANCE;
-    }
-
-    public void initialize(Config config) {
-        NativeHookInitializer.Config nativeConfig = NativeHookInitializer.Config.Builder.of().useJnaForWindows(true).useJavaAwtToReportMousePositionOnWindows(config.useJavaAwtForMousePosition()).build();
-        NativeHookInitializer.of(nativeConfig).start();
-    }
-
-    public void cleanup() {
+    public static void cleanup() {
         NativeHookInitializer.of().stop();
-    }
-
-    public static class Config {
-        // Only applicable for Windows.
-        private final boolean useJavaAwtForMousePosition;
-
-        private Config(boolean useJavaAwtForMousePosition) {
-            this.useJavaAwtForMousePosition = useJavaAwtForMousePosition;
-        }
-
-        boolean useJavaAwtForMousePosition() {
-            return useJavaAwtForMousePosition;
-        }
-
-        public static class Builder {
-            private boolean useJavaAwtForMousePosition;
-
-            public static Builder of() {
-                return new Builder();
-            }
-
-            public Builder useJavaAwtForMousePosition(boolean use) {
-                this.useJavaAwtForMousePosition = use;
-                return this;
-            }
-
-            public Config build() {
-                return new Config(useJavaAwtForMousePosition);
-            }
-        }
     }
 }

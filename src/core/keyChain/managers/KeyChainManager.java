@@ -1,6 +1,7 @@
 package core.keyChain.managers;
 
 import core.config.Config;
+import core.config.Constants;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.ButtonStroke.Source;
@@ -131,7 +132,7 @@ public class KeyChainManager extends KeyStrokeManager {
      * @return if operation succeeded (even if no action has been invoked)
      */
     private UserDefinedAction considerTaskExecution(ButtonStroke stroke) {
-        if (stroke.getKey() == Config.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
+        if (stroke.getKey() == Constants.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
             clear();
             return null;
         }

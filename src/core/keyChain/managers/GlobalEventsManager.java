@@ -41,6 +41,8 @@ import java.util.Set;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static core.config.Constants.HALT_TASK;
+
 public final class GlobalEventsManager {
 
     private static final Logger LOGGER = Logger.getLogger(GlobalEventsManager.class.getName());
@@ -75,41 +77,9 @@ public final class GlobalEventsManager {
     }
 
     public void startGlobalListener() {
-        AbstractGlobalKeyListener keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
-        keyListener.setKeyPressed(new Function<>() {
-            @Override
-            public Boolean apply(NativeKeyEvent r) {
-                KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key pressed " + stroke);
+        AbstractGlobalKeyListener keyListener = getAbstractGlobalKeyListener();
 
-                if (!shouldDelegate(stroke)) {
-                    return true;
-                }
-
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
-                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
-                return true;
-            }
-        });
-
-        keyListener.setKeyReleased(new Function<>() {
-            @Override
-            public Boolean apply(NativeKeyEvent r) {
-                KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key released " + stroke);
-                if (!shouldDelegate(stroke)) {
-                    return true;
-                }
-
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
-                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
-                return true;
-            }
-        });
-
-        AbstractGlobalMouseListener mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
+        AbstractGlobalMouseListener mouseListener = GlobalListenerFactory.createGlobalMouseListener();
         mouseListener.setMousePressed(new Function<>() {
             @Override
             public Boolean apply(NativeMouseEvent r) {
@@ -144,6 +114,43 @@ public final class GlobalEventsManager {
         mouseListener.startListening();
     }
 
+    private AbstractGlobalKeyListener getAbstractGlobalKeyListener() {
+        AbstractGlobalKeyListener keyListener = GlobalListenerFactory.createGlobalKeyListener();
+        keyListener.setKeyPressed(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent r) {
+                KeyStroke stroke = KeyStroke.of(r);
+                LOGGER.fine("Key pressed " + stroke);
+
+                if (!shouldDelegate(stroke)) {
+                    return true;
+                }
+
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
+                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+                actionExecutor.startExecutingActions(actions);
+                return true;
+            }
+        });
+
+        keyListener.setKeyReleased(new Function<>() {
+            @Override
+            public Boolean apply(NativeKeyEvent r) {
+                KeyStroke stroke = KeyStroke.of(r);
+                LOGGER.fine("Key released " + stroke);
+                if (!shouldDelegate(stroke)) {
+                    return true;
+                }
+
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
+                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+                actionExecutor.startExecutingActions(actions);
+                return true;
+            }
+        });
+        return keyListener;
+    }
+
     /**
      * Given a new key code coming in, consider whether we should delegate
      * to the {@link KeyStrokeManager}, or take actions and terminate.
@@ -151,12 +158,11 @@ public final class GlobalEventsManager {
      * @return if we should continue delegating this to the managers.
      */
     private boolean shouldDelegate(KeyStroke stroke) {
-        if ((stroke.getKey() == Config.HALT_TASK) && config.isEnabledHaltingKeyPressed()) {
+        if ((stroke.getKey() == HALT_TASK) && config.isEnabledHaltingKeyPressed()) {
             taskActivationManager.clear();
             actionExecutor.haltAllTasks();
             return false;
         }
-
         return true;
     }
 

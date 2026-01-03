@@ -12,7 +12,7 @@ public class TaskActivationConstructorManager extends AbstractBackgroundEntityMa
 	private final AbstractGlobalKeyListener keyListener;
 
 	public TaskActivationConstructorManager() {
-		keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
+		keyListener = GlobalListenerFactory.createGlobalKeyListener();
 	}
 
 	@Override

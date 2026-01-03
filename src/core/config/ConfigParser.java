@@ -27,6 +27,8 @@ import utilities.json.JSONUtility;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static core.config.Constants.CURRENT_CONFIG_VERSION;
+
 abstract class ConfigParser {
 
     private static final Logger LOGGER = Logger.getLogger(ConfigParser.class.getName());
@@ -60,7 +62,7 @@ abstract class ConfigParser {
             return false;
         }
 
-        if (!Config.CURRENT_CONFIG_VERSION.equals(getVersion())) { // Then convert to latest version then parse
+        if (!CURRENT_CONFIG_VERSION.equals(getVersion())) { // Then convert to latest version then parse
             Pair<ConfigParser, JsonRootNode> latest = convertDataToLatest(data);
             if (latest == null) {
                 return false;
@@ -89,14 +91,14 @@ abstract class ConfigParser {
     }
 
     private Pair<ConfigParser, JsonRootNode> convertDataToLatest(JsonRootNode data) {
-        if (Config.CURRENT_CONFIG_VERSION.equals(getVersion())) {
+        if (CURRENT_CONFIG_VERSION.equals(getVersion())) {
             return Pair.of(this, data);
         }
 
         // Then convert to latest version then parse
         LOGGER.info("Looking for next version " + getVersion());
         String currentVersion = getVersion();
-        while (!currentVersion.equals(Config.CURRENT_CONFIG_VERSION)) {
+        while (!currentVersion.equals(CURRENT_CONFIG_VERSION)) {
             ConfigParser nextVersion = Config.getNextConfigParser(currentVersion);
 
             if (nextVersion == null) {

@@ -80,15 +80,12 @@ public class DynamicCompilerManager implements IJsonable {
             String name = compilerNode.getStringValue("name");
             String path = compilerNode.getStringValue("path");
             JsonNode compilerSpecificArgs = compilerNode.getNode("compiler_specific_args");
-            //JsonNode compilerSpecificArgs = compilerNode.getNode("compilers");
             AbstractNativeCompiler compiler = getNativeCompiler(name);
             if (compiler != null) {
                 compiler.setPath(new File(path));
                 if (!compiler.parseCompilerSpecificArgs(compilerSpecificArgs)) {
-                    LOGGER.warning("Compiler " + name + " was unable to parse its specific arguments.\n");
+                    LOGGER.fine("Compiler " + name + " was unable to parse its specific arguments.\n");
                 }
-            } else {
-                throw new IllegalStateException("Unknown compiler " + name);
             }
         }
         return true;

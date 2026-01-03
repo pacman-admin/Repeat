@@ -23,7 +23,7 @@ public class MousePositionLogger {
 
     public MousePositionLogger(CoreProvider coreProvider) {
         Core controller = coreProvider.getLocal();
-        keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
+        keyListener = GlobalListenerFactory.createGlobalKeyListener();
         keyListener.setKeyPressed(new Function<>() {
             @Override
             public Boolean apply(NativeKeyEvent e) {

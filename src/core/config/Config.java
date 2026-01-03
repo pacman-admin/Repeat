@@ -40,15 +40,9 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class Config implements ILoggable {
+import static core.config.Constants.*;
 
-    public static final String RELEASE_VERSION = "6.0.0";
-    public static final int HALT_TASK = KeyEvent.VK_ESCAPE; // This should be hardcoded, and must not be changed
-    static final String CURRENT_CONFIG_VERSION = "2.15";
-    private static final String CONFIG_FILE_NAME = "config.json";
-    public static final String EXPORTED_CONFIG_FILE_NAME = "exported_" + CONFIG_FILE_NAME;
-    private static final Level DEFAULT_NATIVE_HOOK_DEBUG_LEVEL = Level.INFO;
-    private static final boolean DEFAULT_TRAY_ICON_USE = true;
+public final class Config implements ILoggable {
     private static final List<ConfigParser> knownParsers;
 
     static {

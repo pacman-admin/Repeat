@@ -29,15 +29,14 @@ public class MainFrontEnd {
         backEnd.loadConfig();
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        GlobalListenerHookController.Config hookConfig = GlobalListenerHookController.Config.Builder.of().useJavaAwtForMousePosition(backEnd.getConfig().isUseJavaAwtToGetMousePosition()).build();
-        GlobalListenerHookController.of().initialize(hookConfig);
+        GlobalListenerHookController.initialize(backEnd.getConfig().isUseJavaAwtToGetMousePosition());
         SharedVariablesPubSubManager.get().start();
         /*************************************************************************************/
         /********************************Start main program***********************************/
         try {
             backEnd.keysManager.startGlobalListener();
         } catch (Exception e) {
-            LOGGER.severe("Could not start global event listener!\n"+e);
+            LOGGER.severe("Could not start global event listener!\n" + e);
         }
 
         backEnd.configureMainHotkeys();

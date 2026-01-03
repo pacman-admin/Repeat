@@ -58,7 +58,7 @@ public class MouseGestureManager extends KeyStrokeManager {
         mouseGestureRecognizer = new MouseGestureClassifier();
         actionMap = new HashMap<>();
         coordinates = new ConcurrentLinkedQueue<>();
-        mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
+        mouseListener = GlobalListenerFactory.createGlobalMouseListener();
     }
 
     /**

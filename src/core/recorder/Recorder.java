@@ -66,7 +66,7 @@ public class Recorder {
         sourceGenerators.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
 
         /*************************************************************************************************/
-        keyListener = GlobalListenerFactory.of().createGlobalKeyListener();
+        keyListener = GlobalListenerFactory.createGlobalKeyListener();
         keyListener.setKeyPressed(new Function<>() {
             @Override
             public Boolean apply(final NativeKeyEvent r) {
@@ -96,7 +96,7 @@ public class Recorder {
         });
 
         /*************************************************************************************************/
-        mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
+        mouseListener = GlobalListenerFactory.createGlobalMouseListener();
         mouseListener.setMouseReleased(new Function<>() {
             @Override
             public Boolean apply(final NativeMouseEvent r) {

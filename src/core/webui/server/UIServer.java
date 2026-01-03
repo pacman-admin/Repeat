@@ -18,7 +18,6 @@
  */
 package core.webui.server;
 
-import core.config.WebUIConfig;
 import core.ipc.IPCServiceWithModifiablePort;
 import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
@@ -57,6 +56,8 @@ import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static core.config.Constants.DEFAULT_SERVER_PORT;
+
 @SuppressWarnings("unused")
 public class UIServer extends IPCServiceWithModifiablePort {
     private static final int TERMINATION_DELAY_SECOND = 2;
@@ -70,7 +71,7 @@ public class UIServer extends IPCServiceWithModifiablePort {
     private HttpServer server;
 
     public UIServer() {
-        setPort(WebUIConfig.DEFAULT_SERVER_PORT);
+        setPort(DEFAULT_SERVER_PORT);
         taskActivationConstructorManager = new TaskActivationConstructorManager();
         manuallyBuildActionConstructorManager = ManuallyBuildActionConstructorManager.of();
         objectRenderer = new ObjectRenderer();
@@ -199,7 +200,7 @@ public class UIServer extends IPCServiceWithModifiablePort {
     }
 
     @Override
-    protected void start() throws IOException, java.net.UnknownHostException {
+    protected void start() throws IOException {
         if (!portFree()) {
             getLogger().warning("Failed to initialize " + getName() + ". Port " + port + " is not free.");
             throw new IOException("Port " + port + " is not free.");

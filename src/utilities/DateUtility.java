@@ -44,7 +44,7 @@ public class DateUtility {
      * @return the according calendar object, or null if there is a parse exception occurred.
      */
     public static Calendar stringToCalendar(String s) {
-        Date date = null;
+        Date date;
 
         try {
             date = TIME_FORMAT.parse(s);

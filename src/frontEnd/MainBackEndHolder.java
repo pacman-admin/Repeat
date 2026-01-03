@@ -21,7 +21,7 @@ package frontEnd;
 import core.background.loggers.ActiveWindowInfosLogger;
 import core.background.loggers.MousePositionLogger;
 import core.config.Config;
-import core.config.WebUIConfig;
+import core.config.Constants;
 import core.controller.Core;
 import core.controller.CoreProvider;
 import core.ipc.IPCServiceManager;
@@ -39,8 +39,10 @@ import core.userDefinedTask.*;
 import core.userDefinedTask.internals.*;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
-import utilities.*;
 import utilities.Desktop;
+import utilities.FileUtility;
+import utilities.Function;
+import utilities.StringUtilities;
 import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
@@ -111,7 +113,7 @@ public class MainBackEndHolder {
         taskInvoker = new TaskInvoker(coreProvider, taskGroups);
         actionExecutor = new ActionExecutor(coreProvider);
         keysManager = new GlobalEventsManager(config, actionExecutor);
-        activeWindowInfosLogger = new ActiveWindowInfosLogger(coreProvider);
+        activeWindowInfosLogger = new ActiveWindowInfosLogger();
         mousePositionLogger = new MousePositionLogger(coreProvider);
         replayConfig = ReplayConfig.of();
         runActionConfig = RunActionConfig.of();
@@ -235,7 +237,7 @@ public class MainBackEndHolder {
             LOGGER.log(Level.WARNING, "Unable to stop clients to peer services.", e);
         }
 
-        GlobalListenerHookController.of().cleanup();
+        GlobalListenerHookController.cleanup();
         SharedVariablesPubSubManager.get().stop();
 
         LOGGER.info("All backend activities terminated.");
@@ -869,7 +871,7 @@ public class MainBackEndHolder {
             int existingGroupCount = taskGroups.size();
             boolean result = config.importTaskConfig();
             FileUtility.deleteFile(new File("tmp"));
-            FileUtility.deleteFile(new File(Config.EXPORTED_CONFIG_FILE_NAME));
+            FileUtility.deleteFile(new File(Constants.EXPORTED_CONFIG_FILE_NAME));
 
             if (taskGroups.size() > existingGroupCount) {
                 currentGroup = taskGroups.get(existingGroupCount); // Take the new group with lowest index.
@@ -1059,10 +1061,9 @@ public class MainBackEndHolder {
     /***************************************User Interface********************************************************/
     void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
-        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + WebUIConfig.DEFAULT_SERVER_PORT + "\n*******************************************");
+        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + Constants.DEFAULT_SERVER_PORT + "\n*******************************************");
         String windowEnv = System.getenv("XDG_SESSION_TYPE");
-        if(windowEnv == null)
-            return;
+        if (windowEnv == null) return;
         if (windowEnv.equalsIgnoreCase("wayland")) {
             LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
             try {

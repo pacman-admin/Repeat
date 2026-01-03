@@ -6,7 +6,6 @@ import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 import org.simplenativehooks.utilities.Function;
 
-import core.controller.CoreProvider;
 import globalListener.GlobalListenerFactory;
 import utilities.natives.processes.NativeProcessUtil;
 import utilities.natives.processes.NativeProcessUtil.NativeWindowInfo;
@@ -24,8 +23,8 @@ public class ActiveWindowInfosLogger {
 	private long lastLogged;
 	private boolean enabled;
 
-	public ActiveWindowInfosLogger(CoreProvider coreProvider) {
-		mouseListener = GlobalListenerFactory.of().createGlobalMouseListener();
+	public ActiveWindowInfosLogger() {
+		mouseListener = GlobalListenerFactory.createGlobalMouseListener();
 		mouseListener.setMouseReleased(new Function<>() {
             @Override
             public Boolean apply(NativeMouseEvent arg0) {
