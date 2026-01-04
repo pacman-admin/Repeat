@@ -1050,7 +1050,7 @@ public class MainBackEndHolder {
     /***************************************User Interface********************************************************/
     void launchUI() {
         //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
-        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + Constants.DEFAULT_SERVER_PORT + "\n*******************************************");
+        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + IPCServiceManager.getUIServer().getPort() + "\n*******************************************");
         String windowEnv = System.getenv("XDG_SESSION_TYPE");
         if (windowEnv == null) return;
         if (windowEnv.equalsIgnoreCase("wayland")) {
