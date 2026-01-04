@@ -26,7 +26,6 @@ import core.controller.internals.AbstractKeyboardCoreImplementation;
  * @author HP Truong
  */
 public class KeyboardCore extends AbstractKeyboardCoreImplementation {
-
     private final AbstractKeyboardCoreImplementation k;
 
     KeyboardCore(AbstractKeyboardCoreImplementation k) {
@@ -48,6 +47,7 @@ public class KeyboardCore extends AbstractKeyboardCoreImplementation {
         k.type(keys);
     }
 
+
     @Override
     public void combination(int... keys) {
         k.combination(keys);
@@ -62,6 +62,8 @@ public class KeyboardCore extends AbstractKeyboardCoreImplementation {
     public void press(int... keys) {
         k.press(keys);
     }
+
+
 
     @Override
     public void release(int... keys) {

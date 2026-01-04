@@ -18,17 +18,7 @@
  */
 package core.controller;
 
-import core.config.AbstractRemoteRepeatsClientsConfig;
 import core.config.Config;
-import core.controller.internals.AbstractKeyboardCoreImplementation;
-import core.controller.internals.AbstractMouseCoreImplementation;
-import core.controller.internals.AggregateKeyboardCore;
-import core.controller.internals.AggregateMouseCore;
-
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @SuppressWarnings("ClassCanBeRecord")
 public class CoreProvider {
@@ -44,7 +34,7 @@ public class CoreProvider {
     }
 
     public Core get() {
-        Set<String> clientIds = new HashSet<>(config.getCoreConfig().getClients());
+        /*Set<String> clientIds = new HashSet<>(config.getCoreConfig().getClients());
         List<AbstractMouseCoreImplementation> mice = new ArrayList<>();
         List<AbstractKeyboardCoreImplementation> keyboards = new ArrayList<>();
 
@@ -58,6 +48,7 @@ public class CoreProvider {
 
         MouseCore mouse = new MouseCore(AggregateMouseCore.of(mice));
         KeyboardCore keyboard = new KeyboardCore(AggregateKeyboardCore.of(keyboards));
-        return Core.getInstance(mouse, keyboard);
+        return Core.getInstance(mouse, keyboard);*/
+        return Core.local(config);
     }
 }

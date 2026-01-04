@@ -164,9 +164,29 @@ public final class Config implements ILoggable {
             taskNodes.add(group.jsonize());
         }
 
-        JsonRootNode root = JsonNodeFactories.object(JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)), JsonNodeFactories.field("global_settings", JsonNodeFactories.object(JsonNodeFactories.field("debug", JsonNodeFactories.object(JsonNodeFactories.field("level", JsonNodeFactories.string(nativeHookDebugLevel.toString())))), JsonNodeFactories.field("tray_icon_enabled", JsonNodeFactories.booleanNode(useTrayIcon)), JsonNodeFactories.field("enabled_halt_by_key", JsonNodeFactories.booleanNode(enabledHaltingKeyPressed)), JsonNodeFactories.field("execute_on_key_released", JsonNodeFactories.booleanNode(executeOnKeyReleased)), JsonNodeFactories.field("use_clipboard_to_type_string", JsonNodeFactories.booleanNode(useClipboardToTypeString)), JsonNodeFactories.field("run_task_with_server_config", JsonNodeFactories.booleanNode(runTaskWithServerConfig)), JsonNodeFactories.field("use_java_awt_for_mouse_position", JsonNodeFactories.booleanNode(useJavaAwtToGetMousePosition)), JsonNodeFactories.field("global_hotkey", JsonNodeFactories.object(JsonNodeFactories.field("mouse_gesture_activation", MOUSE_GESTURE.jsonize()), JsonNodeFactories.field("record", RECORD.jsonize()), JsonNodeFactories.field("replay", REPLAY.jsonize()), JsonNodeFactories.field("replay_compiled", COMPILED_REPLAY.jsonize()))), JsonNodeFactories.field("tools_config", toolsConfig.jsonize()), JsonNodeFactories.field("core_config", coreConfig.jsonize()))), JsonNodeFactories.field("ipc_settings", IPCServiceManager.jsonize()), JsonNodeFactories.field("remote_repeats_clients", backEnd.getPeerServiceClientManager().jsonize()), JsonNodeFactories.field("compilers", compilerFactory.jsonize()), JsonNodeFactories.field("task_groups", JsonNodeFactories.array(taskNodes)));
+        JsonRootNode r;
+        r = JsonNodeFactories.object(
+                JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)),
+                JsonNodeFactories.field("global_settings",
+                        JsonNodeFactories.object(JsonNodeFactories.field("tray_icon_enabled", JsonNodeFactories.booleanNode(useTrayIcon)),
+                                JsonNodeFactories.field("enabled_halt_by_key", JsonNodeFactories.booleanNode(enabledHaltingKeyPressed)),
+                                JsonNodeFactories.field("execute_on_key_released", JsonNodeFactories.booleanNode(executeOnKeyReleased)),
+                                JsonNodeFactories.field("use_clipboard_to_type_string", JsonNodeFactories.booleanNode(useClipboardToTypeString)),
+                                JsonNodeFactories.field("run_task_with_server_config", JsonNodeFactories.booleanNode(runTaskWithServerConfig)),
+                                JsonNodeFactories.field("use_java_awt_for_mouse_position", JsonNodeFactories.booleanNode(useJavaAwtToGetMousePosition)),
+                                JsonNodeFactories.field("global_hotkey", JsonNodeFactories.object(
+                                        JsonNodeFactories.field("mouse_gesture_activation", MOUSE_GESTURE.jsonize()),
+                                        JsonNodeFactories.field("record", RECORD.jsonize()),
+                                        JsonNodeFactories.field("replay", REPLAY.jsonize()),
+                                        JsonNodeFactories.field("replay_compiled", COMPILED_REPLAY.jsonize()))),
+                                JsonNodeFactories.field("tools_config", toolsConfig.jsonize()),
+                                JsonNodeFactories.field("core_config", coreConfig.jsonize()))),
+                JsonNodeFactories.field("ipc_settings", IPCServiceManager.jsonize()),
+                JsonNodeFactories.field("remote_repeats_clients", backEnd.getPeerServiceClientManager().jsonize()),
+                JsonNodeFactories.field("compilers", compilerFactory.jsonize()),
+                JsonNodeFactories.field("task_groups", JsonNodeFactories.array(taskNodes)));
 
-        return JSONUtility.writeJson(root, new File(CONFIG_FILE_NAME));
+        return JSONUtility.writeJson(r, new File(CONFIG_FILE_NAME));
     }
 
     public void exportTasksConfig(File destination) {
@@ -205,16 +225,9 @@ public final class Config implements ILoggable {
         return toolsConfig;
     }
 
-    public void setToolsConfig(ToolsConfig toolsConfig) {
-        this.toolsConfig = toolsConfig;
-    }
 
     public CoreConfig getCoreConfig() {
         return coreConfig;
-    }
-
-    public void setCoreConfig(CoreConfig coreConfig) {
-        this.coreConfig = coreConfig;
     }
 
     public int getMouseGestureActivationKey() {

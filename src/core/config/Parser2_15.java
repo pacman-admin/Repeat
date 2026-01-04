@@ -21,9 +21,7 @@ package core.config;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import core.controller.CoreConfig;
 import core.ipc.IPCServiceManager;
-import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.keyChain.KeyChain;
 import core.userDefinedTask.TaskGroup;
 import utilities.json.JSONUtility;
@@ -72,14 +70,14 @@ public class Parser2_15 extends ConfigParser {
     protected boolean internalExtractData(Config config, JsonRootNode root) {
         try {
             JsonNode globalSettings = root.getNode("global_settings");
-            config.setUseTrayIcon(globalSettings.getBooleanValue("tray_icon_enabled"));
-            config.setEnabledHaltingKeyPressed(globalSettings.getBooleanValue("enabled_halt_by_key"));
+            //config.setUseTrayIcon(globalSettings.getBooleanValue("tray_icon_enabled"));
+            //config.setEnabledHaltingKeyPressed(globalSettings.getBooleanValue("enabled_halt_by_key"));
             config.setExecuteOnKeyReleased(globalSettings.getBooleanValue("execute_on_key_released"));
             config.setUseClipboardToTypeString(globalSettings.getBooleanValue("use_clipboard_to_type_string"));
-            config.setRunTaskWithServerConfig(globalSettings.getBooleanValue("run_task_with_server_config"));
+            //config.setRunTaskWithServerConfig(globalSettings.getBooleanValue("run_task_with_server_config"));
             config.setUseJavaAwtToGetMousePosition(globalSettings.getBooleanValue("use_java_awt_for_mouse_position"));
 
-            config.setNativeHookDebugLevel(Level.parse(globalSettings.getNode("debug").getStringValue("level")));
+            //config.setNativeHookDebugLevel(Level.parse(globalSettings.getNode("debug").getStringValue("level")));
 
             JsonNode globalHotkey = globalSettings.getNode("global_hotkey");
 
@@ -88,26 +86,25 @@ public class Parser2_15 extends ConfigParser {
             config.setREPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay")));
             config.setCOMPILED_REPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay_compiled")));
 
-//            JsonNode toolsConfigNode = globalSettings.getNode("tools_config");
-//            ToolsConfig toolsConfig = ToolsConfig.parseJSON(toolsConfigNode);
-//            config.setToolsConfig(toolsConfig);
-
+            /*
+            ToolsConfig toolsConfig = ToolsConfig.parseJSON(toolsConfigNode);
+            config.setToolsConfig(toolsConfig);
+            JsonNode toolsConfigNode = globalSettings.getNode("tools_config");
             JsonNode coreConfigNode = globalSettings.getNode("core_config");
             CoreConfig coreConfig = CoreConfig.parseJSON(coreConfigNode);
             config.setCoreConfig(coreConfig);
-
             JsonNode peerClients = root.getNode("remote_repeats_clients");
             RepeatsPeerServiceClientManager repeatsPeerServiceClientManager = RepeatsPeerServiceClientManager.parseJSON(peerClients);
             config.getBackEnd().getPeerServiceClientManager().updateClients(repeatsPeerServiceClientManager.getClients());
-
+            */
             List<JsonNode> ipcSettings = root.getArrayNode("ipc_settings");
             if (!IPCServiceManager.parseJSON(ipcSettings)) {
                 LOGGER.log(Level.WARNING, "IPC Service Manager failed to parse JSON metadata");
             }
 
-            if (!config.getCompilerFactory().parseJSON(root.getNode("compilers"))) {
-                LOGGER.log(Level.WARNING, "Dynamic Compiler Manager failed to parse JSON metadata");
-            }
+//            if (!config.getCompilerFactory().parseJSON(root.getNode("compilers"))) {
+//                LOGGER.log(Level.WARNING, "Dynamic Compiler Manager failed to parse JSON metadata");
+//            }
 
             config.getBackEnd().clearTaskGroup();
             for (JsonNode taskGroupNode : root.getArrayNode("task_groups")) {
