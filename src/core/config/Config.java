@@ -168,8 +168,7 @@ public final class Config implements ILoggable {
         r = JsonNodeFactories.object(
                 JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)),
                 JsonNodeFactories.field("global_settings",
-                        JsonNodeFactories.object(JsonNodeFactories.field("tray_icon_enabled", JsonNodeFactories.booleanNode(useTrayIcon)),
-                                JsonNodeFactories.field("execute_on_key_released", JsonNodeFactories.booleanNode(executeOnKeyReleased)),
+                        JsonNodeFactories.object(JsonNodeFactories.field("execute_on_key_released", JsonNodeFactories.booleanNode(executeOnKeyReleased)),
                                 JsonNodeFactories.field("use_clipboard_to_type_string", JsonNodeFactories.booleanNode(useClipboardToTypeString)),
                                 JsonNodeFactories.field("use_java_awt_for_mouse_position", JsonNodeFactories.booleanNode(useJavaAwtToGetMousePosition)),
                                 JsonNodeFactories.field("global_hotkey", JsonNodeFactories.object(
