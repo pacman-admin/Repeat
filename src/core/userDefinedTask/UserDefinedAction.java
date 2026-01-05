@@ -3,7 +3,7 @@ package core.userDefinedTask;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import core.config.ConfigParsingMode;
+import core.config.ParsingMode;
 import core.controller.Core;
 import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
@@ -50,14 +50,14 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         enabled = true;
     }
 
-    public static UserDefinedAction parseJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
+    public static UserDefinedAction parseJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
         return parsePureJSON(factory, node, parseMode);
     }
 
-    static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
+    static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
         try {
             String actionId = node.getStringValue("action_id");
-            if (parseMode == ConfigParsingMode.IMPORT_PARSING) {
+            if (parseMode == ParsingMode.IMPORT_PARSING) {
                 actionId = UUID.randomUUID().toString();
             }
 

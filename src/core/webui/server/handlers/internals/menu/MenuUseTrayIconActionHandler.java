@@ -10,7 +10,6 @@ public class MenuUseTrayIconActionHandler extends AbstractBooleanConfigHttpHandl
 
 	@Override
 	protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) throws IOException {
-		backEndHolder.getConfig().setUseTrayIcon(value);
 		return emptySuccessResponse(exchange);
 	}
 }

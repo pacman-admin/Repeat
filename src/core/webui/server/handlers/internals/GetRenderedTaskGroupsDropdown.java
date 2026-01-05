@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import core.userDefinedTask.TaskGroupManager;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
@@ -26,8 +27,8 @@ public class GetRenderedTaskGroupsDropdown extends AbstractUIHttpHandler {
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
-		TaskGroup group = backEndHolder.getCurrentTaskGroup();
-		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, backEndHolder.getTaskGroups()));
+		TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
+		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, TaskGroupManager.getTaskGroups()));
 
 		String page = objectRenderer.render("fragments/task_groups_dropdown", data);
 		if (page == null) {

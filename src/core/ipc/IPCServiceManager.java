@@ -7,15 +7,14 @@ import frontEnd.MainBackEndHolder;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.logging.Logger;
 
 public final class IPCServiceManager {
-    private static final IIPCService UI_SERVER;
+    private static final UIServer UI_SERVER = new UIServer();
+    private static final Logger LOGGER = Logger.getLogger(IPCServiceManager.class.getName());
 
-    static {
-        UI_SERVER = new UIServer();
-    }
     private IPCServiceManager() {
-        throw new InstantiationError("This class is uninstantiable.");
+        //This class is uninstantiable
     }
 
     public static void stopServices() throws IOException {
@@ -23,27 +22,27 @@ public final class IPCServiceManager {
         while (UI_SERVER.isRunning()) ;
     }
 
-    public static boolean parseJSON(List<JsonNode> ipcSettings) {
-        for (JsonNode language : ipcSettings) {
-            String name = language.getStringValue("name");
-            if (name.equals("web_ui_server")) {
-                return UI_SERVER.extractSpecificConfig(language.getNode("config"));
+    public static void parseJSON(List<JsonNode> ipcSettings) {
+        for (JsonNode node : ipcSettings) {
+            if (node.getStringValue("name").equals("web_ui_server")) {
+                if (!UI_SERVER.extractSpecificConfig(node.getNode("config"))) {
+                    LOGGER.warning("Could not parse IPC config");
+                }
+                return;
             }
         }
-        throw new RuntimeException("UI Server not found.");
     }
 
     public static JsonNode jsonize() {
-        return JsonNodeFactories.array(JsonNodeFactories.object(JsonNodeFactories.field("name", JsonNodeFactories.string("web_ui_server")), JsonNodeFactories.field("config", UI_SERVER == null ? JsonNodeFactories.nullNode() : UI_SERVER.getSpecificConfig())));
+        return JsonNodeFactories.array(JsonNodeFactories.object(JsonNodeFactories.field("name", JsonNodeFactories.string("web_ui_server")), JsonNodeFactories.field("config", UI_SERVER.getSpecificConfig())));
     }
 
     public static void initiateServices(MainBackEndHolder backEndHolder) throws IOException {
-        UIServer server = (UIServer) UI_SERVER;
-        server.setMainBackEndHolder(backEndHolder);
+        UI_SERVER.setMainBackEndHolder(backEndHolder);
         UI_SERVER.startRunning();
     }
 
-    public static IIPCService getUIServer(){
+    public static IIPCService getUIServer() {
         return UI_SERVER;
     }
 }

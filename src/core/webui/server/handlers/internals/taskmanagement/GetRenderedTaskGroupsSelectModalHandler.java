@@ -1,6 +1,7 @@
 package core.webui.server.handlers.internals.taskmanagement;
 
 import core.userDefinedTask.TaskGroup;
+import core.userDefinedTask.TaskGroupManager;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
@@ -26,8 +27,8 @@ public class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHttpHandl
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        TaskGroup group = backEndHolder.getCurrentTaskGroup();
-        List<TaskGroup> groups = backEndHolder.getTaskGroups();
+        TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
+        List<TaskGroup> groups = TaskGroupManager.getTaskGroups();
         data.put("groups", groups.stream().map(g -> RenderedTaskGroupForSelectModal.fromTaskGroups(g, group)).collect(Collectors.toList()));
 
         String page = objectRenderer.render("fragments/task_groups_select", data);

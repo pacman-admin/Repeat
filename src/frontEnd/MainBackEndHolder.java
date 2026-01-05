@@ -21,11 +21,9 @@ package frontEnd;
 import core.background.loggers.ActiveWindowInfosLogger;
 import core.background.loggers.MousePositionLogger;
 import core.config.Config;
-import core.config.Constants;
 import core.controller.Core;
 import core.controller.CoreProvider;
 import core.ipc.IPCServiceManager;
-import core.ipc.repeatClient.repeatPeerClient.RepeatsPeerServiceClientManager;
 import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
@@ -36,7 +34,10 @@ import core.languageHandler.compiler.DynamicCompilerOutput;
 import core.recorder.Recorder;
 import core.recorder.ReplayConfig;
 import core.userDefinedTask.*;
-import core.userDefinedTask.internals.*;
+import core.userDefinedTask.internals.ActionExecutor;
+import core.userDefinedTask.internals.RunActionConfig;
+import core.userDefinedTask.internals.SharedVariablesPubSubManager;
+import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 import utilities.Desktop;
@@ -60,11 +61,13 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
+import static core.userDefinedTask.TaskGroupManager.*;
+
 @SuppressWarnings("DanglingJavadoc")
 public class MainBackEndHolder {
     private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
     final GlobalEventsManager keysManager;
-    private final List<TaskGroup> taskGroups;
+
     private final Config config;
     private final UserDefinedAction switchRecord;
     private final UserDefinedAction switchReplay;
@@ -78,7 +81,6 @@ public class MainBackEndHolder {
     private final LogHolder logHolder;
     private final ScheduledThreadPoolExecutor executor;
     private final Recorder recorder;
-    private final RepeatsPeerServiceClientManager peerServiceClientManager;
     private MinimizedFrame trayIcon;
     private Thread compiledExecutor;
     private Language compilingLanguage;
@@ -90,27 +92,15 @@ public class MainBackEndHolder {
     private File currentTempFile;
 
     public MainBackEndHolder() {
-        config = new Config(this);
-
-        if (!SystemTray.isSupported()) {
-            LOGGER.warning("System tray is not supported.");
-        }
-        try {
-            trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
-        } catch (Exception e) {
-            LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
-        }
-
         logHolder = new LogHolder();
 
         executor = new ScheduledThreadPoolExecutor(10);
         compilingLanguage = Language.MANUAL_BUILD;
 
-        taskGroups = new ArrayList<>();
+        config = Config.loadFromFile();
 
-        peerServiceClientManager = new RepeatsPeerServiceClientManager();
         coreProvider = new CoreProvider(config);
-        taskInvoker = new TaskInvoker(coreProvider, taskGroups);
+        taskInvoker = new TaskInvoker(coreProvider);
         actionExecutor = new ActionExecutor(coreProvider);
         keysManager = new GlobalEventsManager(config, actionExecutor);
         activeWindowInfosLogger = new ActiveWindowInfosLogger();
@@ -147,6 +137,31 @@ public class MainBackEndHolder {
                 return null;
             }
         });
+        if (!SystemTray.isSupported()) {
+            LOGGER.warning("System tray is not supported.");
+        }
+//        MainBackEndHolder b = this;
+//        new Timer().scheduleAtFixedRate(new TimerTask() {
+//            @Override
+//            public void run() {
+//                try {
+//                    LOGGER.info("Adding tray icon...");
+//                    trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, b);
+//                    LOGGER.info("Tray Icon added");
+//                } catch (Exception e) {
+//                    LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
+//                }
+//            }
+//        }, 1000L, 1000L);
+        while (BootStrapResources.TRAY_IMAGE == null);
+        try {
+            LOGGER.info("Adding tray icon...");
+            trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
+            LOGGER.info("Tray Icon added");
+        } catch (Exception e) {
+            LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
+        }
+        trayIcon.add();
     }
 
     public void editSource(String code) {
@@ -187,20 +202,6 @@ public class MainBackEndHolder {
         changeDebugLevel(config.getNativeHookDebugLevel());
     }
 
-    /*************************************************************************************************************/
-
-    /************************************************Config*******************************************************/
-    void loadConfig() {
-        config.loadConfig();
-        setTaskInvoker();
-
-        if (trayIcon != null) {
-            if (config.isUseTrayIcon()) {
-                trayIcon.add();
-            }
-        }
-        //IPCServiceManager.setBackEnd(this);
-    }
 
     /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
@@ -211,12 +212,6 @@ public class MainBackEndHolder {
             LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
-        }
-
-        try {
-            peerServiceClientManager.startAllClients(true);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Exception when launching clients connecting to peer services.", e);
         }
     }
 
@@ -229,12 +224,6 @@ public class MainBackEndHolder {
             IPCServiceManager.stopServices();
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
-        }
-
-        try {
-            peerServiceClientManager.stopAllClients();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Unable to stop clients to peer services.", e);
         }
 
         GlobalListenerHookController.cleanup();
@@ -264,16 +253,13 @@ public class MainBackEndHolder {
 
         try {
             LOGGER.info("Waiting for main executor to terminate...");
-            executor.awaitTermination(3, TimeUnit.SECONDS);
+            executor.awaitTermination(5, TimeUnit.SECONDS);
             LOGGER.info("Main executor terminated.");
         } catch (InterruptedException e) {
             LOGGER.log(Level.WARNING, "Interrupted while awaiting backend executor termination.", e);
         }
 
         LOGGER.info("Terminated all background processes.");
-
-        // Only if really needed.
-        // System.exit(0);
     }
 
     /*************************************************************************************************************/
@@ -491,46 +477,7 @@ public class MainBackEndHolder {
                 return;
             }
         }
-
         taskGroups.add(new TaskGroup(name));
-    }
-
-    public void removeTaskGroup(String id) {
-        int index = getTaskGroupIndex(id);
-
-        if (index < 0 || index >= taskGroups.size()) {
-            return;
-        }
-
-        TaskGroup removed = taskGroups.remove(index);
-        if (taskGroups.isEmpty()) {
-            taskGroups.add(new TaskGroup("default"));
-        }
-
-        if (currentGroup == removed) {
-            setCurrentTaskGroup(taskGroups.getFirst());
-        }
-
-        for (UserDefinedAction action : removed.getTasks()) {
-            keysManager.unregisterTask(action);
-        }
-        renderTaskGroup();
-    }
-
-    public void moveTaskGroupUp(String id) {
-        int index = getTaskGroupIndex(id);
-        if (index < 1) {
-            return;
-        }
-        Collections.swap(taskGroups, index, index - 1);
-    }
-
-    public void moveTaskGroupDown(String id) {
-        int index = getTaskGroupIndex(id);
-
-        if (index >= 0 && index < taskGroups.size() - 1) {
-            Collections.swap(taskGroups, index, index + 1);
-        }
     }
 
     /*************************************************************************************************************/
@@ -552,7 +499,7 @@ public class MainBackEndHolder {
                     continue;
                 }
 
-                AbstractNativeCompiler compiler = config.getCompilerFactory().getNativeCompiler(task.getCompiler());
+                AbstractNativeCompiler compiler = COMPILER_FACTORY.getNativeCompiler(task.getCompiler());
                 UserDefinedAction recompiled = task.recompileNative(compiler);
                 if (recompiled == null) {
                     continue;
@@ -710,8 +657,30 @@ public class MainBackEndHolder {
         return -1;
     }
 
+    public void removeTaskGroup(String id) {
+        int index = TaskGroupManager.getTaskGroupIndex(id);
+
+        if (index < 0 || index >= taskGroups.size()) {
+            return;
+        }
+
+        TaskGroup removed = taskGroups.remove(index);
+        if (taskGroups.isEmpty()) {
+            taskGroups.add(new TaskGroup("default"));
+        }
+
+        if (currentGroup == removed) {
+            setCurrentTaskGroup(taskGroups.getFirst());
+        }
+
+        for (UserDefinedAction action : removed.getTasks()) {
+            keysManager.unregisterTask(action);
+        }
+        renderTaskGroup();
+    }
+
     public void changeTaskGroup(String taskId, String newGroupId) {
-        int newGroupIndex = getTaskGroupIndex(newGroupId);
+        int newGroupIndex = TaskGroupManager.getTaskGroupIndex(newGroupId);
         if (newGroupIndex == -1) {
             LOGGER.warning("Cannot change task group to group with ID " + newGroupId + " since it does not exist.");
             return;
@@ -858,8 +827,6 @@ public class MainBackEndHolder {
 
     public void importTasks(File inputFile) {
         try {
-
-
             Util.unZipFile(inputFile.getAbsolutePath(), ".");
             File src = new File("tmp");
             File dst = new File(".");
@@ -869,21 +836,13 @@ public class MainBackEndHolder {
                 return;
             }
             int existingGroupCount = taskGroups.size();
-            boolean result = config.importTaskConfig();
-            FileUtility.deleteFile(new File("tmp"));
-            FileUtility.deleteFile(new File(Constants.EXPORTED_CONFIG_FILE_NAME));
-
+            config.importTaskConfig();
             if (taskGroups.size() > existingGroupCount) {
+                LOGGER.info("Successfully imported tasks. Switching to a new task group...");
                 currentGroup = taskGroups.get(existingGroupCount); // Take the new group with lowest index.
                 setTaskInvoker();
             } else {
                 LOGGER.warning("No new task group found.");
-                return;
-            }
-            if (result) {
-                LOGGER.info("Successfully imported tasks. Switching to a new task group...");
-            } else {
-                LOGGER.warning("Encountered error(s) while importing tasks. Switching to a new task group...");
             }
         } catch (Exception e) {
             LOGGER.warning("Could not import task group!\n" + e);
@@ -954,7 +913,7 @@ public class MainBackEndHolder {
     }
 
     public AbstractNativeCompiler getCompiler() {
-        return config.getCompilerFactory().getNativeCompiler(compilingLanguage);
+        return TaskGroupManager.COMPILER_FACTORY.getNativeCompiler(compilingLanguage);
     }
 
     public void setCompilingLanguage(Language language) {
@@ -1010,17 +969,15 @@ public class MainBackEndHolder {
     /***************************************Configurations********************************************************/
     // Write configuration file
     public boolean writeConfigFile() {
-        boolean result = config.writeConfig();
+        boolean result = config.save();
         if (!result) {
-            LOGGER.warning("Unable to update config.");
+            LOGGER.warning("Unable to save config.");
         }
-
         return result;
     }
 
     public void changeDebugLevel(Level level) {
         config.setNativeHookDebugLevel(level);
-
         Logger.getLogger("").setLevel(level);
         for (Handler h : Logger.getLogger("").getHandlers()) {
             h.setLevel(level);
@@ -1040,10 +997,6 @@ public class MainBackEndHolder {
     private boolean applySpeedup() {
         recorder.setSpeedup(replayConfig.getSpeedup());
         return true;
-    }
-
-    public void setCoreClients(List<String> clients) {
-        config.getCoreConfig().setClients(clients);
     }
 
     /*************************************************************************************************************/
@@ -1102,61 +1055,11 @@ public class MainBackEndHolder {
         return keysManager;
     }
 
-    public RepeatsPeerServiceClientManager getPeerServiceClientManager() {
-        return peerServiceClientManager;
-    }
-
     public String getLogs() {
         return logHolder.getContent();
     }
 
     public void clearLogs() {
         logHolder.clear();
-    }
-
-    public void addTaskGroup(TaskGroup group) {
-        taskGroups.add(group);
-    }
-
-    public void clearTaskGroup() {
-        taskGroups.clear();
-    }
-
-    private int getTaskGroupIndex(String id) {
-        for (ListIterator<TaskGroup> iterator = taskGroups.listIterator(); iterator.hasNext(); ) {
-            int index = iterator.nextIndex();
-            TaskGroup group = iterator.next();
-            if (group.getGroupId().equals(id)) {
-                return index;
-            }
-        }
-        return -1;
-    }
-
-    /**
-     * Get the task group with the given id, or null if no such group exists.
-     */
-    public TaskGroup getTaskGroup(String id) {
-        for (TaskGroup group : taskGroups) {
-            if (group.getGroupId().equals(id)) {
-                return group;
-            }
-        }
-        return null;
-    }
-
-    /**
-     * Retrieve an immutable view of the list of task groups.
-     */
-    public List<TaskGroup> getTaskGroups() {
-        return Collections.unmodifiableList(taskGroups);
-    }
-
-    public TaskGroup getCurrentTaskGroup() {
-        return this.currentGroup;
-    }
-
-    public void setCurrentTaskGroup(TaskGroup currentTaskGroup) {
-        currentGroup = currentTaskGroup;
     }
 }

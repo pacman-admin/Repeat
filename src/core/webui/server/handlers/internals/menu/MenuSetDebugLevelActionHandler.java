@@ -1,42 +1,35 @@
 package core.webui.server.handlers.internals.menu;
 
-import java.io.IOException;
+import core.webui.server.handlers.AbstractPOSTHandler;
+import core.webui.server.handlers.renderedobjects.RenderedDebugLevel;
+import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+import utilities.NumberUtility;
+
 import java.util.Map;
 import java.util.logging.Level;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+public class MenuSetDebugLevelActionHandler extends AbstractPOSTHandler {
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.server.handlers.renderedobjects.RenderedDebugLevel;
-import core.webui.webcommon.HttpServerUtilities;
-import utilities.NumberUtility;
+    public MenuSetDebugLevelActionHandler() {
+        super("Could not set debug output level");
+    }
 
-public class MenuSetDebugLevelActionHandler extends AbstractSingleMethodHttpHandler {
+    @Override
+    protected String handle(HttpRequest request) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+        if (params == null) {
+            throw new IllegalArgumentException("Request empty");
+        }
 
-	public MenuSetDebugLevelActionHandler() {
-		super(AbstractSingleMethodHttpHandler.POST_METHOD);
-	}
+        String levelString = params.get("index");
+        if (levelString == null || !NumberUtility.isNonNegativeInteger(levelString)) {
+            throw new IllegalArgumentException("Debug Level must be non-negative integer.");
+        }
 
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
-		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
-		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse POST parameters.");
-		}
-
-		String levelString = params.get("index");
-		if (levelString == null || !NumberUtility.isNonNegativeInteger(levelString)) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Level must be non-negative integer.");
-		}
-
-		int levelIndex = Integer.parseInt(levelString);
-		if (levelIndex >= RenderedDebugLevel.LEVELS.length) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Index " + levelIndex + " out of bound.");
-		}
-		Level level = RenderedDebugLevel.LEVELS[levelIndex];
-		backEndHolder.changeDebugLevel(level);
-		return emptySuccessResponse(exchange);
-	}
+        int levelIndex = Integer.parseInt(levelString);
+        Level level = RenderedDebugLevel.LEVELS[Math.min(levelIndex, RenderedDebugLevel.LEVELS.length - 1)];
+        backEndHolder.changeDebugLevel(level);
+        return "Successfully set debug output level";
+    }
 }

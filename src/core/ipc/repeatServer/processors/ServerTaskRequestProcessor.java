@@ -19,6 +19,8 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import static core.userDefinedTask.TaskGroupManager.COMPILER_FACTORY;
+
 class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(ServerTaskRequestProcessor.class.getName());
@@ -125,7 +127,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     private UserDefinedAction createTask(String source, Language language) {
-        AbstractNativeCompiler compiler = backEnd.getConfig().getCompilerFactory().getNativeCompiler(language);
+        AbstractNativeCompiler compiler = COMPILER_FACTORY.getNativeCompiler(language);
         if (compiler == null) {
             LOGGER.warning("No compiler found for " + language + ".");
             return null;

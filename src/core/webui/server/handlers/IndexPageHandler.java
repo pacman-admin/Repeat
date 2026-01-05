@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import core.userDefinedTask.TaskGroupManager;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
@@ -42,14 +43,14 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(backEndHolder.getReplayConfig()));
 		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(backEndHolder.getRunActionConfig()));
 
-		TaskGroup group = backEndHolder.getCurrentTaskGroup();
-		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, backEndHolder.getTaskGroups()));
+		TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
+		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, TaskGroupManager.getTaskGroups()));
 		List<RenderedUserDefinedAction> taskList = group.getTasks().stream().map(RenderedUserDefinedAction::fromUserDefinedAction).collect(Collectors.toList());
 		data.put("tasks", taskList);
 		data.put("tooltips", new TooltipsIndexPage());
 
 		data.put("executionTime", getExecutionTime());
-		data.put("config", RenderedConfig.fromConfig(backEndHolder.getConfig(), backEndHolder.getRecorder()));
+		data.put("config", new RenderedConfig(backEndHolder.getConfig(), backEndHolder.getRecorder()));
 
 		Language selectedLanguage = backEndHolder.getSelectedLanguage();
 		List<RenderedCompilingLanguage> languages = new ArrayList<>();
@@ -70,7 +71,7 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 
 	private String getExecutionTime() {
 		long time = 0;
-		for (TaskGroup group : backEndHolder.getTaskGroups()) {
+		for (TaskGroup group : TaskGroupManager.getTaskGroups()) {
 			for (UserDefinedAction action : group.getTasks()) {
 				time += action.getStatistics().getTotalExecutionTime();
 			}

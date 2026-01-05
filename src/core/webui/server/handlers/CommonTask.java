@@ -3,6 +3,7 @@ package core.webui.server.handlers;
 import core.ipc.IIPCService;
 import core.ipc.IPCServiceManager;
 import core.userDefinedTask.TaskGroup;
+import core.userDefinedTask.TaskGroupManager;
 import core.userDefinedTask.UserDefinedAction;
 import frontEnd.MainBackEndHolder;
 
@@ -77,7 +78,7 @@ public class CommonTask {
         String groupValue = params.get("group");
         if (groupValue == null) {
             if (useCurrentIfNotProvided) {
-                return backEndHolder.getCurrentTaskGroup();
+                return TaskGroupManager.getCurrentTaskGroup();
             }
             return null;
         }
@@ -87,6 +88,6 @@ public class CommonTask {
             LOGGER.warning("No such group with ID " + id + ".");
             return null;
         }
-        return backEndHolder.getTaskGroup(id);
+        return TaskGroupManager.getTaskGroup(id);
     }
 }

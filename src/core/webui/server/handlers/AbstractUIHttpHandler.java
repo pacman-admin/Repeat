@@ -3,6 +3,7 @@ package core.webui.server.handlers;
 import core.ipc.IPCServiceManager;
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
+import core.userDefinedTask.TaskGroupManager;
 import core.webui.server.handlers.renderedobjects.*;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
@@ -31,26 +32,9 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         return renderedPage(exchange, "fragments/ipcs", data);
     }
 
-    protected final Map<String, Object> getGlobalConfigRenderingData() {
-        Map<String, Object> data = new HashMap<>();
-        RenderedRemoteRepeatsClientsConfig toolsConfig = RenderedRemoteRepeatsClientsConfig.of(backEndHolder.getPeerServiceClientManager(), backEndHolder.getConfig().getToolsConfig());
-        RenderedRemoteRepeatsClientsConfig coreConfig = RenderedRemoteRepeatsClientsConfig.of(backEndHolder.getPeerServiceClientManager(), backEndHolder.getConfig().getCoreConfig());
-        RenderedRemoteRepeatsClientsConfig remoteRepeatsCompilerConfig = RenderedRemoteRepeatsClientsConfig.of(backEndHolder.getPeerServiceClientManager(), backEndHolder.getConfig().getCompilerFactory().getRemoteRepeatsCompilerConfig());
-        data.put("globalConfigs", RenderedGlobalConfigs.of(toolsConfig, coreConfig, remoteRepeatsCompilerConfig));
-        return data;
-    }
-
-    protected final Void renderedToolsClientsConfig(HttpAsyncExchange exchange) throws IOException {
-        return renderedPage(exchange, "fragments/tools_clients", getGlobalConfigRenderingData());
-    }
-
-    protected final Void renderedCoreClientsConfig(HttpAsyncExchange exchange) throws IOException {
-        return renderedPage(exchange, "fragments/core_clients", getGlobalConfigRenderingData());
-    }
-
     protected final Void renderedTaskForGroup(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        TaskGroup group = backEndHolder.getCurrentTaskGroup();
+        TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
         List<RenderedUserDefinedAction> taskList = group.getTasks().stream().map(RenderedUserDefinedAction::fromUserDefinedAction).collect(Collectors.toList());
         data.put("tooltips", new TooltipsIndexPage());
         data.put("tasks", taskList);
@@ -59,7 +43,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
 
     protected final Void renderedTaskGroups(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        data.put("groups", backEndHolder.getTaskGroups().stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == backEndHolder.getCurrentTaskGroup())).collect(Collectors.toList()));
+        data.put("groups", TaskGroupManager.getTaskGroups().stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == TaskGroupManager.getCurrentTaskGroup())).collect(Collectors.toList()));
         return renderedPage(exchange, "fragments/task_groups", data);
     }
 

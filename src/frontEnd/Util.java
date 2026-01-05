@@ -18,17 +18,28 @@
  */
 package frontEnd;
 
+import argo.jdom.JsonNode;
+import argo.jdom.JsonNodeFactories;
+import argo.jdom.JsonRootNode;
+import core.userDefinedTask.TaskGroup;
+import core.userDefinedTask.TaskGroupManager;
 import utilities.DateUtility;
 import utilities.FileUtility;
+import utilities.json.JSONUtility;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
+
+import static core.config.Constants.CURRENT_CONFIG_VERSION;
+import static core.config.Constants.EXPORTED_CONFIG_FILE_NAME;
 
 /**
  * Contains static methods for the MainBackendHolder class
@@ -63,6 +74,16 @@ final class Util {
             }
         });
         return newHandler;
+    }
+
+    static void exportTasks(File destination) {
+        List<JsonNode> taskNodes = new ArrayList<>();
+        for (TaskGroup group : TaskGroupManager.getTaskGroups()) {
+            taskNodes.add(group.jsonize());
+        }
+        JsonRootNode root = JsonNodeFactories.object(JsonNodeFactories.field("version", JsonNodeFactories.string(CURRENT_CONFIG_VERSION)), JsonNodeFactories.field("task_groups", JsonNodeFactories.array(taskNodes)));
+        String fullPath = FileUtility.joinPath(destination.getAbsolutePath(), EXPORTED_CONFIG_FILE_NAME);
+        JSONUtility.writeJson(root, new File(fullPath));
     }
 
     /**

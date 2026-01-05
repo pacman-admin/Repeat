@@ -1,17 +1,13 @@
 package core.webui.server.handlers.internals.menu;
 
-import java.io.IOException;
-
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-
 import core.webui.server.handlers.AbstractBooleanConfigHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public class MenuHaltTaskByEscapeActionHandler extends AbstractBooleanConfigHttpHandler {
 
-	@Override
-	protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) throws IOException {
-		backEndHolder.getConfig().setEnabledHaltingKeyPressed(value);
-		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
-	}
+    @Override
+    protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "This setting cannot be changed");
+    }
 }

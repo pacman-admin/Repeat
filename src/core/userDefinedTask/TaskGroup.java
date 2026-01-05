@@ -3,7 +3,7 @@ package core.userDefinedTask;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import core.config.ConfigParsingMode;
+import core.config.ParsingMode;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.compiler.DynamicCompilerManager;
 import utilities.json.IJsonable;
@@ -44,10 +44,10 @@ public class TaskGroup implements IJsonable {
     /*public static String getSourceFilePath(){
         return sourceFilePath;
     }*/
-    public static TaskGroup parseJSON(DynamicCompilerManager factory, JsonNode node, ConfigParsingMode parseMode) {
+    public static TaskGroup parseJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
         try {
             String groupId = node.getStringValue("group_id");
-            TaskGroup output = parseMode == ConfigParsingMode.DEFAULT ? new TaskGroup("", groupId) : new TaskGroup("");
+            TaskGroup output = parseMode == ParsingMode.DEFAULT ? new TaskGroup("", groupId) : new TaskGroup("");
             output.name = node.getStringValue("name");
 
             for (JsonNode task : node.getArrayNode("tasks")) {

@@ -81,7 +81,7 @@ public class MouseGestureManager extends KeyStrokeManager {
 
     @Override
     public Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
-        if (stroke.getKey() == getConfig().getMouseGestureActivationKey()) {
+        if (getConfig().getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
             startRecording();
         }
         return Collections.emptySet();
@@ -89,7 +89,7 @@ public class MouseGestureManager extends KeyStrokeManager {
 
     @Override
     public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-        if (stroke.getKey() == getConfig().getMouseGestureActivationKey()) {
+        if (getConfig().getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
             return finishRecording();
         }
         return Collections.emptySet();

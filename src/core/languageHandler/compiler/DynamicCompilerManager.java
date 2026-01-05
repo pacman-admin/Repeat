@@ -36,13 +36,11 @@ import java.util.logging.Logger;
 public class DynamicCompilerManager implements IJsonable {
     private static final Logger LOGGER = Logger.getLogger(DynamicCompilerManager.class.getName());
     private final Map<Language, AbstractNativeCompiler> compilers;
-    private final RemoteRepeatsCompilerConfig remoteRepeatsCompilerConfig;
 
     public DynamicCompilerManager() {
         compilers = new HashMap<>();
         compilers.put(Language.JAVA, new JavaNativeCompiler("CustomAction", new String[]{"core"}, new String[]{}));
         compilers.put(Language.MANUAL_BUILD, new ManualBuildNativeCompiler(new File("core")));
-        remoteRepeatsCompilerConfig = new RemoteRepeatsCompilerConfig(new ArrayList<>());
     }
 
     public AbstractNativeCompiler getNativeCompiler(Language name) {
@@ -57,9 +55,6 @@ public class DynamicCompilerManager implements IJsonable {
         return compilers.containsKey(name);
     }
 
-    public RemoteRepeatsCompilerConfig getRemoteRepeatsCompilerConfig() {
-        return remoteRepeatsCompilerConfig;
-    }
 
     @Override
     public JsonRootNode jsonize() {
@@ -67,15 +62,10 @@ public class DynamicCompilerManager implements IJsonable {
         for (AbstractNativeCompiler compiler : compilers.values()) {
             compilerList.add(JsonNodeFactories.object(JsonNodeFactories.field("name", JsonNodeFactories.string(compiler.getName().toString())), JsonNodeFactories.field("path", JsonNodeFactories.string(FileUtility.getRelativePwdPath(compiler.getPath()))), JsonNodeFactories.field("compiler_specific_args", compiler.getCompilerSpecificArgs())));
         }
-
-        return JsonNodeFactories.object(JsonNodeFactories.field("local_compilers", JsonNodeFactories.array(compilerList)), JsonNodeFactories.field("remote_repeats_compilers", remoteRepeatsCompilerConfig.jsonize()));
+        return JsonNodeFactories.object(JsonNodeFactories.field("local_compilers", JsonNodeFactories.array(compilerList)));
     }
 
     public boolean parseJSON(JsonNode compilerSettings) {
-        JsonNode remoteRepeatsCompilers = compilerSettings.getNode("remote_repeats_compilers");
-        RemoteRepeatsCompilerConfig remoteCompilers = RemoteRepeatsCompilerConfig.parseJSON(remoteRepeatsCompilers);
-        remoteRepeatsCompilerConfig.setClients(remoteCompilers.getClients());
-
         List<JsonNode> localCompilers = compilerSettings.getArrayNode("local_compilers");
         for (JsonNode compilerNode : localCompilers) {
             String name = compilerNode.getStringValue("name");

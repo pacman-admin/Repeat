@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import core.userDefinedTask.TaskGroupManager;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
@@ -25,8 +26,8 @@ public class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
-		data.put("groups", backEndHolder.getTaskGroups()
-				.stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == backEndHolder.getCurrentTaskGroup()))
+		data.put("groups", TaskGroupManager.getTaskGroups()
+				.stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == TaskGroupManager.getCurrentTaskGroup()))
 				.collect(Collectors.toList()));
 		data.put("tooltips", new TooltipsTaskGroupsPage());
 

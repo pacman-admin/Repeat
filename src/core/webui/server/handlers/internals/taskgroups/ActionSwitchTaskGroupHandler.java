@@ -3,6 +3,7 @@ package core.webui.server.handlers.internals.taskgroups;
 import java.io.IOException;
 import java.util.Map;
 
+import core.userDefinedTask.TaskGroupManager;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
@@ -41,7 +42,7 @@ public class ActionSwitchTaskGroupHandler extends AbstractUIHttpHandler {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot get task group from request.");
 		}
 
-		backEndHolder.setCurrentTaskGroup(newCurrent);
+		TaskGroupManager.setCurrentTaskGroup(newCurrent);
 
 		if (rendering.equals("tasks")) {
 			return renderedTaskForGroup(exchange);

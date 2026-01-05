@@ -28,7 +28,7 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
         handleAllowedRequestWithBackend(request, exchange, context);
     }
 
-    protected final Void emptySuccessResponse(HttpAsyncExchange exchange) throws IOException {
+    protected final Void emptySuccessResponse(HttpAsyncExchange exchange){
         return HttpServerUtilities.prepareHttpResponse(exchange, 204, "");
     }
 

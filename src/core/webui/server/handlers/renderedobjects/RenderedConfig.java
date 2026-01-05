@@ -5,27 +5,25 @@ import java.util.List;
 import core.config.Config;
 import core.recorder.Recorder;
 
-public class RenderedConfig {
-	private boolean recordMouseClickOnly;
-	private boolean haltTaskByEscape;
-	private boolean executeOnRelease;
-	private boolean useClipboardToTypeString;
-	private boolean runTaskWithServerConfig;
-	private boolean useJavaAwtToGetMousePosition;
-	private boolean useTrayIcon;
-	private List<RenderedDebugLevel> debugLevels;
+public final class RenderedConfig {
+	private final boolean recordMouseClickOnly;
+	private final boolean haltTaskByEscape;
+	private final boolean executeOnRelease;
+	private final boolean useClipboardToTypeString;
+	private final boolean runTaskWithServerConfig;
+	private final boolean useJavaAwtToGetMousePosition;
+	private final boolean useTrayIcon;
+	private final List<RenderedDebugLevel> debugLevels;
 
-	public static RenderedConfig fromConfig(Config config, Recorder recorder) {
-		RenderedConfig output = new RenderedConfig();
-		output.haltTaskByEscape = config.isEnabledHaltingKeyPressed();
-		output.executeOnRelease = config.isExecuteOnKeyReleased();
-		output.useClipboardToTypeString = config.isUseClipboardToTypeString();
-		output.runTaskWithServerConfig = config.isRunTaskWithServerConfig();
-		output.recordMouseClickOnly = recorder.getRecordMode() == Recorder.MODE_MOUSE_CLICK_ONLY;
-		output.useJavaAwtToGetMousePosition = config.isUseJavaAwtToGetMousePosition();
-		output.useTrayIcon = config.isUseTrayIcon();
-		output.debugLevels = RenderedDebugLevel.of(config.getNativeHookDebugLevel());
-		return output;
+	public RenderedConfig(Config config, Recorder recorder) {
+		haltTaskByEscape = config.isEnabledHaltingKeyPressed();
+		executeOnRelease = config.isExecuteOnKeyReleased();
+		useClipboardToTypeString = config.isUseClipboardToTypeString();
+		runTaskWithServerConfig = config.isRunTaskWithServerConfig();
+		recordMouseClickOnly = recorder.getRecordMode() == Recorder.MODE_MOUSE_CLICK_ONLY;
+		useJavaAwtToGetMousePosition = config.isUseJavaAwtToGetMousePosition();
+		useTrayIcon = config.isUseTrayIcon();
+		debugLevels = RenderedDebugLevel.of(config.getNativeHookDebugLevel());
 	}
 
 	public boolean isRecordMouseClickOnly() {
@@ -33,7 +31,7 @@ public class RenderedConfig {
 	}
 
 	public void setRecordMouseClickOnly(boolean recordMouseClickOnly) {
-		this.recordMouseClickOnly = recordMouseClickOnly;
+		//this.recordMouseClickOnly = recordMouseClickOnly;
 	}
 
 	public boolean isHaltTaskByEscape() {
@@ -41,7 +39,7 @@ public class RenderedConfig {
 	}
 
 	public void setHaltTaskByEscape(boolean haltTaskByEscape) {
-		this.haltTaskByEscape = haltTaskByEscape;
+		//this.haltTaskByEscape = haltTaskByEscape;
 	}
 
 	public boolean isExecuteOnRelease() {
@@ -49,7 +47,7 @@ public class RenderedConfig {
 	}
 
 	public void setExecuteOnRelease(boolean executeOnRelease) {
-		this.executeOnRelease = executeOnRelease;
+		//this.executeOnRelease = executeOnRelease;
 	}
 
 	public boolean isUseClipboardToTypeString() {
@@ -57,7 +55,7 @@ public class RenderedConfig {
 	}
 
 	public void setUseClipboardToTypeString(boolean useClipboardToTypeString) {
-		this.useClipboardToTypeString = useClipboardToTypeString;
+		//this.useClipboardToTypeString = useClipboardToTypeString;
 	}
 
 	public boolean isRunTaskWithServerConfig() {
@@ -65,7 +63,7 @@ public class RenderedConfig {
 	}
 
 	public void setRunTaskWithServerConfig(boolean runTaskWithServerConfig) {
-		this.runTaskWithServerConfig = runTaskWithServerConfig;
+		//this.runTaskWithServerConfig = runTaskWithServerConfig;
 	}
 
 	public boolean isUseJavaAwtToGetMousePosition() {
@@ -73,7 +71,7 @@ public class RenderedConfig {
 	}
 
 	public void setUseJavaAwtToGetMousePosition(boolean useJavaAwtToGetMousePosition) {
-		this.useJavaAwtToGetMousePosition = useJavaAwtToGetMousePosition;
+		//this.useJavaAwtToGetMousePosition = useJavaAwtToGetMousePosition;
 	}
 
 	public boolean isUseTrayIcon() {
@@ -81,7 +79,7 @@ public class RenderedConfig {
 	}
 
 	public void setUseTrayIcon(boolean useTrayIcon) {
-		this.useTrayIcon = useTrayIcon;
+		//this.useTrayIcon = useTrayIcon;
 	}
 
 	public List<RenderedDebugLevel> getDebugLevels() {
@@ -89,6 +87,6 @@ public class RenderedConfig {
 	}
 
 	public void setDebugLevels(List<RenderedDebugLevel> debugLevels) {
-		this.debugLevels = debugLevels;
+		//this.debugLevels = debugLevels;
 	}
 }

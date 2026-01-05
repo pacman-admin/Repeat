@@ -26,7 +26,6 @@ public class MainFrontEnd {
         /*************************************************************************************/
         /********************************Load configs****************************/
         MainBackEndHolder backEnd = new MainBackEndHolder();
-        backEnd.loadConfig();
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
         GlobalListenerHookController.initialize(backEnd.getConfig().isUseJavaAwtToGetMousePosition());

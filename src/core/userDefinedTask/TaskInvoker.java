@@ -3,8 +3,9 @@ package core.userDefinedTask;
 import core.controller.CoreProvider;
 import core.keyChain.ActionInvoker;
 
-import java.util.List;
 import java.util.logging.Logger;
+
+import static core.userDefinedTask.TaskGroupManager.taskGroups;
 
 /**
  * Class to invoke tasks programmatically.
@@ -14,11 +15,9 @@ public class TaskInvoker {
     private static final Logger LOGGER = Logger.getLogger(TaskInvoker.class.getName());
 
     private final CoreProvider coreProvider;
-    private final List<TaskGroup> taskGroup;
 
-    public TaskInvoker(CoreProvider coreProvider, List<TaskGroup> taskGroup) {
+    public TaskInvoker(CoreProvider coreProvider) {
         this.coreProvider = coreProvider;
-        this.taskGroup = taskGroup;
         LOGGER.info("Created TaskInvoker");
     }
 
@@ -41,11 +40,11 @@ public class TaskInvoker {
      * @throws InterruptedException
      */
     private void execute(int groupIndex, int taskIndex, ActionInvoker activation) throws InterruptedException {
-        if (groupIndex >= taskGroup.size()) {
-            LOGGER.warning(String.format("Unable to execute task in group with index %d. There are only %d group(s).", groupIndex, taskGroup.size()));
+        if (groupIndex >= taskGroups.size()) {
+            LOGGER.warning(String.format("Unable to execute task in group with index %d. There are only %d group(s).", groupIndex, taskGroups.size()));
             return;
         }
-        TaskGroup group = taskGroup.get(groupIndex);
+        TaskGroup group = taskGroups.get(groupIndex);
 
         if (taskIndex >= group.getTasks().size()) {
             LOGGER.warning(String.format("Unable to execute task in with index %d. Group %s only has %d tasks.", taskIndex, group.getName(), group.getTasks().size()));
@@ -72,7 +71,7 @@ public class TaskInvoker {
      * @param activation task activation to associate with the execution.
      */
     private void execute(String id, ActionInvoker activation) throws InterruptedException {
-        for (TaskGroup group : taskGroup) {
+        for (TaskGroup group : taskGroups) {
             for (UserDefinedAction task : group.getTasks()) {
                 if (task.getActionId().equals(id)) {
                     execute(task, activation);

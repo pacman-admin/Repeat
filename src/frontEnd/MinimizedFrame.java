@@ -20,7 +20,6 @@ class MinimizedFrame extends TrayIcon {
 
     public MinimizedFrame(Image image, final MainBackEndHolder backEnd) {
         super(image);
-
         this.backEnd = backEnd;
 
         PopupMenu trayPopupMenu = new PopupMenu();

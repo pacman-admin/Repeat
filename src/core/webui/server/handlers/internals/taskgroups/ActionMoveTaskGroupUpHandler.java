@@ -13,6 +13,8 @@ import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 
+import static core.userDefinedTask.TaskGroupManager.moveTaskGroupUp;
+
 public class ActionMoveTaskGroupUpHandler extends AbstractUIHttpHandler {
 
 	public ActionMoveTaskGroupUpHandler(ObjectRenderer objectRenderer) {
@@ -31,7 +33,7 @@ public class ActionMoveTaskGroupUpHandler extends AbstractUIHttpHandler {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task group from request data.");
 		}
 
-		backEndHolder.moveTaskGroupUp(id);
+		moveTaskGroupUp(id);
 		return renderedTaskGroups(exchange);
 	}
 }
