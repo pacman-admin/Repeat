@@ -153,7 +153,7 @@ public class MainBackEndHolder {
 //                }
 //            }
 //        }, 1000L, 1000L);
-        while (BootStrapResources.TRAY_IMAGE == null);
+        while (BootStrapResources.TRAY_IMAGE == null) ;
         try {
             LOGGER.info("Adding tray icon...");
             trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);

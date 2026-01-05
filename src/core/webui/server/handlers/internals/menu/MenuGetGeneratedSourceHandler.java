@@ -23,7 +23,7 @@ public class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeHandler
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
         String source = backEndHolder.generateSource();
         if (source == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to generate source code.");

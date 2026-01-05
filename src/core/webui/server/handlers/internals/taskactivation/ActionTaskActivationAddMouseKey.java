@@ -18,7 +18,7 @@ public class ActionTaskActivationAddMouseKey extends AbstractTaskActivationConst
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         if (!constructor.isListening()) {
             throw new IllegalStateException("Enable key listening before adding mouse click.");
         }

@@ -23,7 +23,7 @@ public class ActionManuallyBuildActionListActionsForActorHandler extends Abstrac
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
 		if (!params.containsKey("actor")) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided.");

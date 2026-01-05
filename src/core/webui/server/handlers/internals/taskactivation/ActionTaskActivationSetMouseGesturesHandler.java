@@ -20,7 +20,7 @@ public class ActionTaskActivationSetMouseGesturesHandler extends AbstractTaskAct
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         String nodeString = params.get("gestures");
         if (nodeString == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be provided.");

@@ -24,8 +24,7 @@ public class GetRenderedTaskGroupsDropdown extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		Map<String, Object> data = new HashMap<>();
 		TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
 		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, TaskGroupManager.getTaskGroups()));

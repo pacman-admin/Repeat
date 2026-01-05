@@ -23,7 +23,7 @@ public class MenuSetCompilingLanguagesActionHandler extends AbstractTaskSourceCo
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse POST parameters.");

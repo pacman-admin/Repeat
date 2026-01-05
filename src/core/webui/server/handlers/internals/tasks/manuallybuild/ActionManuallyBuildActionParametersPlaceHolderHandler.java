@@ -21,7 +21,7 @@ public class ActionManuallyBuildActionParametersPlaceHolderHandler extends Abstr
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		Map<String, String> parameters = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
 		if (parameters == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse GET parameters.");

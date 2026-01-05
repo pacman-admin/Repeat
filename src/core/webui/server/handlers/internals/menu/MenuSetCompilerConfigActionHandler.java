@@ -20,7 +20,7 @@ public class MenuSetCompilerConfigActionHandler extends AbstractSingleMethodHttp
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		Language language = backEndHolder.getSelectedLanguage();
 		if (language != Language.JAVA) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Current language " + language.name() + " does not support changing configuration.");

@@ -16,8 +16,7 @@ public class ActionStartRecordingHandler extends AbstractSingleMethodHttpHandler
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		backEndHolder.startRecording();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
 	}

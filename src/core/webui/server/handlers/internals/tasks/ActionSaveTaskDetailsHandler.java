@@ -83,7 +83,7 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         return emptySuccessResponse(exchange);
     }
 
-    private boolean validateInput(HttpAsyncExchange exchange, JsonNode params) throws IOException {
+    private boolean validateInput(HttpAsyncExchange exchange, JsonNode params) {
         if (!params.isStringValue("id")) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get task activation constructor ID.");
             return false;

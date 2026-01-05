@@ -16,7 +16,7 @@ public class GetIsActiveWindowInfosLoggingEnabledHandler extends AbstractSingleM
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		boolean response = backEndHolder.isActiveWindowInfosLoggingEnabled();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "" + response);
 	}

@@ -16,7 +16,7 @@ public class GetIsMousePositionLoggingEnabledHandler extends AbstractSingleMetho
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		boolean response = backEndHolder.isMousePositionLoggingEnabled();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "" + response);
 	}

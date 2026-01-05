@@ -28,7 +28,6 @@ import java.util.regex.Pattern;
  *
  * @author HP
  */
-@SuppressWarnings("unused")
 public class StringUtilities {
 
     private static final Pattern CAMEL_CASE_TO_SNAKE = Pattern.compile("([a-z])([A-Z]+)");
@@ -317,9 +316,6 @@ public class StringUtilities {
         Arrays.stream(s.split("\\s+")).forEach(part -> sb.append(Character.toTitleCase(part.charAt(0))).append(part.substring(1)).append(" "));
         return sb.toString().trim();
     }
-	/*public static String escapeHtml(String s) {
-		return StringEscapeUtils.escapeHtml4(s);
-	}*/
 
     /**
      * Returns an HTML-escaped version of the string.

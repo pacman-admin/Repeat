@@ -46,5 +46,5 @@ public abstract class AbstractBooleanConfigHttpHandler extends AbstractSingleMet
         return handleAllowedRequestWithBackendAndValue(exchange, enabled);
     }
 
-    protected abstract Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) throws IOException;
+    protected abstract Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value);
 }

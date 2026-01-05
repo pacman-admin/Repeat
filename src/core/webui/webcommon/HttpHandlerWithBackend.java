@@ -24,7 +24,7 @@ public abstract class HttpHandlerWithBackend implements HttpAsyncRequestHandler<
 
     @Override
     public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-            throws HttpException, IOException {
+            throws IOException {
         if (backEndHolder == null) {
             LOGGER.warning("Missing backend");
             HttpServerUtilities.prepareTextResponse(exchange, 500, "Missing backend");

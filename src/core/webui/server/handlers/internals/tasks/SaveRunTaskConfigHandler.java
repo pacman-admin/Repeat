@@ -37,7 +37,7 @@ public class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
         JsonNode requestMessage = HttpServerUtilities.parsePostParameters(request);
         if (requestMessage == null) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse JSON from request parameter.");

@@ -71,7 +71,7 @@ public abstract class IIPCService implements ILoggable {
 
     protected abstract void start() throws IOException;
 
-    protected abstract void stop() throws IOException;
+    protected abstract void stop();
 
     public abstract boolean isRunning();
 

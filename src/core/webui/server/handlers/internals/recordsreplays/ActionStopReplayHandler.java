@@ -16,8 +16,7 @@ public class ActionStopReplayHandler extends AbstractSingleMethodHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
-			throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		backEndHolder.stopReplay();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
 	}

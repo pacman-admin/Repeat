@@ -17,7 +17,7 @@ abstract class AbstractMessageProcessor implements ILoggable {
 		this.messageSender = messageSender;
 	}
 
-	public abstract boolean process(String type, long id, JsonNode content) throws InterruptedException;
+	public abstract boolean process(String type, long id, JsonNode content);
 	protected abstract boolean verifyMessageContent(JsonNode content);
 
 	boolean verifyReplyContent(JsonNode content) {

@@ -29,7 +29,7 @@ public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHa
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		JsonNode params = HttpServerUtilities.parsePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
