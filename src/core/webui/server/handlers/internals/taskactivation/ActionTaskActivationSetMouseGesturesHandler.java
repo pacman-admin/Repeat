@@ -10,7 +10,6 @@ import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.json.JSONUtility;
 
-import java.io.IOException;
 import java.util.*;
 
 public class ActionTaskActivationSetMouseGesturesHandler extends AbstractTaskActivationConstructorActionHandler {

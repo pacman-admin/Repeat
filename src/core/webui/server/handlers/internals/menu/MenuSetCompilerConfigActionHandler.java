@@ -1,6 +1,5 @@
 package core.webui.server.handlers.internals.menu;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
 

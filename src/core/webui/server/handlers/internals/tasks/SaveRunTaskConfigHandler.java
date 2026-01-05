@@ -28,8 +28,6 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 import utilities.NumberUtility;
 
-import java.io.IOException;
-
 public class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
 
     public SaveRunTaskConfigHandler() {

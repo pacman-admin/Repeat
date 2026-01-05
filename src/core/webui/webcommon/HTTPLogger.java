@@ -17,8 +17,6 @@ package core.webui.webcommon;
 
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-import java.io.IOException;
-
 public class HTTPLogger {
     private final String errorMessage;
 

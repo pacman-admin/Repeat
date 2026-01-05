@@ -6,8 +6,6 @@ import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
-
 public class MenuExitActionHandler extends AbstractSingleMethodHttpHandler {
 
     private static final long EXIT_DELAY_MS = 2000;

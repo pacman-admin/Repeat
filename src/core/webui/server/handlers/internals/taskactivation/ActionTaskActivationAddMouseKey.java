@@ -8,7 +8,6 @@ import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.awt.event.InputEvent;
-import java.io.IOException;
 import java.util.Map;
 
 public class ActionTaskActivationAddMouseKey extends AbstractTaskActivationConstructorActionHandler {

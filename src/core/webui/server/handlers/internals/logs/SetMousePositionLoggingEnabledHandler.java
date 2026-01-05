@@ -6,7 +6,6 @@ import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class SetMousePositionLoggingEnabledHandler extends AbstractSingleMethodHttpHandler {

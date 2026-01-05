@@ -7,7 +7,6 @@ import org.apache.http.nio.protocol.HttpAsyncRequestConsumer;
 import org.apache.http.nio.protocol.HttpAsyncRequestHandler;
 import org.apache.http.protocol.HttpContext;
 
-import java.io.IOException;
 import java.util.logging.Logger;
 
 /**

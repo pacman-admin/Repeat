@@ -1,6 +1,5 @@
 package core.webui.server.handlers.internals;
 
-import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 

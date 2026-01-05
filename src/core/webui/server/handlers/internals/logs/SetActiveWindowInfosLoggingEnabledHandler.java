@@ -1,6 +1,5 @@
 package core.webui.server.handlers.internals.logs;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.apache.http.HttpRequest;

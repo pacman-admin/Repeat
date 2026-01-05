@@ -1,7 +1,6 @@
 package core.config;
 
 import java.awt.event.KeyEvent;
-import java.util.logging.Level;
 
 /*
  * Copyright (c) 2025 Langdon Staab <langdon@langdonstaab.ca>

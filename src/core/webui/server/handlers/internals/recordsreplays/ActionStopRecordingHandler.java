@@ -1,7 +1,5 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
-import java.io.IOException;
-
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import org.apache.http.protocol.HttpContext;

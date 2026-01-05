@@ -6,7 +6,6 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-import java.io.IOException;
 import java.util.Map;
 
 public class ActionTaskActivationSetGlobalKeyAction extends AbstractTaskActivationConstructorActionHandler {
