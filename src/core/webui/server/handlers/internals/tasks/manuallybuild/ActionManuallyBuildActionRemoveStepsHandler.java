@@ -54,7 +54,7 @@ public class ActionManuallyBuildActionRemoveStepsHandler extends AbstractUIHttpH
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices must all be integers.");
 		}
 		// Get indices, largest one first.
-		List<Integer> indices = indicesNodes.stream().map(n -> Integer.parseInt(n.getNumberValue())).sorted((i1, i2) -> Integer.compare(i2, i1)).collect(Collectors.toList());
+		List<Integer> indices = indicesNodes.stream().map(n -> Integer.parseInt(n.getNumberValue())).sorted((i1, i2) -> Integer.compare(i2, i1)).toList();
 
 		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
 		// Since the list of indices is sorted with the largest one first, it's safe to remove them sequentially.

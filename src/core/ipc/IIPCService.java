@@ -41,7 +41,7 @@ public abstract class IIPCService implements ILoggable {
         }
     }
 
-    public final void stopRunning() throws IOException {
+    public final void stopRunning() {
         if (!isRunning()) {
             return;
         }
@@ -92,9 +92,5 @@ public abstract class IIPCService implements ILoggable {
 
     public boolean isLaunchAtStartup() {
         return launchAtStartup;
-    }
-
-    public void setLaunchAtStartup(boolean launchAtStartup) {
-        this.launchAtStartup = launchAtStartup;
     }
 }

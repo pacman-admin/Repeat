@@ -24,10 +24,10 @@ public class ActionManuallyBuildActionListActionsForActorHandler extends Abstrac
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
 		Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
-		if (!params.containsKey("actor")) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided.");
-		}
-		String actor = params.get("actor").toLowerCase();
+        if (params != null || !params.containsKey("actor")) {
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided.");
+        }
+        String actor = params.get("actor").toLowerCase();
 		List<String> actions = ManuallyBuildActionFeModel.of().actionsForActor(actor);
 		Map<String, Object> data = new HashMap<>();
 		data.put("possibleActions", RenderedPossibleManuallyBuildActions.of(actions));

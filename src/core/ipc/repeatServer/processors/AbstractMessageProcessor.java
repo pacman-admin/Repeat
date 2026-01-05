@@ -27,16 +27,12 @@ abstract class AbstractMessageProcessor implements ILoggable {
 				content.getBooleanValue("is_reply_message");
 	}
 
-	private boolean success(String type, long id, String message) {
-		return messageSender.sendMessage(type, id, ApiProtocol.successReply(message));
+	boolean success(String type, long id) {
+		return messageSender.sendMessage(type, id, ApiProtocol.successReply(""));
 	}
 
 	boolean success(String type, long id, JsonNode message) {
 		return messageSender.sendMessage(type, id, ApiProtocol.successReply( message));
-	}
-
-	boolean success(String type, long id) {
-		return success(type, id, "");
 	}
 
 	boolean failure(String type, long id, String message) {

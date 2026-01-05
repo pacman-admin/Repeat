@@ -140,20 +140,6 @@ public class MainBackEndHolder {
         if (!SystemTray.isSupported()) {
             LOGGER.warning("System tray is not supported.");
         }
-//        MainBackEndHolder b = this;
-//        new Timer().scheduleAtFixedRate(new TimerTask() {
-//            @Override
-//            public void run() {
-//                try {
-//                    LOGGER.info("Adding tray icon...");
-//                    trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, b);
-//                    LOGGER.info("Tray Icon added");
-//                } catch (Exception e) {
-//                    LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
-//                }
-//            }
-//        }, 1000L, 1000L);
-        while (BootStrapResources.TRAY_IMAGE == null) ;
         try {
             LOGGER.info("Adding tray icon...");
             trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
@@ -521,7 +507,7 @@ public class MainBackEndHolder {
         if (!conflict) {
             keysManager.registerTask(action);
         } else {
-            List<String> collisionNames = collisions.stream().map(UserDefinedAction::getName).collect(Collectors.toList());
+            List<String> collisionNames = collisions.stream().map(UserDefinedAction::getName).toList();
             LOGGER.warning("Unable to register task " + action.getName() + ". Collisions are " + collisionNames);
         }
     }
@@ -882,7 +868,7 @@ public class MainBackEndHolder {
                 List<String> sources = new ArrayList<>();
                 String currentSource = new File(task.getSourcePath()).getAbsolutePath();
                 sources.add(currentSource);
-                sources.addAll(task.getTaskSourceHistory().getEntries().stream().map(e -> new File(e.getSourcePath()).getAbsolutePath()).collect(Collectors.toList()));
+                sources.addAll(task.getTaskSourceHistory().getEntries().stream().map(e -> new File(e.getSourcePath()).getAbsolutePath()).toList());
                 using.addAll(sources);
             }
         }

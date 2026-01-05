@@ -54,7 +54,7 @@ public class ActionManuallyBuildActionMoveUpHandler extends AbstractUIHttpHandle
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices must all be integers.");
 		}
 		// Get indices, smallest one first.
-		List<Integer> indices = indicesNodes.stream().map(n -> Integer.parseInt(n.getNumberValue())).sorted().collect(Collectors.toList());
+		List<Integer> indices = indicesNodes.stream().map(n -> Integer.parseInt(n.getNumberValue())).sorted().toList();
 
 		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
 		// Since the list of indices is sorted with the smallest one first, it's safe to move them sequentially.

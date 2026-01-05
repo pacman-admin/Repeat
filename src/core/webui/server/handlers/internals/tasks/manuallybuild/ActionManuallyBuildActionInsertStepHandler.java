@@ -60,7 +60,7 @@ public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHa
 			index = Math.max(0, constructor.getSteps().size() - 1);
 		}
 
-		ManuallyBuildStep step = null;
+		ManuallyBuildStep step;
 		try {
 			step = getStepFromRequest(params);
 		} catch (InvalidManuallyBuildComponentException e) {

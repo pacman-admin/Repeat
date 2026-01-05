@@ -28,6 +28,7 @@ import java.util.regex.Pattern;
  *
  * @author HP
  */
+@SuppressWarnings("unused")
 public class StringUtilities {
 
     private static final Pattern CAMEL_CASE_TO_SNAKE = Pattern.compile("([a-z])([A-Z]+)");
