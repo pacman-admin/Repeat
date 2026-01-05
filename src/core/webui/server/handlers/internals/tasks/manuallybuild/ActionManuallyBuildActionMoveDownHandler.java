@@ -3,7 +3,6 @@ package core.webui.server.handlers.internals.tasks.manuallybuild;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
