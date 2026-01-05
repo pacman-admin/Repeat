@@ -43,6 +43,8 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
         } catch (IllegalArgumentException e) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
+        } catch (IllegalStateException e) {
+            return HttpServerUtilities.prepareTextResponse(exchange, 503, getErrorMsg(e));
         } catch (Exception e) {
             return HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
         }

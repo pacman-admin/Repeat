@@ -992,14 +992,14 @@ public class MainBackEndHolder {
         LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + IPCServiceManager.getUIServer().getPort() + "\n*******************************************");
         String windowEnv = System.getenv("XDG_SESSION_TYPE");
         if (windowEnv == null) return;
-        if (windowEnv.equalsIgnoreCase("wayland")) {
+        if (windowEnv.equalsIgnoreCase("Wayland")) {
             LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
-            try {
-                Runtime.getRuntime().exec(new String[]{"xeyes"});
-                LOGGER.info("If the eyes look toward your mouse, Repeat will work;\nif the eyes do not, Repeat will not work in that window.");
-            } catch (IOException e) {
-                LOGGER.warning("Please install xeyes so you will be able to tell when Repeat will work and when it will not.");
-            }
+//            try {
+//                Runtime.getRuntime().exec(new String[]{"xeyes"});
+//                LOGGER.info("If the eyes look toward your mouse, Repeat will work;\nif the eyes do not, Repeat will not work in that window.");
+//            } catch (IOException e) {
+//                LOGGER.warning("Please install xeyes so you will be able to tell when Repeat will work and when it will not.");
+//            }
         }
     }
 

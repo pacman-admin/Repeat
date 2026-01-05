@@ -23,6 +23,7 @@ import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.AboutPageHandler;
 import core.webui.server.handlers.ApiPageHandler;
+import core.webui.server.handlers.EmptyHandler;
 import core.webui.server.handlers.IndexPageHandler;
 import core.webui.server.handlers.internals.*;
 import core.webui.server.handlers.internals.ipcs.IPCPageHandler;
@@ -114,13 +115,13 @@ public class UIServer extends IPCServiceWithModifiablePort {
         output.put("/internals/menu/settings/compiler-config-options", new MenuGetCompilerConfigOptionActionHandler(objectRenderer));
         output.put("/internals/menu/settings/set-compiler-config", new MenuSetCompilerConfigActionHandler());
         output.put("/internals/menu/settings/record-mouse-click-only", new MenuRecordMouseClickOnlyActionHandler());
-        output.put("/internals/menu/settings/halt-task-by-escape", new MenuHaltTaskByEscapeActionHandler());
+        output.put("/internals/menu/settings/halt-task-by-escape", new EmptyHandler());
         output.put("/internals/menu/settings/debug-level-options", new MenuGetDebugLevelOptionsActionHandler(objectRenderer));
         output.put("/internals/menu/settings/set-debug-level", new MenuSetDebugLevelActionHandler());
         output.put("/internals/menu/settings/execute-on-release", new MenuExecuteOnReleaseActionHandler());
         output.put("/internals/menu/settings/use-clipboard-to-type-string", new MenuUseClipboardToTypeStringActionHandler());
-        output.put("/internals/menu/settings/run-task-with-server-config", new MenuUseClipboardToTypeStringActionHandler());
-        output.put("/internals/menu/settings/use-tray-icon", new MenuUseTrayIconActionHandler());
+        output.put("/internals/menu/settings/run-task-with-server-config", new EmptyHandler());
+        output.put("/internals/menu/settings/use-tray-icon", new EmptyHandler());
         output.put("/internals/menu/settings/use-java-awt-for-mouse-position", new MenuUseJavaAwtForMousePosition());
 
         output.put("/internals/action/task-details/save", new ActionSaveTaskDetailsHandler(objectRenderer, taskActivationConstructorManager));

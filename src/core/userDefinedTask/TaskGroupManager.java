@@ -16,9 +16,10 @@ public class TaskGroupManager {
 
     public static void parseJSON(List<JsonNode> taskGroupData) {
         parseJSON(taskGroupData, ParsingMode.DEFAULT);
-//        if(taskGroups.isEmpty()){
+        if(taskGroups.isEmpty()){
             taskGroups.addFirst(currentGroup);
-//        }
+        }
+        currentGroup = taskGroups.getFirst();
     }
 
     public static void parseJSON(List<JsonNode> taskGroupData, ParsingMode mode) {
@@ -28,15 +29,6 @@ public class TaskGroupManager {
                 taskGroups.add(taskGroup);
             }
         }
-    }
-
-
-    public static void addTaskGroup(TaskGroup group) {
-        taskGroups.add(group);
-    }
-
-    public static void clearAll() {
-        taskGroups.clear();
     }
 
     /**

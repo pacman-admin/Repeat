@@ -29,7 +29,7 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
     }
 
     protected final Void emptySuccessResponse(HttpAsyncExchange exchange){
-        return HttpServerUtilities.prepareHttpResponse(exchange, 204, "");
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 
     protected abstract Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException;
