@@ -16,8 +16,6 @@ import java.util.Set;
 public enum MouseGesture implements IJsonable {
     ALPHA("alpha"), CIRCLE_LEFT("circle_left"), GAMMA("gamma"), GREATER_THAN("greater_than"), HAT("hat"), HORIZONTAL("horizontal"), LESS_THAN("less_than"), N("N"), RANDOM("random"), SIX("six"), SQUARE("square"), SQUARE_ROOT("square_root"), TILDA("tilda"), TRIANGLE("triangle"), U("u"), VERTICAL("vertical"), Z("z");
 
-    public static final Set<MouseGesture> IGNORED_CLASSIFICATIONS = new HashSet<>(Arrays.asList(HORIZONTAL, VERTICAL, SIX, U, RANDOM));
-
     private final String text;
 
     /**
@@ -25,13 +23,6 @@ public enum MouseGesture implements IJsonable {
      */
     MouseGesture(final String text) {
         this.text = text;
-    }
-
-    /**
-     * @return list of enabled mouse gestures that can be used to activate tasks.
-     */
-    public static List<MouseGesture> enabledGestures() {
-        return List.of(values());
     }
 
     /**
