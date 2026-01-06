@@ -14,7 +14,6 @@ import core.webui.server.handlers.renderedobjects.RenderedMatchingOptionSelectio
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 
@@ -45,7 +44,7 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         JsonNode params = HttpServerUtilities.parsePostParameters(request);
         if (params == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");

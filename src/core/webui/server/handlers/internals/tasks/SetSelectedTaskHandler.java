@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import argo.jdom.JsonNode;
 import core.languageHandler.Language;
@@ -21,7 +20,7 @@ public class SetSelectedTaskHandler extends AbstractTaskSourceCodeHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Unable to parse GET request parameters.");

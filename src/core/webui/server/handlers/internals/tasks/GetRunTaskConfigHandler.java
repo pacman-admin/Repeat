@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
@@ -20,7 +19,7 @@ public class GetRunTaskConfigHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		Map<String, Object> data = new HashMap<>();
 		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(backEndHolder.getRunActionConfig()));
 

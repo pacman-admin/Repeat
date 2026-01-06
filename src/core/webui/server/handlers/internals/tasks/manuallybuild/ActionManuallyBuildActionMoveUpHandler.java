@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import argo.jdom.JsonNode;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
@@ -29,7 +28,7 @@ public class ActionManuallyBuildActionMoveUpHandler extends AbstractUIHttpHandle
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		JsonNode params = HttpServerUtilities.parsePostParameters(request);
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");

@@ -4,7 +4,6 @@ import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.util.Map;
 
@@ -15,7 +14,7 @@ public class SetMousePositionLoggingEnabledHandler extends AbstractSingleMethodH
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
         if (params == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");

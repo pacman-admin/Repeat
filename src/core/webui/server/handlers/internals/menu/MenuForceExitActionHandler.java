@@ -4,7 +4,6 @@ import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +17,7 @@ public class MenuForceExitActionHandler extends AbstractSingleMethodHttpHandler 
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {

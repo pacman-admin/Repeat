@@ -10,7 +10,6 @@ import java.util.stream.Collectors;
 import core.userDefinedTask.TaskGroupManager;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
@@ -37,7 +36,7 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(backEndHolder.getReplayConfig()));

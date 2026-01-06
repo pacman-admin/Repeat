@@ -25,7 +25,6 @@ import core.webui.server.handlers.internals.tasks.RunTaskRequest.RunConfig;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 import utilities.NumberUtility;
 
 public class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
@@ -35,7 +34,7 @@ public class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         JsonNode requestMessage = HttpServerUtilities.parsePostParameters(request);
         if (requestMessage == null) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse JSON from request parameter.");

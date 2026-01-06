@@ -4,7 +4,6 @@ import core.webui.webcommon.HttpHandlerWithBackend;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 
@@ -19,18 +18,18 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
     }
 
     @Override
-    protected final void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected final void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         if (allowedMethod != null && !request.getRequestLine().getMethod().equalsIgnoreCase(allowedMethod)) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Only " + allowedMethod + " requests are accepted.");
             return;
         }
 
-        handleAllowedRequestWithBackend(request, exchange, context);
+        handleAllowedRequestWithBackend(request, exchange);
     }
 
     protected final Void emptySuccessResponse(HttpAsyncExchange exchange){
         return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 
-    protected abstract Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException;
+    protected abstract Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException;
 }

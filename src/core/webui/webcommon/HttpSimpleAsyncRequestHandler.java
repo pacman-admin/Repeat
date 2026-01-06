@@ -30,11 +30,11 @@ import java.io.IOException;
 abstract class HttpSimpleAsyncRequestHandler implements HttpAsyncRequestHandler<HttpRequest> {
 
     @Override
-    public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
-        handleRequest(request, exchange, context);
+    public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext ignored) throws IOException {
+        handleRequest(request, exchange);
     }
 
-    protected abstract Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context);
+    protected abstract Void handleRequest(HttpRequest request, HttpAsyncExchange exchange);
 
     @Override
     public final HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest arg0, HttpContext arg1) {

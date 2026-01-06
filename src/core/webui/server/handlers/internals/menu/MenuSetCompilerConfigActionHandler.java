@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.languageHandler.Language;
 import core.languageHandler.compiler.JavaNativeCompiler;
@@ -19,7 +18,7 @@ public class MenuSetCompilerConfigActionHandler extends AbstractSingleMethodHttp
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		Language language = backEndHolder.getSelectedLanguage();
 		if (language != Language.JAVA) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Current language " + language.name() + " does not support changing configuration.");

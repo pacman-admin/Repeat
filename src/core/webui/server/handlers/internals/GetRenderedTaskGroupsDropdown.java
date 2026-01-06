@@ -7,7 +7,6 @@ import core.userDefinedTask.TaskGroupManager;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.userDefinedTask.TaskGroup;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
@@ -23,7 +22,7 @@ public class GetRenderedTaskGroupsDropdown extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		Map<String, Object> data = new HashMap<>();
 		TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
 		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, TaskGroupManager.getTaskGroups()));

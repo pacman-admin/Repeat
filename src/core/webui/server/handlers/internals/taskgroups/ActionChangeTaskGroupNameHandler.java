@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.userDefinedTask.TaskGroup;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
@@ -21,7 +20,7 @@ public class ActionChangeTaskGroupNameHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
 			throws IOException {
 		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
 		if (params == null) {

@@ -18,7 +18,6 @@ package core.webui.server.handlers;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     private final String errorMessage;
@@ -35,7 +34,7 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
         return errorMessage + "\n" + e.getMessage();
     }
 
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         try {
             String data = handle(request);
             return HttpServerUtilities.prepareTextResponse(exchange, 200, data);

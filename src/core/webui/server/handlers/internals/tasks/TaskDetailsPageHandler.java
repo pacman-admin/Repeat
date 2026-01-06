@@ -12,7 +12,6 @@ import core.webui.server.handlers.renderedobjects.RenderedDetailedUserDefinedAct
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -42,7 +41,7 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         String uriString = request.getRequestLine().getUri();
         Map<String, String> params = HttpServerUtilities.parseGetParameters(uriString);
         if (params == null) {

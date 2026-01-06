@@ -12,7 +12,6 @@ import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler.
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 public class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeHandler {
 
@@ -21,7 +20,7 @@ public class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeHandler
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         String source = backEndHolder.generateSource();
         if (source == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to generate source code.");

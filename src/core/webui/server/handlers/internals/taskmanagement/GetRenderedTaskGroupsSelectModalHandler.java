@@ -10,7 +10,6 @@ import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.util.HashMap;
 import java.util.List;
@@ -24,7 +23,7 @@ public class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHttpHandl
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         Map<String, Object> data = new HashMap<>();
         TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
         List<TaskGroup> groups = TaskGroupManager.getTaskGroups();

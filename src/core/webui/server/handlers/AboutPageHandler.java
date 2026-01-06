@@ -22,7 +22,6 @@ import core.config.Constants;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,7 +34,7 @@ public class AboutPageHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("version", Constants.PROGRAM_VERSION);
         return renderedPage(exchange, "about", data);

@@ -4,7 +4,6 @@ import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 public class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttpHandler {
 
@@ -13,7 +12,7 @@ public class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttpHandle
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         backEndHolder.runCompiledAction();
         return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }

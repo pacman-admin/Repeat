@@ -10,7 +10,6 @@ import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -27,7 +26,7 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
     }
 
     @Override
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         return LOGGER.exec(() -> {
             Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
             if (params == null) {

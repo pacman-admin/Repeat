@@ -1,21 +1,10 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
+import core.webui.server.handlers.AbstractBooleanGETHandler;
 
-import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import core.webui.webcommon.HttpServerUtilities;
-
-public class GetIsReplayingHandler extends AbstractSingleMethodHttpHandler {
-
-	public GetIsReplayingHandler() {
-		super(AbstractSingleMethodHttpHandler.GET_METHOD);
-	}
-
-	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
-		boolean response = backEndHolder.isReplaying();
-		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "" + response);
-	}
+public class GetIsReplayingHandler extends AbstractBooleanGETHandler {
+    @Override
+    protected boolean handle() {
+        return backEndHolder.isReplaying();
+    }
 }

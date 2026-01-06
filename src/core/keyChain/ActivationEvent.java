@@ -44,7 +44,7 @@ public class ActivationEvent {
     }
 
     public enum EventType {
-        UNKNOWN("unknown"), BUTTON_STROKE("button_stroke"), SHARED_VARIABLE("shared_variable");
+        BUTTON_STROKE("button_stroke"), SHARED_VARIABLE("shared_variable");
 
         private final String value;
 

@@ -4,7 +4,6 @@ import java.util.Map;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionFeModel.Actor;
@@ -20,7 +19,7 @@ public class ActionManuallyBuildActionParametersPlaceHolderHandler extends Abstr
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		Map<String, String> parameters = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
 		if (parameters == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse GET parameters.");

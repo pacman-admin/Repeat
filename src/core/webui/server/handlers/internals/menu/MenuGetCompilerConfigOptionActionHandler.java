@@ -8,7 +8,6 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 import utilities.StringUtilities;
 
 import java.io.IOException;
@@ -22,7 +21,7 @@ public class MenuGetCompilerConfigOptionActionHandler extends AbstractUIHttpHand
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         Language language = backEndHolder.getSelectedLanguage();
         if (language != Language.JAVA) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Current language " + language.name() + " does not support changing configuration.");

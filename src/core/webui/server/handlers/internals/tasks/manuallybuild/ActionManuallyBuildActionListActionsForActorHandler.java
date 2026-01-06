@@ -7,7 +7,6 @@ import java.util.Map;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
@@ -22,7 +21,7 @@ public class ActionManuallyBuildActionListActionsForActorHandler extends Abstrac
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context) {
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
 		Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
         if (params == null || !params.containsKey("actor")) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided.");

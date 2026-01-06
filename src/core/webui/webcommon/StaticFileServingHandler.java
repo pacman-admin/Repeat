@@ -24,7 +24,6 @@ import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.nio.protocol.BasicAsyncResponseProducer;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import org.apache.http.protocol.HttpContext;
 import staticResources.BootStrapResources;
 import staticResources.WebUIResources;
 
@@ -44,7 +43,7 @@ public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
     }
 
     @Override
-    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange, HttpContext context){
+    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange){
         LOGGER.fine("Path is " + request.getRequestLine().getUri());
         if (!request.getRequestLine().getMethod().equalsIgnoreCase("GET")) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");

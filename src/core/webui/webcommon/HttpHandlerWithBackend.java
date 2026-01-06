@@ -22,22 +22,22 @@ public abstract class HttpHandlerWithBackend implements HttpAsyncRequestHandler<
     }
 
     @Override
-    public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
+    public final void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext ignored)
             throws IOException {
         if (backEndHolder == null) {
             LOGGER.warning("Missing backend");
             HttpServerUtilities.prepareTextResponse(exchange, 500, "Missing backend");
             return;
         }
-        handleWithBackend(request, exchange, context);
+        handleWithBackend(request, exchange);
     }
 
     @Override
-    public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest request, HttpContext context) {
+    public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest request, HttpContext ignored) {
         // Buffer request content in memory for simplicity.
         return new BasicAsyncRequestConsumer();
     }
 
-    protected abstract void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange, HttpContext context)
+    protected abstract void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange)
             throws IOException;
 }
