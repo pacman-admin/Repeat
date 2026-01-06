@@ -43,7 +43,6 @@ import staticResources.BootStrapResources;
 import utilities.Desktop;
 import utilities.FileUtility;
 import utilities.Function;
-import utilities.StringUtilities;
 import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
@@ -59,7 +58,6 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
 
 import static core.userDefinedTask.TaskGroupManager.*;
 
@@ -429,31 +427,6 @@ public class MainBackEndHolder {
                 }
             }
         }
-    }
-
-    /**
-     * Add a task group with actions already filled in.
-     * This also registers the task activations for the tasks in group.
-     * Note that this does not replace existing activations with colliding activations.
-     * Task activation registration  continues on failures and only reports one failure at the end.
-     *
-     * @param group group to add.
-     * @return whether operation succeeds (i.e. no activation collision).
-     */
-    public boolean addPopulatedTaskGroup(TaskGroup group) {
-        boolean result = true;
-        taskGroups.add(group);
-        for (UserDefinedAction action : group.getTasks()) {
-            Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(action.getActivation());
-            if (collisions.isEmpty()) {
-                keysManager.registerTask(action);
-            } else {
-                result = false;
-                String collisionNames = StringUtilities.join(collisions.stream().map(UserDefinedAction::getName).collect(Collectors.toList()), ", ");
-                LOGGER.log(Level.WARNING, "Cannot register action " + action.getName() + ". There are collisions with " + collisionNames + " in hotkeys.");
-            }
-        }
-        return result;
     }
 
     public void addTaskGroup(String name) {
