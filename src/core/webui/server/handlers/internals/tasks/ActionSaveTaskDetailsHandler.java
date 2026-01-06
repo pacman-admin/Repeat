@@ -1,9 +1,7 @@
 package core.webui.server.handlers.internals.tasks;
 
 import argo.jdom.JsonNode;
-import core.keyChain.ActionInvoker;
-import core.keyChain.TaskActivationConstructor;
-import core.keyChain.TaskActivationConstructorManager;
+import core.keyChain.*;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.preconditions.*;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
@@ -15,13 +13,14 @@ import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-import java.io.IOException;
+import java.util.Set;
 
-public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
+public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
-    private final TaskActivationConstructorManager taskActivationConstructorManager;
+    protected TaskActivationConstructorManager taskActivationConstructorManager;
 
-    public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
+    public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer,
+                                        TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
         this.taskActivationConstructorManager = taskActivationConstructorManager;
     }
@@ -44,7 +43,7 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         JsonNode params = HttpServerUtilities.parsePostParameters(request);
         if (params == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
@@ -56,30 +55,28 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         String id = params.getStringValue("id");
         TaskActivationConstructor constructor = taskActivationConstructorManager.get(id);
         if (constructor == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 404, "No constructor found for ID {" + id + "}.");
+            return HttpServerUtilities.prepareHttpResponse(exchange, 404, "No constructor found for ID '" + id + "'.");
         }
 
         String taskString = params.getStringValue("task");
         if (isHotkey(taskString)) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Changing a global hotkey is not possible. Please edit the config manually");
-            //Does not work at all for some reason.
-            //return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
+            return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
         }
 
         UserDefinedAction task = CommonTask.getTaskFromId(backEndHolder, taskString);
         if (task == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 404, "Cannot get task from request.");
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot get task from request.");
         }
 
         ActionInvoker activation = constructor.getActivation();
         if (!backEndHolder.changeHotkeyTask(task, activation)) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot change task activation.");
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot change task activation.");
         }
         TaskExecutionPreconditions preconditions = getTaskExecutionPreconditions(params);
         task.setExecutionPreconditions(preconditions);
 
         taskActivationConstructorManager.remove(id);
-        return emptySuccessResponse(exchange);
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 
     private boolean validateInput(HttpAsyncExchange exchange, JsonNode params) {
@@ -118,8 +115,40 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         return true;
     }
 
+    private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) {
+        Set<KeyChain> hotKeys = activation.getHotkeys();
+        if (hotKeys.isEmpty()) {
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set!");
+        }
+        KeyChain hotKey = hotKeys.iterator().next();
+
+        switch (taskString) {
+            case TaskDetailsPageHandler.RECORD_TASK_NAME -> {
+                backEndHolder.getConfig().setRECORD(hotKey);
+                backEndHolder.reconfigureSwitchRecord();
+                return emptySuccessResponse(exchange);
+            }
+            case TaskDetailsPageHandler.REPLAY_TASK_NAME -> {
+                backEndHolder.getConfig().setREPLAY(hotKey);
+                backEndHolder.reconfigureSwitchReplay();
+                return emptySuccessResponse(exchange);
+            }
+            case TaskDetailsPageHandler.RUN_COMPILED_TASK_NAME -> {
+                backEndHolder.getConfig().setCOMPILED_REPLAY(hotKey);
+                backEndHolder.reconfigureSwitchCompiledReplay();
+                return emptySuccessResponse(exchange);
+            }
+            case TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME -> {
+                backEndHolder.getConfig().setMOUSE_GESTURE(hotKey);
+                return emptySuccessResponse(exchange);
+            }
+        }
+        return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString + ".");
+    }
+
     private boolean isHotkey(String taskString) {
-        return taskString != null && (TaskDetailsPageHandler.HOTKEY_NAMES.containsKey(taskString));
+        return taskString != null &&
+                (TaskDetailsPageHandler.HOTKEY_NAMES.containsKey(taskString));
     }
 
     private TaskExecutionPreconditions getTaskExecutionPreconditions(JsonNode params) {

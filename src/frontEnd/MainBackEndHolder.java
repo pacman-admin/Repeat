@@ -65,11 +65,10 @@ import static core.userDefinedTask.TaskGroupManager.*;
 public class MainBackEndHolder {
     private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
     final GlobalEventsManager keysManager;
-
+    final UserDefinedAction switchRecord;
+    final UserDefinedAction switchReplay;
+    final UserDefinedAction switchReplayCompiled;
     private final Config config;
-    private final UserDefinedAction switchRecord;
-    private final UserDefinedAction switchReplay;
-    private final UserDefinedAction switchReplayCompiled;
     private final ActiveWindowInfosLogger activeWindowInfosLogger;
     private final MousePositionLogger mousePositionLogger;
     // To allow executing other tasks programmatically.
