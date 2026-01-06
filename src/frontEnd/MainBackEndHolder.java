@@ -85,7 +85,6 @@ public class MainBackEndHolder {
     private ReplayConfig replayConfig;
     private RunActionConfig runActionConfig;
     private UserDefinedAction customFunction;
-    private TaskGroup currentGroup;
     private boolean isRecording, isReplaying, isRunningCompiledTask;
     private File currentTempFile;
 
@@ -495,7 +494,7 @@ public class MainBackEndHolder {
     }
 
     public void addCurrentTask() {
-        addCurrentTask(currentGroup);
+        addCurrentTask(TaskGroupManager.getCurrentTaskGroup());
     }
 
     public void addCurrentTask(TaskGroup group) {
@@ -546,7 +545,7 @@ public class MainBackEndHolder {
 
     public void removeCurrentTask(String id) {
         boolean found = false;
-        for (ListIterator<UserDefinedAction> iterator = currentGroup.getTasks().listIterator(); iterator.hasNext(); ) {
+        for (ListIterator<UserDefinedAction> iterator = TaskGroupManager.getCurrentTaskGroup().getTasks().listIterator(); iterator.hasNext(); ) {
             UserDefinedAction action = iterator.next();
             if (!action.getActionId().equals(id)) {
                 continue;
@@ -591,17 +590,17 @@ public class MainBackEndHolder {
     }
 
     public void moveTaskUp(String taskId) {
-        int selected = getTaskIndex(taskId, currentGroup);
+        int selected = getTaskIndex(taskId, TaskGroupManager.getCurrentTaskGroup());
         if (selected < 1) {
             return;
         }
-        Collections.swap(currentGroup.getTasks(), selected, selected - 1);
+        Collections.swap(TaskGroupManager.getCurrentTaskGroup().getTasks(), selected, selected - 1);
     }
 
     public void moveTaskDown(String taskId) {
-        int selected = getTaskIndex(taskId, currentGroup);
-        if (selected >= 0 && selected < currentGroup.getTasks().size() - 1) {
-            Collections.swap(currentGroup.getTasks(), selected, selected + 1);
+        int selected = getTaskIndex(taskId, TaskGroupManager.getCurrentTaskGroup());
+        if (selected >= 0 && selected < TaskGroupManager.getCurrentTaskGroup().getTasks().size() - 1) {
+            Collections.swap(TaskGroupManager.getCurrentTaskGroup().getTasks(), selected, selected + 1);
         }
     }
 
@@ -628,7 +627,7 @@ public class MainBackEndHolder {
             taskGroups.add(new TaskGroup("default"));
         }
 
-        if (currentGroup == removed) {
+        if (TaskGroupManager.getCurrentTaskGroup() == removed) {
             setCurrentTaskGroup(taskGroups.getFirst());
         }
 
@@ -646,18 +645,18 @@ public class MainBackEndHolder {
         }
 
         TaskGroup destination = taskGroups.get(newGroupIndex);
-        if (destination == currentGroup) {
+        if (destination == TaskGroupManager.getCurrentTaskGroup()) {
             LOGGER.warning("Cannot move to the same group.");
             return;
         }
 
-        if (currentGroup.isEnabled() ^ destination.isEnabled()) {
+        if (TaskGroupManager.getCurrentTaskGroup().isEnabled() ^ destination.isEnabled()) {
             LOGGER.warning("Two groups must be both enabled or disabled to move...");
             return;
         }
 
         UserDefinedAction toMove = null;
-        for (Iterator<UserDefinedAction> iterator = currentGroup.getTasks().iterator(); iterator.hasNext(); ) {
+        for (Iterator<UserDefinedAction> iterator = TaskGroupManager.getCurrentTaskGroup().getTasks().iterator(); iterator.hasNext(); ) {
             toMove = iterator.next();
             if (toMove.getActionId().equals(taskId)) {
                 iterator.remove();
@@ -678,7 +677,7 @@ public class MainBackEndHolder {
             return;
         }
 
-        for (ListIterator<UserDefinedAction> iterator = currentGroup.getTasks().listIterator(); iterator.hasNext(); ) {
+        for (ListIterator<UserDefinedAction> iterator = TaskGroupManager.getCurrentTaskGroup().getTasks().listIterator(); iterator.hasNext(); ) {
             UserDefinedAction action = iterator.next();
             if (!action.getActionId().equals(taskId)) {
                 continue;
@@ -798,7 +797,7 @@ public class MainBackEndHolder {
             config.importTaskConfig();
             if (taskGroups.size() > existingGroupCount) {
                 LOGGER.info("Successfully imported tasks. Switching to a new task group...");
-                currentGroup = taskGroups.get(existingGroupCount); // Take the new group with lowest index.
+                TaskGroupManager.setCurrentTaskGroup(taskGroups.get(existingGroupCount)); // Take the new group with lowest index.
                 setTaskInvoker();
             } else {
                 LOGGER.warning("No new task group found.");
