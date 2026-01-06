@@ -4,16 +4,16 @@ import java.awt.Point;
 import java.util.ArrayList;
 
 class DataNormalizer {
-
-	public static final int POINT_COUNT = 35;
-
 	/**
-	 * Trim down the list of points to have exactly {@link POINT_COUNT}.
+	 * Trim down the list of points to have exactly {@link DataNormalizer}.
 	 * Then scale the points so that they fit into a unit square.
 	 *
 	 * @param input input list of points to normalize.
 	 * @return list of normalized points flattened into (x1,y1,x2,y2,...).
 	 */
+	public static final int POINT_COUNT = 35;
+
+
 	public ArrayList<Float> normalize(ArrayList<Point> input) {
 		input = new DataDefinitionTrimmer().trim(input);
 
