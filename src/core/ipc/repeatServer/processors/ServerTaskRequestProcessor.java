@@ -58,7 +58,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     private boolean createServerTask(String type, long id, JsonNode parameters) {
-        String source = "";
+        String source;
         Language language = Language.JAVA;
         String previousId = "";
 

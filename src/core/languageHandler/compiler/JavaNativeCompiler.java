@@ -178,7 +178,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
     private DynamicCompilationResult loadClass(String loadClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
         classLoader.addURL(new File("./").toURI().toURL());
         Class<?> loadedClass = classLoader.loadClass(StringUtilities.join(packageTree, ".") + "." + loadClassName);
-        Object object = null;
+        Object object;
         try {
             object = loadedClass.getDeclaredConstructor().newInstance();
         } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
@@ -208,7 +208,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
             }
         }
 
-        return output.toArray(new URL[output.size()]);
+        return output.toArray(new URL[0]);
     }
 
     @Override

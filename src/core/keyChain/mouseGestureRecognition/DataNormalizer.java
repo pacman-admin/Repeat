@@ -38,13 +38,13 @@ class DataNormalizer {
 
 		// Fit this into a square box. Center the appropriate dimension.
 		if (height > width) {
-			midX = (maxX + minX) / 2;
-			subX = midX - height / 2;
+			midX = (maxX + minX) / 2f;
+			subX = midX - height / 2f;
 			subY = minY;
 		} else if (width > height) {
 			subX = minX;
-			midY = (maxY + minY) / 2;
-			subY = midY - width / 2;
+			midY = (maxY + minY) / 2f;
+			subY = midY - width / 2f;
 		} else {
 			subX = minX;
 			subY = minY;

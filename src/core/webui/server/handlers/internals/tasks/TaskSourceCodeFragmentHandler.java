@@ -25,8 +25,8 @@ public class TaskSourceCodeFragmentHandler {
 
 	public JsonNode render(Language language) throws RenderException {
 		if (language == Language.MANUAL_BUILD) {
-			Map<String, Object> data = new HashMap<>();
-			data.put("displayManualBuild", true);
+//			Map<String, Object> data = new HashMap<>();
+//			data.put("displayManualBuild", true);
 			String id = manuallyBuildActionConstructorManager.addNew();
 			return renderManuallyBuildActionConstructor(id);
 		}

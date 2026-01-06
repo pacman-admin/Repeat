@@ -39,7 +39,7 @@ class TaskSourceScheduler extends AbstractScheduler<String> {
 				System.exit(1);
 			}
 
-			output.append(getSleepSource.apply((long) ((currentTime - time) / speedup)) + "\n");
+			output.append(getSleepSource.apply((long) ((currentTime - time) / speedup))).append("\n");
 
 			time = currentTime;
 			output.append(t.getData());

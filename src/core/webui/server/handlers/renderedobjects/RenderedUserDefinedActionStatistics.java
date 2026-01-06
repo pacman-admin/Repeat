@@ -39,12 +39,12 @@ public class RenderedUserDefinedActionStatistics {
 		result.totalExecutionTime = DateUtility.durationToString(statistics.getTotalExecutionTime());
 		result.averageExecutionTime  = DateUtility.durationToString(Math.round(statistics.getAverageExecutionTime()));
 
-		List<String> activations = new ArrayList<>(statistics.getTaskActivationBreakdown().size());
-		List<Long> activationCount = new ArrayList<>(statistics.getTaskActivationBreakdown().size());
-		for (Entry<ActionInvoker, Long> entry : statistics.getTaskActivationBreakdown().entrySet()) {
-			activations.add(entry.getKey().getRepresentativeString());
-			activationCount.add(entry.getValue());
-		}
+//		List<String> activations = new ArrayList<>(statistics.getTaskActivationBreakdown().size());
+//		List<Long> activationCount = new ArrayList<>(statistics.getTaskActivationBreakdown().size());
+//		for (Entry<ActionInvoker, Long> entry : statistics.getTaskActivationBreakdown().entrySet()) {
+//			activations.add(entry.getKey().getRepresentativeString());
+//			activationCount.add(entry.getValue());
+//		}
 
 		JsonNode taskActivationBreakdownNode = prepareTaskActivationBreakdown(statistics);
 		result.encodedTaskActivationBreakdown = Base64.getEncoder().encodeToString(JSONUtility.jsonToString(taskActivationBreakdownNode).getBytes());

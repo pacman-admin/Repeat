@@ -35,7 +35,7 @@ public class JavaSourceGenerator extends InjectionSourceGenerator {
 		return new JavaKeyboardSourceCodeGenerator();
 	}
 
-	private class JavaMouseSourceCodeGenerator extends AbstractMouseSourceCodeGenerator {
+	private static class JavaMouseSourceCodeGenerator extends AbstractMouseSourceCodeGenerator {
 
 		@Override
 		protected String move(int[] params) {
@@ -63,7 +63,7 @@ public class JavaSourceGenerator extends InjectionSourceGenerator {
 		}
 	}
 
-	private class JavaKeyboardSourceCodeGenerator extends AbstractKeyboardSourceCodeGenerator {
+	private static class JavaKeyboardSourceCodeGenerator extends AbstractKeyboardSourceCodeGenerator {
 
 		@Override
 		protected String type(int[] params) {

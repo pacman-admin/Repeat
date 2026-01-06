@@ -18,8 +18,6 @@ public abstract class AbstractSourceGenerator {
     static {
         REFERENCE_SOURCES = new HashMap<>();
         REFERENCE_SOURCES.put(Language.JAVA, new JavaSourceGenerator());
-        //REFERENCE_SOURCES.put(Language.PYTHON, new PythonSourceGenerator());
-        //REFERENCE_SOURCES.put(Language.CSHARP, new CSharpSourceGenerator());
         REFERENCE_SOURCES.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
     }
 
@@ -52,7 +50,7 @@ public abstract class AbstractSourceGenerator {
     }
 
     private boolean internalSubmitTask(long time, Device device, String action, int[] params) {
-        String mid = "";
+        String mid;
         if (device.equals(Device.MOUSE)) {
             mid = mouseSourceCodeGenerator.getSourceCode(action, params);
         } else if (device.equals(Device.KEYBOARD)) {

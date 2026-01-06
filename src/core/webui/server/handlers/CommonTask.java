@@ -20,17 +20,6 @@ public class CommonTask {
     }
 
     public static IIPCService getIPCService(Map<String, String> params) {
-		/*String indexString = params.get("ipc");
-		if (indexString == null || !NumberUtility.isNonNegativeInteger(indexString)) {
-			LOGGER.warning("IPC index must be non-negative integer. Got " + indexString + ".");
-			return null;
-		}
-
-		int index = Integer.parseInt(indexString);
-		if (index != ) {
-			LOGGER.warning("IPC index out of bound: " + index);
-			return null;
-		}*/
         return IPCServiceManager.getUIServer();
     }
 
@@ -85,7 +74,7 @@ public class CommonTask {
 
         String id = getTaskGroupIdFromRequest(backEndHolder, params);
         if (id == null) {
-            LOGGER.warning("No such group with ID " + id + ".");
+            LOGGER.warning("Could not gt TaskGroup from request");
             return null;
         }
         return TaskGroupManager.getTaskGroup(id);
