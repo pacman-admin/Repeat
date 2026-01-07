@@ -32,9 +32,9 @@ If you choose to fork this code and improve it, I ask that you make your changes
  so others can benefit as you have benefited from my small changes and additions.
 
 
-===========================================================================================================================
+=============================================
         HOW TO RUN Repeat
-===========================================================================================================================
+=============================================
 
 Run the Jar file with a Java runtime.
 1. Open a terminal (Called "Terminal" on macOS and Ubuntu Linux, "cmd" on Windows)
@@ -64,10 +64,9 @@ You may add RAM flags to increase performance, though is not at all necessary, a
 java -Xms32M -Xmx32M -jar Repeat.jar
 Hover your mouse over a button to see what it does.
 
-
-===========================================================================================================================
+=============================================
         USING Repeat
-===========================================================================================================================
+=============================================
 
 Check out HP Truong's README for info on how to use Repeat.
 https://github.com/repeats/Repeat/blob/master/README.md
@@ -75,10 +74,9 @@ https://github.com/repeats/Repeat/blob/master/README.md
 You can record your actions and replay those actions to save your wrists from repetitive strain injuries.
 
 
-===========================================================================================================================
+=============================================
         HOTKEYS
-===========================================================================================================================
-
+=============================================
 There are hotkeys to control Repeat; you can run your custom action by simply pressing F9, for example.
 The default hotkeys are:
 F7 -> Start/Stop recording your keypresses, mouse movements, etc.
