@@ -18,18 +18,22 @@ public class CustomAction extends UserDefinedAction {
 
         //Clear the system clipboard
         Clipboard.clear();
+
         //Type out whatever is in the system clipboard
         k.type("The clipboard currently holds: "+Clipboard.get()+"\n");
 
         //Initialize the Shared Variable myVariable to 0 if is does not already exist.
         SharedVariables.create("myVariable", "0");
-        //Repeat can read and change what is copied to your clipboard (only if you tell it to!)
-        //Set the clipboard
+
         Clipboard.set("Hello World!\n");
+
         k.type("Repeat can type Strings\n");
+
         k.type(Clipboard.get());
+
         Clipboard.set(SharedVariables.get("myVariable") +"");
-        //Increase the value of my Variable by 1.
+
+        //Increase the value of myVariable by 1.
         SharedVariables.set("myVariable", Integer.parseInt(SharedVariables.get("myVariable")) + 1 +"");
     }
 }
