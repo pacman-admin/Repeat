@@ -27,7 +27,7 @@ public class ActionDeleteTaskGroupHandler extends AbstractUIHttpHandler {
 		}
 
 		String id = CommonTask.getTaskGroupIdFromRequest(backEndHolder, params);
-		if (id == null || id.isEmpty()) {
+		if (id == null || id.isBlank()) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task group from request data.");
 		}
 

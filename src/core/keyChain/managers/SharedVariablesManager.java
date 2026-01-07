@@ -61,7 +61,7 @@ public class SharedVariablesManager extends ActivationEventManager {
 
 	@Override
 	public Set<UserDefinedAction> registerAction(UserDefinedAction action) {
-		if (action.getActivation().getVariables().isEmpty()) {
+		if (action.getActivation().getVariables().isBlank()) {
 			return new HashSet<>();
 		}
 

@@ -11,7 +11,7 @@ public class KeyCodeToChar {
     }
 
     public static boolean hasCharForCode(int code, KeyboardState state) {
-        return !getCharForCode(code, state).isEmpty();
+        return !getCharForCode(code, state).isBlank();
     }
 
     public static String getCharForCode(int code, KeyboardState state) {
@@ -19,9 +19,9 @@ public class KeyCodeToChar {
         String alphaChar = getAlphaChar(code, state);
         String numpadChar = getCharFromNumpadCode(code, state);
 
-        boolean isNonAlpha = !nonAlphaChar.isEmpty();
-        boolean isAlpha = !alphaChar.isEmpty();
-        boolean isNumpad = !numpadChar.isEmpty();
+        boolean isNonAlpha = !nonAlphaChar.isBlank();
+        boolean isAlpha = !alphaChar.isBlank();
+        boolean isNumpad = !numpadChar.isBlank();
 
         int trueCount = (isNonAlpha ? 1 : 0) + (isAlpha ? 1 : 0) + (isNumpad ? 1 : 0);
         if (trueCount > 1) {

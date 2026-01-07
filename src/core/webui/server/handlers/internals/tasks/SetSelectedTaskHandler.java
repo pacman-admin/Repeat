@@ -26,7 +26,7 @@ public class SetSelectedTaskHandler extends AbstractTaskSourceCodeHandler {
 			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Unable to parse GET request parameters.");
 		}
 		String taskId = params.get("task");
-		if (taskId == null || taskId.isEmpty()) {
+		if (taskId.isBlank()) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Task ID must be provided.");
 		}
 

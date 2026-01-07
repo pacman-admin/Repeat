@@ -66,7 +66,7 @@ public class IPCProtocol {
 			buffer.write(firstCharacter);
 		}
 
-		while (reader.ready() || output.isEmpty()) {
+		while (reader.ready() || output.isBlank()) {
 			int readValue = reader.read();
 			if (readValue != -1) {
 				if (readValue == MESSAGE_DELIMITER) {

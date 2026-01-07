@@ -75,7 +75,7 @@ public class KeyChainManager extends KeyStrokeManager {
         if (action != null) {
             pendingAction = action;
         }
-        if (pressedKeyboardKeys.isEmpty() || pressedKeys.isEmpty()) {
+        if (pressedKeyboardKeys.isBlank() || pressedKeys.isBlank()) {
             UserDefinedAction toExecute = pendingAction;
             pendingAction = null;
             return Stream.of(toExecute).filter(Objects::nonNull).collect(Collectors.toSet());

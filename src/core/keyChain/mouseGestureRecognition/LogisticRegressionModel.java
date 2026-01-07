@@ -20,9 +20,6 @@ class LogisticRegressionModel {
      */
     void load() {
         labels = MouseGestureModelResources.getLabels();
-        if (labels == null) {
-            return;
-        }
 
         double[] intercepts = MouseGestureModelResources.getIntercepts();
         double[][] coefficients = MouseGestureModelResources.getCoefficients(labels.length);
@@ -30,6 +27,7 @@ class LogisticRegressionModel {
         assert coefficients != null;
         w = new Matrix(coefficients);
 
+        assert intercepts != null;
         double[][] twoDimensionalIntercept = new double[1][intercepts.length];
         twoDimensionalIntercept[0] = intercepts;
         c = new Matrix(twoDimensionalIntercept);

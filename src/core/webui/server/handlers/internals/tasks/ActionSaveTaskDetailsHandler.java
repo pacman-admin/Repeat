@@ -26,7 +26,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
     }
 
     private static StringMatchingCondition constructStringMatchingCondition(String type, String value) {
-        if (value.isEmpty()) {
+        if (value.isBlank()) {
             return AlwaysMatchingStringCondition.INSTANCE;
         }
 
@@ -117,7 +117,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
     private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) {
         Set<KeyChain> hotKeys = activation.getHotkeys();
-        if (hotKeys.isEmpty()) {
+        if (hotKeys.isBlank()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set!");
         }
         KeyChain hotKey = hotKeys.iterator().next();

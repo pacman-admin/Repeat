@@ -40,7 +40,7 @@ public class ActivationPhrase extends KeySeries {
 
     @Override
     public boolean isEmpty() {
-        return value.isEmpty();
+        return value.isBlank();
     }
 
     @Override

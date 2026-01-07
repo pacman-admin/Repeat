@@ -35,7 +35,7 @@ final class OSXNativeProcessUtil {
 
     public static NativeProcessUtil.NativeWindowInfo getActiveWindowInfo() {
         String execResult = executeActiveWindowTitleCmd();
-        if (execResult == null || execResult.isEmpty()) {
+        if (execResult == null || execResult.isBlank()) {
             return NativeProcessUtil.NativeWindowInfo.of("", "");
         }
 

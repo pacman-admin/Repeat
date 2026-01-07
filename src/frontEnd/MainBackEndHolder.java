@@ -160,7 +160,7 @@ public class MainBackEndHolder {
     public String reloadSource() {
         LOGGER.info("Reloading edits...");
         if (currentTempFile == null) throw new RuntimeException("Source code was never opened for editing.");
-        return FileUtility.readFromFile(currentTempFile).toString();
+        return Objects.requireNonNull(FileUtility.readFromFile(currentTempFile)).toString();
     }
 
     void initializeLogging() {
@@ -420,7 +420,7 @@ public class MainBackEndHolder {
 
             for (UserDefinedAction task : group.getTasks()) {
                 Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(task);
-                if (task.isEnabled() && (collisions.isEmpty())) {
+                if (task.isEnabled() && (collisions.isBlank())) {
                     keysManager.registerTask(task);
                 }
             }
@@ -473,7 +473,7 @@ public class MainBackEndHolder {
 
     private void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
         Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-        boolean conflict = !collisions.isEmpty() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
+        boolean conflict = !collisions.isBlank() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
 
         if (!conflict) {
             keysManager.registerTask(action);
@@ -506,7 +506,7 @@ public class MainBackEndHolder {
     }
 
     private void addTask(UserDefinedAction task, TaskGroup group) {
-        if (task.getName() == null || task.getName().isEmpty()) {
+        if (task.getName() == null || task.getName().isBlank()) {
             task.setName("New task");
         }
         group.getTasks().add(task);
@@ -622,7 +622,7 @@ public class MainBackEndHolder {
         }
 
         TaskGroup removed = taskGroups.remove(index);
-        if (taskGroups.isEmpty()) {
+        if (taskGroups.isBlank()) {
             taskGroups.add(new TaskGroup("default"));
         }
 
@@ -702,7 +702,7 @@ public class MainBackEndHolder {
 
         Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
         collisions.remove(action);
-        if (!collisions.isEmpty()) {
+        if (!collisions.isBlank()) {
             GlobalEventsManager.showCollisionWarning(collisions);
             return false;
         }
@@ -719,7 +719,7 @@ public class MainBackEndHolder {
             }
         } else { // Then enable it
             Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-            if (!collisions.isEmpty()) {
+            if (!collisions.isBlank()) {
                 GlobalEventsManager.showCollisionWarning(collisions);
                 return;
             }
@@ -845,7 +845,7 @@ public class MainBackEndHolder {
         }
 
         allNames.removeAll(using);
-        if (allNames.isEmpty()) {
+        if (allNames.isBlank()) {
             LOGGER.info("Nothing to clean...");
             return;
         }
@@ -904,7 +904,7 @@ public class MainBackEndHolder {
         DynamicCompilationResult compilationResult = compiler.compile(source);
         DynamicCompilerOutput compilerStatus = compilationResult.output();
         UserDefinedAction createdInstance = compilationResult.action();
-        if (taskName != null && !taskName.isEmpty()) {
+        if (taskName != null && !taskName.isBlank()) {
             createdInstance.setName(taskName);
         }
 

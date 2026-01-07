@@ -29,7 +29,7 @@ public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodH
         }
 
         String id = params.get("id");
-        if (id == null || id.isEmpty()) {
+        if (id == null || id.isBlank()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
         }
 

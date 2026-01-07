@@ -72,7 +72,7 @@ public class StringUtilities {
         while (iter.hasNext()) {
             String next = iter.next();
 
-            boolean valid = !next.replaceAll(" ", "").isEmpty();
+            boolean valid = !next.replaceAll(" ", "").isBlank();
 
             if (valid) {
                 builder.append(next);
@@ -235,13 +235,13 @@ public class StringUtilities {
             return l.length();
         }
 
-        if (l.isEmpty() && r.isEmpty()) {
+        if (l.isBlank() && r.isBlank()) {
             return 0;
         }
-        if (l.isEmpty()) {
+        if (l.isBlank()) {
             return r.length();
         }
-        if (r.isEmpty()) {
+        if (r.isBlank()) {
             return l.length();
         }
 
@@ -310,7 +310,7 @@ public class StringUtilities {
         if (s == null) {
             return null;
         }
-        if (s.isEmpty()) {
+        if (s.isBlank()) {
             return s;
         }
         StringBuilder sb = new StringBuilder();

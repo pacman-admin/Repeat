@@ -87,6 +87,7 @@ public class JSONUtility {
      */
     public static JsonRootNode readJSON(File file) {
         StringBuffer strings = FileUtility.readFromFile(file);
+        assert strings != null;
         return jsonFromString(strings.toString());
     }
 

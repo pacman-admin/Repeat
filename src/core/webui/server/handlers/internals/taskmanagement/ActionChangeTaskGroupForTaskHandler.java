@@ -24,11 +24,11 @@ public class ActionChangeTaskGroupForTaskHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data.");
         }
         String groupId = CommonTask.getTaskGroupIdFromRequest(backEndHolder, params);
-        if (groupId == null || groupId.isEmpty()) {
+        if (groupId == null || groupId.isBlank()) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get group ID.");
         }
         String taskId = CommonTask.getTaskIdFromRequest(params);
-        if (taskId == null || taskId.isEmpty()) {
+        if (taskId.isBlank()) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get task ID.");
         }
 

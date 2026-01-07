@@ -39,7 +39,7 @@ public class ActionManuallyBuildActionMoveDownHandler extends AbstractUIHttpHand
 		}
 
 		String id = params.getStringValue("id");
-		if (id == null || id.isEmpty()) {
+		if (id == null || id.isBlank()) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
 		}
 

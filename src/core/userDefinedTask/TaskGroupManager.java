@@ -16,7 +16,7 @@ public class TaskGroupManager {
 
     public static void parseJSON(List<JsonNode> taskGroupData) {
         parseJSON(taskGroupData, ParsingMode.DEFAULT);
-        if(taskGroups.isEmpty()){
+        if(taskGroups.isBlank()){
             taskGroups.addFirst(currentGroup);
         }
         currentGroup = taskGroups.getFirst();

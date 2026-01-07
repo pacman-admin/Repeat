@@ -84,7 +84,7 @@ public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
     private void typeSingleString(String string) {
         if (config.isUseClipboardToTypeString()) {
             String existing = Tools.getClipboard();
-            if (!existing.isEmpty()) {
+            if (!existing.isBlank()) {
                 pasteString(string);
             }
             return;

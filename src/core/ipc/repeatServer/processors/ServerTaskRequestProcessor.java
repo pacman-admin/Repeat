@@ -105,12 +105,12 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
             return failure(type, id, "Unknown structure of parameters " + JSONUtility.jsonToString(parameters));
         }
 
-        if (source.isEmpty()) {
+        if (source.isBlank()) {
             return failure(type, id, "Source is empty or cannot extract source.");
         }
 
         UserDefinedAction existingAction = null;
-        if (!previousId.isEmpty()) {
+        if (!previousId.isBlank()) {
             existingAction = backEnd.getTask(previousId);
         }
         if (existingAction != null) {
@@ -144,7 +144,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
     private boolean runServerTask(String type, long id, JsonNode parameters) {
         List<JsonNode> parameterNodes = parameters.getArrayNode();
-        if (parameterNodes.isEmpty() || parameterNodes.size() > 2) {
+        if (parameterNodes.isBlank() || parameterNodes.size() > 2) {
             return failure(type, id, "Cannot run task with " + parameterNodes.size() + " parameters.");
         }
 

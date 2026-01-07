@@ -27,7 +27,7 @@ public class ActionDeleteTaskHandler extends AbstractUIHttpHandler {
 		}
 
 		String taskId = CommonTask.getTaskIdFromRequest(params);
-		if (taskId == null || taskId.isEmpty()) {
+		if (taskId.isBlank()) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task from request data.");
 		}
 

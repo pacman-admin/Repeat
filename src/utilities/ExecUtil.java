@@ -19,7 +19,7 @@ public class ExecUtil {
      */
     private static String[] execute(String command, String cwd) throws ExecutionException {
         final File dir;
-        if (cwd != null && !cwd.isEmpty()) {
+        if (cwd != null && !cwd.isBlank()) {
             dir = new File(cwd);
         } else {
             dir = null;
@@ -43,7 +43,7 @@ public class ExecUtil {
      */
     public static String[] execute(String[] command, String cwd) throws ExecutionException {
         final File dir;
-        if (cwd != null && !cwd.isEmpty()) {
+        if (cwd != null && !cwd.isBlank()) {
             dir = new File(cwd);
         } else {
             dir = null;
@@ -108,7 +108,7 @@ public class ExecUtil {
         String line;
         while ((line = reader.readLine()) != null) {
             String trimmed = line.trim();
-            if (trimmed.isEmpty()) {
+            if (trimmed.isBlank()) {
                 continue;
             }
             output.append(trimmed);

@@ -7,6 +7,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -137,7 +138,7 @@ public class FileUtility {
         }
 
         boolean result = true;
-        for (File f : sourceDirectory.listFiles()) {
+        for (File f : Objects.requireNonNull(sourceDirectory.listFiles())) {
             String name = f.getName();
             File dst = new File(FileUtility.joinPath(destDirectory.getAbsolutePath(), name));
             if (!f.isDirectory()) {
@@ -193,7 +194,7 @@ public class FileUtility {
     public static boolean deleteFile(File toDelete) {
         boolean result = true;
         if (toDelete.isDirectory()) {
-            for (File c : toDelete.listFiles()) {
+            for (File c : Objects.requireNonNull(toDelete.listFiles())) {
                 result &= deleteFile(c);
             }
         }

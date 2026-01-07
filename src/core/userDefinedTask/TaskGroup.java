@@ -127,7 +127,7 @@ public class TaskGroup implements IJsonable {
             for (UserDefinedAction task : tasks) {
                 if (task.isEnabled()) {
                     Set<UserDefinedAction> collisions = keyManager.isTaskRegistered(task);
-                    if (collisions.isEmpty()) {
+                    if (collisions.isBlank()) {
                         keyManager.registerTask(task);
                     } else { // Revert everything and exit
                         unregisterAll(keyManager);

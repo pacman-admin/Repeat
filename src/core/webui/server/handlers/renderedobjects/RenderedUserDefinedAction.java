@@ -18,7 +18,7 @@ public class RenderedUserDefinedAction {
 		output.setName(action.getName());
 		String representative = action.getActivation().getRepresentativeString();
 		String activation = "None";
-		if (representative != null && !representative.isEmpty()) {
+		if (representative != null && !representative.isBlank()) {
 			activation = representative;
 		}
 		output.setActivation(activation);

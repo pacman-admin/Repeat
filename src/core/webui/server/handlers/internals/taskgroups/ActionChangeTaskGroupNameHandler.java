@@ -32,7 +32,7 @@ public class ActionChangeTaskGroupNameHandler extends AbstractUIHttpHandler {
 		}
 
 		String name = params.get("name");
-		if (name == null || name.isEmpty()) {
+		if (name == null || name.isBlank()) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Group name must be provided.");
 		}
 

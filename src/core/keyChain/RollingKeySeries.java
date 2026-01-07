@@ -61,7 +61,7 @@ public class RollingKeySeries extends KeySeries {
      * @return last key stroke in the series.
      */
     public ButtonStroke getLast() {
-        if (keys.isEmpty()) {
+        if (keys.isBlank()) {
             return null;
         }
         return keys.getLast();

@@ -161,7 +161,7 @@ public class RenderedUserDefinedActionStatistics {
 
         private static BreakdownPieChartEntry of(String name, String color, long data) {
             BreakdownPieChartEntry result = new BreakdownPieChartEntry();
-            result.name = name.isEmpty() ? "Empty" : name;
+            result.name = name.isBlank() ? "Empty" : name;
             result.color = color;
             result.data = data;
             return result;

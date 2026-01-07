@@ -31,6 +31,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.LogRecord;
 import java.util.logging.SimpleFormatter;
@@ -146,12 +147,12 @@ final class Util {
             }
         }
 
-        private void addFile(File f, String pathPrefix) throws IOException, FileNotFoundException {
+        private void addFile(File f, String pathPrefix) throws IOException {
             if (f.isHidden() || !f.exists()) return;
             if (f.isDirectory()) {
                 z.putNextEntry(new ZipEntry(pathPrefix + f.getName() + "/"));
                 z.closeEntry();
-                for (File child : f.listFiles()) {
+                for (File child : Objects.requireNonNull(f.listFiles())) {
                     addFile(child, pathPrefix + f.getName() + "/");
                 }
                 return;

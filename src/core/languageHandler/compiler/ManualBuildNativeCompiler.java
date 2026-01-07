@@ -64,7 +64,7 @@ public class ManualBuildNativeCompiler extends AbstractNativeCompiler {
             String trimmed = line.trim();
 
             // If a line is empty or starts with "//", ignore it.
-            if (trimmed.isEmpty() || trimmed.startsWith("//")) {
+            if (trimmed.isBlank() || trimmed.startsWith("//")) {
                 continue;
             }
 

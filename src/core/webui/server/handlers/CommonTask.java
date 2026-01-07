@@ -25,7 +25,7 @@ public class CommonTask {
 
     public static UserDefinedAction getTaskFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params) {
         String taskId = getTaskIdFromRequest(params);
-        if (taskId.isEmpty()) {
+        if (taskId.isBlank()) {
             LOGGER.warning("Cannot find task ID.");
             return null;
         }
@@ -35,7 +35,7 @@ public class CommonTask {
 
     public static String getTaskIdFromRequest(Map<String, String> params) {
         String taskValue = params.get("task");
-        if (taskValue == null || taskValue.isEmpty()) {
+        if (taskValue == null || taskValue.isBlank()) {
             LOGGER.warning("Missing task ID.");
             return "";
         }
@@ -55,7 +55,7 @@ public class CommonTask {
 
     public static String getTaskGroupIdFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params) {
         String groupValue = params.get("group");
-        if (groupValue == null || groupValue.isEmpty()) {
+        if (groupValue == null || groupValue.isBlank()) {
             LOGGER.warning("Group ID must not be empty.");
             return null;
         }

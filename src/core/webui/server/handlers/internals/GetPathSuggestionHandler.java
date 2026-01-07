@@ -26,10 +26,7 @@ import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
@@ -56,6 +53,7 @@ public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
         }
         if (Files.isDirectory(p)) {
             File[] files = p.toFile().listFiles();
+            assert files != null;
             List<String> suggested = Arrays.asList(files).stream().map(File::getAbsolutePath).collect(Collectors.toList());
             return paths(suggested);
         }
@@ -67,10 +65,11 @@ public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
     }
 
     private String paths(Iterable<String> paths) {
-        return JSONUtility.jsonToString(Jsonizer.jsonize(SuggestedPaths.of(paths)).getRootNode());
+        return JSONUtility.jsonToString(Objects.requireNonNull(Jsonizer.jsonize(SuggestedPaths.of(paths))).getRootNode());
     }
 
     private static class SuggestedPaths {
+        @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         private List<String> paths;
 
         private static SuggestedPaths of(Iterable<String> paths) {

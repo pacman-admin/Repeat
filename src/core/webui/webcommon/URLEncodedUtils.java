@@ -43,7 +43,7 @@ class URLEncodedUtils {
     public static List<NameValuePair> parse(URI uri, Charset charset) {
         Args.notNull(uri, "URI");
         String query = uri.getRawQuery();
-        return query != null && !query.isEmpty() ? parse(query, charset) : createEmptyList();
+        return query != null && !query.isBlank() ? parse(query, charset) : createEmptyList();
     }
 
     private static List<NameValuePair> parse(String s, Charset charset) {
@@ -94,7 +94,7 @@ class URLEncodedUtils {
                 }
             }
 
-            if (!name.isEmpty()) {
+            if (!name.isBlank()) {
                 list.add(new BasicNameValuePair(decodeFormFields(name, charset), decodeFormFields(value, charset)));
             }
         }

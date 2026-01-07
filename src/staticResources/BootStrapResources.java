@@ -29,6 +29,7 @@ import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -64,8 +65,8 @@ public class BootStrapResources {
 
     private static Image getImage(String resource) {
         try {
-            return ImageIO.read(BootStrapResources.class.getResourceAsStream(resource));
-        } catch (IOException e) {
+            return ImageIO.read(Objects.requireNonNull(BootStrapResources.class.getResourceAsStream(resource)));
+        } catch (IOException | NullPointerException e) {
             LOGGER.log(Level.SEVERE, "Cannot load image " + resource, e);
             return null;
         }

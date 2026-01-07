@@ -49,7 +49,7 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
         }
 
         String id = params.get("id");
-        if (id == null || id.isEmpty()) {
+        if (id == null || id.isBlank()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Task ID is empty or not provided.");
         }
         if (isHotkey(id)) {
@@ -85,7 +85,7 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
             KeyChain mouseGestureKeyChain = backEndHolder.getConfig().getMOUSE_GESTURE();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(mouseGestureKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false).setMaxStrokes(1));
         }
-        if (activationConstructorId.isEmpty()) {
+        if (activationConstructorId.isBlank()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString);
         }
 

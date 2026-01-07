@@ -84,7 +84,7 @@ public class SharedVariables {
 		Map<String, String> namespaceVariables = variables.get(namespace);
 		String result = namespaceVariables.remove(variable);
 
-		if (namespaceVariables.isEmpty()) {
+		if (namespaceVariables.isBlank()) {
 			variables.remove(namespace);
 		}
 
