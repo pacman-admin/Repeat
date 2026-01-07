@@ -70,7 +70,7 @@ public class KeySequenceManager extends KeyStrokeManager {
 
 		if (key.getSource() == Source.KEYBOARD && key.equals(currentKeyboardRollingKeySeries.getLast())) {
 			Set<UserDefinedAction> toExecute = tasksToExecute(currentKeyboardRollingKeySeries);
-			if (!toExecute.isBlank()) {
+			if (!toExecute.isEmpty()) {
 				return toExecute;
 			}
 		}

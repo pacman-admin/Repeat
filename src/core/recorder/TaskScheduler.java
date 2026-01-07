@@ -83,7 +83,7 @@ class TaskScheduler extends AbstractScheduler<Runnable> {
 		executeAgent = new Thread(running);
 		executeAgent.start();
 
-		if (tasks.isBlank()) {
+		if (tasks.isEmpty()) {
 			//LOGGER.info("Nothing to run");
 			return callBackDelay;
 		} else {

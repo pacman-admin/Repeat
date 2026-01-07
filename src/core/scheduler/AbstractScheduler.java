@@ -18,7 +18,7 @@ public abstract class AbstractScheduler<T> {
 		Stack<SchedulingData<T>> temp = new Stack<>();
 		while (true) {
 			SchedulingData<T> lastItem;
-			if (tasks.isBlank()) {
+			if (tasks.isEmpty()) {
 				lastItem = null;
 			} else {
 				lastItem = tasks.getLast();
@@ -26,7 +26,7 @@ public abstract class AbstractScheduler<T> {
 
 			if (lastItem == null || lastItem.getTime() < task.getTime()) {
 				tasks.addLast(task);
-				while (!temp.isBlank()) {
+				while (!temp.isEmpty()) {
 					tasks.add(temp.pop());
 				}
 				return true;

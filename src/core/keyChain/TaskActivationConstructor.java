@@ -95,7 +95,7 @@ public class TaskActivationConstructor {
     }
 
     public void addAsKeyChain() {
-        if (strokes.isBlank()) {
+        if (strokes.isEmpty()) {
             return;
         }
         keyChains.add(new KeyChain(strokes));
@@ -110,7 +110,7 @@ public class TaskActivationConstructor {
     }
 
     public void addAsKeySequence() {
-        if (strokes.isBlank()) {
+        if (strokes.isEmpty()) {
             return;
         }
         keySequences.add(new KeySequence(strokes));

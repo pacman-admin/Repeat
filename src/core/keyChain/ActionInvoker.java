@@ -139,7 +139,7 @@ public class ActionInvoker implements IJsonable {
      */
     public final KeyChain getFirstHotkey() {
         Set<KeyChain> hotkeys = getHotkeys();
-        if (hotkeys.isBlank()) {
+        if (hotkeys.isEmpty()) {
             return null;
         } else {
             return hotkeys.iterator().next();
@@ -170,7 +170,7 @@ public class ActionInvoker implements IJsonable {
      */
     public final MouseGesture getFirstMouseGesture() {
         Set<MouseGesture> gestures = getMouseGestures();
-        if (gestures.isBlank()) {
+        if (gestures.isEmpty()) {
             return null;
         } else {
             return gestures.iterator().next();
@@ -201,7 +201,7 @@ public class ActionInvoker implements IJsonable {
      */
     public final KeySequence getFirstKeySequence() {
         Set<KeySequence> keySequences = getKeySequences();
-        if (keySequences.isBlank()) {
+        if (keySequences.isEmpty()) {
             return null;
         } else {
             return keySequences.iterator().next();
@@ -248,7 +248,7 @@ public class ActionInvoker implements IJsonable {
      */
     public final SharedVariablesActivation getFirstVariable() {
         Set<SharedVariablesActivation> variables = getVariables();
-        if (variables.isBlank()) {
+        if (variables.isEmpty()) {
             return null;
         } else {
             return variables.iterator().next();
@@ -290,7 +290,7 @@ public class ActionInvoker implements IJsonable {
      * Check if this activation is empty (i.e. no event for activation).
      */
     public final boolean isEmpty() {
-        return getHotkeys().isBlank() && getMouseGestures().isBlank() && getKeySequences().isBlank() && getPhrases().isBlank();
+        return getHotkeys().isEmpty() && getMouseGestures().isEmpty() && getKeySequences().isEmpty() && getPhrases().isEmpty();
     }
 
     /**
@@ -298,19 +298,19 @@ public class ActionInvoker implements IJsonable {
      * Iterating through all types of activations and select one entry at random.
      */
     public String getRepresentativeString() {
-        if (!getHotkeys().isBlank()) {
+        if (!getHotkeys().isEmpty()) {
             return "{" + getHotkeys().iterator().next().toString() + "}";
         }
-        if (!getKeySequences().isBlank()) {
+        if (!getKeySequences().isEmpty()) {
             return "<" + getKeySequences().iterator().next().toString() + ">";
         }
-        if (!getPhrases().isBlank()) {
+        if (!getPhrases().isEmpty()) {
             return "(" + getPhrases().iterator().next().toString() + ")";
         }
-        if (!getMouseGestures().isBlank()) {
+        if (!getMouseGestures().isEmpty()) {
             return "[" + getMouseGestures().iterator().next().toString() + "]";
         }
-        if (!getVariables().isBlank()) {
+        if (!getVariables().isEmpty()) {
             SharedVariablesSubscription var = getVariables().iterator().next().getVariable();
             if (var.isAll()) {
                 return "-(all)-";

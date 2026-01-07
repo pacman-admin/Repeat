@@ -129,7 +129,7 @@ public abstract class KeySeries implements IJsonable {
      * @return if there is no key stroke in this key chain.
      */
     public boolean isEmpty() {
-        return keys.isBlank();
+        return keys.isEmpty();
     }
 
     /**
