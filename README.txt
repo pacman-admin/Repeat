@@ -8,7 +8,7 @@ I fixed some bugs, improved startup time considerably, and added a standardized 
 
 The project is licensed almost entirely under the Apache License, version 2.0.
 
-Some libraries are ISC licensed, as are 10 source files I created myself (with inspiration from HP Truong's original code).
+Some libraries are ISC licensed, as are 11 source files I created myself (with inspiration from HP Truong's original code).
 
 See https://cvsweb.openbsd.org/src/share/misc/license.template?rev=HEAD for the license.
 
@@ -61,7 +61,7 @@ see the "HOTKEYS" section for more info.
 
 ADDITIONAL NOTES:
 You may add RAM flags to increase performance, though is not at all necessary, as this program consumes almost no resources.
-java -XX:+AlwaysPreTouch -Xms64M -Xmx64M -jar Repeat.jar
+java -Xms32M -Xmx32M -jar Repeat.jar
 Hover your mouse over a button to see what it does.
 
 
@@ -84,13 +84,5 @@ The default hotkeys are:
 F7 -> Start/Stop recording your keypresses, mouse movements, etc.
 F8 -> Start/Stop replaying recorded keypresses, mouse movements, etc.
 F9 -> Run the current compiled Action in memory.
+F4 -> Hold to record your mouse gesture, release when done
 
-Unfortunately, you cannot change these hotkeys through the menu option because it's broken for some reason.
-
-To change the hotkeys:
-0. Run Repeat if you have never run it before
-1. Exit Repeat using the "Exit" menu option
-2. Open a keycode event tool (e.g. https://www.toptal.com/developers/keycode) to get the keycode for the key you want to use as the new hotkey.
-3. Open the config.json file in the same directory as the Repeat jar file.
-4. Find the "global_hotkey" section and find the specific hotkey you want to change.
-5. Replace the number following the word "key" with the keycode detected by the keycode event tool.
