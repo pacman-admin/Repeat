@@ -36,7 +36,7 @@ import core.recorder.ReplayConfig;
 import core.userDefinedTask.*;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
-import core.userDefinedTask.internals.SharedVariablesPubSubManager;
+//import core.userDefinedTask.internals.SharedVariablesPubSubManager;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
@@ -209,7 +209,7 @@ public class MainBackEndHolder {
         }
 
         GlobalListenerHookController.cleanup();
-        SharedVariablesPubSubManager.get().stop();
+//        SharedVariablesPubSubManager.get().stop();
 
         LOGGER.info("All backend activities terminated.");
     }

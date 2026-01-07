@@ -161,13 +161,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     /**
-     * @return the default namespace for this action.
-     */
-    public String getNamespace() {
-        return SharedVariables.GLOBAL_NAMESPACE;
-    }
-
-    /**
      * @return the execution preconditions for this task.
      */
     public final TaskExecutionPreconditions getExecutionPreconditions() {

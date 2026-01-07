@@ -8,7 +8,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -29,7 +29,7 @@ public class MenuGetCompilerConfigOptionActionHandler extends AbstractUIHttpHand
 
         JavaNativeCompiler compiler = (JavaNativeCompiler) backEndHolder.getCompiler();
         Map<String, Object> data = new HashMap<>();
-        data.put("classPaths", StringUtilities.join(compiler.getClassPath(), "\n"));
+        data.put("classPaths", StringUtil.join(compiler.getClassPath(), "\n"));
         return renderedPage(exchange, "fragments/java_compiler_configuration", data);
     }
 }

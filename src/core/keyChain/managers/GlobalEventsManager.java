@@ -25,7 +25,6 @@ import core.keyChain.MouseKey;
 import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
-import core.userDefinedTask.internals.SharedVariablesPubSubManager;
 import core.userDefinedTask.internals.SharedVariablesSubscriber;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 import core.userDefinedTask.internals.preconditions.ExecutionPreconditionsChecker;
@@ -35,7 +34,7 @@ import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 import org.simplenativehooks.utilities.Function;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 import java.util.Set;
 import java.util.logging.Logger;
@@ -66,7 +65,7 @@ public final class GlobalEventsManager {
      * @param collisions set of colliding tasks.
      */
     public static void showCollisionWarning(Set<UserDefinedAction> collisions) {
-        String taskNames = StringUtilities.join(new Function<UserDefinedAction, String>() {
+        String taskNames = StringUtil.join(new Function<UserDefinedAction, String>() {
             @Override
             public String apply(UserDefinedAction d) {
                 return '\'' + d.getName() + '\'';
@@ -103,11 +102,11 @@ public final class GlobalEventsManager {
             }
         });
 
-        SharedVariablesPubSubManager.get().addSubscriber(SharedVariablesSubscriber.of(SharedVariablesSubscription.forAll(), e -> {
-            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(e));
-            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-            actionExecutor.startExecutingActions(actions);
-        }));
+//        SharedVariablesPubSubManager.get().addSubscriber(SharedVariablesSubscriber.of(SharedVariablesSubscription.forAll(), e -> {
+//            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(e));
+//            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+//            actionExecutor.startExecutingActions(actions);
+//        }));
 
         taskActivationManager.startListening();
         keyListener.startListening();

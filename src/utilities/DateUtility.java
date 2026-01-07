@@ -95,6 +95,6 @@ public class DateUtility {
         if (millis != 0) {
             results.add(millis + " ms");
         }
-        return StringUtilities.join(results, ", ");
+        return StringUtil.join(results, ", ");
     }
 }

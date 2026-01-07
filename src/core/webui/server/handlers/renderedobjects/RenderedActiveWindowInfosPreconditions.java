@@ -1,7 +1,7 @@
 package core.webui.server.handlers.renderedobjects;
 
 import core.userDefinedTask.internals.preconditions.*;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,15 +61,15 @@ public class RenderedActiveWindowInfosPreconditions {
         }
         if (condition instanceof ContainingStringMatchingCondition) {
             String value = ((ContainingStringMatchingCondition) condition).getSubstring();
-            return StringUtilities.escapeHtml(value);
+            return StringUtil.escapeHtml(value);
         }
         if (condition instanceof RegexStringMatchingCondition) {
             String value = ((RegexStringMatchingCondition) condition).getRegex();
-            return StringUtilities.escapeHtml(value);
+            return StringUtil.escapeHtml(value);
         }
         if (condition instanceof ExactStringMatchCondition) {
             String value = ((ExactStringMatchCondition) condition).getValue();
-            return StringUtilities.escapeHtml(value);
+            return StringUtil.escapeHtml(value);
         }
         return "";
     }

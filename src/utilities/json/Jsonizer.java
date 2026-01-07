@@ -3,7 +3,7 @@ package utilities.json;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonStringNode;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 import java.lang.reflect.*;
 import java.util.ArrayList;
@@ -46,7 +46,7 @@ public class Jsonizer {
             JsonStringNode nameNode = inner.getKey();
             JsonNode valueNode = inner.getValue();
 
-            String fieldName = StringUtilities.toCamelCase(nameNode.getStringValue());
+            String fieldName = StringUtil.toCamelCase(nameNode.getStringValue());
             Field field = clazz.getDeclaredField(fieldName);
 
             int modifier = field.getModifiers();

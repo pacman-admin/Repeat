@@ -1,6 +1,6 @@
 package core.keyChain;
 
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -39,7 +39,7 @@ public class TaskActivationConstructor {
     }
 
     public String getStrokes() {
-        return StringUtilities.join(strokes.stream().map(ButtonStroke::toString).collect(Collectors.toList()), " + ");
+        return StringUtil.join(strokes.stream().map(ButtonStroke::toString).collect(Collectors.toList()), " + ");
     }
 
     public void clearStrokes() {

@@ -28,7 +28,7 @@ public final class NumberUtility {
     }
 
     private static boolean isInteger(String input) {
-        if(StringUtilities.isNullOrEmpty(input))
+        if(StringUtil.isNullOrEmpty(input))
             return false;
         input = input.replaceAll(",", "");
         if (input.startsWith("-")) {
@@ -43,7 +43,7 @@ public final class NumberUtility {
     }
 
     public static boolean isDouble(String input) {
-        if (StringUtilities.countOccurrence(input, '.') > 1) {
+        if (StringUtil.countOccurrence(input, '.') > 1) {
             return false;
         }
         input = input.replaceAll("\\.", "");

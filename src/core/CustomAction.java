@@ -16,10 +16,11 @@ public class CustomAction extends UserDefinedAction {
 
         //This is example code, try it out!
         k.type(Clipboard.get());
-        SharedVariables.setVar("global", "myPermanantGlobalVariable", "0");
+        SharedVariables.create("myVariable", "0");
         //Repeat can read and change what is copied to your clipboard (only if you tell it to!)
         Clipboard.set("Hello World!");
         k.type("Repeat can type Strings!");
         k.type(Clipboard.get());
+        Clipboard.set(Integer.parseInt(SharedVariables.get("myVariable")) + 1 + "");
     }
 }

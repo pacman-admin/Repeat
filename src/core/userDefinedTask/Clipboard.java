@@ -35,7 +35,7 @@ public final class Clipboard {
      *
      * @return the plain text in the clipboard, or empty string if encounter an error
      */
-    public static String get() {
+    public static synchronized String get() {
         try {
             return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
         } catch (HeadlessException | UnsupportedFlavorException | IOException e) {
@@ -49,9 +49,16 @@ public final class Clipboard {
      *
      * @param data string to copy to the system clipboard
      */
-    public static void set(String data) {
+    public static synchronized void set(String data) {
         java.awt.datatransfer.Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection selection = new StringSelection(data);
         clipboard.setContents(selection, null);
+    }
+
+    /**
+     * Clear the system clipboard
+     */
+    public static synchronized void clear() {
+        set("");
     }
 }

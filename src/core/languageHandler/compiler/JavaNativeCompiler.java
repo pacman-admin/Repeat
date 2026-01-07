@@ -26,7 +26,7 @@ import core.userDefinedTask.UserDefinedAction;
 import utilities.FileUtility;
 import utilities.Function;
 import utilities.RandomUtil;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 import utilities.json.JSONUtility;
 
 import javax.tools.*;
@@ -139,7 +139,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
                     optionList.add("-classpath");
                     String paths = System.getProperty("java.class.path");
                     if (classPaths.length > 0) {
-                        paths += ";" + StringUtilities.join(classPaths, ";");
+                        paths += ";" + StringUtil.join(classPaths, ";");
                     }
                     optionList.add(paths);
 
@@ -177,7 +177,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
 
     private DynamicCompilationResult loadClass(String loadClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
         classLoader.addURL(new File("./").toURI().toURL());
-        Class<?> loadedClass = classLoader.loadClass(StringUtilities.join(packageTree, ".") + "." + loadClassName);
+        Class<?> loadedClass = classLoader.loadClass(StringUtil.join(packageTree, ".") + "." + loadClassName);
         Object object;
         try {
             object = loadedClass.getDeclaredConstructor().newInstance();

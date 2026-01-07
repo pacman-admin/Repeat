@@ -5,7 +5,7 @@ import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
 import utilities.Function;
 import utilities.KeyCodeToChar;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 import utilities.json.IJsonable;
 
 import java.util.ArrayList;
@@ -163,7 +163,7 @@ public abstract class KeySeries implements IJsonable {
 
     @Override
     public String toString() {
-        return StringUtilities.join(keys.stream().map(Object::toString).collect(Collectors.toList()), " + ");
+        return StringUtil.join(keys.stream().map(Object::toString).collect(Collectors.toList()), " + ");
     }
 
     @Override

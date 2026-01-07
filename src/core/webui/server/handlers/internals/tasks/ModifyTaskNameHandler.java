@@ -12,7 +12,7 @@ import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 public class ModifyTaskNameHandler extends AbstractUIHttpHandler {
 
@@ -33,7 +33,7 @@ public class ModifyTaskNameHandler extends AbstractUIHttpHandler {
 		}
 
 		String name = params.get("name");
-		if (StringUtilities.isNullOrEmpty(name)) {
+		if (StringUtil.isNullOrEmpty(name)) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Name must be provided and not empty.");
 		}
 

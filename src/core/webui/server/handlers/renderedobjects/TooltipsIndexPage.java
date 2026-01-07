@@ -1,10 +1,10 @@
 package core.webui.server.handlers.renderedobjects;
 
-import utilities.StringUtilities;
+import utilities.StringUtil;
 
 public class TooltipsIndexPage {
-    private static final String mousePosition = StringUtilities.escapeHtml("If enabled, mouse position will be logged on every left control click (key down time).");
-    private static final String activeWindowInfosLogging = StringUtilities.escapeHtml("If enabled, active window will be logged on every mouse click (key up time).");
+    private static final String mousePosition = StringUtil.escapeHtml("If enabled, mouse position will be logged on every left control click (key down time).");
+    private static final String activeWindowInfosLogging = StringUtil.escapeHtml("If enabled, active window will be logged on every mouse click (key up time).");
     private static final String record = "Record mouse and keyboard activities.";
     private static final String replay = "Replay recorded activities.";
     private static final String compile = "Compile source code.";

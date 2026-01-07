@@ -1,6 +1,5 @@
 package frontEnd;
 
-import core.userDefinedTask.internals.SharedVariablesPubSubManager;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 
@@ -29,7 +28,6 @@ public class MainFrontEnd {
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
         GlobalListenerHookController.initialize(backEnd.getConfig().isUseJavaAwtToGetMousePosition());
-        SharedVariablesPubSubManager.get().start();
         /*************************************************************************************/
         /********************************Start main program***********************************/
         try {
