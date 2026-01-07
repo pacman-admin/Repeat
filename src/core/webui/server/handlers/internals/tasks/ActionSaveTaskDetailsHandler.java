@@ -117,7 +117,7 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
     private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) {
         Set<KeyChain> hotKeys = activation.getHotkeys();
-        if (hotKeys.isBlank()) {
+        if (hotKeys.isEmpty()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set!");
         }
         KeyChain hotKey = hotKeys.iterator().next();

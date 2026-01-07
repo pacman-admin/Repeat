@@ -420,7 +420,7 @@ public class MainBackEndHolder {
 
             for (UserDefinedAction task : group.getTasks()) {
                 Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(task);
-                if (task.isEnabled() && (collisions.isBlank())) {
+                if (task.isEnabled() && (collisions.isEmpty())) {
                     keysManager.registerTask(task);
                 }
             }
@@ -473,7 +473,7 @@ public class MainBackEndHolder {
 
     private void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
         Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-        boolean conflict = !collisions.isBlank() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
+        boolean conflict = !collisions.isEmpty() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
 
         if (!conflict) {
             keysManager.registerTask(action);
@@ -622,7 +622,7 @@ public class MainBackEndHolder {
         }
 
         TaskGroup removed = taskGroups.remove(index);
-        if (taskGroups.isBlank()) {
+        if (taskGroups.isEmpty()) {
             taskGroups.add(new TaskGroup("default"));
         }
 
@@ -702,7 +702,7 @@ public class MainBackEndHolder {
 
         Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
         collisions.remove(action);
-        if (!collisions.isBlank()) {
+        if (!collisions.isEmpty()) {
             GlobalEventsManager.showCollisionWarning(collisions);
             return false;
         }
@@ -719,7 +719,7 @@ public class MainBackEndHolder {
             }
         } else { // Then enable it
             Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-            if (!collisions.isBlank()) {
+            if (!collisions.isEmpty()) {
                 GlobalEventsManager.showCollisionWarning(collisions);
                 return;
             }
@@ -845,7 +845,7 @@ public class MainBackEndHolder {
         }
 
         allNames.removeAll(using);
-        if (allNames.isBlank()) {
+        if (allNames.isEmpty()) {
             LOGGER.info("Nothing to clean...");
             return;
         }

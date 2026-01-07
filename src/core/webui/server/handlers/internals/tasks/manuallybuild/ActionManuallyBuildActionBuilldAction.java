@@ -39,7 +39,6 @@ public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodH
         if (!backEndHolder.compileSourceAndSetCurrent(source, null)) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
         }
-
         return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");
     }
 }
