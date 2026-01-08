@@ -46,6 +46,7 @@ public class BootStrapResources {
         LANGUAGE_API = new HashMap<>();
         LANGUAGE_API.put(Language.JAVA, getFile("/staticContent/core/languageHandler/API/JavaAPI.txt"));
         NATIVE_LANGUAGE_TEMPLATES = new HashMap<>();
+//        NATIVE_LANGUAGE_TEMPLATES.put(Language.JAVA, getFile("/core/CustomAction.java"));
         NATIVE_LANGUAGE_TEMPLATES.put(Language.JAVA, getFile("/staticContent/natives/java/TemplateRepeat"));
         NATIVE_LANGUAGE_TEMPLATES.put(Language.MANUAL_BUILD, getFile("/staticContent/natives/manual/TemplateRepeat.txt"));
         nativeHookResources = new NativeHookBootstrapResources();

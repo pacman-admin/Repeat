@@ -36,7 +36,6 @@ import core.recorder.ReplayConfig;
 import core.userDefinedTask.*;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
-//import core.userDefinedTask.internals.SharedVariablesPubSubManager;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
@@ -216,18 +215,19 @@ public class MainBackEndHolder {
 
     public void scheduleExit(long delayMs) {
         actionExecutor.haltAllTasks();
-        executor.schedule(this::exit, delayMs, TimeUnit.MILLISECONDS);
-    }
 
-    private void exit() {
-        stopBackEndActivities();
+        executor.schedule(this::exit, delayMs + 1000, TimeUnit.MILLISECONDS);
 
         LOGGER.info("Writing config file...");
         if (!writeConfigFile()) {
             LOGGER.log(Level.SEVERE, "Error saving configuration file.");
-            System.exit(2);
+            return;
         }
         LOGGER.info("Wrote config file.");
+    }
+
+    private void exit() {
+        stopBackEndActivities();
 
         if (trayIcon != null) {
             trayIcon.remove();

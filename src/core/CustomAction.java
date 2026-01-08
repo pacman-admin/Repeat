@@ -11,16 +11,35 @@ public class CustomAction extends UserDefinedAction {
     public void action(final Core c) throws InterruptedException {
         KeyboardCore k = c.keyBoard();
         MouseCore m = c.mouse();
-        // Begin generated code (this line must not be changed)
+        //Begin generated code (this line must not be changed)
         //Write your macro code after this line
 
         //This is example code, try it out!
-        k.type(Clipboard.get());
+
+        //Clear the system clipboard
+        Clipboard.clear();
+
+        //Type out whatever is in the system clipboard
+        k.type("The clipboard currently holds: " + Clipboard.get() + "\n");
+
+        //Initialize the Shared Variable myVariable to 0 if it does not already exist.
+        //If a variable with that name already exists, this function does nothing.
         SharedVariables.create("myVariable", "0");
-        //Repeat can read and change what is copied to your clipboard (only if you tell it to!)
-        Clipboard.set("Hello World!");
-        k.type("Repeat can type Strings!");
+
+        //Copy "Hello World!" to the system clipboard
+        Clipboard.set("Hello World!\n");
+
+        //Type something profound
+        k.type("Repeat can type Strings\n");
+
+        //Type out contents of system clipboard
         k.type(Clipboard.get());
-        Clipboard.set(Integer.parseInt(SharedVariables.get("myVariable")) + 1 + "");
+
+        //Set system clipboard to the value of the shared variable set earlier
+        Clipboard.set(SharedVariables.get("myVariable") + "");
+
+        //Increase the value of myVariable by 1.
+        //This code converts it to a number, adds 1, and turns it back into a string.
+        SharedVariables.set("myVariable", Integer.parseInt(SharedVariables.get("myVariable")) + 1 + "");
     }
 }
