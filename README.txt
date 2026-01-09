@@ -56,13 +56,6 @@ If Repeat does not open, ensure your Java runtime is the correct version and is 
 
 KNOWN ISSUES:
 Repeat cannot move the mouse on Wayland; mouse buttons and keypresses can be controlled via Repeat on all systems.
-Changing the hotkeys to record, replay, and run the compiled Action via the menu does not work;
-see the "HOTKEYS" section for more info.
-
-ADDITIONAL NOTES:
-You may add RAM flags to increase performance, though is not at all necessary, as this program consumes almost no resources.
-java -Xms32M -Xmx32M -jar Repeat.jar
-Hover your mouse over a button to see what it does.
 
 =============================================
         USING Repeat
