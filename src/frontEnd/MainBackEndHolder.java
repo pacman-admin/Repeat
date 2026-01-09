@@ -18,8 +18,6 @@
  */
 package frontEnd;
 
-import core.background.loggers.ActiveWindowInfosLogger;
-import core.background.loggers.MousePositionLogger;
 import core.config.Config;
 import core.controller.Core;
 import core.controller.CoreProvider;
@@ -51,8 +49,6 @@ import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ScheduledThreadPoolExecutor;
-import java.util.concurrent.TimeUnit;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
@@ -68,14 +64,13 @@ public class MainBackEndHolder {
     final UserDefinedAction switchReplay;
     final UserDefinedAction switchReplayCompiled;
     private final Config config;
-    private final ActiveWindowInfosLogger activeWindowInfosLogger;
-    private final MousePositionLogger mousePositionLogger;
+    //    private final ActiveWindowInfosLogger activeWindowInfosLogger;
+//    private final MousePositionLogger mousePositionLogger;
     // To allow executing other tasks programmatically.
     private final TaskInvoker taskInvoker;
     private final ActionExecutor actionExecutor;
     private final CoreProvider coreProvider;
     private final LogHolder logHolder;
-    private final ScheduledThreadPoolExecutor executor;
     private final Recorder recorder;
     private MinimizedFrame trayIcon;
     private Thread compiledExecutor;
@@ -89,7 +84,6 @@ public class MainBackEndHolder {
     public MainBackEndHolder() {
         logHolder = new LogHolder();
 
-        executor = new ScheduledThreadPoolExecutor(10);
         compilingLanguage = Language.MANUAL_BUILD;
 
         config = Config.loadFromFile();
@@ -98,8 +92,8 @@ public class MainBackEndHolder {
         taskInvoker = new TaskInvoker(coreProvider);
         actionExecutor = new ActionExecutor(coreProvider);
         keysManager = new GlobalEventsManager(config, actionExecutor);
-        activeWindowInfosLogger = new ActiveWindowInfosLogger();
-        mousePositionLogger = new MousePositionLogger(coreProvider);
+//        activeWindowInfosLogger = new ActiveWindowInfosLogger();
+//        mousePositionLogger = new MousePositionLogger(coreProvider);
         replayConfig = ReplayConfig.of();
         runActionConfig = RunActionConfig.of();
         recorder = new Recorder(coreProvider);
@@ -186,37 +180,9 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
-    void initiateBackEndActivities() {
-        try {
-            IPCServiceManager.initiateServices(this);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
-        }
-    }
-
-    private void stopBackEndActivities() {
-        activeWindowInfosLogger.stop();
-        mousePositionLogger.stop();
-        executor.shutdown();
-
-        try {
-            IPCServiceManager.stopServices();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
-        }
-
-        GlobalListenerHookController.cleanup();
-//        SharedVariablesPubSubManager.get().stop();
-
-        LOGGER.info("All backend activities terminated.");
-    }
 
     public void scheduleExit(long delayMs) {
         actionExecutor.haltAllTasks();
-
-        executor.schedule(this::exit, delayMs + 1000, TimeUnit.MILLISECONDS);
 
         LOGGER.info("Writing config file...");
         if (!writeConfigFile()) {
@@ -224,24 +190,22 @@ public class MainBackEndHolder {
             return;
         }
         LOGGER.info("Wrote config file.");
-    }
 
-    private void exit() {
-        stopBackEndActivities();
+//        activeWindowInfosLogger.stop();
+//        mousePositionLogger.stop();
+
+        GlobalListenerHookController.cleanup();
+        LOGGER.info("All backend activities terminated.");
 
         if (trayIcon != null) {
             trayIcon.remove();
         }
 
         try {
-            LOGGER.info("Waiting for main executor to terminate...");
-            executor.awaitTermination(5, TimeUnit.SECONDS);
-            LOGGER.info("Main executor terminated.");
-        } catch (InterruptedException e) {
-            LOGGER.log(Level.WARNING, "Interrupted while awaiting backend executor termination.", e);
+            IPCServiceManager.stopServices();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
         }
-
-        LOGGER.info("Terminated all background processes.");
     }
 
     /*************************************************************************************************************/
@@ -266,21 +230,21 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /****************************************Background logging***************************************************/
-    public void setEnabledMousePositionLogging(boolean enabled) {
-        mousePositionLogger.setEnabled(enabled);
-    }
-
-    public boolean isMousePositionLoggingEnabled() {
-        return mousePositionLogger.isEnabled();
-    }
-
-    public void setEnabledActiveWindowInfosLogging(boolean enabled) {
-        activeWindowInfosLogger.setEnabled(enabled);
-    }
-
-    public boolean isActiveWindowInfosLoggingEnabled() {
-        return activeWindowInfosLogger.isEnabled();
-    }
+//    public void setEnabledMousePositionLogging(boolean enabled) {
+//        mousePositionLogger.setEnabled(enabled);
+//    }
+//
+//    public boolean isMousePositionLoggingEnabled() {
+//        return mousePositionLogger.isEnabled();
+//    }
+//
+//    public void setEnabledActiveWindowInfosLogging(boolean enabled) {
+//        activeWindowInfosLogger.setEnabled(enabled);
+//    }
+//
+//    public boolean isActiveWindowInfosLoggingEnabled() {
+//        return activeWindowInfosLogger.isEnabled();
+//    }
 
     /*************************************************************************************************************/
     /****************************************Record and replay****************************************************/
@@ -875,7 +839,6 @@ public class MainBackEndHolder {
 
     public void setCompilingLanguage(Language language) {
         compilingLanguage = language;
-
         customFunction = null;
     }
 
@@ -891,11 +854,8 @@ public class MainBackEndHolder {
         if (createdInstance == null) {
             return false;
         }
-        //if (config.getCompilerFactory().getRemoteRepeatsCompilerConfig().hasOnlyLocal()) {
         customFunction = createdInstance;
         return true;
-        //}
-        //return false;
     }
 
     public UserDefinedAction compileSourceNatively(AbstractNativeCompiler compiler, String source, String taskName) {
@@ -954,24 +914,6 @@ public class MainBackEndHolder {
     private boolean applySpeedup() {
         recorder.setSpeedup(replayConfig.getSpeedup());
         return true;
-    }
-
-    /*************************************************************************************************************/
-    /***************************************User Interface********************************************************/
-    void launchUI() {
-        //int port = IPCServiceManager.getIPCService(IPCServiceName.WEB_UI_SERVER).getPort();
-        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + IPCServiceManager.getUIServer().getPort() + "\n*******************************************");
-        String windowEnv = System.getenv("XDG_SESSION_TYPE");
-        if (windowEnv == null) return;
-        if (windowEnv.equalsIgnoreCase("Wayland")) {
-            LOGGER.warning("Your computer is running Wayland.\nRepeat will not be able to control mouse position.\nRecording and replaying of actions will only work in an X window.");
-            try {
-                Runtime.getRuntime().exec(new String[]{"xeyes"});
-                LOGGER.info("If the eyes look toward your mouse, Repeat will work;\nif the eyes do not, Repeat will not work in that window.");
-            } catch (IOException e) {
-                LOGGER.warning("Please install xeyes so you will be able to tell when Repeat will work and when it will not.");
-            }
-        }
     }
 
     /*************************************************************************************************************/

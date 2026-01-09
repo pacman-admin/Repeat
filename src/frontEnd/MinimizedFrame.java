@@ -48,9 +48,9 @@ class MinimizedFrame extends TrayIcon {
     }
 
     private void show() {
-        if (!Desktop.isDesktopSupported()) {
-            LOGGER.warning("Cannot open UI in browser; Desktop module is not supported.");
-        }
+//        if (!Desktop.isDesktopSupported()) {
+//            LOGGER.warning("Cannot open UI in browser; Desktop module is not supported.");
+//        }
 
         IIPCService server = IPCServiceManager.getUIServer();
         try {
@@ -74,7 +74,7 @@ class MinimizedFrame extends TrayIcon {
         try {
             tray.remove(this);
         } catch (UnsupportedOperationException e) {
-            throw new RuntimeException("Try icon error!\nThis error can usually be ignored.\n" + e, e);
+            //throw new RuntimeException("Try icon error!\nThis error can usually be ignored.\n" + e, e);
         }
     }
 
