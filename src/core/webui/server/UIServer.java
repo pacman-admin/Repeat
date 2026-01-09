@@ -189,8 +189,8 @@ public class UIServer extends IPCServiceWithModifiablePort {
         output.put("/internals/get/rendered-task-groups-select-modal", new GetRenderedTaskGroupsSelectModalHandler(objectRenderer));
 
         output.put("/internals/set/selected-task", new SetSelectedTaskHandler(taskSourceCodeFragmentHandler));
-        output.put("/internals/set/mouse-position-logging-enabled", new SetMousePositionLoggingEnabledHandler());
-        output.put("/internals/set/active-window-info-logging-enabled", new SetActiveWindowInfosLoggingEnabledHandler());
+        output.put("/internals/set/mouse-position-logging-enabled", new EmptyHandler());
+        output.put("/internals/set/active-window-info-logging-enabled", new EmptyHandler());
 
         output.put("/internals/modify/ipc-service-port", new ModifyIPCServicePortHandler(objectRenderer));
         output.put("/internals/modify/task-name", new ModifyTaskNameHandler(objectRenderer));

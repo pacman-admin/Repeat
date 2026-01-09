@@ -5,6 +5,7 @@ import core.webui.server.handlers.AbstractBooleanGETHandler;
 public class GetIsMousePositionLoggingEnabledHandler extends AbstractBooleanGETHandler {
     @Override
     protected boolean handle() {
-        return backEndHolder.isMousePositionLoggingEnabled();
+//        return backEndHolder.isMousePositionLoggingEnabled();
+        return false;
     }
 }
