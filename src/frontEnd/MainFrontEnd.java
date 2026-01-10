@@ -4,6 +4,7 @@ import core.ipc.IPCServiceManager;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;
@@ -11,8 +12,16 @@ import java.util.logging.Logger;
 
 @SuppressWarnings("DanglingJavadoc")
 public class MainFrontEnd {
-
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
+    static {
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
+                 UnsupportedLookAndFeelException e) {
+            LOGGER.warning("Error while setting theme to system theme.\n" + e);
+        }
+        LOGGER.info("Successfully set theme to system theme.");
+    }
 
     public static void run() {
         /*************************************************************************************/
