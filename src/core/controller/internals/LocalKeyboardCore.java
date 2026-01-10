@@ -1,6 +1,7 @@
 package core.controller.internals;
 
 import core.config.Config;
+import core.userDefinedTask.Clipboard;
 import core.userDefinedTask.Tools;
 import utilities.Function;
 import utilities.OSIdentifier;
@@ -83,9 +84,10 @@ public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 
     private void typeSingleString(String string) {
         if (config.isUseClipboardToTypeString()) {
-            String existing = Tools.getClipboard();
+            String existing = Clipboard.get();
+            pasteString(string);
             if (!existing.isBlank()) {
-                pasteString(string);
+                Clipboard.set(existing);
             }
             return;
         }
