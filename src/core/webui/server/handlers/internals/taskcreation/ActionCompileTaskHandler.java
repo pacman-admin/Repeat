@@ -25,7 +25,7 @@ import org.apache.http.HttpRequest;
 
 import java.nio.charset.StandardCharsets;
 
-public class ActionCompileTaskHandler extends AbstractPOSTHandler {
+public final class ActionCompileTaskHandler extends AbstractPOSTHandler {
     public ActionCompileTaskHandler() {
         super("Could not compile custom Action.");
     }

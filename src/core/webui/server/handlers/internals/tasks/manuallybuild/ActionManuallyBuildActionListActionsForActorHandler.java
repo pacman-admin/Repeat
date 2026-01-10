@@ -14,7 +14,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedPossibleManuallyBuildActions;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionManuallyBuildActionListActionsForActorHandler extends AbstractUIHttpHandler {
+public final class ActionManuallyBuildActionListActionsForActorHandler extends AbstractUIHttpHandler {
 
 	public ActionManuallyBuildActionListActionsForActorHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

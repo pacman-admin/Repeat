@@ -14,7 +14,7 @@ import core.webui.webcommon.HttpServerUtilities;
 
 import static core.userDefinedTask.TaskGroupManager.moveTaskGroupUp;
 
-public class ActionMoveTaskGroupUpHandler extends AbstractUIHttpHandler {
+public final class ActionMoveTaskGroupUpHandler extends AbstractUIHttpHandler {
 
 	public ActionMoveTaskGroupUpHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

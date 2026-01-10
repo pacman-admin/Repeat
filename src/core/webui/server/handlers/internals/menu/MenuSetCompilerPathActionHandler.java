@@ -39,7 +39,7 @@ public class MenuSetCompilerPathActionHandler extends AbstractSingleMethodHttpHa
 
         Language language = Backend.getSelectedLanguage();
         if (language == Language.PYTHON) {
-            File pythonExecutable = ((PythonRemoteCompiler) (Backend.getConfig().getCompilerFactory()).getNativeCompiler(Language.PYTHON)).getPath();
+            File pythonExecutable = ((PythonRemoteCompiler) (Backend.config.getCompilerFactory()).getNativeCompiler(Language.PYTHON)).getPath();
             ((PythonIPCClientService) IPCServiceManager.getIPCService(IPCServiceName.PYTHON)).setExecutingProgram(pythonExecutable);
         }*/
 

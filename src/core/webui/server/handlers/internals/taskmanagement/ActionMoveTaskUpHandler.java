@@ -12,7 +12,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.io.IOException;
 import java.util.Map;
 
-public class ActionMoveTaskUpHandler extends AbstractUIHttpHandler {
+public final class ActionMoveTaskUpHandler extends AbstractUIHttpHandler {
 
     public ActionMoveTaskUpHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

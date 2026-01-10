@@ -71,19 +71,19 @@ public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
     private Void handleNewHotkey(HttpAsyncExchange exchange, String taskString) throws IOException {
         String activationConstructorId = "";
         if (taskString.equals(RECORD_TASK_NAME)) {
-            KeyChain recordKeyChain = Backend.getConfig().getRECORD();
+            KeyChain recordKeyChain = Backend.config.getRECORD();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(recordKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
         }
         if (taskString.equals(REPLAY_TASK_NAME)) {
-            KeyChain replayKeyChain = Backend.getConfig().getREPLAY();
+            KeyChain replayKeyChain = Backend.config.getREPLAY();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(replayKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
         }
         if (taskString.equals(RUN_COMPILED_TASK_NAME)) {
-            KeyChain runCompiledKeyChain = Backend.getConfig().getCOMPILED_REPLAY();
+            KeyChain runCompiledKeyChain = Backend.config.getCOMPILED_REPLAY();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(runCompiledKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
         }
         if (taskString.equals(MOUSE_GESTURE_ACTIVATION_TASK_NAME)) {
-            KeyChain mouseGestureKeyChain = Backend.getConfig().getMOUSE_GESTURE();
+            KeyChain mouseGestureKeyChain = Backend.config.getMOUSE_GESTURE();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(mouseGestureKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false).setMaxStrokes(1));
         }
         if (activationConstructorId.isBlank()) {

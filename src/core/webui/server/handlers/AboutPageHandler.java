@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class AboutPageHandler extends AbstractUIHttpHandler {
+public final class AboutPageHandler extends AbstractUIHttpHandler {
 
     public AboutPageHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

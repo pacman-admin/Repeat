@@ -1,6 +1,6 @@
 package core.userDefinedTask.internals;
 
-public class ActionExecutionRequest {
+public final class ActionExecutionRequest {
     private int repeatCount;
     private long delayMsBetweenRepeat;
 

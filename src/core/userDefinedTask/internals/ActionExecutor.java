@@ -10,7 +10,7 @@ import java.util.LinkedList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ActionExecutor {
+public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
     private static final int MAX_SIMULTANEOUS_EXECUTIONS = 3;

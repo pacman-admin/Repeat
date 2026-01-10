@@ -9,7 +9,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
 
-public class ActionAddTaskHandler extends AbstractUIHttpHandler {
+public final class ActionAddTaskHandler extends AbstractUIHttpHandler {
 
     public ActionAddTaskHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

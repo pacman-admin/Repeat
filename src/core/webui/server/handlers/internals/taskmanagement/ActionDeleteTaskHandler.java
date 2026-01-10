@@ -13,7 +13,7 @@ import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionDeleteTaskHandler extends AbstractUIHttpHandler {
+public final class ActionDeleteTaskHandler extends AbstractUIHttpHandler {
 
 	public ActionDeleteTaskHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

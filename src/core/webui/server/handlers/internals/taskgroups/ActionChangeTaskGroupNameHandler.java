@@ -13,7 +13,7 @@ import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionChangeTaskGroupNameHandler extends AbstractUIHttpHandler {
+public final class ActionChangeTaskGroupNameHandler extends AbstractUIHttpHandler {
 
 	public ActionChangeTaskGroupNameHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

@@ -21,7 +21,7 @@ public class MenuGetDebugLevelOptionsActionHandler extends AbstractUIHttpHandler
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        data.put("config", new RenderedConfig(Backend.getConfig(), Backend.getRecorder()));
+        data.put("config", new RenderedConfig(Backend.config, Backend.recorder));
         return renderedPage(exchange, "fragments/debug_levels", data);
     }
 }

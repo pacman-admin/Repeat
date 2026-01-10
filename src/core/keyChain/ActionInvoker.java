@@ -16,7 +16,7 @@ import java.util.logging.Logger;
  * Represents an entity that activates a {@link core.userDefinedTask.UserDefinedAction}.
  */
 @SuppressWarnings("unused")
-public class ActionInvoker implements IJsonable {
+public final class ActionInvoker implements IJsonable {
 
     private static final Logger LOGGER = Logger.getLogger(ActionInvoker.class.getName());
     private final Set<ActivationPhrase> phrases;
@@ -370,7 +370,7 @@ public class ActionInvoker implements IJsonable {
     /**
      * Builder for enclosing class.
      */
-    public static class Builder {
+    public static final class Builder {
         private final Set<KeyChain> hotkeys;
         private final Set<MouseGesture> mouseGestures;
         private final Set<KeySequence> keySequences;

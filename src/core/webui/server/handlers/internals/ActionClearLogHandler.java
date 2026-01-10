@@ -22,7 +22,7 @@ import core.webui.server.handlers.AbstractPOSTHandler;
 import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 
-public class ActionClearLogHandler extends AbstractPOSTHandler {
+public final class ActionClearLogHandler extends AbstractPOSTHandler {
 
     public ActionClearLogHandler() {
         super("Could not clear logs.");

@@ -12,7 +12,7 @@ import utilities.json.Jsonizer;
 
 import java.util.Map;
 
-public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHandler {
+public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHandler {
 
     public ActionChangeReplayConfigHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);
@@ -36,7 +36,7 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
             }
             count = Long.parseLong(countString);
         } else {
-            count = Backend.getReplayConfig().getCount();
+            count = Backend.replayConfig.getCount();
         }
 
         String delayString = params.get("delay");
@@ -46,7 +46,7 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
             }
             delay = Long.parseLong(delayString);
         } else {
-            delay = Backend.getReplayConfig().getDelay();
+            delay = Backend.replayConfig.getDelay();
         }
 
         String speedupString = params.get("speedup");
@@ -59,7 +59,7 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
                 return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a positive float number.");
             }
         } else {
-            speedup = Backend.getReplayConfig().getSpeedup();
+            speedup = Backend.replayConfig.getSpeedup();
         }
 
         Backend.setReplayCount(count);
@@ -75,7 +75,7 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
     }
 
     @SuppressWarnings("unused")
-    private static class ResponseMessage {
+    private static final class ResponseMessage {
         private long count;
         private long delay;
         private float speedup;

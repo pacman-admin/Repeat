@@ -17,7 +17,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHandler {
+public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUIHttpHandler {
 
 	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 

@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 @SuppressWarnings("DanglingJavadoc")
 public class MainFrontEnd {
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
+
     static {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -32,15 +33,12 @@ public class MainFrontEnd {
             System.exit(2);
         }
         /*************************************************************************************/
-        /********************************Load configs****************************/
-        //Backend backEnd = new Backend();
-        /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        GlobalListenerHookController.initialize(Program.config.isUseJavaAwtToGetMousePosition());
+        GlobalListenerHookController.initialize(Backend.config.isUseJavaAwtToGetMousePosition());
         /*************************************************************************************/
         /********************************Start main program***********************************/
         try {
-            Program.keysManager.startGlobalListener();
+            Backend.keysManager.startGlobalListener();
         } catch (Exception e) {
             LOGGER.severe("Could not start global event listener!\n" + e);
         }

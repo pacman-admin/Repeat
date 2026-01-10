@@ -8,7 +8,7 @@ import utilities.OSIdentifier;
 public class MenuUseClipboardToTypeStringActionHandler extends AbstractBooleanConfigHttpHandler {
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
-        Backend.getConfig().setUseClipboardToTypeString(value && OSIdentifier.getCurrentOS().isClipboardSupported);
+        Backend.config.setUseClipboardToTypeString(value && OSIdentifier.getCurrentOS().isClipboardSupported);
         return emptySuccessResponse(exchange);
     }
 }

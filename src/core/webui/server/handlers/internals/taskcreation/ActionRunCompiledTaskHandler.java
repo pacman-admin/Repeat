@@ -6,7 +6,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttpHandler {
+public final class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttpHandler {
 
     public ActionRunCompiledTaskHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);

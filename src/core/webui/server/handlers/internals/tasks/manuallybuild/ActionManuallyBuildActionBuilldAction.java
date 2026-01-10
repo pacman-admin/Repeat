@@ -13,7 +13,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.util.Map;
 
 @SuppressWarnings("SpellCheckingInspection")
-public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodHttpHandler {
+public final class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodHttpHandler {
 
     private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 

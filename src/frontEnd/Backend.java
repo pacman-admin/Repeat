@@ -21,6 +21,7 @@ package frontEnd;
 import core.config.Config;
 import core.controller.Core;
 import core.ipc.IPCServiceManager;
+import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.Language;
@@ -29,33 +30,91 @@ import core.languageHandler.compiler.DynamicCompilationResult;
 import core.languageHandler.compiler.DynamicCompilerOutput;
 import core.recorder.Recorder;
 import core.recorder.ReplayConfig;
-import core.userDefinedTask.TaskGroup;
-import core.userDefinedTask.TaskGroupManager;
-import core.userDefinedTask.TaskSourceManager;
-import core.userDefinedTask.UserDefinedAction;
+import core.userDefinedTask.*;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
+import staticResources.BootStrapResources;
 import utilities.Desktop;
 import utilities.FileUtility;
 import utilities.Function;
 import utilities.logging.CompositeOutputStream;
+import utilities.logging.LogHolder;
 
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
+import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static core.userDefinedTask.TaskGroupManager.*;
-import static frontEnd.Program.*;
 
 @SuppressWarnings("DanglingJavadoc")
 public final class Backend {
+    public static final LogHolder logHolder = new LogHolder();
+    public static final Config config = Config.loadFromFile();
+    public static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
+    public static final ActionExecutor actionExecutor = new ActionExecutor(Core.local(config));
+    public static final GlobalEventsManager keysManager = new GlobalEventsManager(config, actionExecutor);
+    public static final Recorder recorder = new Recorder(Core.local(config));
+
+    private static final Logger LOGGER = Logger.getLogger(Backend.class.getName());
+    private static final UserDefinedAction switchRecord = new UserDefinedAction() {
+        @Override
+        public void action(Core controller) {
+            Backend.switchRecord();
+        }
+    };
+    private static final UserDefinedAction switchReplay = new UserDefinedAction() {
+        @Override
+        public void action(Core controller) {
+            Backend.switchReplay();
+        }
+    };
+    private static final UserDefinedAction switchReplayCompiled = new UserDefinedAction() {
+        @Override
+        public void action(Core controller) {
+            Backend.switchRunningCompiledAction();
+        }
+    };
+
+    public static Language compilingLanguage = Language.MANUAL_BUILD;
+    public static ReplayConfig replayConfig = ReplayConfig.of();
+    public static RunActionConfig runActionConfig = RunActionConfig.of();
+
+    private static boolean isRecording, isReplaying, isRunningCompiledTask;
+    private static File currentTempFile;
+    private static MinimizedFrame trayIcon;
+    private static Thread compiledExecutor;
+    private static UserDefinedAction customFunction;
+
+    static {
+        TaskProcessorManager.setProcessorIdentifyCallback(new Function<>() {
+            @Override
+            public Void apply(Language language) {
+                Backend.recompiledNativeTasks(language);
+                return null;
+            }
+        });
+        if (!SystemTray.isSupported()) {
+            LOGGER.warning("System tray is not supported.");
+        }
+        try {
+            LOGGER.info("Adding tray icon...");
+            trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE);
+            LOGGER.info("Tray Icon added");
+        } catch (Exception e) {
+            LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
+        }
+        trayIcon.add();
+    }
+
     private Backend() {
 
     }
@@ -832,14 +891,6 @@ public final class Backend {
     }
 
     /***************************************Generic Getters and Setters*******************************************/
-    public static Recorder getRecorder() {
-        return recorder;
-    }
-
-    public static Config getConfig() {
-        return config;
-    }
-
     public static Core getCore() {
         return Core.local(config);
     }
@@ -848,24 +899,12 @@ public final class Backend {
         return isRecording;
     }
 
-    public static ReplayConfig getReplayConfig() {
-        return replayConfig;
-    }
-
     public static synchronized boolean isReplaying() {
         return isReplaying;
     }
 
     public static synchronized boolean isRunningCompiledAction() {
         return isRunningCompiledTask;
-    }
-
-    public static ActionExecutor getActionExecutor() {
-        return actionExecutor;
-    }
-
-    public static GlobalEventsManager getKeysManager() {
-        return keysManager;
     }
 
     public static String getLogs() {

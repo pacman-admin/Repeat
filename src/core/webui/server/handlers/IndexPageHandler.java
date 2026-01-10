@@ -40,7 +40,7 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
-		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(Backend.getReplayConfig()));
+		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(Backend.replayConfig));
 		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(Backend.getRunActionConfig()));
 
 		TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
@@ -50,7 +50,7 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 		data.put("tooltips", new TooltipsIndexPage());
 
 		data.put("executionTime", getExecutionTime());
-		data.put("config", new RenderedConfig(Backend.getConfig(), Backend.getRecorder()));
+		data.put("config", new RenderedConfig(Backend.config, Backend.recorder));
 
 		Language selectedLanguage = Backend.getSelectedLanguage();
 		List<RenderedCompilingLanguage> languages = new ArrayList<>();

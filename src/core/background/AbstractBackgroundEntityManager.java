@@ -27,7 +27,7 @@ public abstract class AbstractBackgroundEntityManager<T> {
     //Clean up after 1 hour
     private static final long MAX_TIME_UNUSED_MS = 60L * 60L * 1000L;
     private static final long CLEAN_UP_PERIOD_SECOND = 1;
-    protected Map<String, T> entities;
+    protected final Map<String, T> entities;
     private ScheduledThreadPoolExecutor executor;
     private final Map<String, Long> lastUsed;
 

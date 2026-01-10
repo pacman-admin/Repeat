@@ -12,7 +12,7 @@ import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildAct
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionFeModel.MouseAction;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionManuallyBuildActionParametersPlaceHolderHandler extends AbstractSingleMethodHttpHandler {
+public final class ActionManuallyBuildActionParametersPlaceHolderHandler extends AbstractSingleMethodHttpHandler {
 
 	public ActionManuallyBuildActionParametersPlaceHolderHandler() {
 		super(AbstractSingleMethodHttpHandler.GET_METHOD);
