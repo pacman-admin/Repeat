@@ -181,29 +181,34 @@ public class MainBackEndHolder {
     /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
 
-    public void scheduleExit() {
+    public void scheduleExit(long delay) {
         actionExecutor.haltAllTasks();
 
         GlobalListenerHookController.cleanup();
 
-        LOGGER.info("Writing config file...");
-        if (!writeConfigFile()) {
-            LOGGER.log(Level.SEVERE, "Error saving configuration file.");
-            return;
-        }
-        LOGGER.info("Wrote config file.");
+        new Timer("Delayed exit Timer").schedule(new TimerTask() {
+            @Override
+            public void run() {
+                LOGGER.info("Writing config file...");
+                if (!writeConfigFile()) {
+                    LOGGER.log(Level.SEVERE, "Error saving configuration file.");
+                    return;
+                }
+                LOGGER.info("Wrote config file.");
 
-        if (trayIcon != null) {
-            trayIcon.remove();
-        }
+                if (trayIcon != null) {
+                    trayIcon.remove();
+                }
 
-        try {
-            IPCServiceManager.stopServices();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
-        }
-        System.out.println("Goodbye");
-        System.exit(0);
+                try {
+                    IPCServiceManager.stopServices();
+                } catch (IOException e) {
+                    LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
+                }
+                System.out.println("Goodbye");
+                System.exit(0);
+            }
+        }, delay);
     }
 
     /*************************************************************************************************************/
