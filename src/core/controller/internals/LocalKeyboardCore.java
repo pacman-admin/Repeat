@@ -2,7 +2,6 @@ package core.controller.internals;
 
 import core.config.Config;
 import core.userDefinedTask.Clipboard;
-import core.userDefinedTask.Tools;
 import utilities.Function;
 import utilities.OSIdentifier;
 
@@ -63,7 +62,7 @@ public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
     }
 
     private void pasteString(String s) {
-        Tools.setClipboard(s);
+        Clipboard.set(s);
         switch (OSIdentifier.getCurrentOS()) {
             case MAC:
                 press(KeyEvent.VK_META, KeyEvent.VK_V);
