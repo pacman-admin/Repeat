@@ -20,7 +20,6 @@ public class MainFrontEnd {
                  UnsupportedLookAndFeelException e) {
             LOGGER.warning("Error while setting theme to system theme.\n" + e);
         }
-        LOGGER.info("Successfully set theme to system theme.");
     }
 
     public static void run() {

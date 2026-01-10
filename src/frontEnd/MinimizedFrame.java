@@ -52,20 +52,9 @@ class MinimizedFrame extends TrayIcon {
                  UnsupportedLookAndFeelException e) {
             LOGGER.warning("Error while setting theme to system theme.\n" + e);
         }
-        LOGGER.info("Successfully set theme to system theme.");
     }
 
     private void show() {
-//        if (!Desktop.isDesktopSupported()) {
-//            LOGGER.warning("Cannot open UI in browser; Desktop module is not supported.");
-//        }
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-            LOGGER.warning("Error while setting theme to system theme.\n" + e);
-        }
-        LOGGER.info("Successfully set theme to system theme.");
         IIPCService server = IPCServiceManager.getUIServer();
         try {
             Desktop.getDesktop().browse(new URI("http://localhost:" + server.getPort()));
@@ -81,7 +70,6 @@ class MinimizedFrame extends TrayIcon {
                  UnsupportedLookAndFeelException e) {
             LOGGER.warning("Error while setting theme to system theme.\n" + e);
         }
-        LOGGER.info("Successfully set theme to system theme.");
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.add(this);
@@ -100,6 +88,6 @@ class MinimizedFrame extends TrayIcon {
     }
 
     private void exit() {
-        backEnd.scheduleExit(10);
+        backEnd.scheduleExit(15);
     }
 }
