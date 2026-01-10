@@ -17,11 +17,9 @@ class MinimizedFrame extends TrayIcon {
 
     private static final Logger LOGGER = Logger.getLogger(MinimizedFrame.class.getName());
 
-    private final MainBackEndHolder backEnd;
 
-    public MinimizedFrame(Image image, final MainBackEndHolder backEnd) {
+    public MinimizedFrame(Image image) {
         super(image);
-        this.backEnd = backEnd;
 
         PopupMenu trayPopupMenu = new PopupMenu();
 
@@ -88,6 +86,6 @@ class MinimizedFrame extends TrayIcon {
     }
 
     private void exit() {
-        backEnd.scheduleExit(15);
+        Backend.scheduleExit(15);
     }
 }

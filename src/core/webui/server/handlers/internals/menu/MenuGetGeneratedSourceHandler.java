@@ -10,6 +10,7 @@ import core.webui.server.handlers.AbstractTaskSourceCodeHandler;
 import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler;
 import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler.RenderException;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -21,15 +22,15 @@ public class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeHandler
 
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        String source = backEndHolder.generateSource();
+        String source = Backend.generateSource();
         if (source == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to generate source code.");
         }
 
-        Language language = backEndHolder.getSelectedLanguage();
+        Language language = Backend.getSelectedLanguage();
         UserDefinedAction action = null;
         if (language == Language.MANUAL_BUILD) {
-            DynamicCompilationResult compilationResult = backEndHolder.getCompiler().compile(source);
+            DynamicCompilationResult compilationResult = Backend.getCompiler().compile(source);
             if (compilationResult.output() != DynamicCompilerOutput.COMPILATION_SUCCESS) {
                 return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
             }

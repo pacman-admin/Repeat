@@ -4,6 +4,7 @@ import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedConfig;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -20,7 +21,7 @@ public class MenuGetDebugLevelOptionsActionHandler extends AbstractUIHttpHandler
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        data.put("config", new RenderedConfig(backEndHolder.getConfig(), backEndHolder.getRecorder()));
+        data.put("config", new RenderedConfig(Backend.getConfig(), Backend.getRecorder()));
         return renderedPage(exchange, "fragments/debug_levels", data);
     }
 }

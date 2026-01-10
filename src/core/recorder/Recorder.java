@@ -19,7 +19,6 @@
 package core.recorder;
 
 import core.controller.Core;
-import core.controller.CoreProvider;
 import core.languageHandler.Language;
 import core.languageHandler.sourceGenerator.AbstractSourceGenerator;
 import core.languageHandler.sourceGenerator.AbstractSourceGenerator.Device;
@@ -41,28 +40,21 @@ public class Recorder {
     public static final int MODE_MOUSE_CLICK_ONLY = 1;
 
     private static final float NO_SPEEDUP = 1f;
+    private final TaskScheduler taskScheduler;
+    private final AbstractGlobalKeyListener keyListener;
+    private final AbstractGlobalMouseListener mouseListener;
+    private final HashMap<Language, AbstractSourceGenerator> sourceGenerators;
     private float speedup;
-
     private long startTime;
     private int mode;
 
-    private final TaskScheduler taskScheduler;
-
-    private final AbstractGlobalKeyListener keyListener;
-    private final AbstractGlobalMouseListener mouseListener;
-
-    private final HashMap<Language, AbstractSourceGenerator> sourceGenerators;
-
-    public Recorder(CoreProvider coreProvider) {
-        final Core controller = coreProvider.getLocal();
+    public Recorder(final Core controller) {
         taskScheduler = new TaskScheduler();
 
         speedup = NO_SPEEDUP;
 
         sourceGenerators = new HashMap<>();
         sourceGenerators.put(Language.JAVA, new JavaSourceGenerator());
-        //sourceGenerators.put(Language.PYTHON, new PythonSourceGenerator());
-        //sourceGenerators.put(Language.CSHARP, new CSharpSourceGenerator());
         sourceGenerators.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
 
         /*************************************************************************************************/

@@ -5,7 +5,7 @@ import core.webui.server.handlers.AbstractBooleanGETHandler;
 public class GetIsActiveWindowInfosLoggingEnabledHandler extends AbstractBooleanGETHandler {
     @Override
     protected boolean handle() {
-//        return backEndHolder.isActiveWindowInfosLoggingEnabled();
+//        return Backend.isActiveWindowInfosLoggingEnabled();
         return false;
     }
 }

@@ -10,6 +10,7 @@ import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedMatchingOptionSelection;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -63,13 +64,13 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
             return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
         }
 
-        UserDefinedAction task = CommonTask.getTaskFromId(backEndHolder, taskString);
+        UserDefinedAction task = CommonTask.getTaskFromId( taskString);
         if (task == null) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot get task from request.");
         }
 
         ActionInvoker activation = constructor.getActivation();
-        if (!backEndHolder.changeHotkeyTask(task, activation)) {
+        if (!Backend.changeHotkeyTask(task, activation)) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot change task activation.");
         }
         TaskExecutionPreconditions preconditions = getTaskExecutionPreconditions(params);
@@ -124,22 +125,22 @@ public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
         switch (taskString) {
             case TaskDetailsPageHandler.RECORD_TASK_NAME -> {
-                backEndHolder.getConfig().setRECORD(hotKey);
-                backEndHolder.reconfigureSwitchRecord();
+                Backend.getConfig().setRECORD(hotKey);
+                Backend.reconfigureSwitchRecord();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.REPLAY_TASK_NAME -> {
-                backEndHolder.getConfig().setREPLAY(hotKey);
-                backEndHolder.reconfigureSwitchReplay();
+                Backend.getConfig().setREPLAY(hotKey);
+                Backend.reconfigureSwitchReplay();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.RUN_COMPILED_TASK_NAME -> {
-                backEndHolder.getConfig().setCOMPILED_REPLAY(hotKey);
-                backEndHolder.reconfigureSwitchCompiledReplay();
+                Backend.getConfig().setCOMPILED_REPLAY(hotKey);
+                Backend.reconfigureSwitchCompiledReplay();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME -> {
-                backEndHolder.getConfig().setMOUSE_GESTURE(hotKey);
+                Backend.getConfig().setMOUSE_GESTURE(hotKey);
                 return emptySuccessResponse(exchange);
             }
         }

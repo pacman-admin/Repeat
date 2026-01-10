@@ -35,7 +35,7 @@ public class ActionSwitchTaskGroupHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Render parameter only takes `tasks` or `groups`.");
         }
 
-        TaskGroup newCurrent = CommonTask.getTaskGroupFromRequest(backEndHolder, params, false);
+        TaskGroup newCurrent = CommonTask.getTaskGroupFromRequest( params, false);
         if (newCurrent == null) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot get task group from request.");
         }

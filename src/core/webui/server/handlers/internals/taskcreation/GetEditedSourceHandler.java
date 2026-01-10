@@ -16,6 +16,7 @@
 package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractGETHandler;
+import frontEnd.Backend;
 
 public final class GetEditedSourceHandler extends AbstractGETHandler {
     public GetEditedSourceHandler() {
@@ -23,6 +24,6 @@ public final class GetEditedSourceHandler extends AbstractGETHandler {
     }
 
     protected String handle() {
-        return backEndHolder.reloadSource();
+        return Backend.reloadSource();
     }
 }

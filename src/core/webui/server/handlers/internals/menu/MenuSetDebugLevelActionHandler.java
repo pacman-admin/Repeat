@@ -3,6 +3,7 @@ package core.webui.server.handlers.internals.menu;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.server.handlers.renderedobjects.RenderedDebugLevel;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import utilities.NumberUtility;
 
@@ -29,7 +30,7 @@ public class MenuSetDebugLevelActionHandler extends AbstractPOSTHandler {
 
         int levelIndex = Integer.parseInt(levelString);
         Level level = RenderedDebugLevel.LEVELS[Math.min(levelIndex, RenderedDebugLevel.LEVELS.length - 1)];
-        backEndHolder.changeDebugLevel(level);
+        Backend.changeDebugLevel(level);
         return "Successfully set debug output level";
     }
 }

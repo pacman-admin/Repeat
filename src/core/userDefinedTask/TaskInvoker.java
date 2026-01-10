@@ -1,6 +1,6 @@
 package core.userDefinedTask;
 
-import core.controller.CoreProvider;
+import core.controller.Core;
 import core.keyChain.ActionInvoker;
 
 import java.util.logging.Logger;
@@ -14,10 +14,10 @@ public class TaskInvoker {
 
     private static final Logger LOGGER = Logger.getLogger(TaskInvoker.class.getName());
 
-    private final CoreProvider coreProvider;
+    private final Core core;
 
-    public TaskInvoker(CoreProvider coreProvider) {
-        this.coreProvider = coreProvider;
+    public TaskInvoker(final Core controller) {
+        this.core = controller;
         LOGGER.info("Created TaskInvoker");
     }
 
@@ -86,6 +86,6 @@ public class TaskInvoker {
     private void execute(UserDefinedAction action, ActionInvoker activation) throws InterruptedException {
         LOGGER.info("Executing task: " + action.getName());
         action.setInvoker(activation);
-        action.trackedAction(coreProvider.get());
+        action.trackedAction(core);
     }
 }

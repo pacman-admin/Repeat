@@ -27,7 +27,7 @@ public class ActionMoveTaskGroupUpHandler extends AbstractUIHttpHandler {
 		if (params == null) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data.");
 		}
-		String id = CommonTask.getTaskGroupIdFromRequest(backEndHolder, params);
+		String id = CommonTask.getTaskGroupIdFromRequest( params);
 		if (id == null || id.isBlank()) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task group from request data.");
 		}

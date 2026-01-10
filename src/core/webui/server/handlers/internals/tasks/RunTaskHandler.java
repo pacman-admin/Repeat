@@ -24,6 +24,7 @@ import core.userDefinedTask.internals.ActionExecutionRequest;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import utilities.NumberUtility;
 
@@ -45,7 +46,7 @@ public class RunTaskHandler extends AbstractPOSTHandler {
             throw new IllegalArgumentException("Unable to parse POST request parameters.");
         }
         String id = requestData.getId();
-        RunActionConfig runConfig = backEndHolder.getRunActionConfig();
+        RunActionConfig runConfig = Backend.getRunActionConfig();
         ActionExecutionRequest executionRequest = ActionExecutionRequest.of(runConfig.getRepeatCount(), runConfig.getDelayMsBetweenRepeats());
 
         if (requestData.getRunConfig() != null) { // Custom run config is provided.
@@ -63,11 +64,11 @@ public class RunTaskHandler extends AbstractPOSTHandler {
             executionRequest = ActionExecutionRequest.of(repeatCount, delayMs);
         }
 
-        UserDefinedAction action = backEndHolder.getTask(id);
+        UserDefinedAction action = Backend.getTask(id);
         if (action == null) {
             throw new NullPointerException("No such task with ID " + id + ".");
         }
-        backEndHolder.getActionExecutor().startExecutingAction(executionRequest, action);
+        Backend.getActionExecutor().startExecutingAction(executionRequest, action);
         return id;
     }
 }

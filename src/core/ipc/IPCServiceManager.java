@@ -3,7 +3,7 @@ package core.ipc;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import core.webui.server.UIServer;
-import frontEnd.MainBackEndHolder;
+import frontEnd.Backend;
 
 import java.io.IOException;
 import java.util.List;
@@ -36,8 +36,8 @@ public final class IPCServiceManager {
         return JsonNodeFactories.array(JsonNodeFactories.object(JsonNodeFactories.field("name", JsonNodeFactories.string("web_ui_server")), JsonNodeFactories.field("config", UI_SERVER.getSpecificConfig())));
     }
 
-    public static void initiateServices(MainBackEndHolder backEndHolder) throws IOException {
-        UI_SERVER.start(backEndHolder);
+    public static void initiateServices() throws IOException {
+        UI_SERVER.start();
     }
 
     public static IIPCService getUIServer() {

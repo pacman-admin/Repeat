@@ -19,6 +19,7 @@
 package core.webui.server.handlers;
 
 import core.languageHandler.Language;
+import frontEnd.Backend;
 import staticResources.BootStrapResources;
 
 public class ApiPageHandler extends AbstractGETHandler {
@@ -29,7 +30,7 @@ public class ApiPageHandler extends AbstractGETHandler {
 
     @Override
     protected String handle() {
-        Language selected = backEndHolder.getSelectedLanguage();
+        Language selected = Backend.getSelectedLanguage();
         if (selected == Language.MANUAL_BUILD) throw new NullPointerException("The manual build compiler has no API.");
         return BootStrapResources.getAPI(selected);
     }

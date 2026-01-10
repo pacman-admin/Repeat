@@ -2,6 +2,7 @@ package core.webui.server.handlers.internals.menu;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 
 import java.io.File;
@@ -28,7 +29,7 @@ public class MenuImportTaskActionHandler extends AbstractPOSTHandler {
         if (!Files.isRegularFile(Paths.get(path))) {
             throw new IllegalArgumentException("Path '" + path + "' is not a file.");
         }
-        backEndHolder.importTasks(new File(path));
+        Backend.importTasks(new File(path));
         return "";
     }
 }

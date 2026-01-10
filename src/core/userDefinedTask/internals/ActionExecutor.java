@@ -1,6 +1,6 @@
 package core.userDefinedTask.internals;
 
-import core.controller.CoreProvider;
+import core.controller.Core;
 import core.userDefinedTask.UserDefinedAction;
 import utilities.RandomUtil;
 
@@ -13,15 +13,14 @@ import java.util.logging.Logger;
 public class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
-    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 1;
+    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 3;
 
     private final HashMap<String, Thread> executions;
-    private final CoreProvider coreProvider;
-    //private static final ExecutorService actionHandler = newSingleThreadExecutor();
+    private final Core core;
 
-    public ActionExecutor(CoreProvider coreProvider) {
-        this.coreProvider = coreProvider;
-        this.executions = new HashMap<>(1);
+    public ActionExecutor(Core controller) {
+        this.core = controller;
+        this.executions = new HashMap<>();
     }
 
     /**
@@ -47,7 +46,7 @@ public class ActionExecutor {
      * @param action  action to execute
      */
     public void startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
-        if (executions.size() > MAX_SIMULTANEOUS_EXECUTIONS) {
+        if (executions.size() >= MAX_SIMULTANEOUS_EXECUTIONS) {
             //LOGGER.info("Cannot run more than " + MAX_SIMULTANEOUS_EXECUTIONS + " tasks simultaneously.");
             return;
         }
@@ -58,7 +57,7 @@ public class ActionExecutor {
         Thread execution = new Thread(() -> {
             try {
                 for (int i = 0; i < request.getRepeatCount(); i++) {
-                    action.trackedAction(coreProvider.get());
+                    action.trackedAction(core);
                     Thread.sleep(request.getDelayMsBetweenRepeat());
                 }
             } catch (InterruptedException e) {

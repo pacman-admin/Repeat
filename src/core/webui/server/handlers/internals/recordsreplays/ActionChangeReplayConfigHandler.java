@@ -3,6 +3,7 @@ package core.webui.server.handlers.internals.recordsreplays;
 import argo.jdom.JsonNode;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.NumberUtility;
@@ -35,7 +36,7 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
             }
             count = Long.parseLong(countString);
         } else {
-            count = backEndHolder.getReplayConfig().getCount();
+            count = Backend.getReplayConfig().getCount();
         }
 
         String delayString = params.get("delay");
@@ -45,7 +46,7 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
             }
             delay = Long.parseLong(delayString);
         } else {
-            delay = backEndHolder.getReplayConfig().getDelay();
+            delay = Backend.getReplayConfig().getDelay();
         }
 
         String speedupString = params.get("speedup");
@@ -58,12 +59,12 @@ public class ActionChangeReplayConfigHandler extends AbstractSingleMethodHttpHan
                 return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a positive float number.");
             }
         } else {
-            speedup = backEndHolder.getReplayConfig().getSpeedup();
+            speedup = Backend.getReplayConfig().getSpeedup();
         }
 
-        backEndHolder.setReplayCount(count);
-        backEndHolder.setReplayDelay(delay);
-        backEndHolder.setReplaySpeedup(speedup);
+        Backend.setReplayCount(count);
+        Backend.setReplayDelay(delay);
+        Backend.setReplaySpeedup(speedup);
 
         JsonNode responseNode = Jsonizer.jsonize(ResponseMessage.of(count, delay, speedup));
         if (responseNode == null) {

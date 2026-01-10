@@ -2,6 +2,7 @@ package core.webui.server.handlers.internals.tasks;
 
 import java.util.Map;
 
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -30,13 +31,13 @@ public class SetSelectedTaskHandler extends AbstractTaskSourceCodeHandler {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Task ID must be provided.");
 		}
 
-		UserDefinedAction action = backEndHolder.getTask(taskId);
+		UserDefinedAction action = Backend.getTask(taskId);
 		Language language = action.getCompiler();
 
 
 		try {
 			JsonNode data = taskSourceCodeFragmentHandler.render(language, action.getSource(), action);
-			backEndHolder.setCompilingLanguage(language);
+			Backend.setCompilingLanguage(language);
 			return HttpServerUtilities.prepareJsonResponse(exchange, 200, data);
 		} catch (RenderException e) {
 			return HttpServerUtilities.prepareTextResponse(exchange, 500, "Failed to render page: " + e.getMessage());

@@ -2,6 +2,7 @@ package core.webui.server.handlers.internals.menu;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -26,19 +27,19 @@ public class MenuSetCompilerPathActionHandler extends AbstractSingleMethodHttpHa
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path must be provided.");
         }
 
-        if (!backEndHolder.getCompiler().canSetPath()) {
+        if (!Backend.getCompiler().canSetPath()) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Path cannot be set for current compiler.");
         }
 
-        if (!backEndHolder.getCompiler().setPath(new File(path))) {
+        if (!Backend.getCompiler().setPath(new File(path))) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot set path '" + path + "' for current compiler.");
         }
 
         /*
 
-        Language language = backEndHolder.getSelectedLanguage();
+        Language language = Backend.getSelectedLanguage();
         if (language == Language.PYTHON) {
-            File pythonExecutable = ((PythonRemoteCompiler) (backEndHolder.getConfig().getCompilerFactory()).getNativeCompiler(Language.PYTHON)).getPath();
+            File pythonExecutable = ((PythonRemoteCompiler) (Backend.getConfig().getCompilerFactory()).getNativeCompiler(Language.PYTHON)).getPath();
             ((PythonIPCClientService) IPCServiceManager.getIPCService(IPCServiceName.PYTHON)).setExecutingProgram(pythonExecutable);
         }*/
 

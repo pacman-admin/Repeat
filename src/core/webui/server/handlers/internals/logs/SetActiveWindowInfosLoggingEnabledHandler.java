@@ -27,7 +27,7 @@
 //		String enabledString = params.get("enabled");
 //		boolean enabled = enabledString.equals("" + true);
 //
-//		backEndHolder.setEnabledActiveWindowInfosLogging(enabled);
+//		Backend.setEnabledActiveWindowInfosLogging(enabled);
 //		return emptySuccessResponse(exchange);
 //	}
 //}

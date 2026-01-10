@@ -5,6 +5,7 @@ import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
@@ -35,8 +36,8 @@ public class ActionManuallyBuildActionBuilldAction extends AbstractSingleMethodH
 
         ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
         String source = constructor.generateSource();
-        backEndHolder.setCompilingLanguage(Language.MANUAL_BUILD);
-        if (!backEndHolder.compileSourceAndSetCurrent(source, null)) {
+        Backend.setCompilingLanguage(Language.MANUAL_BUILD);
+        if (!Backend.compileSourceAndSetCurrent(source, null)) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
         }
         return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");

@@ -5,6 +5,7 @@ import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -29,7 +30,7 @@ public class ActionOverwriteTaskHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task from request data.");
         }
 
-        backEndHolder.overwriteTask(taskId);
+        Backend.overwriteTask(taskId);
         return renderedTaskForGroup(exchange);
     }
 }

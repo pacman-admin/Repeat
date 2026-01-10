@@ -7,7 +7,7 @@ import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
 import core.languageHandler.compiler.AbstractNativeCompiler;
 import core.userDefinedTask.UserDefinedAction;
-import frontEnd.MainBackEndHolder;
+import frontEnd.Backend;
 import utilities.FileUtility;
 import utilities.json.JSONUtility;
 
@@ -25,9 +25,9 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(ServerTaskRequestProcessor.class.getName());
 
-    private final MainBackEndHolder backEnd;
+    private final Backend backEnd;
 
-    public ServerTaskRequestProcessor(MainBackEndHolder backEnd, MainMessageSender messageSender) {
+    public ServerTaskRequestProcessor(Backend backEnd, MainMessageSender messageSender) {
         super(messageSender);
         this.backEnd = backEnd;
     }
@@ -111,7 +111,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
         UserDefinedAction existingAction = null;
         if (!previousId.isBlank()) {
-            existingAction = backEnd.getTask(previousId);
+            existingAction = Backend.getTask(previousId);
         }
         if (existingAction != null) {
             ClientTask response = ClientTask.of(existingAction.getActionId(), existingAction.getSourcePath());
@@ -138,7 +138,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
             return null;
         }
 
-        backEnd.addRemoteCompiledTask(action);
+        Backend.addRemoteCompiledTask(action);
         return action;
     }
 
@@ -160,7 +160,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     private void runTask(String id, ActionInvoker actionInvoker) {
-        UserDefinedAction action = backEnd.getTask(id);
+        UserDefinedAction action = Backend.getTask(id);
         if (action == null) {
             LOGGER.warning("No server action with ID " + id + " found.");
             return;
@@ -168,7 +168,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
         action.setInvoker(actionInvoker);
         try {
-            action.trackedAction(backEnd.getCoreProvider().getLocal());
+            action.trackedAction(backEnd.getCore());
         } catch (InterruptedException e) {
             LOGGER.log(Level.WARNING, "Interrupted while executing action.", e);
         }
@@ -185,7 +185,7 @@ class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     private void removeTask(String id) {
-        backEnd.removeTask(id);
+        Backend.removeTask(id);
     }
 
     @Override

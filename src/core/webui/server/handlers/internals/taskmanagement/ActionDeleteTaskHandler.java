@@ -3,6 +3,7 @@ package core.webui.server.handlers.internals.taskmanagement;
 import java.io.IOException;
 import java.util.Map;
 
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -31,7 +32,7 @@ public class ActionDeleteTaskHandler extends AbstractUIHttpHandler {
 			return HttpServerUtilities.prepareTextResponse(exchange, 400, "Cannot find task from request data.");
 		}
 
-		backEndHolder.removeCurrentTask(taskId);
+		Backend.removeCurrentTask(taskId);
 		return renderedTaskForGroup(exchange);
 	}
 }

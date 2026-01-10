@@ -26,7 +26,7 @@
 //        String enabledString = params.get("enabled");
 //        boolean enabled = enabledString.equals("" + true);
 //
-//        backEndHolder.setEnabledMousePositionLogging(enabled);
+//        Backend.setEnabledMousePositionLogging(enabled);
 //        return emptySuccessResponse(exchange);
 //    }
 //}

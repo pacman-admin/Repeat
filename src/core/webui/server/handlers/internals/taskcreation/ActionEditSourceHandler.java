@@ -17,6 +17,7 @@ package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 
 import java.nio.charset.StandardCharsets;
@@ -29,7 +30,7 @@ public final class ActionEditSourceHandler extends AbstractPOSTHandler {
     protected String handle(HttpRequest request) {
         byte[] data = HttpServerUtilities.getPostContent(request);
         if (data == null) throw new IllegalArgumentException("Source code may not be null.");
-        backEndHolder.editSource(new String(data, StandardCharsets.UTF_8));
+        Backend.editSource(new String(data, StandardCharsets.UTF_8));
         return "Opened source code in default editor.";
     }
 }

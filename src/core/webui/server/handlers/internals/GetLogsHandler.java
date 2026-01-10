@@ -19,6 +19,7 @@
 package core.webui.server.handlers.internals;
 
 import core.webui.server.handlers.AbstractGETHandler;
+import frontEnd.Backend;
 
 public class GetLogsHandler extends AbstractGETHandler {
 
@@ -28,6 +29,6 @@ public class GetLogsHandler extends AbstractGETHandler {
 
     @Override
     protected String handle() {
-        return backEndHolder.getLogs();
+        return Backend.getLogs();
     }
 }

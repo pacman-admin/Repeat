@@ -23,6 +23,7 @@ import core.userDefinedTask.internals.RunActionConfig;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.internals.tasks.RunTaskRequest.RunConfig;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.NumberUtility;
@@ -54,7 +55,7 @@ public class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
         }
         long delayMs = Long.parseLong(delayMsString);
 
-        backEndHolder.setRunActionConfig(RunActionConfig.of(repeatCount, delayMs));
+        Backend.setRunActionConfig(RunActionConfig.of(repeatCount, delayMs));
         return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }
 }

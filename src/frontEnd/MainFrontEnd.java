@@ -33,27 +33,27 @@ public class MainFrontEnd {
         }
         /*************************************************************************************/
         /********************************Load configs****************************/
-        MainBackEndHolder backEnd = new MainBackEndHolder();
+        //Backend backEnd = new Backend();
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        GlobalListenerHookController.initialize(backEnd.getConfig().isUseJavaAwtToGetMousePosition());
+        GlobalListenerHookController.initialize(Program.config.isUseJavaAwtToGetMousePosition());
         /*************************************************************************************/
         /********************************Start main program***********************************/
         try {
-            backEnd.keysManager.startGlobalListener();
+            Program.keysManager.startGlobalListener();
         } catch (Exception e) {
             LOGGER.severe("Could not start global event listener!\n" + e);
         }
 
-        backEnd.configureMainHotkeys();
+        Backend.configureMainHotkeys();
         /*************************************************************************************/
-        backEnd.renderTaskGroup();
+        Backend.renderTaskGroup();
 
         /*************************************************************************************/
-        backEnd.initializeLogging();
+        Backend.initializeLogging();
 
         try {
-            IPCServiceManager.initiateServices(backEnd);
+            IPCServiceManager.initiateServices();
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
         } catch (Exception e) {

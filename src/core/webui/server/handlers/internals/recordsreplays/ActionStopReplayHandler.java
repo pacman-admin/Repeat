@@ -1,5 +1,6 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -14,7 +15,7 @@ public class ActionStopReplayHandler extends AbstractSingleMethodHttpHandler {
 
 	@Override
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-		backEndHolder.stopReplay();
+		Backend.stopReplay();
 		return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
 	}
 }

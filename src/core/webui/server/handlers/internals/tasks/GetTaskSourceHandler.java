@@ -20,6 +20,7 @@ package core.webui.server.handlers.internals.tasks;
 
 import core.userDefinedTask.UserDefinedAction;
 import core.webui.server.handlers.AbstractComplexGETHandler;
+import frontEnd.Backend;
 
 import java.util.Map;
 
@@ -41,11 +42,11 @@ public class GetTaskSourceHandler extends AbstractComplexGETHandler {
         if (timestampString == null || timestampString.isBlank())
             throw new IllegalArgumentException("Timestamp is empty or not provided.");
 
-        UserDefinedAction action = backEndHolder.getTask(id);
+        UserDefinedAction action = Backend.getTask(id);
         if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
 
         long timestamp = Long.parseLong(timestampString);
-        String sourceCode = backEndHolder.getSourceForTask(action, timestamp);
+        String sourceCode = Backend.getSourceForTask(action, timestamp);
         if (sourceCode == null) throw new NullPointerException("Could not find source code for Action with ID: " + id);
 
         return sourceCode;

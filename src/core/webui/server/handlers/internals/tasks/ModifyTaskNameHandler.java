@@ -27,7 +27,7 @@ public class ModifyTaskNameHandler extends AbstractUIHttpHandler {
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse POST parameters.");
 		}
-		UserDefinedAction task = CommonTask.getTaskFromRequest(backEndHolder, params);
+		UserDefinedAction task = CommonTask.getTaskFromRequest( params);
 		if (task == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get task.");
 		}

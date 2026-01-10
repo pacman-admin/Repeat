@@ -2,6 +2,7 @@ package core.webui.server.handlers.internals.menu;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -17,11 +18,11 @@ public class MenuGetCompilerPathActionHandler extends AbstractSingleMethodHttpHa
 
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        if (!backEndHolder.getCompiler().canSetPath()) {
+        if (!Backend.getCompiler().canSetPath()) {
             LOGGER.info("Current compiler does not support getting/setting path.");
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Current compiler does not support getting/setting path.");
         }
-        String result = backEndHolder.getCompiler().getPath().getAbsolutePath();
+        String result = Backend.getCompiler().getPath().getAbsolutePath();
         return HttpServerUtilities.prepareTextResponse(exchange, 200, result);
     }
 }

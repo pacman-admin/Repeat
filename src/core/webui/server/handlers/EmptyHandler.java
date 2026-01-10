@@ -7,7 +7,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public class EmptyHandler extends HttpHandlerWithBackend {
     @Override
-    protected void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    protected void handle(HttpRequest request, HttpAsyncExchange exchange) {
         HttpServerUtilities.prepareHttpResponse(exchange, 200, "Feature disabled");
     }
 }

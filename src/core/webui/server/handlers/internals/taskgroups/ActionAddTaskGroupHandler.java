@@ -3,6 +3,7 @@ package core.webui.server.handlers.internals.taskgroups;
 import java.io.IOException;
 import java.util.Map;
 
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -30,7 +31,7 @@ public class ActionAddTaskGroupHandler extends AbstractUIHttpHandler {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Group name must be provided.");
 		}
 
-		backEndHolder.addTaskGroup(name);
+		Backend.addTaskGroup(name);
 		return renderedTaskGroups(exchange);
 	}
 }

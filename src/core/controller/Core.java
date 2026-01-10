@@ -38,7 +38,7 @@ public final class Core {
         this.keyboard = keyboard;
     }
 
-    static Core local(Config config) {
+    public static Core local(Config config) {
         Robot controller = null;
         try {
             controller = new Robot();
@@ -48,10 +48,6 @@ public final class Core {
         }
 
         return new Core(new MouseCore(new LocalMouseCore(controller)), new KeyboardCore(new LocalKeyboardCore(config, controller)));
-    }
-
-    public static Core getInstance(MouseCore mouse, KeyboardCore keyboard) {
-        return new Core(mouse, keyboard);
     }
 
     /**

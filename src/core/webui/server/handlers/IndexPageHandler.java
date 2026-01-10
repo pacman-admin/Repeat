@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import core.userDefinedTask.TaskGroupManager;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -39,8 +40,8 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
-		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(backEndHolder.getReplayConfig()));
-		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(backEndHolder.getRunActionConfig()));
+		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(Backend.getReplayConfig()));
+		data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(Backend.getRunActionConfig()));
 
 		TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
 		data.put("taskGroup", RenderedTaskGroupButton.fromTaskGroups(group, TaskGroupManager.getTaskGroups()));
@@ -49,15 +50,15 @@ public class IndexPageHandler extends AbstractUIHttpHandler {
 		data.put("tooltips", new TooltipsIndexPage());
 
 		data.put("executionTime", getExecutionTime());
-		data.put("config", new RenderedConfig(backEndHolder.getConfig(), backEndHolder.getRecorder()));
+		data.put("config", new RenderedConfig(Backend.getConfig(), Backend.getRecorder()));
 
-		Language selectedLanguage = backEndHolder.getSelectedLanguage();
+		Language selectedLanguage = Backend.getSelectedLanguage();
 		List<RenderedCompilingLanguage> languages = new ArrayList<>();
 		for (Language language : Language.values()) {
 			languages.add(RenderedCompilingLanguage.forLanguage(language, language == selectedLanguage));
 		}
 		data.put("compilingLanguages", languages);
-		boolean displayManualBuild = backEndHolder.getSelectedLanguage() == Language.MANUAL_BUILD;
+		boolean displayManualBuild = Backend.getSelectedLanguage() == Language.MANUAL_BUILD;
 		data.put("displayManualBuild", displayManualBuild);
 		if (displayManualBuild) {
 			String id = manuallyBuildActionConstructorManager.addNew();

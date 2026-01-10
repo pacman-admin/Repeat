@@ -5,6 +5,7 @@ import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -23,7 +24,7 @@ public class ActionChangeTaskGroupForTaskHandler extends AbstractUIHttpHandler {
         if (params == null) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data.");
         }
-        String groupId = CommonTask.getTaskGroupIdFromRequest(backEndHolder, params);
+        String groupId = CommonTask.getTaskGroupIdFromRequest( params);
         if (groupId == null || groupId.isBlank()) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get group ID.");
         }
@@ -32,7 +33,7 @@ public class ActionChangeTaskGroupForTaskHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get task ID.");
         }
 
-        backEndHolder.changeTaskGroup(taskId, groupId);
+        Backend.changeTaskGroup(taskId, groupId);
         return renderedTaskForGroup(exchange);
     }
 }

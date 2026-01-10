@@ -20,9 +20,7 @@ package frontEnd;
 
 import core.config.Config;
 import core.controller.Core;
-import core.controller.CoreProvider;
 import core.ipc.IPCServiceManager;
-import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.Language;
@@ -31,115 +29,38 @@ import core.languageHandler.compiler.DynamicCompilationResult;
 import core.languageHandler.compiler.DynamicCompilerOutput;
 import core.recorder.Recorder;
 import core.recorder.ReplayConfig;
-import core.userDefinedTask.*;
+import core.userDefinedTask.TaskGroup;
+import core.userDefinedTask.TaskGroupManager;
+import core.userDefinedTask.TaskSourceManager;
+import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
-import staticResources.BootStrapResources;
 import utilities.Desktop;
 import utilities.FileUtility;
 import utilities.Function;
 import utilities.logging.CompositeOutputStream;
-import utilities.logging.LogHolder;
 
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.util.*;
-import java.util.List;
 import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import static core.userDefinedTask.TaskGroupManager.*;
+import static frontEnd.Program.*;
 
 @SuppressWarnings("DanglingJavadoc")
-public class MainBackEndHolder {
-    private static final Logger LOGGER = Logger.getLogger(MainBackEndHolder.class.getName());
-    final GlobalEventsManager keysManager;
-    final UserDefinedAction switchRecord;
-    final UserDefinedAction switchReplay;
-    final UserDefinedAction switchReplayCompiled;
-    private final Config config;
-    //    private final ActiveWindowInfosLogger activeWindowInfosLogger;
-//    private final MousePositionLogger mousePositionLogger;
-    // To allow executing other tasks programmatically.
-    private final TaskInvoker taskInvoker;
-    private final ActionExecutor actionExecutor;
-    private final CoreProvider coreProvider;
-    private final LogHolder logHolder;
-    private final Recorder recorder;
-    private MinimizedFrame trayIcon;
-    private Thread compiledExecutor;
-    private Language compilingLanguage;
-    private ReplayConfig replayConfig;
-    private RunActionConfig runActionConfig;
-    private UserDefinedAction customFunction;
-    private boolean isRecording, isReplaying, isRunningCompiledTask;
-    private File currentTempFile;
+public final class Backend {
+    private Backend() {
 
-    public MainBackEndHolder() {
-        logHolder = new LogHolder();
-
-        compilingLanguage = Language.MANUAL_BUILD;
-
-        config = Config.loadFromFile();
-
-        coreProvider = new CoreProvider(config);
-        taskInvoker = new TaskInvoker(coreProvider);
-        actionExecutor = new ActionExecutor(coreProvider);
-        keysManager = new GlobalEventsManager(config, actionExecutor);
-//        activeWindowInfosLogger = new ActiveWindowInfosLogger();
-//        mousePositionLogger = new MousePositionLogger(coreProvider);
-        replayConfig = ReplayConfig.of();
-        runActionConfig = RunActionConfig.of();
-        recorder = new Recorder(coreProvider);
-
-        switchRecord = new UserDefinedAction() {
-            @Override
-            public void action(Core controller) {
-                switchRecord();
-            }
-        };
-
-        switchReplay = new UserDefinedAction() {
-            @Override
-            public void action(Core controller) {
-                switchReplay();
-            }
-        };
-
-        switchReplayCompiled = new UserDefinedAction() {
-            @Override
-            public void action(Core controller) {
-                switchRunningCompiledAction();
-            }
-        };
-
-        TaskProcessorManager.setProcessorIdentifyCallback(new Function<>() {
-            @Override
-            public Void apply(Language language) {
-                recompiledNativeTasks(language);
-                return null;
-            }
-        });
-        if (!SystemTray.isSupported()) {
-            LOGGER.warning("System tray is not supported.");
-        }
-        try {
-            LOGGER.info("Adding tray icon...");
-            trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE, this);
-            LOGGER.info("Tray Icon added");
-        } catch (Exception e) {
-            LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
-        }
-        trayIcon.add();
     }
 
-    public void editSource(String code) {
+    public static void editSource(String code) {
         LOGGER.info("Opening source code in editor...");
         try {
             File f = File.createTempFile("source", compilingLanguage == Language.JAVA ? ".java" : ".txt");
@@ -150,13 +71,13 @@ public class MainBackEndHolder {
         }
     }
 
-    public String reloadSource() {
+    public static String reloadSource() {
         LOGGER.info("Reloading edits...");
         if (currentTempFile == null) throw new RuntimeException("Source code was never opened for editing.");
         return Objects.requireNonNull(FileUtility.readFromFile(currentTempFile)).toString();
     }
 
-    void initializeLogging() {
+    static void initializeLogging() {
         // Change stdout and stderr to also copy content to the logHolder.
         System.setOut(new PrintStream(CompositeOutputStream.of(logHolder, System.out)));
         System.setErr(new PrintStream(CompositeOutputStream.of(logHolder, System.err)));
@@ -181,7 +102,7 @@ public class MainBackEndHolder {
     /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
 
-    public synchronized void scheduleExit(long delay) {
+    public static synchronized void scheduleExit(long delay) {
         actionExecutor.haltAllTasks();
 
         GlobalListenerHookController.cleanup();
@@ -213,59 +134,41 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /****************************************Main hotkeys*********************************************************/
-    void configureMainHotkeys() {
+    static void configureMainHotkeys() {
         reconfigureSwitchRecord();
         reconfigureSwitchReplay();
         reconfigureSwitchCompiledReplay();
     }
 
-    public void reconfigureSwitchRecord() {
+    public static void reconfigureSwitchRecord() {
         keysManager.reRegisterTask(switchRecord, ActionInvoker.newBuilder().withHotKey(config.getRECORD()).build());
     }
 
-    public void reconfigureSwitchReplay() {
+    public static void reconfigureSwitchReplay() {
         keysManager.reRegisterTask(switchReplay, ActionInvoker.newBuilder().withHotKey(config.getREPLAY()).build());
     }
 
-    public void reconfigureSwitchCompiledReplay() {
+    public static void reconfigureSwitchCompiledReplay() {
         keysManager.reRegisterTask(switchReplayCompiled, ActionInvoker.newBuilder().withHotKey(config.getCOMPILED_REPLAY()).build());
     }
 
     /*************************************************************************************************************/
-    /****************************************Background logging***************************************************/
-//    public void setEnabledMousePositionLogging(boolean enabled) {
-//        mousePositionLogger.setEnabled(enabled);
-//    }
-//
-//    public boolean isMousePositionLoggingEnabled() {
-//        return mousePositionLogger.isEnabled();
-//    }
-//
-//    public void setEnabledActiveWindowInfosLogging(boolean enabled) {
-//        activeWindowInfosLogger.setEnabled(enabled);
-//    }
-//
-//    public boolean isActiveWindowInfosLoggingEnabled() {
-//        return activeWindowInfosLogger.isEnabled();
-//    }
-
-    /*************************************************************************************************************/
     /****************************************Record and replay****************************************************/
-    public synchronized void startRecording() {
+    public static synchronized void startRecording() {
         if (isRecording) {
             return;
         }
         switchRecord();
     }
 
-    public synchronized void stopRecording() {
+    public static synchronized void stopRecording() {
         if (!isRecording) {
             return;
         }
         switchRecord();
     }
 
-    private synchronized void switchRecord() {
+    static synchronized void switchRecord() {
         if (isReplaying) { // Do not switch record when replaying.
             return;
         }
@@ -280,33 +183,33 @@ public class MainBackEndHolder {
         }
     }
 
-    public void setReplayCount(long count) {
+    public static void setReplayCount(long count) {
         replayConfig = ReplayConfig.of(count, replayConfig.getDelay(), replayConfig.getSpeedup());
     }
 
-    public void setReplayDelay(long delay) {
+    public static void setReplayDelay(long delay) {
         replayConfig = ReplayConfig.of(replayConfig.getCount(), delay, replayConfig.getSpeedup());
     }
 
-    public void setReplaySpeedup(float speedup) {
+    public static void setReplaySpeedup(float speedup) {
         replayConfig = ReplayConfig.of(replayConfig.getCount(), replayConfig.getDelay(), speedup);
     }
 
-    public synchronized void startReplay() {
+    public static synchronized void startReplay() {
         if (isReplaying) {
             return;
         }
         switchReplay();
     }
 
-    public synchronized void stopReplay() {
+    public static synchronized void stopReplay() {
         if (!isReplaying) {
             return;
         }
         switchReplay();
     }
 
-    private void switchReplay() {
+    static void switchReplay() {
         if (isRecording) { // Cannot switch replay when recording.
             return;
         }
@@ -330,21 +233,21 @@ public class MainBackEndHolder {
         }
     }
 
-    public synchronized void runCompiledAction() {
+    public static synchronized void runCompiledAction() {
         if (isRunningCompiledTask) {
             return;
         }
         switchRunningCompiledAction();
     }
 
-    public synchronized void stopRunningCompiledAction() {
+    public static synchronized void stopRunningCompiledAction() {
         if (!isRunningCompiledTask) {
             return;
         }
         switchRunningCompiledAction();
     }
 
-    private synchronized void switchRunningCompiledAction() {
+    static synchronized void switchRunningCompiledAction() {
         if (isRunningCompiledTask) {
             isRunningCompiledTask = false;
             if (compiledExecutor != null) {
@@ -364,7 +267,7 @@ public class MainBackEndHolder {
 
             compiledExecutor = new Thread(() -> {
                 try {
-                    customFunction.action(coreProvider.get());
+                    customFunction.action(Core.local(config));
                 } catch (InterruptedException e) { // Stopped prematurely
                     return;
                 } catch (Exception e) {
@@ -379,7 +282,7 @@ public class MainBackEndHolder {
 
     /*************************************************************************************************************/
     /*****************************************Task group related**************************************************/
-    void renderTaskGroup() {
+    static void renderTaskGroup() {
         for (TaskGroup group : taskGroups) {
             if (!group.isEnabled()) {
                 continue;
@@ -394,7 +297,7 @@ public class MainBackEndHolder {
         }
     }
 
-    public void addTaskGroup(String name) {
+    public static void addTaskGroup(String name) {
         for (TaskGroup group : taskGroups) {
             if (group.getName().equals(name)) {
                 LOGGER.warning("This name already exists. Try again.");
@@ -405,16 +308,8 @@ public class MainBackEndHolder {
     }
 
     /*************************************************************************************************************/
-    /*****************************************Task related********************************************************/
-    public RunActionConfig getRunActionConfig() {
-        return runActionConfig;
-    }
 
-    public void setRunActionConfig(RunActionConfig config) {
-        this.runActionConfig = config;
-    }
-
-    private void recompiledNativeTasks(Language language) {
+    static void recompiledNativeTasks(Language language) {
         for (TaskGroup group : taskGroups) {
             List<UserDefinedAction> tasks = group.getTasks();
             for (int i = 0; i < tasks.size(); i++) {
@@ -438,7 +333,7 @@ public class MainBackEndHolder {
         }
     }
 
-    private void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
+    private static void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
         Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
         boolean conflict = !collisions.isEmpty() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
 
@@ -450,20 +345,19 @@ public class MainBackEndHolder {
         }
     }
 
-
     /**
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
      */
 
-    private void unregisterTask(UserDefinedAction task) {
+    private static void unregisterTask(UserDefinedAction task) {
         keysManager.unregisterTask(task);
     }
 
-    public void addCurrentTask() {
+    public static void addCurrentTask() {
         addCurrentTask(TaskGroupManager.getCurrentTaskGroup());
     }
 
-    public void addCurrentTask(TaskGroup group) {
+    public static void addCurrentTask(TaskGroup group) {
         if (customFunction != null) {
             addTask(customFunction, group);
             customFunction = null;
@@ -472,7 +366,7 @@ public class MainBackEndHolder {
         }
     }
 
-    private void addTask(UserDefinedAction task, TaskGroup group) {
+    private static void addTask(UserDefinedAction task, TaskGroup group) {
         if (task.getName() == null || task.getName().isBlank()) {
             task.setName("New task");
         }
@@ -486,7 +380,7 @@ public class MainBackEndHolder {
      * Add task to a special remote task group.
      * If this group does not exist yet, create it.
      */
-    public void addRemoteCompiledTask(UserDefinedAction task) {
+    public static void addRemoteCompiledTask(UserDefinedAction task) {
         for (TaskGroup group : taskGroups) {
             if (group.getGroupId().equals(TaskGroup.REMOTE_TASK_GROUP_ID)) {
                 addTask(task, group);
@@ -499,7 +393,7 @@ public class MainBackEndHolder {
         addTask(task, remoteGroup);
     }
 
-    public UserDefinedAction getTask(String id) {
+    public static UserDefinedAction getTask(String id) {
         for (TaskGroup group : taskGroups) {
             UserDefinedAction task = group.getTask(id);
             if (task != null) {
@@ -509,7 +403,7 @@ public class MainBackEndHolder {
         return null;
     }
 
-    public void removeCurrentTask(String id) {
+    public static void removeCurrentTask(String id) {
         boolean found = false;
         for (ListIterator<UserDefinedAction> iterator = TaskGroupManager.getCurrentTaskGroup().getTasks().listIterator(); iterator.hasNext(); ) {
             UserDefinedAction action = iterator.next();
@@ -529,7 +423,7 @@ public class MainBackEndHolder {
         writeConfigFile();
     }
 
-    public void removeTask(String id) {
+    public static void removeTask(String id) {
         UserDefinedAction toRemove = getTask(id);
         if (toRemove == null) {
             return;
@@ -538,7 +432,7 @@ public class MainBackEndHolder {
         removeTask(toRemove);
     }
 
-    public void removeTask(UserDefinedAction toRemove) {
+    public static void removeTask(UserDefinedAction toRemove) {
         for (TaskGroup group : taskGroups) {
             for (Iterator<UserDefinedAction> iterator = group.getTasks().iterator(); iterator.hasNext(); ) {
                 UserDefinedAction action = iterator.next();
@@ -555,7 +449,7 @@ public class MainBackEndHolder {
         }
     }
 
-    public void moveTaskUp(String taskId) {
+    public static void moveTaskUp(String taskId) {
         int selected = getTaskIndex(taskId, TaskGroupManager.getCurrentTaskGroup());
         if (selected < 1) {
             return;
@@ -563,14 +457,14 @@ public class MainBackEndHolder {
         Collections.swap(TaskGroupManager.getCurrentTaskGroup().getTasks(), selected, selected - 1);
     }
 
-    public void moveTaskDown(String taskId) {
+    public static void moveTaskDown(String taskId) {
         int selected = getTaskIndex(taskId, TaskGroupManager.getCurrentTaskGroup());
         if (selected >= 0 && selected < TaskGroupManager.getCurrentTaskGroup().getTasks().size() - 1) {
             Collections.swap(TaskGroupManager.getCurrentTaskGroup().getTasks(), selected, selected + 1);
         }
     }
 
-    private int getTaskIndex(String taskId, TaskGroup group) {
+    private static int getTaskIndex(String taskId, TaskGroup group) {
         for (ListIterator<UserDefinedAction> iterator = group.getTasks().listIterator(); iterator.hasNext(); ) {
             int index = iterator.nextIndex();
             UserDefinedAction action = iterator.next();
@@ -581,7 +475,7 @@ public class MainBackEndHolder {
         return -1;
     }
 
-    public void removeTaskGroup(String id) {
+    public static void removeTaskGroup(String id) {
         int index = TaskGroupManager.getTaskGroupIndex(id);
 
         if (index < 0 || index >= taskGroups.size()) {
@@ -603,7 +497,7 @@ public class MainBackEndHolder {
         renderTaskGroup();
     }
 
-    public void changeTaskGroup(String taskId, String newGroupId) {
+    public static void changeTaskGroup(String taskId, String newGroupId) {
         int newGroupIndex = TaskGroupManager.getTaskGroupIndex(newGroupId);
         if (newGroupIndex == -1) {
             LOGGER.warning("Cannot change task group to group with ID " + newGroupId + " since it does not exist.");
@@ -637,7 +531,7 @@ public class MainBackEndHolder {
         writeConfigFile();
     }
 
-    public void overwriteTask(String taskId) {
+    public static void overwriteTask(String taskId) {
         if (customFunction == null) {
             LOGGER.info("Nothing to override. Compile first?");
             return;
@@ -664,21 +558,7 @@ public class MainBackEndHolder {
         cleanUnusedSource();
     }
 
-    public boolean changeHotkeyTask(UserDefinedAction action, ActionInvoker newActivation) {
-        if (newActivation == null) throw new IllegalArgumentException("Can't add null activation.");
-
-        Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
-        collisions.remove(action);
-        if (!collisions.isEmpty()) {
-            GlobalEventsManager.showCollisionWarning(collisions);
-            return false;
-        }
-
-        keysManager.reRegisterTask(action, newActivation);
-        return true;
-    }
-
-    public void switchEnableTask(UserDefinedAction action) {
+    public static void switchEnableTask(UserDefinedAction action) {
         if (action.isEnabled()) { // Then disable it
             action.setEnabled(false);
             if (!action.isEnabled()) {
@@ -712,25 +592,10 @@ public class MainBackEndHolder {
         }
     }
 
-    public String getSourceForTask(UserDefinedAction action, long timestamp) {
-        TaskSourceHistoryEntry entry = action.getTaskSourceHistory().findEntry(timestamp);
-        if (entry == null) {
-            LOGGER.warning("No source path for action " + action.getName() + " at time " + timestamp + ".");
-            return null;
-        }
-
-        StringBuffer content = FileUtility.readFromFile(entry.getSourcePath());
-        if (content == null) {
-            LOGGER.warning("No source content for action " + action.getName() + " at file " + entry.getSourcePath() + ".");
-            return null;
-        }
-        return content.toString();
-    }
-
     /**
      * Populate all tasks with task invoker to dynamically execute other tasks.
      */
-    private void setTaskInvoker() {
+    private static void setTaskInvoker() {
         for (TaskGroup taskGroup : taskGroups) {
             for (UserDefinedAction task : taskGroup.getTasks()) {
                 task.setTaskInvoker(taskInvoker);
@@ -738,18 +603,7 @@ public class MainBackEndHolder {
         }
     }
 
-    /*************************************************************************************************************/
-    /********************************************Source code related**********************************************/
-
-    public String generateSource() {
-        String source = "";
-        if (applySpeedup()) {
-            source = recorder.getGeneratedCode(compilingLanguage);
-        }
-        return source;
-    }
-
-    public void importTasks(File inputFile) {
+    public static void importTasks(File inputFile) {
         try {
             Util.unZipFile(inputFile.getAbsolutePath(), ".");
             File src = new File("tmp");
@@ -773,7 +627,7 @@ public class MainBackEndHolder {
         }
     }
 
-    public void exportTasks(File outputDirectory) {
+    public static void exportTasks(File outputDirectory) {
         File destination = new File(FileUtility.joinPath(outputDirectory.getAbsolutePath(), "tmp"));
         FileUtility.createDirectory(destination.getAbsolutePath());
         config.exportTasksConfig(destination);
@@ -791,7 +645,7 @@ public class MainBackEndHolder {
         LOGGER.info("Data exported to " + zipPath);
     }
 
-    public void cleanUnusedSource() {
+    public static void cleanUnusedSource() {
         List<File> files = FileUtility.walk(FileUtility.joinPath("data", "source"));
         Set<String> allNames = new HashSet<>(new Function<File, String>() {
             @Override
@@ -829,20 +683,110 @@ public class MainBackEndHolder {
         LOGGER.info("Successfully cleaned " + count + " files.\n Failed to clean " + failed + " files.");
     }
 
+    public static void setCompilingLanguage(Language language) {
+        compilingLanguage = language;
+        customFunction = null;
+    }
+
     /*************************************************************************************************************/
+
+    /***************************************Configurations********************************************************/
+    // Write configuration file
+    public static boolean writeConfigFile() {
+        boolean result = config.save();
+        if (!result) {
+            LOGGER.warning("Unable to save config.");
+        }
+        return result;
+    }
+
+    public static void changeDebugLevel(Level level) {
+        config.setNativeHookDebugLevel(level);
+        Logger.getLogger("").setLevel(level);
+        for (Handler h : Logger.getLogger("").getHandlers()) {
+            h.setLevel(level);
+        }
+    }
+
+    public static void haltAllTasks() {
+        actionExecutor.haltAllTasks();
+    }
+
+    /**
+     * Apply the current speedup in the textbox.
+     * This attempts to parse the speedup.
+     *
+     * @return if the speedup was successfully parsed and applied.
+     */
+    private static boolean applySpeedup() {
+        recorder.setSpeedup(replayConfig.getSpeedup());
+        return true;
+    }
+
+    /*************************************************************************************************************/
+
+    public static void clearLogs() {
+        logHolder.clear();
+    }
+
+    /*****************************************Task related********************************************************/
+    public static RunActionConfig getRunActionConfig() {
+        return runActionConfig;
+    }
+
+    public static void setRunActionConfig(RunActionConfig config) {
+        runActionConfig = config;
+    }
+
+    public static boolean changeHotkeyTask(UserDefinedAction action, ActionInvoker newActivation) {
+        if (newActivation == null) throw new IllegalArgumentException("Can't add null activation.");
+
+        Set<UserDefinedAction> collisions = keysManager.isActivationRegistered(newActivation);
+        collisions.remove(action);
+        if (!collisions.isEmpty()) {
+            GlobalEventsManager.showCollisionWarning(collisions);
+            return false;
+        }
+
+        keysManager.reRegisterTask(action, newActivation);
+        return true;
+    }
+
+    public static String getSourceForTask(UserDefinedAction action, long timestamp) {
+        TaskSourceHistoryEntry entry = action.getTaskSourceHistory().findEntry(timestamp);
+        if (entry == null) {
+            LOGGER.warning("No source path for action " + action.getName() + " at time " + timestamp + ".");
+            return null;
+        }
+
+        StringBuffer content = FileUtility.readFromFile(entry.getSourcePath());
+        if (content == null) {
+            LOGGER.warning("No source content for action " + action.getName() + " at file " + entry.getSourcePath() + ".");
+            return null;
+        }
+        return content.toString();
+    }
+
+    /*************************************************************************************************************/
+
+    /********************************************Source code related**********************************************/
+
+    public static String generateSource() {
+        String source = "";
+        if (applySpeedup()) {
+            source = recorder.getGeneratedCode(compilingLanguage);
+        }
+        return source;
+    }
+
     /***************************************Source compilation****************************************************/
 
-    public Language getSelectedLanguage() {
+    public static Language getSelectedLanguage() {
         return compilingLanguage;
     }
 
-    public AbstractNativeCompiler getCompiler() {
+    public static AbstractNativeCompiler getCompiler() {
         return TaskGroupManager.COMPILER_FACTORY.getNativeCompiler(compilingLanguage);
-    }
-
-    public void setCompilingLanguage(Language language) {
-        compilingLanguage = language;
-        customFunction = null;
     }
 
     /**
@@ -851,7 +795,7 @@ public class MainBackEndHolder {
      * @param source   source code to compile.
      * @param taskName name of the newly created task. A default name will be given if not provided.
      */
-    public boolean compileSourceAndSetCurrent(String source, String taskName) {
+    public static boolean compileSourceAndSetCurrent(String source, String taskName) {
         AbstractNativeCompiler compiler = getCompiler();
         UserDefinedAction createdInstance = compileSourceNatively(compiler, source, taskName);
         if (createdInstance == null) {
@@ -861,7 +805,9 @@ public class MainBackEndHolder {
         return true;
     }
 
-    public UserDefinedAction compileSourceNatively(AbstractNativeCompiler compiler, String source, String taskName) {
+    /*************************************************************************************************************/
+
+    public static UserDefinedAction compileSourceNatively(AbstractNativeCompiler compiler, String source, String taskName) {
         source = source.replaceAll("\t", "    "); // Use spaces instead of tabs
 
         DynamicCompilationResult compilationResult = compiler.compile(source);
@@ -885,83 +831,44 @@ public class MainBackEndHolder {
         return createdInstance;
     }
 
-    /*************************************************************************************************************/
-    /***************************************Configurations********************************************************/
-    // Write configuration file
-    public boolean writeConfigFile() {
-        boolean result = config.save();
-        if (!result) {
-            LOGGER.warning("Unable to save config.");
-        }
-        return result;
-    }
-
-    public void changeDebugLevel(Level level) {
-        config.setNativeHookDebugLevel(level);
-        Logger.getLogger("").setLevel(level);
-        for (Handler h : Logger.getLogger("").getHandlers()) {
-            h.setLevel(level);
-        }
-    }
-
-    public void haltAllTasks() {
-        actionExecutor.haltAllTasks();
-    }
-
-    /**
-     * Apply the current speedup in the textbox.
-     * This attempts to parse the speedup.
-     *
-     * @return if the speedup was successfully parsed and applied.
-     */
-    private boolean applySpeedup() {
-        recorder.setSpeedup(replayConfig.getSpeedup());
-        return true;
-    }
-
-    /*************************************************************************************************************/
     /***************************************Generic Getters and Setters*******************************************/
-    public Recorder getRecorder() {
+    public static Recorder getRecorder() {
         return recorder;
     }
 
-    public Config getConfig() {
+    public static Config getConfig() {
         return config;
     }
 
-    public CoreProvider getCoreProvider() {
-        return coreProvider;
+    public static Core getCore() {
+        return Core.local(config);
     }
 
-    public synchronized boolean isRecording() {
+    public static synchronized boolean isRecording() {
         return isRecording;
     }
 
-    public ReplayConfig getReplayConfig() {
+    public static ReplayConfig getReplayConfig() {
         return replayConfig;
     }
 
-    public synchronized boolean isReplaying() {
+    public static synchronized boolean isReplaying() {
         return isReplaying;
     }
 
-    public synchronized boolean isRunningCompiledAction() {
+    public static synchronized boolean isRunningCompiledAction() {
         return isRunningCompiledTask;
     }
 
-    public ActionExecutor getActionExecutor() {
+    public static ActionExecutor getActionExecutor() {
         return actionExecutor;
     }
 
-    public GlobalEventsManager getKeysManager() {
+    public static GlobalEventsManager getKeysManager() {
         return keysManager;
     }
 
-    public String getLogs() {
+    public static String getLogs() {
         return logHolder.getContent();
-    }
-
-    public void clearLogs() {
-        logHolder.clear();
     }
 }

@@ -7,6 +7,7 @@ import core.userDefinedTask.TaskGroupManager;
 import core.webui.server.handlers.renderedobjects.*;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -48,7 +49,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
     }
 
     protected final Void renderedCompilingLanguages(HttpAsyncExchange exchange) throws IOException {
-        Language selected = backEndHolder.getSelectedLanguage();
+        Language selected = Backend.getSelectedLanguage();
         Map<String, Object> data = new HashMap<>();
         List<RenderedCompilingLanguage> languages = new ArrayList<>();
         for (Language language : Language.values()) {

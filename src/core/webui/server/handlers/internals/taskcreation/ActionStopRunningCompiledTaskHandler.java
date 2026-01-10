@@ -2,6 +2,7 @@ package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
+import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -13,7 +14,7 @@ public class ActionStopRunningCompiledTaskHandler extends AbstractSingleMethodHt
 
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        backEndHolder.stopRunningCompiledAction();
+        Backend.stopRunningCompiledAction();
         return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }
 }

@@ -26,7 +26,7 @@ public class ActionChangeTaskGroupNameHandler extends AbstractUIHttpHandler {
 		if (params == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters.");
 		}
-		TaskGroup group = CommonTask.getTaskGroupFromRequest(backEndHolder, params, false);
+		TaskGroup group = CommonTask.getTaskGroupFromRequest( params, false);
 		if (group == null) {
 			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get task group.");
 		}

@@ -5,7 +5,7 @@ import core.ipc.IPCServiceManager;
 import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.TaskGroupManager;
 import core.userDefinedTask.UserDefinedAction;
-import frontEnd.MainBackEndHolder;
+import frontEnd.Backend;
 
 import java.util.Map;
 import java.util.logging.Logger;
@@ -23,14 +23,14 @@ public class CommonTask {
         return IPCServiceManager.getUIServer();
     }
 
-    public static UserDefinedAction getTaskFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params) {
+    public static UserDefinedAction getTaskFromRequest(Map<String, String> params) {
         String taskId = getTaskIdFromRequest(params);
         if (taskId.isBlank()) {
             LOGGER.warning("Cannot find task ID.");
             return null;
         }
 
-        return getTaskFromId(backEndHolder, taskId);
+        return getTaskFromId(taskId);
     }
 
     public static String getTaskIdFromRequest(Map<String, String> params) {
@@ -43,8 +43,8 @@ public class CommonTask {
         return taskValue;
     }
 
-    public static UserDefinedAction getTaskFromId(MainBackEndHolder backEndHolder, String id) {
-        UserDefinedAction task = backEndHolder.getTask(id);
+    public static UserDefinedAction getTaskFromId(String id) {
+        UserDefinedAction task = Backend.getTask(id);
         if (task == null) {
             LOGGER.warning("No such task with ID " + id + ".");
             return null;
@@ -53,7 +53,7 @@ public class CommonTask {
         return task;
     }
 
-    public static String getTaskGroupIdFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params) {
+    public static String getTaskGroupIdFromRequest(Map<String, String> params) {
         String groupValue = params.get("group");
         if (groupValue == null || groupValue.isBlank()) {
             LOGGER.warning("Group ID must not be empty.");
@@ -63,7 +63,7 @@ public class CommonTask {
         return groupValue;
     }
 
-    public static TaskGroup getTaskGroupFromRequest(MainBackEndHolder backEndHolder, Map<String, String> params, boolean useCurrentIfNotProvided) {
+    public static TaskGroup getTaskGroupFromRequest(Map<String, String> params, boolean useCurrentIfNotProvided) {
         String groupValue = params.get("group");
         if (groupValue == null) {
             if (useCurrentIfNotProvided) {
@@ -72,7 +72,7 @@ public class CommonTask {
             return null;
         }
 
-        String id = getTaskGroupIdFromRequest(backEndHolder, params);
+        String id = getTaskGroupIdFromRequest(params);
         if (id == null) {
             LOGGER.warning("Could not gt TaskGroup from request");
             return null;

@@ -22,7 +22,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public abstract class AbstractBooleanGETHandler extends HttpHandlerWithBackend {
     @Override
-    protected void handleWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    protected void handle(HttpRequest request, HttpAsyncExchange exchange) {
         HttpServerUtilities.prepareTextResponse(exchange, 200, "" + handle());
     }
 
