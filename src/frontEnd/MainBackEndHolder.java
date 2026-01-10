@@ -181,7 +181,7 @@ public class MainBackEndHolder {
     /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
 
-    public void scheduleExit(long delayMs) {
+    public void scheduleExit() {
         actionExecutor.haltAllTasks();
 
         GlobalListenerHookController.cleanup();
@@ -203,7 +203,7 @@ public class MainBackEndHolder {
             LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
         }
         System.out.println("Goodbye");
-//        System.exit(0);
+        System.exit(0);
     }
 
     /*************************************************************************************************************/
