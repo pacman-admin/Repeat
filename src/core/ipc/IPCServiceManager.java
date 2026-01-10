@@ -19,7 +19,6 @@ public final class IPCServiceManager {
 
     public static void stopServices() throws IOException {
         UI_SERVER.stopRunning();
-        while (UI_SERVER.isRunning()) ;
     }
 
     public static void parseJSON(List<JsonNode> ipcSettings) {
@@ -38,8 +37,7 @@ public final class IPCServiceManager {
     }
 
     public static void initiateServices(MainBackEndHolder backEndHolder) throws IOException {
-        UI_SERVER.setMainBackEndHolder(backEndHolder);
-        UI_SERVER.startRunning();
+        UI_SERVER.start(backEndHolder);
     }
 
     public static IIPCService getUIServer() {

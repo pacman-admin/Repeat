@@ -22,8 +22,6 @@ import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import utilities.ILoggable;
 
-import java.io.IOException;
-
 public abstract class IIPCService implements ILoggable {
 
     protected int port;
@@ -33,19 +31,11 @@ public abstract class IIPCService implements ILoggable {
         launchAtStartup = true;
     }
 
-    public final void startRunning() throws IOException {
-        if (!isRunning()) {
-            start();
-        } else {
-            getLogger().info("This service is already running.");
-        }
-    }
 
     public final void stopRunning() {
         if (!isRunning()) {
             return;
         }
-
         stop();
     }
 
@@ -69,8 +59,6 @@ public abstract class IIPCService implements ILoggable {
         return true;
     }
 
-    protected abstract void start() throws IOException;
-
     protected abstract void stop();
 
     public abstract boolean isRunning();
@@ -83,11 +71,9 @@ public abstract class IIPCService implements ILoggable {
         this.port = newPort;
         return true;
     }
-
-    public final int getPort() {
+    public int getPort(){
         return port;
     }
-
     public abstract String getName();
 
     public boolean isLaunchAtStartup() {

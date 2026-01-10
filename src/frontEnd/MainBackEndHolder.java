@@ -184,18 +184,14 @@ public class MainBackEndHolder {
     public void scheduleExit(long delayMs) {
         actionExecutor.haltAllTasks();
 
+        GlobalListenerHookController.cleanup();
+
         LOGGER.info("Writing config file...");
         if (!writeConfigFile()) {
             LOGGER.log(Level.SEVERE, "Error saving configuration file.");
             return;
         }
         LOGGER.info("Wrote config file.");
-
-//        activeWindowInfosLogger.stop();
-//        mousePositionLogger.stop();
-
-        GlobalListenerHookController.cleanup();
-        LOGGER.info("All backend activities terminated.");
 
         if (trayIcon != null) {
             trayIcon.remove();
@@ -206,6 +202,8 @@ public class MainBackEndHolder {
         } catch (IOException e) {
             LOGGER.log(Level.WARNING, "Unable to stop ipcs.", e);
         }
+        System.out.println("Goodbye");
+//        System.exit(0);
     }
 
     /*************************************************************************************************************/

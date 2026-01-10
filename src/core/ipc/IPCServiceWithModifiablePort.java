@@ -1,5 +1,7 @@
 package core.ipc;
 
+import java.io.IOException;
+import java.net.ServerSocket;
 import java.util.logging.Level;
 
 import argo.jdom.JsonNode;
@@ -10,6 +12,15 @@ import utilities.json.JSONUtility;
  * IPC service with modifiable port to start at. E.g. a server.
  */
 public abstract class IPCServiceWithModifiablePort extends IIPCService {
+	public static boolean portUnavailable(int port) {
+		try {
+			ServerSocket socket = new ServerSocket(port);
+			socket.close();
+			return false;
+		} catch (IOException e) {
+			return true;
+		}
+	}
 
 	@Override
 	protected boolean extractSpecificConfig(JsonNode node) {
@@ -40,5 +51,13 @@ public abstract class IPCServiceWithModifiablePort extends IIPCService {
 	@Override
 	protected final JsonNode getSpecificConfig() {
 		 return JSONUtility.addChild(super.getSpecificConfig(), "port", JsonNodeFactories.number(port));
+	}
+	@Override
+	public boolean setPort(int newPort) {
+		if (portUnavailable(newPort)) {
+			return false;
+		}
+		this.port = newPort;
+		return true;
 	}
 }
