@@ -143,14 +143,6 @@ public final class TaskActivationConstructor {
         mouseGestures.addAll(gestures);
     }
 
-    public void addSharedVariables(Collection<SharedVariablesActivation> sharedVariablesActivations) {
-        variables.addAll(sharedVariablesActivations);
-    }
-
-    public void removeSharedVariable(int index) {
-        variables.remove(index);
-    }
-
     public void setGlobalKeyReleased(boolean value) {
         globalActivation = GlobalActivation.Builder.fromGlobalActivation(globalActivation).onKeyReleased(value).build();
     }

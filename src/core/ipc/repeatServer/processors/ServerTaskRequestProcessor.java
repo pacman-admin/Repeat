@@ -132,7 +132,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
             LOGGER.warning("No compiler found for " + language + ".");
             return null;
         }
-        UserDefinedAction action = backEnd.compileSourceNatively(compiler, source, "remote-task");
+        UserDefinedAction action = Backend.compileSourceNatively(compiler, source, "remote-task");
         if (action == null) {
             LOGGER.warning("Compilation for remote task failed.");
             return null;
@@ -168,7 +168,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
         action.setInvoker(actionInvoker);
         try {
-            action.trackedAction(backEnd.getCore());
+            action.trackedAction(Backend.getCore());
         } catch (InterruptedException e) {
             LOGGER.log(Level.WARNING, "Interrupted while executing action.", e);
         }
