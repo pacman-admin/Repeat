@@ -735,6 +735,7 @@ public final class Backend {
     }
 
     public static void exportTasks(File outputDirectory) {
+        LOGGER.info(outputDirectory.getAbsolutePath());
         File destination = new File(FileUtility.joinPath(outputDirectory.getAbsolutePath(), "tmp"));
         FileUtility.createDirectory(destination.getAbsolutePath());
         config.exportTasksConfig(destination);
