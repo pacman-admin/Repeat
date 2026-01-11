@@ -56,16 +56,6 @@ final class URLEncodedUtils {
         }
     }
 
-    public static List<NameValuePair> parse(String s, Charset charset, char... separators) {
-        if (s == null) {
-            return createEmptyList();
-        } else {
-            CharArrayBuffer buffer = new CharArrayBuffer(s.length());
-            buffer.append(s);
-            return parse(buffer, charset, separators);
-        }
-    }
-
     private static List<NameValuePair> parse(CharArrayBuffer buf, Charset charset, char... separators) {
         Args.notNull(buf, "Char array buffer");
         TokenParser tokenParser = TokenParser.INSTANCE;

@@ -7,6 +7,7 @@ import java.util.Map;
  * Shared variables used to pass values between tasks. This only supports string values since the tasks can be
  * written in different programming languages.
  */
+@SuppressWarnings("unused")
 public final class SharedVariables {
 
     private static final Map<String, String> variables = new HashMap<>();

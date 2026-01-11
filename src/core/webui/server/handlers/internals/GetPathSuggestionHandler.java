@@ -54,7 +54,7 @@ public final class GetPathSuggestionHandler extends AbstractComplexGETHandler {
         if (Files.isDirectory(p)) {
             File[] files = p.toFile().listFiles();
             assert files != null;
-            List<String> suggested = Arrays.asList(files).stream().map(File::getAbsolutePath).collect(Collectors.toList());
+            List<String> suggested = Arrays.stream(files).map(File::getAbsolutePath).collect(Collectors.toList());
             return paths(suggested);
         }
         return paths();

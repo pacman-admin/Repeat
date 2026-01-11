@@ -28,6 +28,7 @@ import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("unused")
 public final class Desktop {
 
     private static final Logger LOGGER = Logger.getLogger(Desktop.class.getName());
