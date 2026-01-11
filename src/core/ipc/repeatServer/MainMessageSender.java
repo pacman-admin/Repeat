@@ -58,7 +58,11 @@ public final class MainMessageSender implements ILoggable {
     }
 
     private JsonRootNode getMessage(String type, long id, JsonNode message) {
-        return JsonNodeFactories.object(JsonNodeFactories.field("type", JsonNodeFactories.string(type)), JsonNodeFactories.field("id", JsonNodeFactories.number(id)), JsonNodeFactories.field("content", message));
+        return JsonNodeFactories.object(
+                JsonNodeFactories.field("type", JsonNodeFactories.string(type)),
+                JsonNodeFactories.field("id", JsonNodeFactories.number(id)),
+                JsonNodeFactories.field("content", message)
+        );
     }
 
     private synchronized long newID() {

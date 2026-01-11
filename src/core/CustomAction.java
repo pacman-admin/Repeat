@@ -36,7 +36,7 @@ final class CustomAction extends UserDefinedAction {
         k.type(Clipboard.get());
 
         //Set system clipboard to the value of the shared variable set earlier
-        Clipboard.set(SharedVariables.get("myVariable") + "");
+        Clipboard.set(SharedVariables.get("myVariable"));
 
         //Increase the value of myVariable by 1.
         //This code converts it to a number, adds 1, and turns it back into a string.
