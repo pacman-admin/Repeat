@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MenuGetDebugLevelOptionsActionHandler extends AbstractUIHttpHandler {
+public final class MenuGetDebugLevelOptionsActionHandler extends AbstractUIHttpHandler {
 
     public MenuGetDebugLevelOptionsActionHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

@@ -7,7 +7,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionStartReplayHandler extends AbstractSingleMethodHttpHandler {
+public final class ActionStartReplayHandler extends AbstractSingleMethodHttpHandler {
 
 	public ActionStartReplayHandler() {
 		super(AbstractSingleMethodHttpHandler.POST_METHOD);

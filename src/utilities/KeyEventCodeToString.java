@@ -2,7 +2,7 @@ package utilities;
 
 import java.awt.event.KeyEvent;
 
-public class KeyEventCodeToString {
+public final class KeyEventCodeToString {
 
     private KeyEventCodeToString() {
         throw new InstantiationError("This class is uninstantiable.");

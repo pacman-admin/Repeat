@@ -14,7 +14,7 @@ import java.util.logging.Logger;
  * Represents a key stroke on the keyboard.
  */
 @SuppressWarnings("unused")
-public class KeyStroke implements ButtonStroke {
+public final class KeyStroke implements ButtonStroke {
 
     private static final Logger LOGGER = Logger.getLogger(KeyStroke.class.getName());
 
@@ -181,7 +181,7 @@ public class KeyStroke implements ButtonStroke {
             this.value = value;
         }
 
-        static Modifier forValue(int value) {
+        private static Modifier forValue(int value) {
             for (Modifier m : Modifier.values()) {
                 if (m.value == value) {
                     return m;
@@ -192,7 +192,7 @@ public class KeyStroke implements ButtonStroke {
             return KEY_MODIFIER_UNKNOWN;
         }
 
-        int getValue() {
+        private int getValue() {
             return this.value;
         }
 
@@ -204,7 +204,7 @@ public class KeyStroke implements ButtonStroke {
             return (this == KEY_MODIFIER_UNKNOWN) || (other == KEY_MODIFIER_UNKNOWN) || (this == other);
         }
 
-        org.simplenativehooks.events.NativeKeyEvent.Modifier toNativeModifier() {
+        private org.simplenativehooks.events.NativeKeyEvent.Modifier toNativeModifier() {
             return switch (this) {
                 case KEY_MODIFIER_UNKNOWN -> NativeKeyEvent.Modifier.KEY_MODIFIER_UNKNOWN;
                 case KEY_MODIFIER_LEFT -> NativeKeyEvent.Modifier.KEY_MODIFIER_LEFT;

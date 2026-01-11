@@ -3,7 +3,7 @@ package core.webui.server.handlers.internals.tasks;
 import utilities.json.AutoJsonable;
 
 @SuppressWarnings("unused")
-public class RunTaskRequest extends AutoJsonable {
+public final class RunTaskRequest extends AutoJsonable {
 	private String id;
 	private RunConfig runConfig;
 
@@ -19,7 +19,7 @@ public class RunTaskRequest extends AutoJsonable {
 		return runConfig;
 	}
 
-	protected static class RunConfig extends AutoJsonable {
+	protected static final class RunConfig extends AutoJsonable {
 		private String repeatCount;
 		private String delayMsBetweenRepeat;
 

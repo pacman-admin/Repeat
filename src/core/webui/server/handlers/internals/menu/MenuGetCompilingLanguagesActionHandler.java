@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
 
-public class MenuGetCompilingLanguagesActionHandler extends AbstractUIHttpHandler {
+public final class MenuGetCompilingLanguagesActionHandler extends AbstractUIHttpHandler {
 
     public MenuGetCompilingLanguagesActionHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

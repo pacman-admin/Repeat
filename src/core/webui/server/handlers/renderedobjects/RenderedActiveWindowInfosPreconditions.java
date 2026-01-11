@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SuppressWarnings("unused")
-public class RenderedActiveWindowInfosPreconditions {
+public final class RenderedActiveWindowInfosPreconditions {
 
     private List<RenderedMatchingOptionSelection> activeWindowTitleMatchingTypes;
     private String activeWindowTitle;

@@ -1,6 +1,6 @@
 package core.userDefinedTask.internals;
 
-public class SharedVariablesSubscriber {
+public final class SharedVariablesSubscriber {
 
 	private final SharedVariablesSubscription subscription;
 	private final ProcessingFunction f;

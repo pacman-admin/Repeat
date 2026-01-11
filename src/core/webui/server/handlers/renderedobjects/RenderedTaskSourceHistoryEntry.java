@@ -3,7 +3,7 @@ package core.webui.server.handlers.renderedobjects;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import utilities.DateUtility;
 
-public class RenderedTaskSourceHistoryEntry {
+public final class RenderedTaskSourceHistoryEntry {
 	private String taskId;
 	private String createdTime;
 	private String createdTimeMillis;

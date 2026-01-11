@@ -21,7 +21,7 @@ package core.webui.server.handlers.internals;
 import core.webui.server.handlers.AbstractGETHandler;
 import frontEnd.Backend;
 
-public class GetLogsHandler extends AbstractGETHandler {
+public final class GetLogsHandler extends AbstractGETHandler {
 
     public GetLogsHandler() {
         super("Could not get logs.");

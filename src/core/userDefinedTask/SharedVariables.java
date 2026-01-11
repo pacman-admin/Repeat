@@ -8,7 +8,7 @@ import java.util.logging.Logger;
  * Shared variables used to pass values between tasks. This only supports string values since the tasks can be
  * written in different programming languages.
  */
-public class SharedVariables {
+public final class SharedVariables {
 
     private static final Logger LOGGER = Logger.getLogger(SharedVariables.class.getName());
 

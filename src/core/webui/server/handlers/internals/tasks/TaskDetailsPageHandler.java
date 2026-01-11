@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TaskDetailsPageHandler extends AbstractUIHttpHandler {
+public final class TaskDetailsPageHandler extends AbstractUIHttpHandler {
 
     public static final String RECORD_TASK_NAME = "record";
     public static final String REPLAY_TASK_NAME = "replay";

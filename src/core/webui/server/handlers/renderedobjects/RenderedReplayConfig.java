@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import core.recorder.ReplayConfig;
 
-public class RenderedReplayConfig {
+public final class RenderedReplayConfig {
 	private long count;
 	private long delay;
 	private float speedup;

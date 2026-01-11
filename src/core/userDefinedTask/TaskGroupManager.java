@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
-public class TaskGroupManager {
+public final class TaskGroupManager {
     public static final DynamicCompilerManager COMPILER_FACTORY = new DynamicCompilerManager();
     public static final List<TaskGroup> taskGroups = new ArrayList<>();
     private static TaskGroup currentGroup = new TaskGroup("default");

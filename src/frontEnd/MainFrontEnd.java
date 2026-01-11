@@ -11,7 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings("DanglingJavadoc")
-public class MainFrontEnd {
+public final class MainFrontEnd {
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
 
     static {

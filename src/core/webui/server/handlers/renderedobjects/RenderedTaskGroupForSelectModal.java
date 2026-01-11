@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import core.userDefinedTask.TaskGroup;
 
-public class RenderedTaskGroupForSelectModal {
+public final class RenderedTaskGroupForSelectModal {
 	private String name;
 	private String selected;
 

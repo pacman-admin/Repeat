@@ -4,7 +4,7 @@ import core.keyChain.KeyboardState;
 
 import java.awt.event.KeyEvent;
 
-public class KeyCodeToChar {
+public final class KeyCodeToChar {
 
     private KeyCodeToChar() {
         throw new InstantiationError("This class is uninstantiable.");

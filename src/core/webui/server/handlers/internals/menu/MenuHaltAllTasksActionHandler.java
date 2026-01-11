@@ -7,7 +7,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class MenuHaltAllTasksActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuHaltAllTasksActionHandler extends AbstractSingleMethodHttpHandler {
 
 	public MenuHaltAllTasksActionHandler() {
 		super(AbstractSingleMethodHttpHandler.POST_METHOD);

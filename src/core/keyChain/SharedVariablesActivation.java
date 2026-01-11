@@ -6,7 +6,7 @@ import argo.jdom.JsonRootNode;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 import utilities.json.IJsonable;
 
-public class SharedVariablesActivation implements IJsonable {
+public final class SharedVariablesActivation implements IJsonable {
 	private final SharedVariablesSubscription variable;
 
 	private SharedVariablesActivation(SharedVariablesSubscription variable) {

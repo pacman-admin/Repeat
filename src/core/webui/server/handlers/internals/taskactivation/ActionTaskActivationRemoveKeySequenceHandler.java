@@ -10,7 +10,7 @@ import utilities.NumberUtility;
 import java.io.IOException;
 import java.util.Map;
 
-public class ActionTaskActivationRemoveKeySequenceHandler extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationRemoveKeySequenceHandler extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationRemoveKeySequenceHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

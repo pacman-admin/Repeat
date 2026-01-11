@@ -7,7 +7,7 @@ import core.userDefinedTask.Clipboard;
 import core.userDefinedTask.SharedVariables;
 import core.userDefinedTask.UserDefinedAction;
 
-public class CustomAction extends UserDefinedAction {
+final class CustomAction extends UserDefinedAction {
     public void action(final Core c) throws InterruptedException {
         KeyboardCore k = c.keyBoard();
         MouseCore m = c.mouse();

@@ -15,7 +15,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroup;
 import core.webui.server.handlers.renderedobjects.TooltipsTaskGroupsPage;
 
-public class TaskGroupsPageHandler extends AbstractUIHttpHandler {
+public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 
 	public TaskGroupsPageHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

@@ -5,7 +5,7 @@ import core.controller.Core;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
 import utilities.KeyEventCodeToString;
 
-public class KeyboardPressKeyStep extends ManuallyBuildStep {
+public final class KeyboardPressKeyStep extends ManuallyBuildStep {
 
 	private int key;
 

@@ -23,7 +23,7 @@ import frontEnd.Backend;
 
 import java.awt.*;
 
-public class GetMousePositionHandler extends AbstractGETHandler {
+public final class GetMousePositionHandler extends AbstractGETHandler {
 
     public GetMousePositionHandler() {
         super("Could not get mouse pos.");

@@ -8,7 +8,7 @@ import core.userDefinedTask.UserDefinedAction;
 
 import java.util.*;
 
-public class GlobalKeyActionManager extends KeyStrokeManager {
+public final class GlobalKeyActionManager extends KeyStrokeManager {
 
     private final Set<UserDefinedAction> onKeyStrokePressedTasks;
     private final Set<UserDefinedAction> onKeyReleasedTasks;

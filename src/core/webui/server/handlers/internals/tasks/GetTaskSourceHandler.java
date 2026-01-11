@@ -24,7 +24,7 @@ import frontEnd.Backend;
 
 import java.util.Map;
 
-public class GetTaskSourceHandler extends AbstractComplexGETHandler {
+public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
 
     public GetTaskSourceHandler() {
         super("Could not get source code for current Action.");

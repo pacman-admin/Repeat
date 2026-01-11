@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class MenuForceExitActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuForceExitActionHandler extends AbstractSingleMethodHttpHandler {
 
     private static final long EXIT_DELAY_MS = 5;
 

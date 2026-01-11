@@ -43,7 +43,7 @@ final class WindowsNativeProcessUtil {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    static class Psapi {
+    private static final class Psapi {
         static {
             if (OSIdentifier.isWindows()) {
                 Native.register("psapi");
@@ -55,10 +55,10 @@ final class WindowsNativeProcessUtil {
         public static native int GetModuleBaseNameW(Pointer hProcess, Pointer hmodule, char[] lpBaseName, int size);
     }
 
-    static class Kernel32 {
+    private static final class Kernel32 {
         // https://learn.microsoft.com/en-us/windows/win32/procthread/process-security-and-access-rights
-        static int PROCESS_QUERY_INFORMATION = 0x0400;
-        static int PROCESS_VM_READ = 0x0010;
+        private static final int PROCESS_QUERY_INFORMATION = 0x0400;
+        private static final int PROCESS_VM_READ = 0x0010;
 
         static {
             if (OSIdentifier.isWindows()) {
@@ -71,7 +71,7 @@ final class WindowsNativeProcessUtil {
     }
 
     @SuppressWarnings("UnusedReturnValue")
-    static class User32DLL {
+    private static final class User32DLL {
         static {
             if (OSIdentifier.isWindows()) {
                 Native.register("user32");

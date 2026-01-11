@@ -3,7 +3,7 @@ package core.keyChain.mouseGestureRecognition;
 import java.awt.Point;
 import java.util.ArrayList;
 
-class DataNormalizer {
+final class DataNormalizer {
 	/**
 	 * Trim down the list of points to have exactly {@link DataNormalizer}.
 	 * Then scale the points so that they fit into a unit square.

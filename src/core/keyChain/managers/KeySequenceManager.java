@@ -17,7 +17,7 @@ import core.keyChain.KeySequence;
 import core.keyChain.RollingKeySeries;
 import core.userDefinedTask.UserDefinedAction;
 
-public class KeySequenceManager extends KeyStrokeManager {
+public final class KeySequenceManager extends KeyStrokeManager {
 
 	private final RollingKeySeries currentKeyboardRollingKeySeries;
 	private final RollingKeySeries currentRollingKeySeries;

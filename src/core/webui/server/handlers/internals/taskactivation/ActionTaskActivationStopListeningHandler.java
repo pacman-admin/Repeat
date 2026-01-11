@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Map;
 
-public class ActionTaskActivationStopListeningHandler extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationStopListeningHandler extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationStopListeningHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

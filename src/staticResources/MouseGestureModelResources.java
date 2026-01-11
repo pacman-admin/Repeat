@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 /**
  * Handle the loading and parsing of mouse gesture recognition model.
  */
-public class MouseGestureModelResources {
+public final class MouseGestureModelResources {
 
     private static final Logger LOGGER = Logger.getLogger(MouseGestureModelResources.class.getName());
 

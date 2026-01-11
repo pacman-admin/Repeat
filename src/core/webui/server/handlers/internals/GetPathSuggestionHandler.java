@@ -29,7 +29,7 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
+public final class GetPathSuggestionHandler extends AbstractComplexGETHandler {
     public GetPathSuggestionHandler() {
         super("Could not get path suggestions.");
     }
@@ -68,7 +68,7 @@ public class GetPathSuggestionHandler extends AbstractComplexGETHandler {
         return JSONUtility.jsonToString(Objects.requireNonNull(Jsonizer.jsonize(SuggestedPaths.of(paths))).getRootNode());
     }
 
-    private static class SuggestedPaths {
+    private static final class SuggestedPaths {
         @SuppressWarnings("MismatchedQueryAndUpdateOfCollection")
         private List<String> paths;
 

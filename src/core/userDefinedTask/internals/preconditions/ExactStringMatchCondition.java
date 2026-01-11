@@ -7,7 +7,7 @@ import argo.jdom.JsonRootNode;
 /**
  * Represents an exact string matching condition.
  */
-public class ExactStringMatchCondition extends StringMatchingCondition {
+public final class ExactStringMatchCondition extends StringMatchingCondition {
 
     private String value;
 

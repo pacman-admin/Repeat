@@ -14,7 +14,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeHandler {
+public final class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeHandler {
 
     public MenuGetGeneratedSourceHandler(TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler) {
         super(taskSourceCodeFragmentHandler, AbstractSingleMethodHttpHandler.POST_METHOD);

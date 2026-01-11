@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IPCProtocol {
+public final class IPCProtocol {
 
 	private static final Logger LOGGER = Logger.getLogger(IPCProtocol.class.getName());
 

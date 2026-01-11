@@ -18,7 +18,7 @@ public final class ExecutionContext {
         return controller;
     }
 
-    public static class Builder {
+    public static final class Builder {
         private Core controller;
         private ActionInvoker activation;
 

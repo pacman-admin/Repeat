@@ -43,7 +43,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class JavaNativeCompiler extends AbstractNativeCompiler {
+public final class JavaNativeCompiler extends AbstractNativeCompiler {
 
     private final String[] packageTree;
     private final String defaultClassName;
@@ -353,7 +353,7 @@ public class JavaNativeCompiler extends AbstractNativeCompiler {
      * exposing addURL should not be a concern.
      */
     private static final class DynamicClassLoader extends URLClassLoader {
-        DynamicClassLoader(URL[] urls, ClassLoader parent) {
+        private DynamicClassLoader(URL[] urls, ClassLoader parent) {
             super(urls, parent);
         }
 

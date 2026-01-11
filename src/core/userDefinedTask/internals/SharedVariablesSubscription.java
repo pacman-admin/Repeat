@@ -6,7 +6,7 @@ import argo.jdom.JsonRootNode;
 import utilities.json.IJsonable;
 
 @SuppressWarnings("unused")
-public class SharedVariablesSubscription implements IJsonable {
+public final class SharedVariablesSubscription implements IJsonable {
 
     private static final SharedVariablesSubscription ALL = new SharedVariablesSubscription(null, null, true, true);
 

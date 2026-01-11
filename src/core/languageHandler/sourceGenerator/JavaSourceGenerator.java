@@ -3,7 +3,7 @@ package core.languageHandler.sourceGenerator;
 import core.languageHandler.Language;
 import utilities.Function;
 
-public class JavaSourceGenerator extends InjectionSourceGenerator {
+public final class JavaSourceGenerator extends InjectionSourceGenerator {
 
 	public JavaSourceGenerator() {
 		super();
@@ -35,7 +35,7 @@ public class JavaSourceGenerator extends InjectionSourceGenerator {
 		return new JavaKeyboardSourceCodeGenerator();
 	}
 
-	private static class JavaMouseSourceCodeGenerator extends AbstractMouseSourceCodeGenerator {
+	private static final class JavaMouseSourceCodeGenerator extends AbstractMouseSourceCodeGenerator {
 
 		@Override
 		protected String move(int[] params) {
@@ -63,7 +63,7 @@ public class JavaSourceGenerator extends InjectionSourceGenerator {
 		}
 	}
 
-	private static class JavaKeyboardSourceCodeGenerator extends AbstractKeyboardSourceCodeGenerator {
+	private static final class JavaKeyboardSourceCodeGenerator extends AbstractKeyboardSourceCodeGenerator {
 
 		@Override
 		protected String type(int[] params) {

@@ -22,7 +22,7 @@ import core.languageHandler.Language;
 import frontEnd.Backend;
 import staticResources.BootStrapResources;
 
-public class ApiPageHandler extends AbstractGETHandler {
+public final class ApiPageHandler extends AbstractGETHandler {
 
     public ApiPageHandler() {
         super("Could not get API documentation for selected language.");

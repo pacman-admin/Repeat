@@ -14,7 +14,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class IPCPageHandler extends AbstractUIHttpHandler {
+public final class IPCPageHandler extends AbstractUIHttpHandler {
 
     public IPCPageHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

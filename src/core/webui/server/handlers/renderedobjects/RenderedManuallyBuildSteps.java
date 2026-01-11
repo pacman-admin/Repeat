@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
 
-public class RenderedManuallyBuildSteps {
+public final class RenderedManuallyBuildSteps {
 	private List<String> steps;
 
 	private RenderedManuallyBuildSteps() {}

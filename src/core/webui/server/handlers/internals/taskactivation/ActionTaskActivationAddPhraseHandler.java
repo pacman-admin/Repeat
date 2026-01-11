@@ -9,7 +9,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.io.IOException;
 import java.util.Map;
 
-public class ActionTaskActivationAddPhraseHandler extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationAddPhraseHandler extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationAddPhraseHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

@@ -14,7 +14,7 @@ import core.webui.server.handlers.AbstractTaskSourceCodeHandler;
 import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler.RenderException;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class SetSelectedTaskHandler extends AbstractTaskSourceCodeHandler {
+public final class SetSelectedTaskHandler extends AbstractTaskSourceCodeHandler {
 
 	public SetSelectedTaskHandler(TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler) {
 		super(taskSourceCodeFragmentHandler, AbstractSingleMethodHttpHandler.POST_METHOD);

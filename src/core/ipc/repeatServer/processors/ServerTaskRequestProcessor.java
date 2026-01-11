@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 import static core.userDefinedTask.TaskGroupManager.COMPILER_FACTORY;
 
-class ServerTaskRequestProcessor extends AbstractMessageProcessor {
+final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(ServerTaskRequestProcessor.class.getName());
 

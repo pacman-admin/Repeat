@@ -3,7 +3,7 @@ package core.webui.server.handlers.renderedobjects;
 import core.keyChain.TaskActivationConstructor;
 import core.userDefinedTask.UserDefinedAction;
 
-public class RenderedDetailedUserDefinedAction {
+public final class RenderedDetailedUserDefinedAction {
 	private String id;
 	private String name;
 	private String isEnabled;

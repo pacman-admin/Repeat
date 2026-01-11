@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.logging.Logger;
 
-public class MenuGetCompilerPathActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuGetCompilerPathActionHandler extends AbstractSingleMethodHttpHandler {
 
     private static final Logger LOGGER = Logger.getLogger(MenuGetCompilerPathActionHandler.class.getName());
 

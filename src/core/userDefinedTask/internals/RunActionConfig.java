@@ -1,6 +1,6 @@
 package core.userDefinedTask.internals;
 
-public class RunActionConfig {
+public final class RunActionConfig {
 	private int repeatCount;
 	private long delayMsBetweenRepeats;
 

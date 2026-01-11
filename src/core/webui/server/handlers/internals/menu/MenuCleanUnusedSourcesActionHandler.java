@@ -5,7 +5,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class MenuCleanUnusedSourcesActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuCleanUnusedSourcesActionHandler extends AbstractSingleMethodHttpHandler {
 
     public MenuCleanUnusedSourcesActionHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);

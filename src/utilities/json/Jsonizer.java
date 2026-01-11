@@ -18,7 +18,7 @@ import java.util.logging.Logger;
  * Automatically turns a JSON into a Java object and back using reflection.
  * Only consider private fields. Inherited fields are not considered.
  */
-public class Jsonizer {
+public final class Jsonizer {
 
     private static final Logger LOGGER = Logger.getLogger(Jsonizer.class.getName());
 

@@ -1,7 +1,7 @@
 package core.webui.server.handlers.renderedobjects;
 
 @SuppressWarnings("unused")
-public class RenderedMatchingOptionSelection {
+public final class RenderedMatchingOptionSelection {
     public static final RenderedMatchingOptionSelection CONTAINING = new RenderedMatchingOptionSelection(
             false,
             "match_containing",

@@ -4,7 +4,7 @@ import java.util.UUID;
 
 import core.languageHandler.Language;
 
-public class RenderedCompilingLanguage {
+public final class RenderedCompilingLanguage {
 	private String id;
 	private String name;
 	private boolean selected;

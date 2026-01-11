@@ -3,7 +3,7 @@ package core.webui.server.handlers.renderedobjects;
 import core.userDefinedTask.UserDefinedAction;
 import utilities.DateUtility;
 
-public class RenderedUserDefinedAction {
+public final class RenderedUserDefinedAction {
 
 	private String id;
 	private String name;

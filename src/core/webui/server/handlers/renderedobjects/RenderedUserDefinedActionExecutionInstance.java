@@ -4,7 +4,7 @@ import core.userDefinedTask.UsageStatistics.ExecutionInstance;
 import utilities.DateUtility;
 import utilities.json.AutoJsonable;
 
-public class RenderedUserDefinedActionExecutionInstance extends AutoJsonable {
+public final class RenderedUserDefinedActionExecutionInstance extends AutoJsonable {
 	private String start;
 	private String end;
 	private long duration;

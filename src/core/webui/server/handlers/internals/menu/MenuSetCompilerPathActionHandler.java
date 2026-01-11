@@ -9,7 +9,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.io.File;
 import java.util.Map;
 
-public class MenuSetCompilerPathActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuSetCompilerPathActionHandler extends AbstractSingleMethodHttpHandler {
 
     public MenuSetCompilerPathActionHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);

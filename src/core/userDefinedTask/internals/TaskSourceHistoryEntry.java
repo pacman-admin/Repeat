@@ -5,7 +5,7 @@ import java.util.Calendar;
 /**
  * Holds a single entry of source history.
  */
-public class TaskSourceHistoryEntry {
+public final class TaskSourceHistoryEntry {
     private final String sourcePath;
     private final Calendar created;
 

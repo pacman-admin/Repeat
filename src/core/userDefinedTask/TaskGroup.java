@@ -13,7 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @SuppressWarnings("unused")
-public class TaskGroup implements IJsonable {
+public final class TaskGroup implements IJsonable {
 
     public static final String REMOTE_TASK_GROUP_ID = "remote-tasks";
     private final List<UserDefinedAction> tasks;

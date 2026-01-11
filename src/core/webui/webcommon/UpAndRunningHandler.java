@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 /**
  * Returns response saying that server is up and running.
  */
-public class UpAndRunningHandler implements HttpAsyncRequestHandler<HttpRequest> {
+public final class UpAndRunningHandler implements HttpAsyncRequestHandler<HttpRequest> {
 
     private static final Logger LOGGER = Logger.getLogger(UpAndRunningHandler.class.getName());
 

@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.stream.Collectors;
 
-public class ManuallyBuildActionParametersParser {
+public final class ManuallyBuildActionParametersParser {
 
     private static final List<Class<?>> KNOWN_CLASSES = Arrays.asList(
             Long.class,
@@ -136,7 +136,7 @@ public class ManuallyBuildActionParametersParser {
         }
     }
 
-    private static class MouseMask {
+    private static final class MouseMask {
         private static void verify(String value) throws InvalidManuallyBuildComponentException {
             if (!NumberUtility.isNonNegativeInteger(value) && !StringToAwtEventCode.isValidMouseMask(value)) {
                 throw new InvalidManuallyBuildComponentException("Unknown mouse with value " + value + ".");
@@ -152,7 +152,7 @@ public class ManuallyBuildActionParametersParser {
         }
     }
 
-    private static class Key {
+    private static final class Key {
         private static void verify(String value) throws InvalidManuallyBuildComponentException {
             if (!NumberUtility.isNonNegativeInteger(value) && !StringToAwtEventCode.isValidKeyValue(value)) {
                 throw new InvalidManuallyBuildComponentException("Unknown key with value " + value + ".");
@@ -169,6 +169,6 @@ public class ManuallyBuildActionParametersParser {
 
     }
 
-    private static class NonNegativeLong {
+    private static final class NonNegativeLong {
     }
 }

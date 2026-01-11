@@ -27,7 +27,7 @@ import core.webui.server.handlers.renderedobjects.RenderedUserDefinedAction;
 import core.webui.server.handlers.renderedobjects.TooltipsIndexPage;
 import utilities.DateUtility;
 
-public class IndexPageHandler extends AbstractUIHttpHandler {
+public final class IndexPageHandler extends AbstractUIHttpHandler {
 
 	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 

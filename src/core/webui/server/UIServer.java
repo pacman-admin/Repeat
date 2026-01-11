@@ -60,7 +60,7 @@ import java.util.logging.Logger;
 import static core.config.Constants.DEFAULT_SERVER_PORT;
 
 @SuppressWarnings("unused")
-public class UIServer extends IPCServiceWithModifiablePort {
+public final class UIServer extends IPCServiceWithModifiablePort {
     private static final int TERMINATION_DELAY_SECOND = 5;
     private final ObjectRenderer objectRenderer;
     private final TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler;

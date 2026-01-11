@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MenuGetCompilerConfigOptionActionHandler extends AbstractUIHttpHandler {
+public final class MenuGetCompilerConfigOptionActionHandler extends AbstractUIHttpHandler {
 
     public MenuGetCompilerConfigOptionActionHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

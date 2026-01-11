@@ -4,7 +4,7 @@ import argo.jdom.JsonNode;
 import core.controller.Core;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
 
-public class ControllerDelayStep extends ManuallyBuildStep {
+public final class ControllerDelayStep extends ManuallyBuildStep {
 
 	private int delay;
 

@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Map;
 
-public class ActionTaskActivationSetGlobalKeyAction extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationSetGlobalKeyAction extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationSetGlobalKeyAction(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

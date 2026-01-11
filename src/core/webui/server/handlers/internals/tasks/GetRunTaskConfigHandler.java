@@ -12,7 +12,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.util.HashMap;
 import java.util.Map;
 
-public class GetRunTaskConfigHandler extends AbstractUIHttpHandler {
+public final class GetRunTaskConfigHandler extends AbstractUIHttpHandler {
 
     public GetRunTaskConfigHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

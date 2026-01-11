@@ -11,7 +11,7 @@ import java.util.ListIterator;
  * A chronologically ordered key series that have an upper limit of number of
  * key strokes and will remove the last one.
  */
-public class RollingKeySeries extends KeySeries {
+public final class RollingKeySeries extends KeySeries {
 
     private static final int DEFAULT_LIMIT = 100;
 

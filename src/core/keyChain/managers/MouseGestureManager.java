@@ -41,7 +41,7 @@ import java.util.stream.Collectors;
 /**
  * Class to manage mouse gesture recognition and action
  */
-public class MouseGestureManager extends KeyStrokeManager {
+public final class MouseGestureManager extends KeyStrokeManager {
 
     private static final Logger LOGGER = Logger.getLogger(MouseGestureManager.class.getName());
 

@@ -8,7 +8,7 @@ import core.webui.server.handlers.renderedobjects.RenderedPossibleManuallyBuildA
 import java.util.HashMap;
 import java.util.Map;
 
-public class ManuallyBuildActionBuilderBody {
+public final class ManuallyBuildActionBuilderBody {
 
     private ManuallyBuildActionBuilderBody() {
         throw new InstantiationError("This class is uninstantiable.");

@@ -25,7 +25,7 @@ import core.controller.internals.AbstractKeyboardCoreImplementation;
  *
  * @author HP Truong
  */
-public class KeyboardCore extends AbstractKeyboardCoreImplementation {
+public final class KeyboardCore extends AbstractKeyboardCoreImplementation {
     private final AbstractKeyboardCoreImplementation k;
 
     KeyboardCore(AbstractKeyboardCoreImplementation k) {

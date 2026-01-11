@@ -3,7 +3,7 @@ package core.keyChain.mouseGestureRecognition;
 import java.awt.Point;
 import java.util.ArrayList;
 
-public class DataDefinitionTrimmer extends AbstractDataTrimmer {
+final class DataDefinitionTrimmer extends AbstractDataTrimmer {
 
 	/**
 	 * Leaving out points once every period.

@@ -2,7 +2,7 @@ package core.userDefinedTask.manualBuild.steps;
 
 import java.awt.event.InputEvent;
 
-class DisplayTextUtil {
+final class DisplayTextUtil {
 
     private DisplayTextUtil() {
         //This class is uninstantiable.

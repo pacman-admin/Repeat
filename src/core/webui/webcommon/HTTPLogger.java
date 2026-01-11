@@ -17,7 +17,7 @@ package core.webui.webcommon;
 
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class HTTPLogger {
+public final class HTTPLogger {
     private final String errorMessage;
 
     public HTTPLogger(String errorMsg) {

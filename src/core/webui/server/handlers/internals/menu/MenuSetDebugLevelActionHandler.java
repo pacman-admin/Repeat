@@ -10,7 +10,7 @@ import utilities.NumberUtility;
 import java.util.Map;
 import java.util.logging.Level;
 
-public class MenuSetDebugLevelActionHandler extends AbstractPOSTHandler {
+public final class MenuSetDebugLevelActionHandler extends AbstractPOSTHandler {
 
     public MenuSetDebugLevelActionHandler() {
         super("Could not set debug output level");

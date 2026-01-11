@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Map;
 
-public class ActionTaskActivationGetStrokesHandler extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationGetStrokesHandler extends AbstractTaskActivationConstructorActionHandler {
     public ActionTaskActivationGetStrokesHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);
     }

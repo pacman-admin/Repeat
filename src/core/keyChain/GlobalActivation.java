@@ -12,7 +12,7 @@ import utilities.json.IJsonable;
 /**
  * Represents that this activation is configured to comes from all key/mouse events.
  */
-public class GlobalActivation implements IJsonable {
+public final class GlobalActivation implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(GlobalActivation.class.getName());
 
@@ -36,7 +36,7 @@ public class GlobalActivation implements IJsonable {
 		return new Builder();
 	}
 
-	protected static class Builder {
+	protected static final class Builder {
 		private boolean onKeyReleased;
 		private boolean onKeyPressed;
 

@@ -15,7 +15,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroupButton;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class GetRenderedTaskGroupsDropdown extends AbstractUIHttpHandler {
+public final class GetRenderedTaskGroupsDropdown extends AbstractUIHttpHandler {
 
 	public GetRenderedTaskGroupsDropdown(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

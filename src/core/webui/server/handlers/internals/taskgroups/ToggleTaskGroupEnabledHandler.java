@@ -13,7 +13,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.io.IOException;
 import java.util.Map;
 
-public class ToggleTaskGroupEnabledHandler extends AbstractUIHttpHandler {
+public final class ToggleTaskGroupEnabledHandler extends AbstractUIHttpHandler {
 
     public ToggleTaskGroupEnabledHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

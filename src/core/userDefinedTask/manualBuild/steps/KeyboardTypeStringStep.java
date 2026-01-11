@@ -4,7 +4,7 @@ import argo.jdom.JsonNode;
 import core.controller.Core;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
 
-public class KeyboardTypeStringStep extends ManuallyBuildStep {
+public final class KeyboardTypeStringStep extends ManuallyBuildStep {
 
 	private String content;
 

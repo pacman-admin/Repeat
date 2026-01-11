@@ -7,7 +7,7 @@ import argo.jdom.JsonRootNode;
 /**
  * Match a string if it contains certain substring.
  */
-public class ContainingStringMatchingCondition extends StringMatchingCondition {
+public final class ContainingStringMatchingCondition extends StringMatchingCondition {
 
 	private final String substring;
 

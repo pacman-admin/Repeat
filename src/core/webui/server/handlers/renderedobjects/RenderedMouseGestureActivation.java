@@ -5,7 +5,7 @@ import core.keyChain.MouseGesture;
 
 import java.util.Set;
 
-public class RenderedMouseGestureActivation {
+public final class RenderedMouseGestureActivation {
 
     public static final MouseGesture[] INDICES = new MouseGesture[]{MouseGesture.ALPHA, MouseGesture.CIRCLE_LEFT, MouseGesture.GAMMA, MouseGesture.GREATER_THAN, MouseGesture.HAT, MouseGesture.LESS_THAN, MouseGesture.N, MouseGesture.SQUARE, MouseGesture.SQUARE_ROOT, MouseGesture.TILDA, MouseGesture.TRIANGLE, MouseGesture.Z,};
 

@@ -1,6 +1,6 @@
 package core.webui.server.handlers.renderedobjects;
 
-public class TooltipsIPCPage {
+public final class TooltipsIPCPage {
 	private String run = "Run the selected IPC service.";
 	private String stop = "Stop the selected IPC service.";
 

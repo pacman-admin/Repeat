@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.io.IOException;
 import java.util.Map;
 
-public class ActionTaskActivationAddStrokesAsKeyChainHandler extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationAddStrokesAsKeyChainHandler extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationAddStrokesAsKeyChainHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

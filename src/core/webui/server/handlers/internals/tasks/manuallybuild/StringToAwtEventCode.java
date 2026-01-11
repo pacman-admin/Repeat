@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.Map;
 
-class StringToAwtEventCode {
+final class StringToAwtEventCode {
 
     private static final int UNKNOWN_VALUE = -1;
 

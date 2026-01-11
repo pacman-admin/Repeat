@@ -3,7 +3,7 @@ package core.webui.server.handlers.internals.tasks.manuallybuild;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public class ManuallyBuildActionFeModel {
+public final class ManuallyBuildActionFeModel {
 
     private static final Map<Actor, List<Action>> ACTORS_TO_ACTIONS = new HashMap<>();
 
@@ -40,7 +40,7 @@ public class ManuallyBuildActionFeModel {
             value = s;
         }
 
-        static Actor forValue(String s) {
+        private static Actor forValue(String s) {
             for (Actor actor : Actor.values()) {
                 if (actor.toString().equals(s)) {
                     return actor;

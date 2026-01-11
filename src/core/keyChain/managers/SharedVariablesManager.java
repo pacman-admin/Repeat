@@ -16,7 +16,7 @@ import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.SharedVariablesEvent;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 
-public class SharedVariablesManager extends ActivationEventManager {
+public final class SharedVariablesManager extends ActivationEventManager {
 
 	private final List<UserDefinedAction> registeredActions;
 

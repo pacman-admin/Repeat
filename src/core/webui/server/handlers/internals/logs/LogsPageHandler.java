@@ -10,7 +10,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LogsPageHandler extends AbstractUIHttpHandler {
+public final class LogsPageHandler extends AbstractUIHttpHandler {
 
     public LogsPageHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

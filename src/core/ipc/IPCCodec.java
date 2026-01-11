@@ -6,7 +6,7 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.Base64;
 
-class IPCCodec {
+final class IPCCodec {
 
 	private static final Charset ENCODING = StandardCharsets.UTF_8;
 

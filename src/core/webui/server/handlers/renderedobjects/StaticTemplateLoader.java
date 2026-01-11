@@ -26,7 +26,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-public class StaticTemplateLoader implements TemplateLoader {
+public final class StaticTemplateLoader implements TemplateLoader {
     private static final StaticTemplateLoader INSTANCE = new StaticTemplateLoader();
 
     //private StaticTemplateLoader() {}

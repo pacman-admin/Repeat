@@ -35,7 +35,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
+public final class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
 
     private static final Logger LOGGER = Logger.getLogger(StaticFileServingHandler.class.getName());
 

@@ -4,7 +4,7 @@ import core.webui.server.handlers.AbstractBooleanConfigHttpHandler;
 import frontEnd.Backend;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class MenuUseJavaAwtForMousePosition extends AbstractBooleanConfigHttpHandler {
+public final class MenuUseJavaAwtForMousePosition extends AbstractBooleanConfigHttpHandler {
 
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {

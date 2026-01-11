@@ -3,7 +3,7 @@ package core.controller.internals;
 import java.awt.*;
 import java.awt.event.InputEvent;
 
-public class LocalMouseCore extends AbstractMouseCoreImplementation {
+public final class LocalMouseCore extends AbstractMouseCoreImplementation {
 
     private final Robot controller;
 

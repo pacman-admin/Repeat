@@ -21,7 +21,7 @@ import utilities.json.IJsonable;
 import utilities.json.JSONUtility;
 import utilities.json.Jsonizer;
 
-public class UsageStatistics implements IJsonable {
+public final class UsageStatistics implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(UsageStatistics.class.getName());
 	private static final int MAX_EXECUTION_INSTANCES_STORED = 10000;
@@ -188,13 +188,13 @@ public class UsageStatistics implements IJsonable {
 		totalExecutionTime += end-start;
 	}
 
-	public static class ExecutionInstance extends AutoJsonable {
+	public static final class ExecutionInstance extends AutoJsonable {
 		public static final Long DID_NOT_END = -1L;
 
 		private final long start;
 		private long end;
 
-		static ExecutionInstance of(long start, long end) {
+		private static ExecutionInstance of(long start, long end) {
 			return new ExecutionInstance(start, end);
 		}
 

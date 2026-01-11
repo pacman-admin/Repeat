@@ -3,7 +3,7 @@ package utilities.logging;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class CompositeOutputStream extends OutputStream {
+public final class CompositeOutputStream extends OutputStream {
 
 	private final OutputStream out1;
     private final OutputStream out2;

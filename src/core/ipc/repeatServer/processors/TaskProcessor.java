@@ -46,7 +46,7 @@ import java.util.logging.Level;
  * @author HP Truong
  *
  */
-public class TaskProcessor extends AbstractMessageProcessor {
+public final class TaskProcessor extends AbstractMessageProcessor {
 
     public static final String CREATE_TASK_ACTION = "create_task";
     public static final String RUN_TASK_ACTION = "run_task";
@@ -149,7 +149,7 @@ public class TaskProcessor extends AbstractMessageProcessor {
                 content.isArrayNode("parameters");
     }
 
-    private static class Reply {
+    private static final class Reply {
         private String status;
         private JsonNode message;
         private boolean timeout;

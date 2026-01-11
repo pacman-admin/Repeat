@@ -12,7 +12,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-public class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
+public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 
     private static final Logger LOGGER = Logger.getLogger(LocalKeyboardCore.class.getName());
     private static final Set<Integer> OSX_FLAG_KEYS;

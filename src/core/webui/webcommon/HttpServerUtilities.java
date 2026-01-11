@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class HttpServerUtilities {
+public final class HttpServerUtilities {
 
     private static final Logger LOGGER = Logger.getLogger(HttpServerUtilities.class.getName());
 

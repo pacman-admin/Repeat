@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import java.util.List;
 
-public class RenderedSharedVariablesActivation {
+public final class RenderedSharedVariablesActivation {
 
     private final List<RenderedSharedVariableActivation> variables = List.of();
 

@@ -34,7 +34,7 @@ import org.simplenativehooks.utilities.Function;
 
 import java.util.HashMap;
 
-public class Recorder {
+public final class Recorder {
 
     public static final int MODE_NORMAL = 0;
     public static final int MODE_MOUSE_CLICK_ONLY = 1;

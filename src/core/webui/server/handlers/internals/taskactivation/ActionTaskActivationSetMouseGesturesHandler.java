@@ -12,7 +12,7 @@ import utilities.json.JSONUtility;
 
 import java.util.*;
 
-public class ActionTaskActivationSetMouseGesturesHandler extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationSetMouseGesturesHandler extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationSetMouseGesturesHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

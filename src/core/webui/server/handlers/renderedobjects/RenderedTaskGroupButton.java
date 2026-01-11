@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import core.userDefinedTask.TaskGroup;
 
-public class RenderedTaskGroupButton {
+public final class RenderedTaskGroupButton {
 	private String current;
 	private boolean enabled;
 	private List<RenderedTaskGroupSimple> groups;

@@ -18,7 +18,7 @@ import java.util.regex.Pattern;
  *
  * @author HP Truong
  */
-public class FileUtility {
+public final class FileUtility {
 
     private static final Logger LOGGER = Logger.getLogger(FileUtility.class.getName());
 

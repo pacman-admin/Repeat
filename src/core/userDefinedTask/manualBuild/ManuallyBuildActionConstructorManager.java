@@ -2,7 +2,7 @@ package core.userDefinedTask.manualBuild;
 
 import core.background.AbstractBackgroundEntityManager;
 
-public class ManuallyBuildActionConstructorManager extends AbstractBackgroundEntityManager<ManuallyBuildActionConstructor> {
+public final class ManuallyBuildActionConstructorManager extends AbstractBackgroundEntityManager<ManuallyBuildActionConstructor> {
 
 	public static ManuallyBuildActionConstructorManager of() {
 		return new ManuallyBuildActionConstructorManager();

@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import core.ipc.IIPCService;
 
-public class RenderedIPCService {
+public final class RenderedIPCService {
 	private String name;
 	private String port;
 	private String running;

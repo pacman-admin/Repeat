@@ -7,7 +7,7 @@ import java.util.stream.IntStream;
 
 import core.keyChain.*;
 
-public class RenderedTaskActivation {
+public final class RenderedTaskActivation {
     private List<SortedString> keyChains;
     private List<SortedString> keySequences;
     private List<SortedString> phrases;
@@ -44,7 +44,7 @@ public class RenderedTaskActivation {
         return IntStream.range(0, vals.size()).mapToObj(i -> SortedString.of(i, vals.get(i))).sorted(Comparator.comparing(s -> s.getValue())).collect(Collectors.toList());
     }
 
-    public static class SortedString {
+    public static final class SortedString {
         int originalIndex;
         String value;
 
@@ -69,7 +69,7 @@ public class RenderedTaskActivation {
         }
     }
 
-    public static class Config {
+    public static final class Config {
         private boolean modifiable;
         private boolean disableGlobalAction;
         private boolean disableKeyChain;

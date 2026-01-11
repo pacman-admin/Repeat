@@ -33,7 +33,7 @@ public interface ButtonStroke extends IJsonable {
 		return KeyStroke.parseJSON(n);
 	}
 
-	class KeyboardResult {
+	final class KeyboardResult {
 		private KeyboardState keyboardState;
 		private String typedString;
 

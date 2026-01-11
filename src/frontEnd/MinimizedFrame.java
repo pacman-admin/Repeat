@@ -13,7 +13,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-class MinimizedFrame extends TrayIcon {
+final class MinimizedFrame extends TrayIcon {
 
     private static final Logger LOGGER = Logger.getLogger(MinimizedFrame.class.getName());
 

@@ -11,7 +11,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.util.Arrays;
 import java.util.Map;
 
-public class MenuSetCompilerConfigActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuSetCompilerConfigActionHandler extends AbstractSingleMethodHttpHandler {
 
     public MenuSetCompilerConfigActionHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);

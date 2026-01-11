@@ -8,7 +8,7 @@ import utilities.json.IJsonable;
 /**
  * Preconditions for executing an action.
  */
-public class TaskExecutionPreconditions implements IJsonable {
+public final class TaskExecutionPreconditions implements IJsonable {
 
     private static final TaskExecutionPreconditions NO_CONDITION = TaskExecutionPreconditions.of(ActiveWindowsInfoCondition.of(AlwaysMatchingStringCondition.INSTANCE, AlwaysMatchingStringCondition.INSTANCE));
 

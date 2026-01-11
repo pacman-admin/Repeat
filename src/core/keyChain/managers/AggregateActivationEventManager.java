@@ -12,7 +12,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class AggregateActivationEventManager extends ActivationEventManager {
+public final class AggregateActivationEventManager extends ActivationEventManager {
 
     private final List<ActivationEventManager> managers;
 

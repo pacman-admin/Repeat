@@ -2,7 +2,7 @@ package globalListener;
 
 import org.simplenativehooks.NativeHookInitializer;
 
-public class GlobalListenerHookController {
+public final class GlobalListenerHookController {
     private GlobalListenerHookController() {}
 
     public static void initialize(boolean useAWTForMousePos) {

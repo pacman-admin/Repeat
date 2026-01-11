@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class RenderedUserDefinedActionStatistics {
+public final class RenderedUserDefinedActionStatistics {
 
     private static final int MAX_EXECUTION_INSTANCES = 100;
     private static final List<Color> BREAKDOWN_COLORS = Arrays.asList(

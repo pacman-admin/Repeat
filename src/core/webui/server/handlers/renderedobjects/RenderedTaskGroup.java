@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import core.userDefinedTask.TaskGroup;
 
-public class RenderedTaskGroup {
+public final class RenderedTaskGroup {
 	private String id;
 	private String name;
 	private int taskCount;

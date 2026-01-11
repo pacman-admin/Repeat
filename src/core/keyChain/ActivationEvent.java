@@ -2,7 +2,7 @@ package core.keyChain;
 
 import core.userDefinedTask.internals.SharedVariablesEvent;
 
-public class ActivationEvent {
+public final class ActivationEvent {
     private final EventType type;
     private ButtonStroke buttonStroke;
     private SharedVariablesEvent variable;

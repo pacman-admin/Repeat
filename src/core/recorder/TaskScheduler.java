@@ -7,7 +7,7 @@ import utilities.Function;
 import core.scheduler.AbstractScheduler;
 import core.scheduler.SchedulingData;
 
-class TaskScheduler extends AbstractScheduler<Runnable> {
+final class TaskScheduler extends AbstractScheduler<Runnable> {
 
 	private static final Logger LOGGER = Logger.getLogger(TaskScheduler.class.getName());
 

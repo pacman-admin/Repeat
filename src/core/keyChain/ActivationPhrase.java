@@ -6,7 +6,7 @@ import argo.jdom.JsonRootNode;
 
 import java.util.logging.Logger;
 
-public class ActivationPhrase extends KeySeries {
+public final class ActivationPhrase extends KeySeries {
 
     private static final Logger LOGGER = Logger.getLogger(ActivationPhrase.class.getName());
     private final String value;

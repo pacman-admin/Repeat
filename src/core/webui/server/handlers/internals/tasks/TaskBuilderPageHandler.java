@@ -12,7 +12,7 @@ import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionBuilderBody;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
-public class TaskBuilderPageHandler extends AbstractUIHttpHandler {
+public final class TaskBuilderPageHandler extends AbstractUIHttpHandler {
 
 	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
 

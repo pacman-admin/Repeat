@@ -3,7 +3,7 @@ package core.webui.server.handlers.renderedobjects;
 import core.keyChain.ActionInvoker;
 
 @SuppressWarnings("unused")
-public class RenderedGlobalActivation {
+public final class RenderedGlobalActivation {
     private final boolean onKeyPressed;
     private final boolean onKeyReleased;
 

@@ -6,7 +6,7 @@ import java.util.List;
 import core.controller.Core;
 import core.userDefinedTask.UserDefinedAction;
 
-public class ManuallyBuildAction extends UserDefinedAction {
+public final class ManuallyBuildAction extends UserDefinedAction {
 
 	private final List<ManuallyBuildStep> steps;
 

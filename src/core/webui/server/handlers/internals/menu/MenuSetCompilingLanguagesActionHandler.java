@@ -15,7 +15,7 @@ import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler.
 import core.webui.webcommon.HttpServerUtilities;
 import utilities.NumberUtility;
 
-public class MenuSetCompilingLanguagesActionHandler extends AbstractTaskSourceCodeHandler {
+public final class MenuSetCompilingLanguagesActionHandler extends AbstractTaskSourceCodeHandler {
 
 	public MenuSetCompilingLanguagesActionHandler(TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler) {
 		super(taskSourceCodeFragmentHandler, AbstractSingleMethodHttpHandler.POST_METHOD);

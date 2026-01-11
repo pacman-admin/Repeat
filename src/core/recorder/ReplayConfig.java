@@ -1,6 +1,6 @@
 package core.recorder;
 
-public class ReplayConfig {
+public final class ReplayConfig {
 	private long count;
 	private long delay;
 	private float speedup;

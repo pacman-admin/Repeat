@@ -4,7 +4,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
-public class DataCutTrimmer extends AbstractDataTrimmer {
+final class DataCutTrimmer extends AbstractDataTrimmer {
 
 	/**
 	 * Remove points from the beginning of the list.

@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHttpHandler {
+public final class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHttpHandler {
 
     public GetRenderedTaskGroupsSelectModalHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.GET_METHOD);

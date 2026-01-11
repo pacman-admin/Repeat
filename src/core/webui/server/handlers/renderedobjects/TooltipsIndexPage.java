@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import utilities.StringUtil;
 
-public class TooltipsIndexPage {
+public final class TooltipsIndexPage {
     private static final String mousePosition = StringUtil.escapeHtml("If enabled, mouse position will be logged on every left control click (key down time).");
     private static final String activeWindowInfosLogging = StringUtil.escapeHtml("If enabled, active window will be logged on every mouse click (key up time).");
     private static final String record = "Record mouse and keyboard activities.";

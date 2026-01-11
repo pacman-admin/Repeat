@@ -3,7 +3,7 @@ package utilities.logging;
 import java.io.OutputStream;
 import java.util.LinkedList;
 
-public class LogHolder extends OutputStream {
+public final class LogHolder extends OutputStream {
 
     private static final int MAX_LINE_COUNT = 4096;
 
@@ -58,7 +58,7 @@ public class LogHolder extends OutputStream {
         return content.substring(currentIndex);
     }
 
-    private static class LineEntry {
+    private static final class LineEntry {
         private int position;
         //private long time;
 

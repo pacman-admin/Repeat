@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import utilities.StringUtil;
 
-public class RenderedPossibleManuallyBuildActions {
+public final class RenderedPossibleManuallyBuildActions {
 	private List<String> actions;
 
 	public static RenderedPossibleManuallyBuildActions of(List<String> possibleActions) {

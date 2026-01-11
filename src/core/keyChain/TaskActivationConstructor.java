@@ -8,7 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TaskActivationConstructor {
+public final class TaskActivationConstructor {
 
     private final List<KeyChain> keyChains;
     private final List<KeySequence> keySequences;
@@ -163,7 +163,7 @@ public class TaskActivationConstructor {
         return config;
     }
 
-    public static class Config {
+    public static final class Config {
         private boolean disableKeyChain;
         private boolean disableKeySequence;
         private boolean disablePhrase;

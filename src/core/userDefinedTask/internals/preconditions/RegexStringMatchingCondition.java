@@ -11,7 +11,7 @@ import argo.jdom.JsonRootNode;
 /**
  * Represents a regex string matching condition.
  */
-public class RegexStringMatchingCondition extends StringMatchingCondition {
+public final class RegexStringMatchingCondition extends StringMatchingCondition {
 
 	private static final Logger LOGGER = Logger.getLogger(RegexStringMatchingCondition.class.getName());
 

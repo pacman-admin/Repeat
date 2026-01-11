@@ -5,7 +5,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class MenuSaveConfigActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuSaveConfigActionHandler extends AbstractSingleMethodHttpHandler {
 
     public MenuSaveConfigActionHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);

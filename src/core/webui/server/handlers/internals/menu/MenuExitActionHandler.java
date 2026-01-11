@@ -6,7 +6,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class MenuExitActionHandler extends AbstractSingleMethodHttpHandler {
+public final class MenuExitActionHandler extends AbstractSingleMethodHttpHandler {
 
     private static final long EXIT_DELAY_MS = 2000;
 

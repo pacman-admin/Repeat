@@ -7,7 +7,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class GetSourceTemplateHandler extends AbstractSingleMethodHttpHandler {
+public final class GetSourceTemplateHandler extends AbstractSingleMethodHttpHandler {
 
     public GetSourceTemplateHandler() {
         super(AbstractSingleMethodHttpHandler.GET_METHOD);

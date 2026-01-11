@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import core.userDefinedTask.internals.preconditions.TaskExecutionPreconditions;
 
-public class RenderedTaskExecutionPreconditions {
+public final class RenderedTaskExecutionPreconditions {
 	private RenderedActiveWindowInfosPreconditions activeWindowInfosPreconditions;
 
 	public static RenderedTaskExecutionPreconditions of(TaskExecutionPreconditions preconditions) {

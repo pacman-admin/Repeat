@@ -10,7 +10,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ObjectRenderer {
+public final class ObjectRenderer {
 
     private static final Logger LOGGER = Logger.getLogger(ObjectRenderer.class.getName());
 

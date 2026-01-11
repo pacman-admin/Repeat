@@ -16,9 +16,9 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Set;
 
-public class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
+public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
-    protected TaskActivationConstructorManager taskActivationConstructorManager;
+    private final TaskActivationConstructorManager taskActivationConstructorManager;
 
     public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer,
                                         TaskActivationConstructorManager taskActivationConstructorManager) {

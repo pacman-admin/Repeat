@@ -8,7 +8,7 @@ import utilities.json.IJsonable;
 /**
  * Condition on an active window information.
  */
-public class ActiveWindowsInfoCondition implements IJsonable {
+public final class ActiveWindowsInfoCondition implements IJsonable {
 
     private StringMatchingCondition title;
     private StringMatchingCondition processName;

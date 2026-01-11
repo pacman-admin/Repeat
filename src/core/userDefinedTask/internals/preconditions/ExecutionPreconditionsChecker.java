@@ -8,7 +8,7 @@ import utilities.natives.processes.NativeProcessUtil.NativeWindowInfo;
  * Checks whether the execution preconditions are met.
  */
 @SuppressWarnings("unused")
-public class ExecutionPreconditionsChecker {
+public final class ExecutionPreconditionsChecker {
 
     private NativeWindowInfo cachedActiveWindowInfo;
     private long activeWindowInfoFetchTime;

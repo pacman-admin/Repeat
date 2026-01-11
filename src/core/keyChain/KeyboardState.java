@@ -6,7 +6,7 @@ import java.awt.event.KeyEvent;
  * The state of lock keys on the keyboard (numslock, capslock, scrolllock).
  * Instances of this class is immutable.
  */
-public class KeyboardState {
+public final class KeyboardState {
 	private boolean numslockLocked;
 	private boolean capslockLocked;
 	private boolean scrollLockLocked;

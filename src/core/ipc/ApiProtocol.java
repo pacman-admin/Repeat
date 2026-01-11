@@ -3,7 +3,7 @@ package core.ipc;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 
-public class ApiProtocol {
+public final class ApiProtocol {
 	private ApiProtocol() {
         throw new InstantiationError("This class is uninstantiable.");
     }

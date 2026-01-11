@@ -28,7 +28,7 @@ import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.NumberUtility;
 
-public class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
+public final class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
 
     public SaveRunTaskConfigHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);

@@ -28,7 +28,7 @@ import frontEnd.Backend;
 import org.apache.http.HttpRequest;
 import utilities.NumberUtility;
 
-public class RunTaskHandler extends AbstractPOSTHandler {
+public final class RunTaskHandler extends AbstractPOSTHandler {
 
     public RunTaskHandler() {
         super("Could not run task.");

@@ -14,7 +14,7 @@ import core.config.ParsingMode;
 import utilities.json.IJsonable;
 
 /** Contains information about the source history of a task. */
-public class TaskSourceHistory implements IJsonable {
+public final class TaskSourceHistory implements IJsonable {
 
 	private static final Logger LOGGER = Logger.getLogger(TaskSourceHistory.class.getName());
 

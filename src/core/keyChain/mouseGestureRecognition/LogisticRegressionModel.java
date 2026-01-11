@@ -9,7 +9,7 @@ import staticResources.MouseGestureModelResources;
  *
  * @author HP Truong
  */
-class LogisticRegressionModel {
+final class LogisticRegressionModel {
 
     private String[] labels; // classifying classes
     private Matrix w; // coefficients

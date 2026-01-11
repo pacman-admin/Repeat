@@ -10,7 +10,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 
-public class MenuImportTaskActionHandler extends AbstractPOSTHandler {
+public final class MenuImportTaskActionHandler extends AbstractPOSTHandler {
 
     public MenuImportTaskActionHandler() {
         super("Could not import tasks.");

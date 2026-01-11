@@ -7,7 +7,7 @@ import org.apache.http.ExceptionLogger;
 /**
  * Logger that ignores certain commonly encountered (but harmless) exceptions.
  */
-class UIServerExceptionLogger implements ExceptionLogger {
+final class UIServerExceptionLogger implements ExceptionLogger {
 	@Override
 	public void log(Exception arg0) {
 		if (arg0 instanceof IOException) {

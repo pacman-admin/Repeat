@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.BitSet;
 import java.util.List;
 
-class URLEncodedUtils {
+final class URLEncodedUtils {
     private URLEncodedUtils(){
         throw new InstantiationError("This class is uninstantiable.");
     }

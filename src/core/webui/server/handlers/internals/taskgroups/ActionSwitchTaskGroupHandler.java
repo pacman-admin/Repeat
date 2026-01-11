@@ -13,7 +13,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.io.IOException;
 import java.util.Map;
 
-public class ActionSwitchTaskGroupHandler extends AbstractUIHttpHandler {
+public final class ActionSwitchTaskGroupHandler extends AbstractUIHttpHandler {
 
     public ActionSwitchTaskGroupHandler(ObjectRenderer objectRenderer) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

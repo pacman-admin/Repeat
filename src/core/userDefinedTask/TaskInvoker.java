@@ -10,7 +10,7 @@ import static core.userDefinedTask.TaskGroupManager.taskGroups;
 /**
  * Class to invoke tasks programmatically.
  */
-public class TaskInvoker {
+public final class TaskInvoker {
 
     private static final Logger LOGGER = Logger.getLogger(TaskInvoker.class.getName());
 

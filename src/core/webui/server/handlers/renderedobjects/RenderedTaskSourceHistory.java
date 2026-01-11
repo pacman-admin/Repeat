@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 import core.userDefinedTask.internals.TaskSourceHistory;
 
-public class RenderedTaskSourceHistory {
+public final class RenderedTaskSourceHistory {
 
 	private List<RenderedTaskSourceHistoryEntry> entries;
 

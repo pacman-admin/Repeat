@@ -14,7 +14,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
 @SuppressWarnings("unused")
-public class JSONUtility {
+public final class JSONUtility {
 
     /**
      * Private constructor so that no instance is created

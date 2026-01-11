@@ -13,7 +13,7 @@ import core.keyChain.MouseGesture;
  *
  * @author HP Truong
  */
-public class MouseGestureClassifier {
+public final class MouseGestureClassifier {
 
 	private static final Logger LOGGER = Logger.getLogger(MouseGestureClassifier.class.getName());
 

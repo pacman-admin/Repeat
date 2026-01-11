@@ -2,7 +2,7 @@ package core.webui.server.handlers.renderedobjects;
 
 import core.userDefinedTask.internals.RunActionConfig;
 
-public class RenderedRunTaskConfig {
+public final class RenderedRunTaskConfig {
 	private String repeatCount;
 	private String delayMsBetweenRepeats;
 

@@ -1,6 +1,6 @@
 package core.webui.server.handlers.renderedobjects;
 
-public class RenderedSharedVariableActivation {
+public final class RenderedSharedVariableActivation {
 	private String namespace;
 	private String name;
 

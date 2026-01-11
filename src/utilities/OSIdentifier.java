@@ -15,7 +15,7 @@
  */
 package utilities;
 
-public class OSIdentifier {
+public final class OSIdentifier {
     private static final OS THE_OS = OS.getCurrentOS();
 
     public static OS getCurrentOS() {

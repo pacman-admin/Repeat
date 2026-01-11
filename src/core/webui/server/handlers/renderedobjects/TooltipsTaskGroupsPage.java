@@ -1,6 +1,6 @@
 package core.webui.server.handlers.renderedobjects;
 
-public class TooltipsTaskGroupsPage {
+public final class TooltipsTaskGroupsPage {
 	private String add = "Add a new task group.";
 	private String remove = "Remove the selected task group.";
 	private String up = "Move the selected task group up.";

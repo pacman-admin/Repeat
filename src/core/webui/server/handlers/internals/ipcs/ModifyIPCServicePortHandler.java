@@ -15,7 +15,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import utilities.NumberUtility;
 
-public class ModifyIPCServicePortHandler extends AbstractUIHttpHandler {
+public final class ModifyIPCServicePortHandler extends AbstractUIHttpHandler {
 
 	public ModifyIPCServicePortHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

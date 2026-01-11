@@ -10,7 +10,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import java.awt.event.InputEvent;
 import java.util.Map;
 
-public class ActionTaskActivationAddMouseKey extends AbstractTaskActivationConstructorActionHandler {
+public final class ActionTaskActivationAddMouseKey extends AbstractTaskActivationConstructorActionHandler {
 
     public ActionTaskActivationAddMouseKey(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, taskActivationConstructorManager);

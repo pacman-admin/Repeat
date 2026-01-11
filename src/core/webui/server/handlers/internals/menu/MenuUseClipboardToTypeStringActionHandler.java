@@ -5,7 +5,7 @@ import frontEnd.Backend;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.OSIdentifier;
 
-public class MenuUseClipboardToTypeStringActionHandler extends AbstractBooleanConfigHttpHandler {
+public final class MenuUseClipboardToTypeStringActionHandler extends AbstractBooleanConfigHttpHandler {
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
         Backend.config.setUseClipboardToTypeString(value && OSIdentifier.getCurrentOS().isClipboardSupported);

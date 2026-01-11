@@ -5,7 +5,7 @@ import core.webui.server.handlers.AbstractBooleanConfigHttpHandler;
 import frontEnd.Backend;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public class MenuRecordMouseClickOnlyActionHandler extends AbstractBooleanConfigHttpHandler {
+public final class MenuRecordMouseClickOnlyActionHandler extends AbstractBooleanConfigHttpHandler {
 
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {

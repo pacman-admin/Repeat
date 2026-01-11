@@ -13,7 +13,7 @@ import java.util.Map.Entry;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class KeyChainManager extends KeyStrokeManager {
+public final class KeyChainManager extends KeyStrokeManager {
 
     private final Set<ButtonStroke> pressedKeyboardKeys, pressedKeys;
     private final Map<KeyChain, UserDefinedAction> keyChainActions;

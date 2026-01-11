@@ -6,7 +6,7 @@ import java.io.File;
 import java.util.logging.Logger;
 
 
-public class TaskSourceManager {
+public final class TaskSourceManager {
 
     private static final Logger LOGGER = Logger.getLogger(TaskSourceManager.class.getName());
 

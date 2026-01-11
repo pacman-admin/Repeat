@@ -4,7 +4,7 @@ import argo.jdom.JsonNode;
 import core.controller.Core;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
 
-public class MouseClickStep extends ManuallyBuildStep {
+public final class MouseClickStep extends ManuallyBuildStep {
 
 	private int mask;
 	private int x;

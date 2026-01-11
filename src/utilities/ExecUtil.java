@@ -5,7 +5,7 @@ import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ExecUtil {
+public final class ExecUtil {
 
     private static final Logger LOGGER = Logger.getLogger(ExecUtil.class.getName());
 
@@ -144,10 +144,10 @@ public class ExecUtil {
 
     private static abstract class ExceptableFunction<D, R, E extends Exception> {
 
-        public abstract R apply(D d) throws E;
+        protected abstract R apply(D d) throws E;
     }
 
-    public static class ExecutionException extends Exception {
+    public static final class ExecutionException extends Exception {
         @Serial
         private static final long serialVersionUID = 6688739122137565700L;
 

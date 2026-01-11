@@ -24,12 +24,12 @@ import utilities.json.JSONUtility;
  * @author HP Truong
  *
  */
-public class MainMessageSender implements ILoggable {
+public final class MainMessageSender implements ILoggable {
 
 	private long idCount;
 	private DataOutputStream writer;
 
-	MainMessageSender() {
+	private MainMessageSender() {
 		idCount = 1L;
 	}
 

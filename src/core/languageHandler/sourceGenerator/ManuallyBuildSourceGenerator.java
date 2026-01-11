@@ -13,7 +13,7 @@ import core.userDefinedTask.manualBuild.steps.MouseReleaseCurrentPositionStep;
 import utilities.Function;
 import utilities.json.JSONUtility;
 
-public class ManuallyBuildSourceGenerator extends InjectionSourceGenerator {
+public final class ManuallyBuildSourceGenerator extends InjectionSourceGenerator {
 
 	public ManuallyBuildSourceGenerator() {
 		super();
@@ -45,7 +45,7 @@ public class ManuallyBuildSourceGenerator extends InjectionSourceGenerator {
 		return "";
 	}
 
-	private static class ManuallyBuildMouseSourceCodeGenerator extends AbstractMouseSourceCodeGenerator {
+	private static final class ManuallyBuildMouseSourceCodeGenerator extends AbstractMouseSourceCodeGenerator {
 
 		@Override
 		protected String move(int[] params) {
@@ -73,7 +73,7 @@ public class ManuallyBuildSourceGenerator extends InjectionSourceGenerator {
 		}
 	}
 
-	private static class ManuallyBuildKeyboardSourceCodeGenerator extends AbstractKeyboardSourceCodeGenerator {
+	private static final class ManuallyBuildKeyboardSourceCodeGenerator extends AbstractKeyboardSourceCodeGenerator {
 
 		@Override
 		protected String type(int[] params) {

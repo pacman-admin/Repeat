@@ -5,7 +5,7 @@ import utilities.OSIdentifier;
 /**
  * Provides utility to interact with processes via native APIs.
  */
-public class NativeProcessUtil {
+public final class NativeProcessUtil {
 
     private NativeProcessUtil() {
         throw new InstantiationError("This class is uninstantiable.");
@@ -23,7 +23,7 @@ public class NativeProcessUtil {
     /**
      * Contains information for native window.
      */
-    public static class NativeWindowInfo {
+    public static final class NativeWindowInfo {
         private String title;
         // Name of the active process.
         // For OSX this is the active application.

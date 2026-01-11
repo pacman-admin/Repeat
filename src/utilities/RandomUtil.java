@@ -1,6 +1,6 @@
 package utilities;
 
-public class RandomUtil {
+public final class RandomUtil {
 
 	/**
 	 * Generate a random ID.

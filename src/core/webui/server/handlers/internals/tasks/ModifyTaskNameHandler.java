@@ -14,7 +14,7 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import utilities.StringUtil;
 
-public class ModifyTaskNameHandler extends AbstractUIHttpHandler {
+public final class ModifyTaskNameHandler extends AbstractUIHttpHandler {
 
 	public ModifyTaskNameHandler(ObjectRenderer objectRenderer) {
 		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);

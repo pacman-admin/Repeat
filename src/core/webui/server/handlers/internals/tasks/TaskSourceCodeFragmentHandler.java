@@ -13,7 +13,7 @@ import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionBuilderBody;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
-public class TaskSourceCodeFragmentHandler {
+public final class TaskSourceCodeFragmentHandler {
 
 	private final ObjectRenderer objectRenderer;
 	private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
@@ -78,8 +78,8 @@ public class TaskSourceCodeFragmentHandler {
 	}
 
 	@SuppressWarnings("serial")
-	public static class RenderException extends Exception {
-		RenderException(String message){
+	public static final class RenderException extends Exception {
+		private RenderException(String message){
 	        super(message);
 	    }
 	}

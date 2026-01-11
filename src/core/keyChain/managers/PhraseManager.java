@@ -17,7 +17,7 @@ import core.keyChain.ButtonStroke.Source;
 import core.keyChain.RollingKeySeries;
 import core.userDefinedTask.UserDefinedAction;
 
-public class PhraseManager extends KeyStrokeManager {
+public final class PhraseManager extends KeyStrokeManager {
 
 	private final RollingKeySeries currentRollingKeySeries;
 	private final List<UserDefinedAction> registeredActions;

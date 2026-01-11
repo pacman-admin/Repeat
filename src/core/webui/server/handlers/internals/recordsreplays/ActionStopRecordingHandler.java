@@ -7,7 +7,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 
-public class ActionStopRecordingHandler extends AbstractSingleMethodHttpHandler {
+public final class ActionStopRecordingHandler extends AbstractSingleMethodHttpHandler {
 
 	public ActionStopRecordingHandler() {
 		super(AbstractSingleMethodHttpHandler.POST_METHOD);
