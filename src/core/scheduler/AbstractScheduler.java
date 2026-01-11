@@ -10,9 +10,9 @@ public abstract class AbstractScheduler<T> {
 		this.tasks = new LinkedList<>();
 	}
 
-	public final synchronized boolean addTask(SchedulingData<T> task) {
+	public final synchronized void addTask(SchedulingData<T> task) {
 		if (!isLegalAddTask()) {
-			return false;
+			return;
 		}
 
 		Stack<SchedulingData<T>> temp = new Stack<>();
@@ -29,7 +29,7 @@ public abstract class AbstractScheduler<T> {
 				while (!temp.isEmpty()) {
 					tasks.add(temp.pop());
 				}
-				return true;
+				return;
 			} else {
 				temp.push(tasks.removeLast());
 			}

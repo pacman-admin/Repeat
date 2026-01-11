@@ -49,17 +49,19 @@ public abstract class AbstractSourceGenerator {
 
     }
 
-    private boolean internalSubmitTask(long time, Device device, String action, int[] params) {
+    private void internalSubmitTask(long time, Device device, String action, int[] params) {
         String mid;
         if (device.equals(Device.MOUSE)) {
             mid = mouseSourceCodeGenerator.getSourceCode(action, params);
         } else if (device.equals(Device.KEYBOARD)) {
             mid = keyboardSourceCodeGenerator.getSourceCode(action, params);
         } else {
-            return false;
+            return;
         }
 
-        return mid != null && sourceScheduler.addTask(new SchedulingData<>(time, getSourceTab() + mid + "\n"));
+        if (mid != null) {
+            sourceScheduler.addTask(new SchedulingData<>(time, getSourceTab() + mid + "\n"));
+        }
     }
 
     private boolean verify(Object... ignored) {

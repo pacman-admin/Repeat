@@ -98,15 +98,7 @@ public final class TaskProcessor extends AbstractMessageProcessor {
 
 
     public boolean runTask(String id, ActionInvoker invoker) {
-        JsonRootNode requestMessage = JsonNodeFactories.object(
-                JsonNodeFactories.field("task_action", JsonNodeFactories.string(RUN_TASK_ACTION)),
-                JsonNodeFactories.field("parameters",
-                        JsonNodeFactories.array(
-                                JsonNodeFactories.string(id),
-                                invoker.jsonize()
-                        )
-                )
-        );
+        JsonRootNode requestMessage = JsonNodeFactories.object(JsonNodeFactories.field("task_action", JsonNodeFactories.string(RUN_TASK_ACTION)), JsonNodeFactories.field("parameters", JsonNodeFactories.array(JsonNodeFactories.string(id), invoker.jsonize())));
 
         Reply reply = fullMessage(requestMessage, EXECUTION_TIMEOUT_MS);
         return reply != null && reply.status.equals(ApiProtocol.SUCCESS_STATUS);
@@ -145,8 +137,7 @@ public final class TaskProcessor extends AbstractMessageProcessor {
 
     @Override
     protected boolean verifyMessageContent(JsonNode content) {
-        return content.isStringValue("task_action") &&
-                content.isArrayNode("parameters");
+        return content.isStringValue("task_action") && content.isArrayNode("parameters");
     }
 
     private static final class Reply {

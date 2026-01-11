@@ -42,10 +42,9 @@ public final class SharedVariables {
      *
      * @param name variable name.
      * @param data value of the variable.
-     * @return the existing value of the variable, or null if the variable does not exist before.
      */
-    public static synchronized String set(String name, String data) {
-        return variables.put(name, data);
+    public static synchronized void set(String name, String data) {
+        variables.put(name, data);
     }
 
     /**

@@ -167,10 +167,9 @@ public final class GlobalEventsManager {
      * Map all key chains of the current task to the action. Kick out all colliding tasks.
      *
      * @param action action to register.
-     * @return List of currently registered tasks that collide with this newly registered task
      */
-    public Set<UserDefinedAction> registerTask(UserDefinedAction action) {
-        return taskActivationManager.registerAction(action);
+    public void registerTask(UserDefinedAction action) {
+        taskActivationManager.registerAction(action);
     }
 
     /**

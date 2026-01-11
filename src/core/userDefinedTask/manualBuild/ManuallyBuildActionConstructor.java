@@ -29,7 +29,7 @@ public final class ManuallyBuildActionConstructor {
         return Collections.unmodifiableList(steps);
     }
 
-    public ManuallyBuildActionConstructor addStep(int index, ManuallyBuildStep step) {
+    public void addStep(int index, ManuallyBuildStep step) {
         index = index + 1;
         if (index >= steps.size()) {
             index = steps.size() - 1;
@@ -39,36 +39,32 @@ public final class ManuallyBuildActionConstructor {
         }
 
         steps.add(index, step);
-        return this;
     }
 
-    public ManuallyBuildActionConstructor removeStep(int index) {
+    public void removeStep(int index) {
         if (index >= 0 && index < steps.size()) {
             steps.remove(index);
         }
-        return this;
     }
 
-    public ManuallyBuildActionConstructor moveStepUp(int index) {
+    public void moveStepUp(int index) {
         if (index <= 0 || index >= steps.size()) {
-            return this;
+            return;
         }
 
         ManuallyBuildStep tmp = steps.get(index);
         steps.set(index, steps.get(index - 1));
         steps.set(index - 1, tmp);
-        return this;
     }
 
-    public ManuallyBuildActionConstructor moveStepDown(int index) {
+    public void moveStepDown(int index) {
         if (index < 0 || index >= steps.size()) {
-            return this;
+            return;
         }
 
         ManuallyBuildStep tmp = steps.get(index);
         steps.set(index, steps.get(index + 1));
         steps.set(index + 1, tmp);
-        return this;
     }
 
     public String generateSource() {

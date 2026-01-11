@@ -47,7 +47,7 @@ public final class TaskSourceHistory implements IJsonable {
 		entries.sort((e1, e2) -> e2.getCreated().compareTo(e1.getCreated()));
 		if (entries.size() > MAX_REVISION_COUNT) {
 			// Remove the last one, which is the oldest one.
-			entries.remove(entries.size() - 1);
+			entries.removeLast();
 		}
 	}
 
@@ -57,7 +57,7 @@ public final class TaskSourceHistory implements IJsonable {
 		entries.sort((e1, e2) -> e2.getCreated().compareTo(e1.getCreated()));
 		while (entries.size() > MAX_REVISION_COUNT) {
 			// Remove the last one, which is the oldest one.
-			entries.remove(entries.size() - 1);
+			entries.removeLast();
 		}
 	}
 
@@ -80,8 +80,8 @@ public final class TaskSourceHistory implements IJsonable {
 		}
 		if (parseMode == ParsingMode.IMPORT_PARSING) {
 			// Only retain the latest entry.
-			Optional<TaskSourceHistoryEntry> latest = entries.stream().sorted(Comparator.comparing(TaskSourceHistoryEntry::getCreated).reversed()).findFirst();
-			if (!latest.isPresent()) {
+			Optional<TaskSourceHistoryEntry> latest = entries.stream().max(Comparator.comparing(TaskSourceHistoryEntry::getCreated));
+			if (latest.isEmpty()) {
 				entries = new ArrayList<>();
 			} else {
 				entries = new ArrayList<>();

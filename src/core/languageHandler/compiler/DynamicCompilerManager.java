@@ -65,7 +65,7 @@ public final class DynamicCompilerManager implements IJsonable {
         return JsonNodeFactories.object(JsonNodeFactories.field("local_compilers", JsonNodeFactories.array(compilerList)));
     }
 
-    public boolean parseJSON(JsonNode compilerSettings) {
+    public void parseJSON(JsonNode compilerSettings) {
         List<JsonNode> localCompilers = compilerSettings.getArrayNode("local_compilers");
         for (JsonNode compilerNode : localCompilers) {
             String name = compilerNode.getStringValue("name");
@@ -79,6 +79,5 @@ public final class DynamicCompilerManager implements IJsonable {
                 }
             }
         }
-        return true;
     }
 }

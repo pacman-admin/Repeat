@@ -1,7 +1,9 @@
 package core.webui.server.handlers.renderedobjects;
 
-import freemarker.core.ParseException;
-import freemarker.template.*;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
+import freemarker.template.TemplateExceptionHandler;
 
 import java.io.IOException;
 import java.io.StringWriter;
@@ -39,7 +41,7 @@ public final class ObjectRenderer {
         }
     }
 
-    private String internalRender(String templateFile, Map<String, Object> data) throws IOException, TemplateException, TemplateNotFoundException, MalformedTemplateNameException, ParseException {
+    private String internalRender(String templateFile, Map<String, Object> data) throws IOException, TemplateException {
         if (!templateFile.endsWith(TEMPLATE_EXTENSION)) {
             templateFile += TEMPLATE_EXTENSION;
         }
