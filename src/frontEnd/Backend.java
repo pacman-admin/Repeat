@@ -55,37 +55,19 @@ import static core.userDefinedTask.TaskGroupManager.*;
 
 @SuppressWarnings("DanglingJavadoc")
 public final class Backend {
-    public static final LogHolder logHolder = new LogHolder();
     public static final Config config = Config.loadFromFile();
-    public static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
     public static final ActionExecutor actionExecutor = new ActionExecutor(Core.local(config));
     public static final GlobalEventsManager keysManager = new GlobalEventsManager(config, actionExecutor);
     public static final Recorder recorder = new Recorder(Core.local(config));
-
+    private static final LogHolder logHolder = new LogHolder();
+    private static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
     private static final Logger LOGGER = Logger.getLogger(Backend.class.getName());
-    private static final UserDefinedAction switchRecord = new UserDefinedAction() {
-        @Override
-        public void action(Core controller) {
-            Backend.switchRecord();
-        }
-    };
-    private static final UserDefinedAction switchReplay = new UserDefinedAction() {
-        @Override
-        public void action(Core controller) {
-            Backend.switchReplay();
-        }
-    };
-    private static final UserDefinedAction switchReplayCompiled = new UserDefinedAction() {
-        @Override
-        public void action(Core controller) {
-            Backend.switchRunningCompiledAction();
-        }
-    };
-
-    public static Language compilingLanguage = Language.MANUAL_BUILD;
+    private static final UserDefinedAction switchRecord = UserDefinedAction.of(Backend::switchRecord);
+    private static final UserDefinedAction switchReplay = UserDefinedAction.of(Backend::switchReplay);
+    private static final UserDefinedAction switchReplayCompiled = UserDefinedAction.of(Backend::switchRunningCompiledAction);
     public static ReplayConfig replayConfig = ReplayConfig.of();
-    public static RunActionConfig runActionConfig = RunActionConfig.of();
-
+    private static Language compilingLanguage = Language.MANUAL_BUILD;
+    private static RunActionConfig runActionConfig = RunActionConfig.of();
     private static boolean isRecording, isReplaying, isRunningCompiledTask;
     private static File currentTempFile;
     private static MinimizedFrame trayIcon;
@@ -225,7 +207,7 @@ public final class Backend {
         switchRecord();
     }
 
-    static synchronized void switchRecord() {
+    private static synchronized void switchRecord() {
         if (isReplaying) { // Do not switch record when replaying.
             return;
         }
@@ -266,7 +248,7 @@ public final class Backend {
         switchReplay();
     }
 
-    static void switchReplay() {
+    private static void switchReplay() {
         if (isRecording) { // Cannot switch replay when recording.
             return;
         }
@@ -304,7 +286,7 @@ public final class Backend {
         switchRunningCompiledAction();
     }
 
-    static synchronized void switchRunningCompiledAction() {
+    private static synchronized void switchRunningCompiledAction() {
         if (isRunningCompiledTask) {
             isRunningCompiledTask = false;
             if (compiledExecutor != null) {
@@ -366,7 +348,7 @@ public final class Backend {
 
     /*************************************************************************************************************/
 
-    static void recompiledNativeTasks(Language language) {
+    private static void recompiledNativeTasks(Language language) {
         for (TaskGroup group : taskGroups) {
             List<UserDefinedAction> tasks = group.getTasks();
             for (int i = 0; i < tasks.size(); i++) {
@@ -414,7 +396,7 @@ public final class Backend {
         addCurrentTask(TaskGroupManager.getCurrentTaskGroup());
     }
 
-    public static void addCurrentTask(TaskGroup group) {
+    private static void addCurrentTask(TaskGroup group) {
         if (customFunction != null) {
             addTask(customFunction, group);
             customFunction = null;
@@ -489,7 +471,7 @@ public final class Backend {
         removeTask(toRemove);
     }
 
-    public static void removeTask(UserDefinedAction toRemove) {
+    private static void removeTask(UserDefinedAction toRemove) {
         for (TaskGroup group : taskGroups) {
             for (Iterator<UserDefinedAction> iterator = group.getTasks().iterator(); iterator.hasNext(); ) {
                 UserDefinedAction action = iterator.next();
@@ -683,6 +665,7 @@ public final class Backend {
             LOGGER.warning("Could not import task group!\n" + e);
         }
     }
+
     /**
      * Creates a ConsoleHandler to print LOGGER messages to stderr
      *
@@ -791,7 +774,7 @@ public final class Backend {
 
         allNames.removeAll(using);
         if (allNames.isEmpty()) {
-            LOGGER.info("Nothing to clean...");
+            LOGGER.fine("Nothing to clean");
             return;
         }
 
@@ -803,7 +786,7 @@ public final class Backend {
                 failed++;
             }
         }
-        LOGGER.fine("Successfully cleaned " + count + " files.\n Failed to clean " + failed + " files.");
+        LOGGER.fine("Successfully cleaned " + count + " files.\n" + failed + " files could not be cleaned");
     }
 
     public static void setCompilingLanguage(Language language) {

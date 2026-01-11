@@ -27,7 +27,7 @@ public abstract class IIPCService implements ILoggable {
     protected int port;
     private boolean launchAtStartup;
 
-    protected IIPCService() {
+    IIPCService() {
         launchAtStartup = true;
     }
 
@@ -44,7 +44,7 @@ public abstract class IIPCService implements ILoggable {
      *
      * @return the json node containing configuration parameters for this ipc service.
      */
-    protected JsonNode getSpecificConfig() {
+    JsonNode getSpecificConfig() {
         return JsonNodeFactories.object(JsonNodeFactories.field("launch_at_startup", JsonNodeFactories.booleanNode(launchAtStartup)));
     }
 
@@ -54,7 +54,7 @@ public abstract class IIPCService implements ILoggable {
      * @param node the json node containing configuration parameters for this ipc service.
      * @return if parsing was successful.
      */
-    protected boolean extractSpecificConfig(JsonNode node) {
+    boolean extractSpecificConfig(JsonNode node) {
         launchAtStartup = node.getBooleanValue("launch_at_startup");
         return true;
     }

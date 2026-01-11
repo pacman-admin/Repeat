@@ -12,7 +12,7 @@ import utilities.json.JSONUtility;
  * IPC service with modifiable port to start at. E.g. a server.
  */
 public abstract class IPCServiceWithModifiablePort extends IIPCService {
-	public static boolean portUnavailable(int port) {
+	protected static boolean portUnavailable(int port) {
 		try {
 			ServerSocket socket = new ServerSocket(port);
 			socket.close();

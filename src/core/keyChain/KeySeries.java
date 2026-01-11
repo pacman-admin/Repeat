@@ -25,7 +25,7 @@ public abstract class KeySeries implements IJsonable {
         this.keys.addAll(keys);
     }
 
-    KeySeries(Iterable<Integer> keys) {
+    private KeySeries(Iterable<Integer> keys) {
         this.keys = new ArrayList<>();
 
         for (Integer key : keys) {

@@ -25,11 +25,11 @@ import java.util.logging.Logger;
 public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
     private static final Logger LOGGER = Logger.getLogger(UserDefinedAction.class.getName());
-    protected String sourcePath;
-    protected Language compiler;
-    protected ActionInvoker invoker;
+    Language compiler;
     String actionId;
     String name;
+    private String sourcePath;
+    private ActionInvoker invoker;
     private boolean enabled;
     private UsageStatistics statistics;
     private TaskSourceHistory sourceHistory;
@@ -40,7 +40,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         this(UUID.randomUUID().toString());
     }
 
-    protected UserDefinedAction(String actionId) {
+    private UserDefinedAction(String actionId) {
         this.actionId = actionId;
         executionPreconditions = TaskExecutionPreconditions.defaultConditions();
         activation = ActionInvoker.newBuilder().build();
@@ -50,11 +50,20 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         enabled = true;
     }
 
+    public static UserDefinedAction of(Runnable task) {
+        return new UserDefinedAction() {
+            @Override
+            public void action(Core controller) {
+                task.run();
+            }
+        };
+    }
+
     public static UserDefinedAction parseJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
         return parsePureJSON(factory, node, parseMode);
     }
 
-    static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
+    private static UserDefinedAction parsePureJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
         try {
             String actionId = node.getStringValue("action_id");
             if (parseMode == ParsingMode.IMPORT_PARSING) {

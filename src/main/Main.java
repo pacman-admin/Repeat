@@ -20,6 +20,7 @@ package main;
 
 import frontEnd.MainFrontEnd;
 
+@SuppressWarnings("WeakerAccess")
 public final class Main {
     public static void main(String[] args) {
         MainFrontEnd.run();
