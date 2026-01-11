@@ -77,7 +77,7 @@ public final class RenderedUserDefinedActionStatistics {
             sortedData = Stream.concat(
                             sortedData.stream().limit(BREAKDOWN_COLORS.size() - 1),
                             Stream.of(Pair.of("Other", otherCount)))
-                    .collect(Collectors.toList());
+                    .toList();
         }
 
         List<BreakdownPieChartEntry> data = new ArrayList<>(sortedData.size());
