@@ -15,12 +15,10 @@ public final class TaskActivationConstructor {
     private final List<ActivationPhrase> phrases;
     private final List<MouseGesture> mouseGestures;
     private final List<SharedVariablesActivation> variables;
+    private final Config config;
     private LinkedList<ButtonStroke> strokes;
     private GlobalActivation globalActivation;
-
     private boolean listening;
-
-    private final Config config;
 
     public TaskActivationConstructor(ActionInvoker reference) {
         this(reference, Config.of());
