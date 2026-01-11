@@ -32,7 +32,7 @@ public final class GlobalActivation implements IJsonable {
 		return onKeyPressed;
 	}
 
-	protected static Builder newBuilder() {
+	static Builder newBuilder() {
 		return new Builder();
 	}
 
