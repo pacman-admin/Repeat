@@ -36,6 +36,7 @@ import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
+import utilities.DateUtility;
 import utilities.Desktop;
 import utilities.FileUtility;
 import utilities.Function;
@@ -43,15 +44,12 @@ import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
+import java.io.*;
 import java.util.*;
 import java.util.List;
-import java.util.logging.ConsoleHandler;
-import java.util.logging.Handler;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.logging.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import static core.userDefinedTask.TaskGroupManager.*;
 
@@ -150,7 +148,7 @@ public final class Backend {
                 Logger.getLogger("").removeHandler(handler);
             }
         }
-        Handler newHandler = Util.getNewHandler();
+        Handler newHandler = getNewHandler();
         Logger.getLogger("").addHandler(newHandler);
 
         // Update the logging level based on the config.
@@ -664,7 +662,7 @@ public final class Backend {
 
     public static void importTasks(File inputFile) {
         try {
-            Util.unZipFile(inputFile.getAbsolutePath(), ".");
+            unZipFile(inputFile.getAbsolutePath(), ".");
             File src = new File("tmp");
             File dst = new File(".");
             boolean moved = FileUtility.moveDirectory(src, dst);
@@ -685,6 +683,73 @@ public final class Backend {
             LOGGER.warning("Could not import task group!\n" + e);
         }
     }
+    /**
+     * Creates a ConsoleHandler to print LOGGER messages to stderr
+     *
+     * @return The new ConsoleHandler
+     */
+    private static ConsoleHandler getNewHandler() {
+        ConsoleHandler newHandler = new ConsoleHandler();
+        newHandler.setFormatter(new SimpleFormatter() {
+            private static final String FORMAT = "[%s] %s %s: %s\n";
+
+            @Override
+            public synchronized String format(LogRecord lr) {
+                Calendar cal = DateUtility.calendarFromMillis(lr.getMillis());
+                String base = String.format(FORMAT, DateUtility.calendarToTimeString(cal), lr.getLoggerName(), lr.getLevel().getLocalizedName(), lr.getMessage());
+                StringBuilder builder = new StringBuilder(base);
+                if (lr.getThrown() != null) {
+                    StringWriter sw = new StringWriter();
+                    PrintWriter pw = new PrintWriter(sw);
+                    lr.getThrown().printStackTrace(pw);
+                    builder.append(sw);
+                }
+                return builder.toString();
+            }
+        });
+        return newHandler;
+    }
+
+    /**
+     * Zip a file
+     *
+     * @param zipFile
+     * @param outputFolder
+     */
+    private static void unZipFile(String zipFile, String outputFolder) throws IOException {
+        byte[] buffer = new byte[1024];
+        // Create output directory is not exists
+        File folder = new File(outputFolder);
+        if (!folder.exists()) if (folder.mkdir()) throw new RuntimeException("Could not create directory.");
+        // Get the zip file content
+        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile));
+        // Get the zipped file list entry
+        ZipEntry zipEntry = zipInputStream.getNextEntry();
+        while (zipEntry != null) {
+            String fileName = zipEntry.getName();
+            File newFile = new File(FileUtility.joinPath(outputFolder, fileName));
+            // create all non exists folders
+            // else you will hit FileNotFoundException for compressed folder
+            new File(newFile.getParent()).mkdirs();
+            FileOutputStream fileOutputStream = new FileOutputStream(newFile);
+
+            int length;
+            while ((length = zipInputStream.read(buffer)) > 0) {
+                fileOutputStream.write(buffer, 0, length);
+            }
+            fileOutputStream.close();
+            zipEntry = zipInputStream.getNextEntry();
+            zipInputStream.closeEntry();
+            zipInputStream.close();
+        }
+    }
+
+    private static void zipDir(File in, String out) {
+        if (in == null || out == null) throw new IllegalArgumentException("File(s) may not be null.");
+        if (!in.exists()) throw new IllegalArgumentException("Input directory does not not exist.");
+        if (!in.isDirectory()) throw new IllegalArgumentException("Not a directory.");
+        new FileZipper(in, out);
+    }
 
     public static void exportTasks(File outputDirectory) {
         File destination = new File(FileUtility.joinPath(outputDirectory.getAbsolutePath(), "tmp"));
@@ -700,7 +765,7 @@ public final class Backend {
             }
         }
         String zipPath = FileUtility.joinPath(outputDirectory.getAbsolutePath(), "repeat_export.zip");
-        Util.zipDir(destination, zipPath);
+        zipDir(destination, zipPath);
         LOGGER.info("Data exported to " + zipPath);
     }
 
@@ -738,8 +803,7 @@ public final class Backend {
                 failed++;
             }
         }
-
-        LOGGER.info("Successfully cleaned " + count + " files.\n Failed to clean " + failed + " files.");
+        LOGGER.fine("Successfully cleaned " + count + " files.\n Failed to clean " + failed + " files.");
     }
 
     public static void setCompilingLanguage(Language language) {
