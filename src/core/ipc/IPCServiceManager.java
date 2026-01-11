@@ -3,7 +3,6 @@ package core.ipc;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import core.webui.server.UIServer;
-import frontEnd.Backend;
 
 import java.io.IOException;
 import java.util.List;

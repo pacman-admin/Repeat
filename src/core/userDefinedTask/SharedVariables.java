@@ -2,15 +2,12 @@ package core.userDefinedTask;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Logger;
 
 /**
  * Shared variables used to pass values between tasks. This only supports string values since the tasks can be
  * written in different programming languages.
  */
 public final class SharedVariables {
-
-    private static final Logger LOGGER = Logger.getLogger(SharedVariables.class.getName());
 
     private static final Map<String, String> variables = new HashMap<>();
 

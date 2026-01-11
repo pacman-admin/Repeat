@@ -7,50 +7,52 @@ import utilities.json.IJsonable;
  * Represents any input button stroke (e.g. mouse button, keyboard, joystick, ...)
  */
 public interface ButtonStroke extends IJsonable {
-	int getKey();
+    static ButtonStroke parseJSON(JsonNode n) {
+        if (n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING)) {
+            return MouseKey.parseJSON(n);
+        }
+        return KeyStroke.parseJSON(n);
+    }
 
-	enum Source {
-		KEYBOARD,
-		MOUSE;
-	}
+    int getKey();
 
-	/**
-	 * Syntactic sugar for {@link #getKey()}.
-	 */
-	default int k() {
-		return getKey();
-	}
+    /**
+     * Syntactic sugar for {@link #getKey()}.
+     */
+    default int k() {
+        return getKey();
+    }
 
-	boolean isPressed();
-	KeyboardResult getTypedString(KeyboardState keyboardState);
-	ButtonStroke clone();
-	Source getSource();
+    boolean isPressed();
 
-	static ButtonStroke parseJSON(JsonNode n) {
-		if (n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING)) {
-			return MouseKey.parseJSON(n);
-		}
-		return KeyStroke.parseJSON(n);
-	}
+    KeyboardResult getTypedString(KeyboardState keyboardState);
 
-	final class KeyboardResult {
-		private KeyboardState keyboardState;
-		private String typedString;
+    ButtonStroke clone();
 
-		static KeyboardResult of(KeyboardState keyboardState, String typedString) {
-			KeyboardResult result = new KeyboardResult();
-			result.keyboardState = keyboardState;
-			result.typedString = typedString;
+    Source getSource();
 
-			return result;
-		}
+    enum Source {
+        KEYBOARD, MOUSE
+    }
 
-		public KeyboardState keyboardState() {
-			return keyboardState;
-		}
+    final class KeyboardResult {
+        private KeyboardState keyboardState;
+        private String typedString;
 
-		public String typedString() {
-			return typedString;
-		}
-	}
+        static KeyboardResult of(KeyboardState keyboardState, String typedString) {
+            KeyboardResult result = new KeyboardResult();
+            result.keyboardState = keyboardState;
+            result.typedString = typedString;
+
+            return result;
+        }
+
+        public KeyboardState keyboardState() {
+            return keyboardState;
+        }
+
+        public String typedString() {
+            return typedString;
+        }
+    }
 }

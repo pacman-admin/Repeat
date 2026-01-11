@@ -127,7 +127,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return the set of key chains associated with this activation entity.
      */
-    public final Set<KeyChain> getHotkeys() {
+    public Set<KeyChain> getHotkeys() {
         if (hotkeys == null) {
             hotkeys = new HashSet<>();
         }
@@ -137,7 +137,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return an arbitrary {@link KeyChain} from the set of keychains, or null if the set is empty.
      */
-    public final KeyChain getFirstHotkey() {
+    public KeyChain getFirstHotkey() {
         Set<KeyChain> hotkeys = getHotkeys();
         if (hotkeys.isEmpty()) {
             return null;
@@ -149,7 +149,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return set of mouse gestures associated with this activation entity.
      */
-    public final Set<MouseGesture> getMouseGestures() {
+    public Set<MouseGesture> getMouseGestures() {
         if (mouseGestures == null) {
             mouseGestures = new HashSet<>();
         }
@@ -168,7 +168,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return an arbitrary {@link MouseGesture} from the set of gestures, or null if the set is empty.
      */
-    public final MouseGesture getFirstMouseGesture() {
+    public MouseGesture getFirstMouseGesture() {
         Set<MouseGesture> gestures = getMouseGestures();
         if (gestures.isEmpty()) {
             return null;
@@ -180,7 +180,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return set of key sequences associated with this activation entity.
      */
-    public final Set<KeySequence> getKeySequences() {
+    public Set<KeySequence> getKeySequences() {
         if (keySequences == null) {
             return new HashSet<>();
         }
@@ -199,7 +199,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return an arbitrary {@link KeySequence} from the set of gestures, or null if the set is empty.
      */
-    public final KeySequence getFirstKeySequence() {
+    public KeySequence getFirstKeySequence() {
         Set<KeySequence> keySequences = getKeySequences();
         if (keySequences.isEmpty()) {
             return null;
@@ -211,7 +211,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return set of phrases associated with this activation entity.
      */
-    public final Set<ActivationPhrase> getPhrases() {
+    public Set<ActivationPhrase> getPhrases() {
         if (phrases == null) {
             return new HashSet<>();
         }
@@ -230,7 +230,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return set of variables associated with this activation entity.
      */
-    public final Set<SharedVariablesActivation> getVariables() {
+    public Set<SharedVariablesActivation> getVariables() {
         if (variables == null) {
             return new HashSet<>();
         }
@@ -246,7 +246,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return an arbitrary variable from the set of variables, or null if the set is empty.
      */
-    public final SharedVariablesActivation getFirstVariable() {
+    public SharedVariablesActivation getFirstVariable() {
         Set<SharedVariablesActivation> variables = getVariables();
         if (variables.isEmpty()) {
             return null;
@@ -258,7 +258,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * @return the global activation configuration for this activation.
      */
-    public final GlobalActivation getGlobalActivation() {
+    public GlobalActivation getGlobalActivation() {
         if (globalActivation == null) {
             return GlobalActivation.newBuilder().build();
         }
@@ -277,7 +277,7 @@ public final class ActionInvoker implements IJsonable {
      *
      * @param other other task activation whose content will be copied from.
      */
-    public final void copy(ActionInvoker other) {
+    public void copy(ActionInvoker other) {
         setHotKeys(other.getHotkeys());
         setMouseGestures(other.getMouseGestures());
         setKeySequences(other.getKeySequences());
@@ -289,7 +289,7 @@ public final class ActionInvoker implements IJsonable {
     /**
      * Check if this activation is empty (i.e. no event for activation).
      */
-    public final boolean isEmpty() {
+    public boolean isEmpty() {
         return getHotkeys().isEmpty() && getMouseGestures().isEmpty() && getKeySequences().isEmpty() && getPhrases().isEmpty();
     }
 

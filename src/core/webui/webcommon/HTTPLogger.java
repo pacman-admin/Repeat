@@ -25,7 +25,7 @@ public final class HTTPLogger {
         errorMessage = errorMsg;
     }
 
-    public final Void exec(RunnableVoid task, HttpAsyncExchange exchange) {
+    public Void exec(RunnableVoid task, HttpAsyncExchange exchange) {
         try {
             return task.run();
         } catch (NullPointerException e) {

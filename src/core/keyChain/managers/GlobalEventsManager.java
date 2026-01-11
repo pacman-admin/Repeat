@@ -25,8 +25,6 @@ import core.keyChain.MouseKey;
 import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
-import core.userDefinedTask.internals.SharedVariablesSubscriber;
-import core.userDefinedTask.internals.SharedVariablesSubscription;
 import core.userDefinedTask.internals.preconditions.ExecutionPreconditionsChecker;
 import globalListener.GlobalListenerFactory;
 import org.simplenativehooks.events.NativeKeyEvent;

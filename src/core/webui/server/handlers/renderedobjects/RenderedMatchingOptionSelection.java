@@ -27,7 +27,7 @@ public final class RenderedMatchingOptionSelection {
         this.displayedOption = displayedOption;
     }
 
-    public final RenderedMatchingOptionSelection selected() {
+    public RenderedMatchingOptionSelection selected() {
         return new RenderedMatchingOptionSelection(true, htmlValue, displayedOption);
     }
 

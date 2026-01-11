@@ -30,7 +30,7 @@ public final class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public final void startListening() {
+	public void startListening() {
 		// Do nothing.
 	}
 
@@ -62,7 +62,7 @@ public final class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public final Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
+	public Set<UserDefinedAction> collision(Collection<ActionInvoker> activations) {
 		Set<UserDefinedAction> output = new HashSet<>();
 		for (ActionInvoker activation : activations) {
 			for (UserDefinedAction action : registeredActions) {
@@ -86,7 +86,7 @@ public final class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public final Set<UserDefinedAction> registerAction(UserDefinedAction action) {
+	public Set<UserDefinedAction> registerAction(UserDefinedAction action) {
 		Set<UserDefinedAction> toRemove = collision(action.getActivation());
 		toRemove.forEach(this::unRegisterAction);
 
@@ -95,7 +95,7 @@ public final class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-	public final Set<UserDefinedAction> unRegisterAction(UserDefinedAction action) {
+	public Set<UserDefinedAction> unRegisterAction(UserDefinedAction action) {
 		Set<UserDefinedAction> output = new HashSet<>();
 		for (Iterator<UserDefinedAction> iterator = registeredActions.iterator(); iterator.hasNext();) {
 			UserDefinedAction existing = iterator.next();
@@ -108,7 +108,7 @@ public final class PhraseManager extends KeyStrokeManager {
 	}
 
 	@Override
-    public final synchronized void clear() {
+    public synchronized void clear() {
 		currentRollingKeySeries.clearKeys();
 	}
 

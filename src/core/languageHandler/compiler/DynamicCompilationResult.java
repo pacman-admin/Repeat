@@ -33,11 +33,11 @@ public final class DynamicCompilationResult {
         return new DynamicCompilationResult(output, action);
     }
 
-    public final DynamicCompilerOutput output() {
+    public DynamicCompilerOutput output() {
         return output;
     }
 
-    public final UserDefinedAction action() {
+    public UserDefinedAction action() {
         return action;
     }
 }

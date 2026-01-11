@@ -28,7 +28,7 @@ final class TaskSourceScheduler extends AbstractScheduler<String> {
 			return null;
 		}
 
-		StringBuffer output = new StringBuffer();
+		StringBuilder output = new StringBuilder();
 
 		long time = 0;
 		for (SchedulingData<String> t : tasks) {

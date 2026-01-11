@@ -43,7 +43,7 @@ public final class MouseCore extends AbstractMouseCoreImplementation {
     }
 
     @Override
-    public final Color getColor() {
+    public Color getColor() {
         return m.getColor();
     }
 

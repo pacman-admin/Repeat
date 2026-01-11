@@ -18,7 +18,7 @@ final class DataDefinitionTrimmer extends AbstractDataTrimmer {
 		for (int i = 0; i < length; i++) {
 			if (i == 0) {
 				previousBase = 0;
-				result.add(input.get(0));
+				result.add(input.getFirst());
 				continue;
 			}
 
