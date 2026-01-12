@@ -36,10 +36,8 @@ import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
-import utilities.DateUtility;
+import utilities.*;
 import utilities.Desktop;
-import utilities.FileUtility;
-import utilities.Function;
 import utilities.logging.CompositeOutputStream;
 import utilities.logging.LogHolder;
 
@@ -48,8 +46,6 @@ import java.io.*;
 import java.util.*;
 import java.util.List;
 import java.util.logging.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import static core.userDefinedTask.TaskGroupManager.*;
 
@@ -62,17 +58,17 @@ public final class Backend {
     private static final LogHolder logHolder = new LogHolder();
     private static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
     private static final Logger LOGGER = Logger.getLogger(Backend.class.getName());
-    private static final UserDefinedAction switchRecord = UserDefinedAction.of(Backend::switchRecord);
-    private static final UserDefinedAction switchReplay = UserDefinedAction.of(Backend::switchReplay);
-    private static final UserDefinedAction switchReplayCompiled = UserDefinedAction.of(Backend::switchRunningCompiledAction);
     public static ReplayConfig replayConfig = ReplayConfig.of();
     private static Language compilingLanguage = Language.MANUAL_BUILD;
     private static RunActionConfig runActionConfig = RunActionConfig.of();
     private static boolean isRecording, isReplaying, isRunningCompiledTask;
+    private static final UserDefinedAction switchRecord = UserDefinedAction.of(Backend::switchRecord);
+    private static final UserDefinedAction switchReplay = UserDefinedAction.of(Backend::switchReplay);
     private static File currentTempFile;
     private static MinimizedFrame trayIcon;
     private static Thread compiledExecutor;
     private static UserDefinedAction customFunction;
+    private static final UserDefinedAction switchReplayCompiled = UserDefinedAction.of(Backend::switchRunningCompiledAction);
 
     static {
         TaskProcessorManager.setProcessorIdentifyCallback(new Function<>() {
@@ -644,7 +640,12 @@ public final class Backend {
 
     public static void importTasks(File inputFile) {
         try {
-            unZipFile(inputFile.getAbsolutePath(), ".");
+            LOGGER.finer(inputFile.getAbsolutePath());
+            LOGGER.info("Your java runtime is at: " + System.getProperty("java.home"));
+            LOGGER.fine(ExecUtil.execute(System.getProperty("java.home") + "/bin/jar -xf " + inputFile.getAbsolutePath()));
+            LOGGER.fine(ExecUtil.execute("tar -xf " + inputFile.getAbsolutePath()));
+            LOGGER.fine(ExecUtil.execute("unzip " + inputFile.getAbsolutePath()));
+
             File src = new File("tmp");
             File dst = new File(".");
             boolean moved = FileUtility.moveDirectory(src, dst);
@@ -691,40 +692,6 @@ public final class Backend {
             }
         });
         return newHandler;
-    }
-
-    /**
-     * Zip a file
-     *
-     * @param zipFile
-     * @param outputFolder
-     */
-    private static void unZipFile(String zipFile, String outputFolder) throws IOException {
-        byte[] buffer = new byte[1024];
-        // Create output directory is not exists
-        File folder = new File(outputFolder);
-        if (!folder.exists()) if (folder.mkdir()) throw new RuntimeException("Could not create directory.");
-        // Get the zip file content
-        ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(zipFile));
-        // Get the zipped file list entry
-        ZipEntry zipEntry = zipInputStream.getNextEntry();
-        while (zipEntry != null) {
-            String fileName = zipEntry.getName();
-            File newFile = new File(FileUtility.joinPath(outputFolder, fileName));
-            // create all non exists folders
-            // else you will hit FileNotFoundException for compressed folder
-            new File(newFile.getParent()).mkdirs();
-            FileOutputStream fileOutputStream = new FileOutputStream(newFile);
-
-            int length;
-            while ((length = zipInputStream.read(buffer)) > 0) {
-                fileOutputStream.write(buffer, 0, length);
-            }
-            fileOutputStream.close();
-            zipEntry = zipInputStream.getNextEntry();
-            zipInputStream.closeEntry();
-            zipInputStream.close();
-        }
     }
 
     private static void zipDir(File in, String out) {
