@@ -68,6 +68,8 @@ public final class Config implements ILoggable {
             config.setExecuteOnKeyReleased(globalSettings.getBooleanValue("execute_on_key_released"));
             config.setUseClipboardToTypeString(globalSettings.getBooleanValue("use_clipboard_to_type_string"));
             config.setUseJavaAwtToGetMousePosition(globalSettings.getBooleanValue("use_java_awt_for_mouse_position"));
+            config.setNativeHookDebugLevel(Level.parse(globalSettings.getStringValue("debug_level")));
+
 
             JsonNode globalHotkey = globalSettings.getNode("global_hotkey");
             config.setMOUSE_GESTURE(KeyChain.parseJSON(globalHotkey.getArrayNode("mouse_gesture_activation")));

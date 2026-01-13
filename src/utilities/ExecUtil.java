@@ -57,6 +57,12 @@ public final class ExecUtil {
         });
     }
 
+    public static int execute(String[] command) throws IOException, InterruptedException {
+        ProcessBuilder builder = new ProcessBuilder(command);
+        builder.inheritIO();
+        return builder.start().waitFor();
+    }
+
     private static String[] execute(String command, ExceptableFunction<Void, Process, IOException> processSupplier) throws ExecutionException {
         // 0 for stdout, 1 for stderr.
         final boolean[] fail = new boolean[2];
