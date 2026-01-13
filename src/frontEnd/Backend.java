@@ -639,19 +639,29 @@ public final class Backend {
 
     public static void importTasks(File inputFile) {
         try {
-            LOGGER.finer(inputFile.getAbsolutePath());
-            LOGGER.info("Your java runtime is at: " + System.getProperty("java.home"));
+            LOGGER.fine(inputFile.getAbsolutePath());
+            LOGGER.fine("Your java runtime is at: " + System.getProperty("java.home"));
             LOGGER.fine(ExecUtil.execute(System.getProperty("java.home") + "/bin/jar -xf " + inputFile.getAbsolutePath()));
             LOGGER.fine(ExecUtil.execute("tar -xf " + inputFile.getAbsolutePath()));
             LOGGER.fine(ExecUtil.execute("unzip " + inputFile.getAbsolutePath()));
 
             File src = new File("tmp");
             File dst = new File(".");
-            boolean moved = FileUtility.moveDirectory(src, dst);
-            if (!moved) {
-                LOGGER.warning("Failed to move files from " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
-                return;
+            LOGGER.fine("Moving files...");
+            if (OSIdentifier.isWindows()) {
+                LOGGER.fine(ExecUtil.execute("move " + src.getAbsolutePath() + " " + dst.getAbsolutePath()));
+            }else{
+                LOGGER.fine(ExecUtil.execute("mv " + src.getAbsolutePath() + " " + dst.getAbsolutePath()));
             }
+
+            LOGGER.fine("Removing empty directory...");
+            LOGGER.fine(ExecUtil.execute("rmdir " + src.getAbsolutePath()));
+
+//            boolean moved = FileUtility.moveDirectory(src, dst);
+//            if (!moved) {
+//                LOGGER.warning("Failed to move files from " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
+//                return;
+//            }
             int existingGroupCount = taskGroups.size();
             config.importTaskConfig();
             if (taskGroups.size() > existingGroupCount) {
