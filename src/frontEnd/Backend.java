@@ -139,8 +139,7 @@ public final class Backend {
 
     public static synchronized void scheduleExit(long delay) {
         actionExecutor.haltAllTasks();
-
-        GlobalListenerHookController.cleanup();
+        new Thread(GlobalListenerHookController::cleanup).start();
 
         new Timer("Delayed exit Timer").schedule(new TimerTask() {
             @Override

@@ -8,7 +8,7 @@ import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public final class MenuExitActionHandler extends AbstractSingleMethodHttpHandler {
 
-    private static final long EXIT_DELAY_MS = 2000;
+    private static final long EXIT_DELAY_MS = 5000;
 
     public MenuExitActionHandler() {
         super(AbstractSingleMethodHttpHandler.POST_METHOD);
