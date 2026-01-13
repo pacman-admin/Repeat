@@ -395,9 +395,8 @@ public final class Backend {
     private static void addCurrentTask(TaskGroup group) {
         if (customFunction != null) {
             addTask(customFunction, group);
-            customFunction = null;
         } else {
-            LOGGER.warning("Nothing to add. Compile first?");
+            LOGGER.info("Nothing to add. Compile first?");
         }
     }
 
@@ -435,7 +434,8 @@ public final class Backend {
                 return task;
             }
         }
-        return null;
+        LOGGER.severe("Could not get task with ID: " + id);
+        throw new NullPointerException("Could not get task with ID: " + id);
     }
 
     public static void removeCurrentTask(String id) {
@@ -460,10 +460,9 @@ public final class Backend {
 
     public static void removeTask(String id) {
         UserDefinedAction toRemove = getTask(id);
-        if (toRemove == null) {
-            return;
-        }
-
+//        if (toRemove == null) {
+//            return;
+//        }
         removeTask(toRemove);
     }
 

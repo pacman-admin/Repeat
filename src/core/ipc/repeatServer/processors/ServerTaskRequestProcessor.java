@@ -25,11 +25,8 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
     private static final Logger LOGGER = Logger.getLogger(ServerTaskRequestProcessor.class.getName());
 
-    private final Backend backEnd;
-
-    public ServerTaskRequestProcessor(Backend backEnd, MainMessageSender messageSender) {
+    public ServerTaskRequestProcessor(MainMessageSender messageSender) {
         super(messageSender);
-        this.backEnd = backEnd;
     }
 
     @Override

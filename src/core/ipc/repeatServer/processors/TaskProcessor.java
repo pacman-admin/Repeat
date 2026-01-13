@@ -60,7 +60,7 @@ public final class TaskProcessor extends AbstractMessageProcessor {
 
     public TaskProcessor(Backend backEnd, MainMessageSender messageSender) {
         super(messageSender);
-        this.taskRequestProcessor = new ServerTaskRequestProcessor(backEnd, messageSender);
+        this.taskRequestProcessor = new ServerTaskRequestProcessor(messageSender);
         locks = new HashMap<>();
     }
 
