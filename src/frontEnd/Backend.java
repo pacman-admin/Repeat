@@ -638,62 +638,55 @@ public final class Backend {
     }
 
     public static void extractImportTasks(String path) {
+
+    }
+
+
+    public static void importTasks(File inputFile) {
+        String path = inputFile.getAbsolutePath();
+        LOGGER.fine(path);
+        LOGGER.finer("Your java runtime is at: " + System.getProperty("java.home"));
+        File dst = new File(".");
         try {
-            LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("/bin/sh", "-c", "unzip", path).start().waitFor());
-//            LOGGER.fine("Exit code of unzip: " + ExecUtil.execute(new String[]{"/bin/sh", "-c", "unzip", path}));
-            //return;
+            LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip -oz ", path, "-d", dst.getAbsolutePath()).inheritIO().start().waitFor());
         } catch (IOException e) {
             LOGGER.fine("The unzip command doesn't work...");
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        try {
-            LOGGER.fine("Exit code of tar: " + new ProcessBuilder("/bin/sh", "-c", "tar", "-xf", path).start().waitFor());
-//            LOGGER.fine("Exit code of tar: " + ExecUtil.execute(new String[]{"/bin/sh", "-c", "tar", "-xf", path}));
-//            return;
-        } catch (IOException e) {
-            LOGGER.fine("The tar command doesn't work...");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            LOGGER.fine("Exit code of jar: " + new ProcessBuilder("/bin/sh", "-c", "jar", "-xf", path).start().waitFor());
-//            LOGGER.fine("Exit code of jar: " + ExecUtil.execute(new String[]{"/bin/sh", "-c", "jar", "-xf", path}));
-//            return;
-        } catch (IOException e) {
-            LOGGER.fine("The jar command doesn't work...");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-    }
+//        try {
+//            LOGGER.fine("Exit code of tar: " + new ProcessBuilder("/bin/sh", "-c", "tar", "-xf", path).inheritIO().start().waitFor());
+//        } catch (IOException e) {
+//            LOGGER.fine("The tar command doesn't work...");
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
+//        try {
+//            LOGGER.fine("Exit code of jar: " + new ProcessBuilder("/bin/sh", "-c", "jar", "-xf", path).inheritIO().start().waitFor());
+//        } catch (IOException e) {
+//            LOGGER.fine("The jar command doesn't work...");
+//        } catch (InterruptedException e) {
+//            throw new RuntimeException(e);
+//        }
 
-
-    public static void importTasks(File inputFile) {
-        String in = inputFile.getAbsolutePath();
-        LOGGER.fine(in);
-        LOGGER.fine("Your java runtime is at: " + System.getProperty("java.home"));
-        extractImportTasks(in);
         LOGGER.info("Extracted tasks to import...");
         try {
             File src = new File("tmp");
-            File dst = new File(".");
+
             LOGGER.fine("Moving files...");
             if (OSIdentifier.isWindows()) {
-                LOGGER.fine("Exit code of move: " + new ProcessBuilder("cmd", "/c", "move", src.getAbsolutePath(),dst.getAbsolutePath()).start().waitFor());
+                LOGGER.fine("Exit code of move: " + new ProcessBuilder("cmd", "/c", "move", src.getAbsolutePath(), dst.getAbsolutePath()).start().waitFor());
             } else {
-                LOGGER.fine("Exit code of mv: " + new ProcessBuilder("/bin/sh", "-c", "mv", src.getAbsolutePath(),dst.getAbsolutePath()).start().waitFor());
+                ProcessBuilder b = new ProcessBuilder("cp", "-r", src.getAbsolutePath(), dst.getAbsolutePath());
+                b.inheritIO();
+                LOGGER.finer("Moving " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
+                LOGGER.fine("Exit code of mv: " + b.start().waitFor());
             }
             LOGGER.fine("Successfully moved files");
 
-//            LOGGER.fine("Removing empty directory...");
-//            LOGGER.fine("Exit code of mv: " + new ProcessBuilder("/bin/sh", "-c", "rmdir", src.getAbsolutePath()).start().waitFor());
+            LOGGER.fine("Removing useless directory");
+            LOGGER.fine("Exit code of rm: " + new ProcessBuilder("rm", "-rf", src.getAbsolutePath()).inheritIO().start().waitFor());
 
-
-//            boolean moved = FileUtility.moveDirectory(src, dst);
-//            if (!moved) {
-//                LOGGER.warning("Failed to move files from " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
-//                return;
-//            }
             int existingGroupCount = taskGroups.size();
             config.importTaskConfig();
             if (taskGroups.size() > existingGroupCount) {
