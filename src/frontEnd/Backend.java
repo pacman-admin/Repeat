@@ -638,53 +638,28 @@ public final class Backend {
         }
     }
 
-    public static void extractImportTasks(String path) {
-
-    }
-
-
-    public static void importTasks(File inputFile) {
+    public static void importTasks(File inputFile) throws IOException {
         String path = inputFile.getAbsolutePath();
         LOGGER.fine(path);
         LOGGER.finer("Your java runtime is at: " + System.getProperty("java.home"));
-        File dst = new File(".");
         try {
-            LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip", path).inheritIO().start().waitFor());
+            LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip", "-o", path).inheritIO().start().waitFor());
         } catch (Exception ignored) {
         }
-//        try {
-//            LOGGER.fine("Exit code of tar: " + new ProcessBuilder("/bin/sh", "-c", "tar", "-xf", path).inheritIO().start().waitFor());
-//        } catch (IOException e) {
-//            LOGGER.fine("The tar command doesn't work...");
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
-//        try {
-//            LOGGER.fine("Exit code of jar: " + new ProcessBuilder("/bin/sh", "-c", "jar", "-xf", path).inheritIO().start().waitFor());
-//        } catch (IOException e) {
-//            LOGGER.fine("The jar command doesn't work...");
-//        } catch (InterruptedException e) {
-//            throw new RuntimeException(e);
-//        }
         LOGGER.info("Extracted tasks to import");
+
         LOGGER.fine("Moving files...");
         try {
-//            File src = new File("tmp");
-
-            new ProcessBuilder("mv", "tmp/" + Constants.EXPORTED_CONFIG_FILE_NAME, ".").inheritIO().start().waitFor();
 
             if (OSIdentifier.isWindows()) {
-//                LOGGER.fine("Exit code of move: " + new ProcessBuilder("cmd", "/c", "move", src.getAbsolutePath(), dst.getAbsolutePath()).start().waitFor());
+                LOGGER.warning("You appear to be using Windows; why?");
+//                new ProcessBuilder("MOVE", "tmp/" + Constants.EXPORTED_CONFIG_FILE_NAME, ".").inheritIO().start().waitFor();
+                new ProcessBuilder("XCOPY", "/E", "tmp/data", "data").inheritIO().start().waitFor();
             } else {
-                ProcessBuilder b = new ProcessBuilder("cp", "-r", "tmp/data", "data");
-                b.inheritIO();
-//                LOGGER.finer("Moving " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
-                LOGGER.fine("Exit code of mv: " + b.start().waitFor());
+//                new ProcessBuilder("mv", "tmp/" + Constants.EXPORTED_CONFIG_FILE_NAME, ".").inheritIO().start().waitFor();
+                new ProcessBuilder("cp", "-r", "tmp/data", "data").inheritIO().start().waitFor();
             }
             LOGGER.fine("Successfully moved files");
-
-            LOGGER.fine("Removing useless directory");
-            LOGGER.fine("Exit code of rm: " + new ProcessBuilder("rm", "-rf", "tmp").inheritIO().start().waitFor());
 
             int existingGroupCount = taskGroups.size();
             config.importTaskConfig();
@@ -698,6 +673,8 @@ public final class Backend {
         } catch (Exception e) {
             LOGGER.warning("Could not import task group!\n" + e);
         }
+        LOGGER.fine("Removing useless tmp directory...");
+        new ProcessBuilder("rm", "-rf", "tmp").start();
     }
 
     /**

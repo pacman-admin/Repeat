@@ -133,7 +133,7 @@ public final class Config implements ILoggable {
     }
 
     public void importTaskConfig() {
-        File configFile = new File(EXPORTED_CONFIG_FILE_NAME);
+        File configFile = new File("tmp/"+EXPORTED_CONFIG_FILE_NAME);
         if (!configFile.isFile()) {
             getLogger().warning("Config file does not exist " + configFile.getAbsolutePath());
         }
