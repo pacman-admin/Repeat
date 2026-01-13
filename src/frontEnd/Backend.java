@@ -19,6 +19,7 @@
 package frontEnd;
 
 import core.config.Config;
+import core.config.Constants;
 import core.controller.Core;
 import core.ipc.IPCServiceManager;
 import core.ipc.repeatServer.processors.TaskProcessorManager;
@@ -648,11 +649,8 @@ public final class Backend {
         LOGGER.finer("Your java runtime is at: " + System.getProperty("java.home"));
         File dst = new File(".");
         try {
-            LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip -oz ", path, "-d", dst.getAbsolutePath()).inheritIO().start().waitFor());
-        } catch (IOException e) {
-            LOGGER.fine("The unzip command doesn't work...");
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip", path).inheritIO().start().waitFor());
+        } catch (Exception ignored) {
         }
 //        try {
 //            LOGGER.fine("Exit code of tar: " + new ProcessBuilder("/bin/sh", "-c", "tar", "-xf", path).inheritIO().start().waitFor());
@@ -668,24 +666,25 @@ public final class Backend {
 //        } catch (InterruptedException e) {
 //            throw new RuntimeException(e);
 //        }
-
-        LOGGER.info("Extracted tasks to import...");
+        LOGGER.info("Extracted tasks to import");
+        LOGGER.fine("Moving files...");
         try {
-            File src = new File("tmp");
+//            File src = new File("tmp");
 
-            LOGGER.fine("Moving files...");
+            new ProcessBuilder("mv", "tmp/" + Constants.EXPORTED_CONFIG_FILE_NAME, ".").inheritIO().start().waitFor();
+
             if (OSIdentifier.isWindows()) {
-                LOGGER.fine("Exit code of move: " + new ProcessBuilder("cmd", "/c", "move", src.getAbsolutePath(), dst.getAbsolutePath()).start().waitFor());
+//                LOGGER.fine("Exit code of move: " + new ProcessBuilder("cmd", "/c", "move", src.getAbsolutePath(), dst.getAbsolutePath()).start().waitFor());
             } else {
-                ProcessBuilder b = new ProcessBuilder("cp", "-r", src.getAbsolutePath(), dst.getAbsolutePath());
+                ProcessBuilder b = new ProcessBuilder("cp", "-r", "tmp/data", "data");
                 b.inheritIO();
-                LOGGER.finer("Moving " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
+//                LOGGER.finer("Moving " + src.getAbsolutePath() + " to " + dst.getAbsolutePath());
                 LOGGER.fine("Exit code of mv: " + b.start().waitFor());
             }
             LOGGER.fine("Successfully moved files");
 
             LOGGER.fine("Removing useless directory");
-            LOGGER.fine("Exit code of rm: " + new ProcessBuilder("rm", "-rf", src.getAbsolutePath()).inheritIO().start().waitFor());
+            LOGGER.fine("Exit code of rm: " + new ProcessBuilder("rm", "-rf", "tmp").inheritIO().start().waitFor());
 
             int existingGroupCount = taskGroups.size();
             config.importTaskConfig();
