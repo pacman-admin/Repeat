@@ -19,7 +19,6 @@
 package frontEnd;
 
 import core.config.Config;
-import core.config.Constants;
 import core.controller.Core;
 import core.ipc.IPCServiceManager;
 import core.ipc.repeatServer.processors.TaskProcessorManager;
@@ -638,7 +637,7 @@ public final class Backend {
         }
     }
 
-    public static void importTasks(File inputFile) throws IOException {
+    public static void importTasks(File inputFile) {
         String path = inputFile.getAbsolutePath();
         LOGGER.fine(path);
         LOGGER.finer("Your java runtime is at: " + System.getProperty("java.home"));
@@ -674,7 +673,10 @@ public final class Backend {
             LOGGER.warning("Could not import task group!\n" + e);
         }
         LOGGER.fine("Removing useless tmp directory...");
-        new ProcessBuilder("rm", "-rf", "tmp").start();
+        try {
+            new ProcessBuilder("rm", "-rf", "tmp").start();
+        } catch (IOException ignored) {
+        }
     }
 
     /**
@@ -684,23 +686,23 @@ public final class Backend {
      */
     private static ConsoleHandler getNewHandler() {
         ConsoleHandler newHandler = new ConsoleHandler();
-        newHandler.setFormatter(new SimpleFormatter() {
-            private static final String FORMAT = "[%s] %s %s: %s\n";
-
-            @Override
-            public synchronized String format(LogRecord lr) {
-                Calendar cal = DateUtility.calendarFromMillis(lr.getMillis());
-                String base = String.format(FORMAT, DateUtility.calendarToTimeString(cal), lr.getLoggerName(), lr.getLevel().getLocalizedName(), lr.getMessage());
-                StringBuilder builder = new StringBuilder(base);
-                if (lr.getThrown() != null) {
-                    StringWriter sw = new StringWriter();
-                    PrintWriter pw = new PrintWriter(sw);
-                    lr.getThrown().printStackTrace(pw);
-                    builder.append(sw);
-                }
-                return builder.toString();
-            }
-        });
+//        newHandler.setFormatter(new SimpleFormatter() {
+//            private static final String FORMAT = "[%s] %s %s: %s\n";
+//
+//            @Override
+//            public synchronized String format(LogRecord lr) {
+//                Calendar cal = DateUtility.calendarFromMillis(lr.getMillis());
+//                String base = String.format(FORMAT, DateUtility.calendarToTimeString(cal), lr.getLoggerName(), lr.getLevel().getLocalizedName(), lr.getMessage());
+//                StringBuilder builder = new StringBuilder(base);
+//                if (lr.getThrown() != null) {
+//                    StringWriter sw = new StringWriter();
+//                    PrintWriter pw = new PrintWriter(sw);
+//                    lr.getThrown().printStackTrace(pw);
+//                    builder.append(sw);
+//                }
+//                return builder.toString();
+//            }
+//        });
         return newHandler;
     }
 
@@ -742,11 +744,12 @@ public final class Backend {
         Set<String> using = new HashSet<>();
         for (TaskGroup group : taskGroups) {
             for (UserDefinedAction task : group.getTasks()) {
-                List<String> sources = new ArrayList<>();
-                String currentSource = new File(task.getSourcePath()).getAbsolutePath();
-                sources.add(currentSource);
-                sources.addAll(task.getTaskSourceHistory().getEntries().stream().map(e -> new File(e.getSourcePath()).getAbsolutePath()).toList());
-                using.addAll(sources);
+//                List<String> sources = new ArrayList<>();
+//                String currentSource = new File(task.getSourcePath()).getAbsolutePath();
+//                sources.add(currentSource);
+                using.addAll(task.getTaskSourceHistory().getEntries().stream().map(TaskSourceHistoryEntry::getAbsSourcePath).toList());
+                using.add(FileUtility.getPath(task.getSourcePath()));
+//                using.addAll(List.of(FileUtility.getPath(task.getSourcePath()), ));
             }
         }
 

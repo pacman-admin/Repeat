@@ -1,5 +1,7 @@
 package core.userDefinedTask.internals;
 
+import utilities.FileUtility;
+
 import java.util.Calendar;
 
 /**
@@ -27,6 +29,9 @@ public final class TaskSourceHistoryEntry {
 
     public String getSourcePath() {
         return sourcePath;
+    }
+    public String getAbsSourcePath(){
+        return FileUtility.getPath(sourcePath);
     }
 
     public Calendar getCreated() {

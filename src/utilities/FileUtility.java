@@ -3,8 +3,6 @@ package utilities;
 import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -37,6 +35,12 @@ public final class FileUtility {
      */
     public static boolean fileExists(File file) {
         return file.exists() && !file.isDirectory();
+    }
+
+
+    public static String getPath(String path) {
+        return new File(path).getAbsolutePath();
+
     }
 
     /**
@@ -123,44 +127,6 @@ public final class FileUtility {
         }
 
         return output;
-    }
-
-    /**
-     * Move the content of directory A to directory B.
-     *
-     * @param sourceDirectory source directory.
-     * @param destDirectory   destination directory.
-     * @return whether operation succeeded.
-     */
-    public static boolean moveDirectory(File sourceDirectory, File destDirectory) {
-        if (!sourceDirectory.isDirectory() || !destDirectory.isDirectory()) {
-            return false;
-        }
-
-        boolean result = true;
-        for (File f : Objects.requireNonNull(sourceDirectory.listFiles())) {
-            String name = f.getName();
-            File dst = new File(FileUtility.joinPath(destDirectory.getAbsolutePath(), name));
-            if (!f.isDirectory()) {
-                try {
-                    Files.move(Paths.get(f.getAbsolutePath()), Paths.get(dst.getAbsolutePath()), StandardCopyOption.REPLACE_EXISTING);
-                } catch (SecurityException | IOException e) {
-                    LOGGER.log(Level.WARNING, "Failed to move file.", e);
-                    return false;
-                }
-            } else {
-                try {
-                    if (!dst.mkdirs()) {
-                        LOGGER.warning("Could not create destination directory.");
-                    }
-                } catch (SecurityException e) {
-                    LOGGER.log(Level.WARNING, "No permission to create destination directory: " + name + "\n" + e, e);
-                    return false;
-                }
-                result &= moveDirectory(f, dst);
-            }
-        }
-        return result;
     }
 
     /**
@@ -388,7 +354,7 @@ public final class FileUtility {
     /**
      * Remove a file
      *
-     * @param file file to be remove
+     * @param file file to be removed
      * @return if removal is successful. Throw IOException if encounters error
      */
     public static boolean removeFile(File file) {

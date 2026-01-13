@@ -20,7 +20,7 @@ public final class ActionExecutor {
 
     public ActionExecutor(Core controller) {
         this.core = controller;
-        this.executions = new HashMap<>();
+        this.executions = HashMap.newHashMap(MAX_SIMULTANEOUS_EXECUTIONS + 1);
     }
 
     /**
