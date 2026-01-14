@@ -23,7 +23,7 @@ public abstract class InjectionSourceGenerator extends AbstractSourceGenerator {
 			mainSource = "";
 		}
 
-		StringBuffer sb = new StringBuffer();
+		StringBuilder sb = new StringBuilder();
 		String template = BootStrapResources.getNativeLanguageTemplate(getSourceLanguage());
 		int generatedCodeIndex = template.indexOf(GENERATED_CODE_SECTION_SIGNAL);
 		if (generatedCodeIndex == -1) {
@@ -38,10 +38,10 @@ public abstract class InjectionSourceGenerator extends AbstractSourceGenerator {
 		}
 
 		// Split the template and inject source code
-		sb.append(template.substring(0, injectingIndex));
+		sb.append(template, 0, injectingIndex);
 		sb.append('\n');
 		sb.append(mainSource);
-		sb.append(template.substring(injectingIndex + 1, template.length()));
+		sb.append(template, injectingIndex + 1, template.length());
 
 		return sb.toString();
 	}

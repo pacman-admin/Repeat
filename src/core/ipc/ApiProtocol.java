@@ -11,10 +11,6 @@ public final class ApiProtocol {
         throw new InstantiationError("This class is uninstantiable.");
     }
 
-    public static JsonNode keepAliveMessage() {
-        return JsonNodeFactories.object(JsonNodeFactories.field("device", JsonNodeFactories.string("system")), JsonNodeFactories.field("action", JsonNodeFactories.string("keep_alive")), JsonNodeFactories.field("parameters", JsonNodeFactories.array()));
-    }
-
     public static JsonNode successReply(String message) {
         return generateReply(SUCCESS_STATUS, message);
     }
