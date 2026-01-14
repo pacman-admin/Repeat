@@ -1,0 +1,59 @@
+Repeat - Java API
+Updated September 28th 2025
+Author: HP Truong (creator) and Langdon Staab (editor)
+
+**********************************************************************************************************
+
+I. Core API: (variable controller of type Core)
+    Use these anywhere with the controller variable: controller.<method_name>
+    1) mouse(): get MouseCore
+    2) keyBoard(): get KeyboardCore
+    3) blockingWait(int milliseconds): wait for milliseconds before executing next command
+    4) delay(int milliseconds): an alias for blockingWait method
+
+II. MouseCore API: (variable mouse of type MouseCore)
+    Use these anywhere with mouse variable: mouse.<method_name>
+    1) getPosition()
+    2) getColor()
+    3) getColor(int x, int y)
+    4) click(int mask)
+    5) click(int mask, int delay)
+    6) leftClick()
+    7) move(int newX, int newY)
+    8) drag(int sourceX, int sourceY, int destX, int destY)
+    9) moveBy(int amountX, int amountY)
+    10) dragBy(int amountX, int amountY)
+    11) leftClicK(int delay);
+    12) rightClick();
+    13) rightClick(int delay);
+    14) hold(int mask, int duration)
+    15) click(int mask, int x, int y)
+    16) click(int mask, Point p)
+    17) leftClick(int x, int y)
+    18) leftClick(int x, int y, int delay)
+    19) rightClick(int x, int y)
+    20) rightClick(int x, int y, int delay)
+    21) press(int mask)
+    22) release(int mask)
+    23) move(int newX, int newY)
+    24) moveBy(int amountX, int amountY)
+
+III. KeyboardCore API: (variable key of type KeyboardCore)
+    Use these anywhere with key variable: key.<method_name>
+    1) type(String string)
+    2) type(char c)
+    3) type(int key)
+    4) type(int...keys)
+    5) typeRepeat(int key, int count)
+    6) combination(int...keys)
+    7) hold(int key, int duration)
+    8) press(int key)
+    9) press(int...keys)
+    10) release(int key)
+    11) release(int...keys)
+    12) isLocked(int key)
+
+IV. Clipboard API: (allows clipboard manipulation and query)
+    Use these anywhere with Clipboard.<method_name>
+    1) get()
+    2) set(String string)
