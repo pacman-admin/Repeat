@@ -32,3 +32,7 @@ bin/
 *.json
 *.out
 *.manualbuild
+/out/
+/core/
+/data/
+/resources/
