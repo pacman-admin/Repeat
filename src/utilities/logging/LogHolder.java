@@ -1,11 +1,17 @@
 package utilities.logging;
 
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.util.LinkedList;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
+import java.util.logging.Logger;
+
+import static frontEnd.Backend.*;
 
 public final class LogHolder extends OutputStream {
 
-    private static final int MAX_LINE_COUNT = 4096;
+    private static final int MAX_LINE_COUNT = 100;
 
     private final StringBuffer content;
     private final LinkedList<LineEntry> lines;
@@ -15,6 +21,23 @@ public final class LogHolder extends OutputStream {
 
 
     public LogHolder() {
+        // Change stdout and stderr to also copy content to the logHolder.
+        System.setOut(new PrintStream(CompositeOutputStream.of(this, System.out)));
+        System.setErr(new PrintStream(CompositeOutputStream.of(this, System.err)));
+
+        // Once we've updated stdout and stderr, we need to re-register the ConsoleHandler of the root
+        // logger because it was only logging to the old stderr which we just changed above.
+        Logger rootLogger = Logger.getLogger("");
+        Handler[] handlers = rootLogger.getHandlers();
+        for (Handler handler : handlers) {
+            if (handler.getClass().getName().equals(ConsoleHandler.class.getName())) {
+                Logger.getLogger("").removeHandler(handler);
+            }
+        }
+        Logger.getLogger("").addHandler(new ConsoleHandler());
+
+        // Update the logging level based on the config.
+        changeDebugLevel(config.getNativeHookDebugLevel());
         content = new StringBuffer();
         lines = new LinkedList<>();
     }

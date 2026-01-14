@@ -18,13 +18,11 @@
  */
 package core.keyChain.managers;
 
-import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationEvent;
 import core.keyChain.KeyStroke;
 import core.keyChain.MouseKey;
-import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UserDefinedAction;
-import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.preconditions.ExecutionPreconditionsChecker;
 import globalListener.GlobalListenerFactory;
 import org.simplenativehooks.events.NativeKeyEvent;
@@ -39,22 +37,19 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static core.config.Constants.HALT_TASK;
+import static frontEnd.Backend.actionExecutor;
+import static frontEnd.Backend.config;
 
 public final class GlobalEventsManager {
 
     private static final Logger LOGGER = Logger.getLogger(GlobalEventsManager.class.getName());
 
-    private final Config config;
-    private final ActionExecutor actionExecutor;
     private final ExecutionPreconditionsChecker executionPreconditionsChecker;
     private final ActivationEventManager taskActivationManager;
 
-    public GlobalEventsManager(Config config, ActionExecutor actionExecutor) {
-        this.config = config;
-        this.actionExecutor = actionExecutor;
-
+    public GlobalEventsManager() {
         this.executionPreconditionsChecker = ExecutionPreconditionsChecker.of();
-        this.taskActivationManager = new AggregateActivationEventManager(config, new KeyChainManager(config), new KeySequenceManager(config), new PhraseManager(config), new MouseGestureManager(config), new SharedVariablesManager(config), new GlobalKeyActionManager(config));
+        this.taskActivationManager = new AggregateActivationEventManager(new KeyChainManager(), new KeySequenceManager(), new PhraseManager(), new MouseGestureManager(), new SharedVariablesManager(), new GlobalKeyActionManager());
     }
 
     /**
@@ -212,5 +207,12 @@ public final class GlobalEventsManager {
      */
     public Set<UserDefinedAction> isActivationRegistered(ActionInvoker activation) {
         return taskActivationManager.collision(activation);
+    }
+
+
+    public void shutdown() {
+        taskActivationManager.stopListening();
+        actionExecutor.haltAllTasks();
+
     }
 }

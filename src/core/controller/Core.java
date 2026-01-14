@@ -18,7 +18,6 @@
  */
 package core.controller;
 
-import core.config.Config;
 import core.controller.internals.LocalKeyboardCore;
 import core.controller.internals.LocalMouseCore;
 
@@ -38,7 +37,7 @@ public final class Core {
         this.keyboard = keyboard;
     }
 
-    public static Core local(Config config) {
+    public static Core local() {
         Robot controller = null;
         try {
             controller = new Robot();
@@ -47,7 +46,7 @@ public final class Core {
             System.exit(1);
         }
 
-        return new Core(new MouseCore(new LocalMouseCore(controller)), new KeyboardCore(new LocalKeyboardCore(config, controller)));
+        return new Core(new MouseCore(new LocalMouseCore(controller)), new KeyboardCore(new LocalKeyboardCore(controller)));
     }
 
     /**

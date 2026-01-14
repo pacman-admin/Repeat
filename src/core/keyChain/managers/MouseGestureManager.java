@@ -18,12 +18,12 @@
  */
 package core.keyChain.managers;
 
-import core.config.Config;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.MouseGesture;
 import core.keyChain.mouseGestureRecognition.MouseGestureClassifier;
 import core.userDefinedTask.UserDefinedAction;
+import frontEnd.Backend;
 import globalListener.GlobalListenerFactory;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
@@ -53,8 +53,8 @@ public final class MouseGestureManager extends KeyStrokeManager {
     private final Queue<Point> coordinates;
     private boolean enabled;
 
-    public MouseGestureManager(Config config) {
-        super(config);
+    public MouseGestureManager() {
+
         mouseGestureRecognizer = new MouseGestureClassifier();
         actionMap = new HashMap<>();
         coordinates = new ConcurrentLinkedQueue<>();
@@ -81,7 +81,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
 
     @Override
     public Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
-        if (getConfig().getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
+        if (Backend.config.getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
             startRecording();
         }
         return Collections.emptySet();
@@ -89,7 +89,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
 
     @Override
     public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-        if (getConfig().getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
+        if (Backend.config.getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
             return finishRecording();
         }
         return Collections.emptySet();
@@ -208,7 +208,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
     /**
      * Stop listening to the mouse for movement
      */
-    private void stopListening() {
+    public void stopListening() {
         mouseListener.stopListening();
     }
 }

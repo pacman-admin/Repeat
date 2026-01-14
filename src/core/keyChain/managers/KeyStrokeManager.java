@@ -1,33 +1,48 @@
 package core.keyChain.managers;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import core.config.Config;
 import core.keyChain.ActivationEvent;
 import core.keyChain.ActivationEvent.EventType;
 import core.keyChain.ButtonStroke;
 import core.userDefinedTask.UserDefinedAction;
 
-public abstract class KeyStrokeManager extends ActivationEventManager {
+import java.util.HashSet;
+import java.util.Set;
 
-	KeyStrokeManager(Config config) {
-		super(config);
-	}
+public abstract class KeyStrokeManager implements ActivationEventManager {
+    private boolean listening = false;
 
-	@Override
-	public final Set<UserDefinedAction> onActivationEvent(ActivationEvent event) {
-		if (event.getType() != EventType.BUTTON_STROKE) {
-			return new HashSet<>();
-		}
+    @Override
+    public void startListening() {
+        listening = true;
+    }
 
-		ButtonStroke buttonStroke = event.getButtonStroke();
-		if (buttonStroke.isPressed()) {
-			return onButtonStrokePressed(buttonStroke);
-		}
-		return onButtonStrokeReleased(buttonStroke);
-	}
+    @Override
+    public void stopListening() {
+        listening = false;
+    }
 
-	protected abstract Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke);
-	protected abstract Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke);
+    protected final boolean isListening() {
+        return listening;
+    }
+
+    protected final boolean isIgnoring() {
+        return !listening;
+    }
+
+    @Override
+    public final Set<UserDefinedAction> onActivationEvent(ActivationEvent event) {
+        if (event.getType() != EventType.BUTTON_STROKE) {
+            return new HashSet<>();
+        }
+
+        ButtonStroke buttonStroke = event.getButtonStroke();
+        if (buttonStroke.isPressed()) {
+            return onButtonStrokePressed(buttonStroke);
+        }
+        return onButtonStrokeReleased(buttonStroke);
+    }
+
+    protected abstract Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke);
+
+    protected abstract Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke);
 }

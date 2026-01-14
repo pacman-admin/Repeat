@@ -36,6 +36,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     private TaskExecutionPreconditions executionPreconditions;
     private ActionInvoker activation;
 
+
     public UserDefinedAction() {
         this(UUID.randomUUID().toString());
     }

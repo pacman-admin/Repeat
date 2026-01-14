@@ -1,6 +1,5 @@
 package core.controller.internals;
 
-import core.config.Config;
 import core.userDefinedTask.Clipboard;
 import utilities.Function;
 import utilities.OSIdentifier;
@@ -11,6 +10,8 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
+
+import static frontEnd.Backend.config;
 
 public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 
@@ -50,14 +51,12 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
         }
     }
 
-    private final Config config;
     private final Robot controller;
 
     /**
      * Only use this constructor within the {@link core.controller.Core} class.
      */
-    public LocalKeyboardCore(Config config, Robot controller) {
-        this.config = config;
+    public LocalKeyboardCore(Robot controller) {
         this.controller = controller;
     }
 

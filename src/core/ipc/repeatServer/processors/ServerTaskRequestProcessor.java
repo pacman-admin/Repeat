@@ -1,6 +1,7 @@
 package core.ipc.repeatServer.processors;
 
 import argo.jdom.JsonNode;
+import core.controller.Core;
 import core.ipc.repeatServer.ClientTask;
 import core.ipc.repeatServer.MainMessageSender;
 import core.keyChain.ActionInvoker;
@@ -165,7 +166,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
         action.setInvoker(actionInvoker);
         try {
-            action.trackedAction(Backend.getCore());
+            action.trackedAction(Core.local());
         } catch (InterruptedException e) {
             LOGGER.log(Level.WARNING, "Interrupted while executing action.", e);
         }

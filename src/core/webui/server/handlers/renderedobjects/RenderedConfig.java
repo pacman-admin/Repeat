@@ -5,6 +5,9 @@ import java.util.List;
 import core.config.Config;
 import core.recorder.Recorder;
 
+import static frontEnd.Backend.config;
+import static frontEnd.Backend.recorder;
+
 public final class RenderedConfig {
 	private final boolean recordMouseClickOnly;
 	private final boolean haltTaskByEscape;
@@ -15,7 +18,7 @@ public final class RenderedConfig {
 	private final boolean useTrayIcon;
 	private final List<RenderedDebugLevel> debugLevels;
 
-	public RenderedConfig(Config config, Recorder recorder) {
+	public RenderedConfig() {
 		haltTaskByEscape = config.isEnabledHaltingKeyPressed();
 		executeOnRelease = config.isExecuteOnKeyReleased();
 		useClipboardToTypeString = config.isUseClipboardToTypeString();

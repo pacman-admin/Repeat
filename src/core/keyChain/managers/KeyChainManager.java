@@ -1,12 +1,12 @@
 package core.keyChain.managers;
 
-import core.config.Config;
 import core.config.Constants;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.ButtonStroke.Source;
 import core.keyChain.KeyChain;
 import core.userDefinedTask.UserDefinedAction;
+import frontEnd.Backend;
 
 import java.util.*;
 import java.util.Map.Entry;
@@ -21,19 +21,13 @@ public final class KeyChainManager extends KeyStrokeManager {
     private final KeyChain currentKeyChain;
     private UserDefinedAction pendingAction;
 
-    public KeyChainManager(Config config) {
-        super(config);
+    public KeyChainManager() {
         currentKeyboardChain = new KeyChain();
         currentKeyChain = new KeyChain();
         pressedKeyboardKeys = Collections.synchronizedSet(new HashSet<>());
         pressedKeys = Collections.synchronizedSet(new HashSet<>());
         keyChainActions = new HashMap<>();
 
-    }
-
-    @Override
-    public void startListening() {
-        // Do nothing.
     }
 
     @Override
@@ -49,7 +43,7 @@ public final class KeyChainManager extends KeyStrokeManager {
         currentKeyChain.addKeyStroke(stroke);
 
         UserDefinedAction action = null;
-        if (!getConfig().isExecuteOnKeyReleased()) {
+        if (!Backend.config.isExecuteOnKeyReleased()) {
             action = considerTaskExecution(stroke);
         }
 
@@ -63,7 +57,7 @@ public final class KeyChainManager extends KeyStrokeManager {
         }
         pressedKeys.remove(stroke);
         UserDefinedAction action = null;
-        if (getConfig().isExecuteOnKeyReleased()) {
+        if (Backend.config.isExecuteOnKeyReleased()) {
             action = considerTaskExecution(stroke);
         }
 
@@ -132,7 +126,7 @@ public final class KeyChainManager extends KeyStrokeManager {
      * @return if operation succeeded (even if no action has been invoked)
      */
     private UserDefinedAction considerTaskExecution(ButtonStroke stroke) {
-        if (stroke.getKey() == Constants.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
+        if (stroke.getKey() == Constants.HALT_TASK && Backend.config.isEnabledHaltingKeyPressed()) {
             clear();
             return null;
         }

@@ -16,18 +16,22 @@ import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.SharedVariablesEvent;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 
-public final class SharedVariablesManager extends ActivationEventManager {
+public final class SharedVariablesManager implements ActivationEventManager {
 
 	private final List<UserDefinedAction> registeredActions;
 
-	public SharedVariablesManager(Config config) {
-		super(config);
+	public SharedVariablesManager() {
 		registeredActions = new ArrayList<>();
 	}
 
 	@Override
 	public void startListening() {
 		// Nothing to do.
+	}
+
+	@Override
+	public void stopListening() {
+
 	}
 
 	@Override

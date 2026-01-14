@@ -1,6 +1,5 @@
 package core.keyChain.managers;
 
-import core.config.Config;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ButtonStroke;
 import core.keyChain.KeyChain;
@@ -13,15 +12,10 @@ public final class GlobalKeyActionManager extends KeyStrokeManager {
     private final Set<UserDefinedAction> onKeyStrokePressedTasks;
     private final Set<UserDefinedAction> onKeyReleasedTasks;
 
-    public GlobalKeyActionManager(Config config) {
-        super(config);
+    public GlobalKeyActionManager() {
+
         onKeyStrokePressedTasks = new HashSet<>();
         onKeyReleasedTasks = new HashSet<>();
-    }
-
-    @Override
-    public void startListening() {
-        // Nothing to do.
     }
 
     @Override
