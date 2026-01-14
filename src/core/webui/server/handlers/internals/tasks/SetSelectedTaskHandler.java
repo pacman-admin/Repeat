@@ -2,7 +2,7 @@ package core.webui.server.handlers.internals.tasks;
 
 import java.util.Map;
 
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 

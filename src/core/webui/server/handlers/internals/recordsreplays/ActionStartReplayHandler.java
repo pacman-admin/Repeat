@@ -1,6 +1,6 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 

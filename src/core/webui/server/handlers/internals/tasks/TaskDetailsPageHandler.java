@@ -10,7 +10,8 @@ import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedDetailedUserDefinedAction;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
+import main.Main;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -71,19 +72,19 @@ public final class TaskDetailsPageHandler extends AbstractUIHttpHandler {
     private Void handleNewHotkey(HttpAsyncExchange exchange, String taskString) throws IOException {
         String activationConstructorId = "";
         if (taskString.equals(RECORD_TASK_NAME)) {
-            KeyChain recordKeyChain = Backend.CONFIG.getRECORD();
+            KeyChain recordKeyChain = Main.CONFIG.getRECORD();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(recordKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
         }
         if (taskString.equals(REPLAY_TASK_NAME)) {
-            KeyChain replayKeyChain = Backend.CONFIG.getREPLAY();
+            KeyChain replayKeyChain = Main.CONFIG.getREPLAY();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(replayKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
         }
         if (taskString.equals(RUN_COMPILED_TASK_NAME)) {
-            KeyChain runCompiledKeyChain = Backend.CONFIG.getCOMPILED_REPLAY();
+            KeyChain runCompiledKeyChain = Main.CONFIG.getCOMPILED_REPLAY();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(runCompiledKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false));
         }
         if (taskString.equals(MOUSE_GESTURE_ACTIVATION_TASK_NAME)) {
-            KeyChain mouseGestureKeyChain = Backend.CONFIG.getMOUSE_GESTURE();
+            KeyChain mouseGestureKeyChain = Main.CONFIG.getMOUSE_GESTURE();
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(mouseGestureKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false).setMaxStrokes(1));
         }
         if (activationConstructorId.isBlank()) {

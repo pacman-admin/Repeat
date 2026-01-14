@@ -2,7 +2,7 @@ package core.webui.server.handlers.internals.menu;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 
 import java.io.File;

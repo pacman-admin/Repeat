@@ -8,7 +8,7 @@ import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
 import core.languageHandler.compiler.AbstractNativeCompiler;
 import core.userDefinedTask.UserDefinedAction;
-import frontEnd.Backend;
+import main.Backend;
 import utilities.FileUtility;
 import utilities.json.JSONUtility;
 

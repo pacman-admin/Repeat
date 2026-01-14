@@ -20,7 +20,7 @@ package core.webui.server.handlers.internals.tasks;
 
 import core.userDefinedTask.UserDefinedAction;
 import core.webui.server.handlers.AbstractComplexGETHandler;
-import frontEnd.Backend;
+import main.Backend;
 
 import java.util.Map;
 

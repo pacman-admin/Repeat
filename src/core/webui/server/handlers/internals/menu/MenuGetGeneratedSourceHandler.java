@@ -10,7 +10,7 @@ import core.webui.server.handlers.AbstractTaskSourceCodeHandler;
 import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler;
 import core.webui.server.handlers.internals.tasks.TaskSourceCodeFragmentHandler.RenderException;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 

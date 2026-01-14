@@ -1,10 +1,12 @@
-package frontEnd;
+package utilities;
 
 import core.ipc.IIPCService;
 import core.ipc.IPCServiceManager;
+import main.Backend;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.Desktop;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
@@ -13,7 +15,7 @@ import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-final class MinimizedFrame extends TrayIcon {
+public final class MinimizedFrame extends TrayIcon {
 
     private static final Logger LOGGER = Logger.getLogger(MinimizedFrame.class.getName());
 
@@ -61,7 +63,7 @@ final class MinimizedFrame extends TrayIcon {
         }
     }
 
-    void add() {
+    public void add() {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
@@ -76,7 +78,7 @@ final class MinimizedFrame extends TrayIcon {
         }
     }
 
-    void remove() {
+    public void remove() {
         SystemTray tray = SystemTray.getSystemTray();
         try {
             tray.remove(this);

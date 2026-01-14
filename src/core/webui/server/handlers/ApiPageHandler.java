@@ -19,7 +19,7 @@
 package core.webui.server.handlers;
 
 import core.languageHandler.Language;
-import frontEnd.Backend;
+import main.Backend;
 import staticResources.BootStrapResources;
 
 public final class ApiPageHandler extends AbstractGETHandler {

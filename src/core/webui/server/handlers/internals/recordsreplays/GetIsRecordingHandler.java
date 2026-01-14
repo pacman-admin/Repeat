@@ -1,7 +1,7 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
 import core.webui.server.handlers.AbstractBooleanGETHandler;
-import frontEnd.Backend;
+import main.Backend;
 
 public final class GetIsRecordingHandler extends AbstractBooleanGETHandler {
     @Override

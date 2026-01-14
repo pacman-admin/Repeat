@@ -7,7 +7,7 @@ import core.userDefinedTask.TaskGroupManager;
 import core.webui.server.handlers.renderedobjects.*;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 

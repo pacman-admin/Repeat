@@ -16,7 +16,7 @@
 package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractGETHandler;
-import frontEnd.Backend;
+import main.Backend;
 
 public final class GetEditedSourceHandler extends AbstractGETHandler {
     public GetEditedSourceHandler() {

@@ -4,8 +4,8 @@ import java.util.List;
 
 import core.recorder.Recorder;
 
-import static frontEnd.Backend.CONFIG;
-import static frontEnd.Backend.RECORDER;
+import static main.Main.CONFIG;
+import static main.Main.RECORDER;
 
 public final class RenderedConfig {
 	private final boolean recordMouseClickOnly;

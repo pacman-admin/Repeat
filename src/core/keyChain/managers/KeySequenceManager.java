@@ -7,7 +7,7 @@ import core.keyChain.ButtonStroke.Source;
 import core.keyChain.KeySequence;
 import core.keyChain.RollingKeySeries;
 import core.userDefinedTask.UserDefinedAction;
-import frontEnd.Backend;
+import main.Main;
 
 import java.util.*;
 
@@ -29,7 +29,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
             currentKeyboardRollingKeySeries.addKeyStroke(stroke);
         }
         currentRollingKeySeries.addKeyStroke(stroke);
-        if (!Backend.CONFIG.isExecuteOnKeyReleased()) {
+        if (!Main.CONFIG.isExecuteOnKeyReleased()) {
             return considerTaskExecution(stroke);
         }
 
@@ -38,7 +38,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
 
     @Override
     public synchronized Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-        if (Backend.CONFIG.isExecuteOnKeyReleased()) {
+        if (Main.CONFIG.isExecuteOnKeyReleased()) {
             return considerTaskExecution(stroke);
         }
 
@@ -51,7 +51,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
      * @return set of actions to execute.
      */
     private Set<UserDefinedAction> considerTaskExecution(ButtonStroke key) {
-        if (key.getKey() == Constants.HALT_TASK && Backend.CONFIG.isEnabledHaltingKeyPressed()) {
+        if (key.getKey() == Constants.HALT_TASK && Main.CONFIG.isEnabledHaltingKeyPressed()) {
             clear();
             return Collections.emptySet();
         }

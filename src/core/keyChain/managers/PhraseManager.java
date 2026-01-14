@@ -7,7 +7,7 @@ import core.keyChain.ButtonStroke;
 import core.keyChain.ButtonStroke.Source;
 import core.keyChain.RollingKeySeries;
 import core.userDefinedTask.UserDefinedAction;
-import frontEnd.Backend;
+import main.Main;
 
 import java.util.*;
 
@@ -25,7 +25,7 @@ public final class PhraseManager extends KeyStrokeManager {
     public synchronized Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
         if (isListening() && stroke.getSource() == Source.KEYBOARD) {
             currentRollingKeySeries.addKeyStroke(stroke);
-            if (!Backend.CONFIG.isExecuteOnKeyReleased()) {
+            if (!Main.CONFIG.isExecuteOnKeyReleased()) {
                 return considerTaskExecution(stroke);
             }
         }
@@ -36,7 +36,7 @@ public final class PhraseManager extends KeyStrokeManager {
     public synchronized Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
         if (isListening() && stroke.getSource() == Source.KEYBOARD) {
             currentRollingKeySeries.addKeyStroke(stroke);
-            if (Backend.CONFIG.isExecuteOnKeyReleased()) {
+            if (Main.CONFIG.isExecuteOnKeyReleased()) {
                 return considerTaskExecution(stroke);
             }
         }

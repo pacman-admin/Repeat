@@ -2,7 +2,7 @@ package core.webui.server.handlers.internals.menu;
 
 import core.recorder.Recorder;
 import core.webui.server.handlers.AbstractBooleanConfigHttpHandler;
-import frontEnd.Backend;
+import main.Main;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public final class MenuRecordMouseClickOnlyActionHandler extends AbstractBooleanConfigHttpHandler {
@@ -10,9 +10,9 @@ public final class MenuRecordMouseClickOnlyActionHandler extends AbstractBoolean
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
         if (value) {
-            Backend.RECORDER.setRecordMode(Recorder.MODE_MOUSE_CLICK_ONLY);
+            Main.RECORDER.setRecordMode(Recorder.MODE_MOUSE_CLICK_ONLY);
         } else {
-            Backend.RECORDER.setRecordMode(Recorder.MODE_NORMAL);
+            Main.RECORDER.setRecordMode(Recorder.MODE_NORMAL);
         }
         return emptySuccessResponse(exchange);
     }

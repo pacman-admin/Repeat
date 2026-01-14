@@ -17,7 +17,7 @@ package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 
 import java.nio.charset.StandardCharsets;

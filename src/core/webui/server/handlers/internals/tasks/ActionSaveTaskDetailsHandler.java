@@ -10,7 +10,8 @@ import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedMatchingOptionSelection;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
+import main.Main;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
@@ -125,22 +126,22 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
         switch (taskString) {
             case TaskDetailsPageHandler.RECORD_TASK_NAME -> {
-                Backend.CONFIG.setRECORD(hotKey);
+                Main.CONFIG.setRECORD(hotKey);
                 Backend.reconfigureSwitchRecord();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.REPLAY_TASK_NAME -> {
-                Backend.CONFIG.setREPLAY(hotKey);
+                Main.CONFIG.setREPLAY(hotKey);
                 Backend.reconfigureSwitchReplay();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.RUN_COMPILED_TASK_NAME -> {
-                Backend.CONFIG.setCOMPILED_REPLAY(hotKey);
+                Main.CONFIG.setCOMPILED_REPLAY(hotKey);
                 Backend.reconfigureSwitchCompiledReplay();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME -> {
-                Backend.CONFIG.setMOUSE_GESTURE(hotKey);
+                Main.CONFIG.setMOUSE_GESTURE(hotKey);
                 return emptySuccessResponse(exchange);
             }
         }

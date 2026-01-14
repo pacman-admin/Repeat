@@ -19,7 +19,7 @@
 package core.webui.server.handlers.internals;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 
 public final class ActionClearLogHandler extends AbstractPOSTHandler {

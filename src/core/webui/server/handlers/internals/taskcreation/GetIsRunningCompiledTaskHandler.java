@@ -1,7 +1,7 @@
 package core.webui.server.handlers.internals.taskcreation;
 
 import core.webui.server.handlers.AbstractBooleanGETHandler;
-import frontEnd.Backend;
+import main.Backend;
 
 public final class GetIsRunningCompiledTaskHandler extends AbstractBooleanGETHandler {
     @Override

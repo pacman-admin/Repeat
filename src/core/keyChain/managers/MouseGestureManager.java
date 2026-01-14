@@ -23,8 +23,8 @@ import core.keyChain.ButtonStroke;
 import core.keyChain.MouseGesture;
 import core.keyChain.mouseGestureRecognition.MouseGestureClassifier;
 import core.userDefinedTask.UserDefinedAction;
-import frontEnd.Backend;
 import globalListener.GlobalListenerFactory;
+import main.Main;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 import org.simplenativehooks.utilities.Function;
@@ -81,7 +81,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
 
     @Override
     public Set<UserDefinedAction> onButtonStrokePressed(ButtonStroke stroke) {
-        if (Backend.CONFIG.getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
+        if (Main.CONFIG.getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
             startRecording();
         }
         return Collections.emptySet();
@@ -89,7 +89,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
 
     @Override
     public Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-        if (Backend.CONFIG.getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
+        if (Main.CONFIG.getMOUSE_GESTURE().getButtonStrokes().contains(stroke)) {
             return finishRecording();
         }
         return Collections.emptySet();

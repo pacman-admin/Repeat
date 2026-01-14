@@ -37,8 +37,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static core.config.Constants.HALT_TASK;
-import static frontEnd.Backend.ACTION_EXECUTOR;
-import static frontEnd.Backend.CONFIG;
+import static main.Main.ACTION_EXECUTOR;
+import static main.Main.CONFIG;
 
 public final class GlobalEventsManager {
 

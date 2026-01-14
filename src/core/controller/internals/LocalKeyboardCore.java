@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static frontEnd.Backend.CONFIG;
+import static main.Main.CONFIG;
 
 public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 

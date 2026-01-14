@@ -6,7 +6,7 @@ import argo.jdom.JsonRootNode;
 import core.ipc.ApiProtocol;
 import core.ipc.repeatServer.MainMessageSender;
 import core.keyChain.ActionInvoker;
-import frontEnd.Backend;
+import main.Backend;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;

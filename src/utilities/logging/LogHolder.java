@@ -1,5 +1,7 @@
 package utilities.logging;
 
+import main.Main;
+
 import java.io.OutputStream;
 import java.io.PrintStream;
 import java.util.LinkedList;
@@ -7,7 +9,7 @@ import java.util.logging.ConsoleHandler;
 import java.util.logging.Handler;
 import java.util.logging.Logger;
 
-import static frontEnd.Backend.*;
+import static main.Backend.changeDebugLevel;
 
 public final class LogHolder extends OutputStream {
 
@@ -37,7 +39,7 @@ public final class LogHolder extends OutputStream {
         Logger.getLogger("").addHandler(new ConsoleHandler());
 
         // Update the logging level based on the config.
-        changeDebugLevel(CONFIG.getNativeHookDebugLevel());
+        changeDebugLevel(Main.CONFIG.getNativeHookDebugLevel());
         content = new StringBuffer();
         lines = new LinkedList<>();
     }

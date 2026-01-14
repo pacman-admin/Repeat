@@ -24,7 +24,8 @@ import core.userDefinedTask.internals.ActionExecutionRequest;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
+import main.Main;
 import org.apache.http.HttpRequest;
 import utilities.NumberUtility;
 
@@ -68,7 +69,7 @@ public final class RunTaskHandler extends AbstractPOSTHandler {
         if (action == null) {
             throw new NullPointerException("No such task with ID " + id + ".");
         }
-        Backend.ACTION_EXECUTOR.startExecutingAction(executionRequest, action);
+        Main.ACTION_EXECUTOR.startExecutingAction(executionRequest, action);
         return id;
     }
 }

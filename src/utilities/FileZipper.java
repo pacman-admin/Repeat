@@ -1,16 +1,14 @@
-package frontEnd;
-
-import utilities.FileUtility;
+package utilities;
 
 import java.io.*;
 import java.util.Objects;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
 
-final class FileZipper {
+public final class FileZipper {
     private final ZipOutputStream z;
 
-    FileZipper(File in, String out) {
+    public FileZipper(File in, String out) {
         try {
             z = new ZipOutputStream(new FileOutputStream(out));
             addFile(in, "");

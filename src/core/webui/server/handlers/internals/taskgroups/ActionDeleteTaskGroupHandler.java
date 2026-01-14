@@ -3,7 +3,7 @@ package core.webui.server.handlers.internals.taskgroups;
 import java.io.IOException;
 import java.util.Map;
 
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 

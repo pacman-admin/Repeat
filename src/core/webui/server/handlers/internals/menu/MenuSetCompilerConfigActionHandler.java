@@ -4,7 +4,7 @@ import core.languageHandler.Language;
 import core.languageHandler.compiler.JavaNativeCompiler;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
-import frontEnd.Backend;
+import main.Backend;
 import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 

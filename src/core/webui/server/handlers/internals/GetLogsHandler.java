@@ -19,7 +19,7 @@
 package core.webui.server.handlers.internals;
 
 import core.webui.server.handlers.AbstractGETHandler;
-import frontEnd.Backend;
+import main.Backend;
 
 public final class GetLogsHandler extends AbstractGETHandler {
 
