@@ -39,6 +39,7 @@ import java.util.logging.Logger;
 
 import static core.config.Constants.*;
 import static core.userDefinedTask.TaskGroupManager.getTaskGroups;
+import static core.userDefinedTask.TaskGroupManager.taskGroups;
 
 public final class Config implements ILoggable {
     private static final HashMap<String, Parser> parsers = new HashMap<>();
@@ -118,6 +119,7 @@ public final class Config implements ILoggable {
             Parser parser = parsers.get(version);
             parser.parse(root, c);
         }
+        TaskGroupManager.ensureHasAGroup();
         return c;
     }
 

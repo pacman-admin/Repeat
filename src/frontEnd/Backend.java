@@ -81,6 +81,7 @@ public final class Backend {
         if (!SystemTray.isSupported()) {
             LOGGER.warning("System tray is not supported.");
         }
+        TaskGroupManager.ensureHasAGroup();
         try {
             LOGGER.info("Adding tray icon...");
             trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE);
