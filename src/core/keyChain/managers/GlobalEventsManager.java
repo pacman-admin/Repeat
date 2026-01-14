@@ -37,8 +37,8 @@ import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 import static core.config.Constants.HALT_TASK;
-import static frontEnd.Backend.actionExecutor;
-import static frontEnd.Backend.config;
+import static frontEnd.Backend.ACTION_EXECUTOR;
+import static frontEnd.Backend.CONFIG;
 
 public final class GlobalEventsManager {
 
@@ -79,7 +79,7 @@ public final class GlobalEventsManager {
 
                 Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
+                ACTION_EXECUTOR.startExecutingActions(actions);
                 return true;
             }
         });
@@ -90,7 +90,7 @@ public final class GlobalEventsManager {
 
                 Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
+                ACTION_EXECUTOR.startExecutingActions(actions);
                 return true;
             }
         });
@@ -120,7 +120,7 @@ public final class GlobalEventsManager {
 
                 Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
+                ACTION_EXECUTOR.startExecutingActions(actions);
                 return true;
             }
         });
@@ -136,7 +136,7 @@ public final class GlobalEventsManager {
 
                 Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(stroke));
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
+                ACTION_EXECUTOR.startExecutingActions(actions);
                 return true;
             }
         });
@@ -150,9 +150,9 @@ public final class GlobalEventsManager {
      * @return if we should continue delegating this to the managers.
      */
     private boolean shouldDelegate(KeyStroke stroke) {
-        if ((stroke.getKey() == HALT_TASK) && config.isEnabledHaltingKeyPressed()) {
+        if ((stroke.getKey() == HALT_TASK) && CONFIG.isEnabledHaltingKeyPressed()) {
             taskActivationManager.clear();
-            actionExecutor.haltAllTasks();
+            ACTION_EXECUTOR.haltAllTasks();
             return false;
         }
         return true;
@@ -212,7 +212,7 @@ public final class GlobalEventsManager {
 
     public void shutdown() {
         taskActivationManager.stopListening();
-        actionExecutor.haltAllTasks();
+        ACTION_EXECUTOR.haltAllTasks();
 
     }
 }

@@ -8,7 +8,7 @@ public final class MenuExecuteOnReleaseActionHandler extends AbstractBooleanConf
 
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
-        Backend.config.setExecuteOnKeyReleased(value);
+        Backend.CONFIG.setExecuteOnKeyReleased(value);
         return emptySuccessResponse(exchange);
     }
 }

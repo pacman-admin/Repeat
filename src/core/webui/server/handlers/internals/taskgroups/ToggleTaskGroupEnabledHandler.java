@@ -31,7 +31,7 @@ public final class ToggleTaskGroupEnabledHandler extends AbstractUIHttpHandler {
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get task group from request parameters.");
         }
 
-        group.setEnabled(!group.isEnabled(), Backend.keysManager);
+        group.setEnabled(!group.isEnabled(), Backend.INPUT_EVENT_MANAGER);
         return renderedTaskGroups(exchange);
     }
 }

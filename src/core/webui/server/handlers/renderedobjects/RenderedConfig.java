@@ -2,11 +2,10 @@ package core.webui.server.handlers.renderedobjects;
 
 import java.util.List;
 
-import core.config.Config;
 import core.recorder.Recorder;
 
-import static frontEnd.Backend.config;
-import static frontEnd.Backend.recorder;
+import static frontEnd.Backend.CONFIG;
+import static frontEnd.Backend.RECORDER;
 
 public final class RenderedConfig {
 	private final boolean recordMouseClickOnly;
@@ -19,14 +18,14 @@ public final class RenderedConfig {
 	private final List<RenderedDebugLevel> debugLevels;
 
 	public RenderedConfig() {
-		haltTaskByEscape = config.isEnabledHaltingKeyPressed();
-		executeOnRelease = config.isExecuteOnKeyReleased();
-		useClipboardToTypeString = config.isUseClipboardToTypeString();
-		runTaskWithServerConfig = config.isRunTaskWithServerConfig();
-		recordMouseClickOnly = recorder.getRecordMode() == Recorder.MODE_MOUSE_CLICK_ONLY;
-		useJavaAwtToGetMousePosition = config.isUseJavaAwtToGetMousePosition();
-		useTrayIcon = config.isUseTrayIcon();
-		debugLevels = RenderedDebugLevel.of(config.getNativeHookDebugLevel());
+		haltTaskByEscape = CONFIG.isEnabledHaltingKeyPressed();
+		executeOnRelease = CONFIG.isExecuteOnKeyReleased();
+		useClipboardToTypeString = CONFIG.isUseClipboardToTypeString();
+		runTaskWithServerConfig = CONFIG.isRunTaskWithServerConfig();
+		recordMouseClickOnly = RECORDER.getRecordMode() == Recorder.MODE_MOUSE_CLICK_ONLY;
+		useJavaAwtToGetMousePosition = CONFIG.isUseJavaAwtToGetMousePosition();
+		useTrayIcon = CONFIG.isUseTrayIcon();
+		debugLevels = RenderedDebugLevel.of(CONFIG.getNativeHookDebugLevel());
 	}
 
 	public boolean isRecordMouseClickOnly() {

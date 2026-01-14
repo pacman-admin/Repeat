@@ -34,11 +34,11 @@ public final class MainFrontEnd {
         }
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        GlobalListenerHookController.initialize(Backend.config.isUseJavaAwtToGetMousePosition());
+        GlobalListenerHookController.initialize(Backend.CONFIG.isUseJavaAwtToGetMousePosition());
         /*************************************************************************************/
         /********************************Start main program***********************************/
         try {
-            Backend.keysManager.startGlobalListener();
+            Backend.INPUT_EVENT_MANAGER.startGlobalListener();
         } catch (Exception e) {
             LOGGER.severe("Could not start global event listener!\n" + e);
         }

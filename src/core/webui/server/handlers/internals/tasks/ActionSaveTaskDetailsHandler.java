@@ -125,22 +125,22 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
         switch (taskString) {
             case TaskDetailsPageHandler.RECORD_TASK_NAME -> {
-                Backend.config.setRECORD(hotKey);
+                Backend.CONFIG.setRECORD(hotKey);
                 Backend.reconfigureSwitchRecord();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.REPLAY_TASK_NAME -> {
-                Backend.config.setREPLAY(hotKey);
+                Backend.CONFIG.setREPLAY(hotKey);
                 Backend.reconfigureSwitchReplay();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.RUN_COMPILED_TASK_NAME -> {
-                Backend.config.setCOMPILED_REPLAY(hotKey);
+                Backend.CONFIG.setCOMPILED_REPLAY(hotKey);
                 Backend.reconfigureSwitchCompiledReplay();
                 return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME -> {
-                Backend.config.setMOUSE_GESTURE(hotKey);
+                Backend.CONFIG.setMOUSE_GESTURE(hotKey);
                 return emptySuccessResponse(exchange);
             }
         }

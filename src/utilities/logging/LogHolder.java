@@ -37,7 +37,7 @@ public final class LogHolder extends OutputStream {
         Logger.getLogger("").addHandler(new ConsoleHandler());
 
         // Update the logging level based on the config.
-        changeDebugLevel(config.getNativeHookDebugLevel());
+        changeDebugLevel(CONFIG.getNativeHookDebugLevel());
         content = new StringBuffer();
         lines = new LinkedList<>();
     }

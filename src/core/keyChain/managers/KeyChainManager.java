@@ -43,7 +43,7 @@ public final class KeyChainManager extends KeyStrokeManager {
         currentKeyChain.addKeyStroke(stroke);
 
         UserDefinedAction action = null;
-        if (!Backend.config.isExecuteOnKeyReleased()) {
+        if (!Backend.CONFIG.isExecuteOnKeyReleased()) {
             action = considerTaskExecution(stroke);
         }
 
@@ -57,7 +57,7 @@ public final class KeyChainManager extends KeyStrokeManager {
         }
         pressedKeys.remove(stroke);
         UserDefinedAction action = null;
-        if (Backend.config.isExecuteOnKeyReleased()) {
+        if (Backend.CONFIG.isExecuteOnKeyReleased()) {
             action = considerTaskExecution(stroke);
         }
 
@@ -126,7 +126,7 @@ public final class KeyChainManager extends KeyStrokeManager {
      * @return if operation succeeded (even if no action has been invoked)
      */
     private UserDefinedAction considerTaskExecution(ButtonStroke stroke) {
-        if (stroke.getKey() == Constants.HALT_TASK && Backend.config.isEnabledHaltingKeyPressed()) {
+        if (stroke.getKey() == Constants.HALT_TASK && Backend.CONFIG.isEnabledHaltingKeyPressed()) {
             clear();
             return null;
         }

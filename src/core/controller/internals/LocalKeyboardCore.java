@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.logging.Logger;
 
-import static frontEnd.Backend.config;
+import static frontEnd.Backend.CONFIG;
 
 public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
 
@@ -75,13 +75,13 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
                 return;
             default:
                 LOGGER.warning("Using the clipboard to type strings works on macOS and Windows only.");
-                config.setUseClipboardToTypeString(false);
+                CONFIG.setUseClipboardToTypeString(false);
                 type(s);
         }
     }
 
     private void typeSingleString(String string) {
-        if (config.isUseClipboardToTypeString()) {
+        if (CONFIG.isUseClipboardToTypeString()) {
             String existing = Clipboard.get();
             pasteString(string);
             if (!existing.isBlank()) {

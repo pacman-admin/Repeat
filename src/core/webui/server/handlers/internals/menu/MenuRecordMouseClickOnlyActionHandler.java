@@ -10,9 +10,9 @@ public final class MenuRecordMouseClickOnlyActionHandler extends AbstractBoolean
     @Override
     protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
         if (value) {
-            Backend.recorder.setRecordMode(Recorder.MODE_MOUSE_CLICK_ONLY);
+            Backend.RECORDER.setRecordMode(Recorder.MODE_MOUSE_CLICK_ONLY);
         } else {
-            Backend.recorder.setRecordMode(Recorder.MODE_NORMAL);
+            Backend.RECORDER.setRecordMode(Recorder.MODE_NORMAL);
         }
         return emptySuccessResponse(exchange);
     }

@@ -29,7 +29,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
             currentKeyboardRollingKeySeries.addKeyStroke(stroke);
         }
         currentRollingKeySeries.addKeyStroke(stroke);
-        if (!Backend.config.isExecuteOnKeyReleased()) {
+        if (!Backend.CONFIG.isExecuteOnKeyReleased()) {
             return considerTaskExecution(stroke);
         }
 
@@ -38,7 +38,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
 
     @Override
     public synchronized Set<UserDefinedAction> onButtonStrokeReleased(ButtonStroke stroke) {
-        if (Backend.config.isExecuteOnKeyReleased()) {
+        if (Backend.CONFIG.isExecuteOnKeyReleased()) {
             return considerTaskExecution(stroke);
         }
 
@@ -51,7 +51,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
      * @return set of actions to execute.
      */
     private Set<UserDefinedAction> considerTaskExecution(ButtonStroke key) {
-        if (key.getKey() == Constants.HALT_TASK && Backend.config.isEnabledHaltingKeyPressed()) {
+        if (key.getKey() == Constants.HALT_TASK && Backend.CONFIG.isEnabledHaltingKeyPressed()) {
             clear();
             return Collections.emptySet();
         }
