@@ -630,13 +630,13 @@ public final class Backend {
     /**
      * Populate all tasks with task invoker to dynamically execute other tasks.
      */
-    private static void setTaskInvoker() {
-        for (TaskGroup taskGroup : taskGroups) {
-            for (UserDefinedAction task : taskGroup.getTasks()) {
-                task.setTaskInvoker(taskInvoker);
-            }
-        }
-    }
+//    private static void setTaskInvoker() {
+//        for (TaskGroup taskGroup : taskGroups) {
+//            for (UserDefinedAction task : taskGroup.getTasks()) {
+//                task.setTaskInvoker(taskInvoker);
+//            }
+//        }
+//    }
 
     public static void importTasks(File inputFile) throws IOException {
         if (OSIdentifier.isWindows()) {
@@ -667,7 +667,7 @@ public final class Backend {
             if (taskGroups.size() > existingGroupCount) {
                 LOGGER.info("Successfully imported tasks. Switching to a new task group...");
                 TaskGroupManager.setCurrentTaskGroup(taskGroups.get(existingGroupCount)); // Take the new group with lowest index.
-                setTaskInvoker();
+//                setTaskInvoker();
             } else {
                 LOGGER.warning("No new task group found.");
             }
@@ -907,7 +907,7 @@ public final class Backend {
             return null;
         }
 
-        createdInstance.setTaskInvoker(taskInvoker);
+//        createdInstance.setTaskInvoker(taskInvoker);
         createdInstance.setCompiler(compiler.getName());
 
         if (!TaskSourceManager.submitTask(createdInstance, source)) {

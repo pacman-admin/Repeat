@@ -240,10 +240,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
         this.enabled = enabled;
     }
 
-    public void setTaskInvoker(TaskInvoker taskInvoker) {
-        // This is to enable invoking task programmatically.
-    }
-
     public final UsageStatistics getStatistics() {
         return statistics;
     }
