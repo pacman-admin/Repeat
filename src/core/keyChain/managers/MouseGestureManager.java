@@ -208,7 +208,8 @@ public final class MouseGestureManager extends KeyStrokeManager {
     /**
      * Stop listening to the mouse for movement
      */
-    private void stopListening() {
+    @Override
+    public void stopListening() {
         mouseListener.stopListening();
     }
 }

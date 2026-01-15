@@ -1,6 +1,5 @@
 package core.keyChain.managers;
 
-import core.config.Config;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationEvent;
 import core.userDefinedTask.UserDefinedAction;
@@ -11,17 +10,10 @@ import java.util.Set;
 
 public abstract class ActivationEventManager {
 
-    private final Config config;
-
-    ActivationEventManager(Config config) {
-        this.config = config;
-    }
-
-    final Config getConfig() {
-        return config;
-    }
 
     public abstract void startListening();
+
+    public abstract void stopListening();
 
     public abstract Set<UserDefinedAction> onActivationEvent(ActivationEvent event);
 

@@ -4,7 +4,6 @@ import core.ipc.IPCServiceManager;
 import globalListener.GlobalListenerHookController;
 import staticResources.BootStrapResources;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.logging.Level;

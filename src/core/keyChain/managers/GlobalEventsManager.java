@@ -54,7 +54,7 @@ public final class GlobalEventsManager {
         this.actionExecutor = actionExecutor;
 
         this.executionPreconditionsChecker = ExecutionPreconditionsChecker.of();
-        this.taskActivationManager = new AggregateActivationEventManager(config, new KeyChainManager(config), new KeySequenceManager(config), new PhraseManager(config), new MouseGestureManager(config), new SharedVariablesManager(config), new GlobalKeyActionManager(config));
+        this.taskActivationManager = new AggregateActivationEventManager(new KeyChainManager(config), new KeySequenceManager(config), new PhraseManager(config), new MouseGestureManager(config), new SharedVariablesManager(), new GlobalKeyActionManager(config));
     }
 
     /**

@@ -7,7 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import core.config.Config;
 import core.keyChain.ActivationEvent;
 import core.keyChain.ActivationEvent.EventType;
 import core.keyChain.SharedVariablesActivation;
@@ -20,13 +19,18 @@ public final class SharedVariablesManager extends ActivationEventManager {
 
 	private final List<UserDefinedAction> registeredActions;
 
-	public SharedVariablesManager(Config config) {
-		super(config);
+	public SharedVariablesManager() {
+//		super(config);
 		registeredActions = new ArrayList<>();
 	}
 
 	@Override
 	public void startListening() {
+		// Nothing to do.
+	}
+
+	@Override
+	public void stopListening() {
 		// Nothing to do.
 	}
 

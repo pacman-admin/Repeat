@@ -1,6 +1,5 @@
 package core.keyChain.managers;
 
-import core.config.Config;
 import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationEvent;
 import core.userDefinedTask.UserDefinedAction;
@@ -16,14 +15,18 @@ public final class AggregateActivationEventManager extends ActivationEventManage
 
     private final List<ActivationEventManager> managers;
 
-    public AggregateActivationEventManager(Config config, ActivationEventManager... managers) {
-        super(config);
+    public AggregateActivationEventManager(ActivationEventManager... managers) {
         this.managers = Arrays.asList(managers);
     }
 
     @Override
     public void startListening() {
         managers.forEach(ActivationEventManager::startListening);
+    }
+
+    @Override
+    public void stopListening() {
+        managers.forEach(ActivationEventManager::stopListening);
     }
 
     @Override
