@@ -20,8 +20,9 @@ public interface ActivationEventManager {
     Set<UserDefinedAction> collision(Collection<ActionInvoker> activations);
 
     default Set<UserDefinedAction> collision(ActionInvoker activation) {
-       return collision(List.of(activation));
+        return collision(List.of(activation));
     }
+
     Set<UserDefinedAction> registerAction(UserDefinedAction action);
 
     Set<UserDefinedAction> unRegisterAction(UserDefinedAction action);
