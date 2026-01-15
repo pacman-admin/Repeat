@@ -20,7 +20,11 @@ final class MinimizedFrame extends TrayIcon {
 
     public MinimizedFrame(Image image) {
         super(image);
-
+        try {
+            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+        } catch (Exception e) {
+            LOGGER.warning("Error while setting theme to system theme.\n" + e);
+        }
         PopupMenu trayPopupMenu = new PopupMenu();
 
         MenuItem miInterface = new MenuItem("Show UI");
@@ -44,12 +48,6 @@ final class MinimizedFrame extends TrayIcon {
                 }
             }
         });
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-            LOGGER.warning("Error while setting theme to system theme.\n" + e);
-        }
     }
 
     private void show() {

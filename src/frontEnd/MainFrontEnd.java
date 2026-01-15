@@ -14,41 +14,10 @@ import java.util.logging.Logger;
 public final class MainFrontEnd {
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
 
-    static {
-        try {
-            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException |
-                 UnsupportedLookAndFeelException e) {
-            LOGGER.warning("Error while setting theme to system theme.\n" + e);
-        }
-    }
-
     public static void run() {
-        /*************************************************************************************/
-        /********************************Extracting resources*********************************/
-        try {
-            BootStrapResources.extractResources();
-        } catch (IOException | URISyntaxException e) {
-            LOGGER.log(Level.SEVERE, "Cannot extract bootstrap resources.", e);
-            System.exit(2);
-        }
-        /*************************************************************************************/
-        /********************************Initializing global hooks****************************/
-        GlobalListenerHookController.initialize(Backend.config.isUseJavaAwtToGetMousePosition());
-        /*************************************************************************************/
-        /********************************Start main program***********************************/
-        try {
-            Backend.keysManager.startGlobalListener();
-        } catch (Exception e) {
-            LOGGER.severe("Could not start global event listener!\n" + e);
-        }
-
-        Backend.configureMainHotkeys();
-        /*************************************************************************************/
-        Backend.renderTaskGroup();
-
-        /*************************************************************************************/
         Backend.initializeLogging();
+        Backend.init();
+        Backend.renderTaskGroup();
 
         try {
             IPCServiceManager.initiateServices();
@@ -57,6 +26,28 @@ public final class MainFrontEnd {
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
         }
+
+        /*************************************************************************************/
+        /********************************Extracting resources*********************************/
+        try {
+            BootStrapResources.extractResources();
+        } catch (IOException | URISyntaxException e) {
+            LOGGER.log(Level.SEVERE, "Cannot extract bootstrap resources.", e);
+            System.exit(2);
+        }
+
+        /*************************************************************************************/
+        /********************************Initializing global hooks****************************/
+        GlobalListenerHookController.initialize(Backend.config.isUseJavaAwtToGetMousePosition());
+
+        /*************************************************************************************/
+        /********************************Start main program***********************************/
+        try {
+            Backend.keysManager.startGlobalListener();
+        } catch (Exception e) {
+            LOGGER.severe("Could not start global event listener!\n" + e);
+        }
+        Backend.configureMainHotkeys();
 
 
         LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + IPCServiceManager.getUIServer().getPort() + "\n*******************************************");

@@ -30,7 +30,10 @@ import core.languageHandler.compiler.DynamicCompilationResult;
 import core.languageHandler.compiler.DynamicCompilerOutput;
 import core.recorder.Recorder;
 import core.recorder.ReplayConfig;
-import core.userDefinedTask.*;
+import core.userDefinedTask.TaskGroup;
+import core.userDefinedTask.TaskGroupManager;
+import core.userDefinedTask.TaskSourceManager;
+import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
@@ -56,11 +59,10 @@ public final class Backend {
     public static final GlobalEventsManager keysManager = new GlobalEventsManager(config, actionExecutor);
     public static final Recorder recorder = new Recorder(Core.local(config));
     private static final LogHolder logHolder = new LogHolder();
-//    private static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
     private static final Logger LOGGER = Logger.getLogger(Backend.class.getName());
-    public static ReplayConfig replayConfig = ReplayConfig.of();
-    private static Language compilingLanguage = Language.MANUAL_BUILD;
-    private static RunActionConfig runActionConfig = RunActionConfig.of();
+    public static ReplayConfig replayConfig;
+    private static Language compilingLanguage;
+    private static RunActionConfig runActionConfig;
     private static boolean isRecording, isReplaying, isRunningCompiledTask;
     private static final UserDefinedAction switchRecord = UserDefinedAction.of(Backend::switchRecord);
     private static final UserDefinedAction switchReplay = UserDefinedAction.of(Backend::switchReplay);
@@ -70,7 +72,14 @@ public final class Backend {
     private static UserDefinedAction customFunction;
     private static final UserDefinedAction switchReplayCompiled = UserDefinedAction.of(Backend::switchRunningCompiledAction);
 
-    static {
+    private Backend() {
+
+    }
+
+    static void init() {
+        replayConfig = ReplayConfig.of();
+        compilingLanguage = Language.MANUAL_BUILD;
+        runActionConfig = RunActionConfig.of();
         TaskProcessorManager.setProcessorIdentifyCallback(new Function<>() {
             @Override
             public Void apply(Language language) {
@@ -90,10 +99,6 @@ public final class Backend {
             LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
         }
         trayIcon.add();
-    }
-
-    private Backend() {
-
     }
 
     public static void editSource(String code) {
@@ -134,8 +139,6 @@ public final class Backend {
         changeDebugLevel(config.getNativeHookDebugLevel());
     }
 
-
-    /*************************************************************************************************************/
     /************************************************IPC**********************************************************/
 
     public static synchronized void scheduleExit(long delay) {
@@ -168,13 +171,17 @@ public final class Backend {
         }, delay);
     }
 
+
     /*************************************************************************************************************/
+
     /****************************************Main hotkeys*********************************************************/
     static void configureMainHotkeys() {
         reconfigureSwitchRecord();
         reconfigureSwitchReplay();
         reconfigureSwitchCompiledReplay();
     }
+
+    /*************************************************************************************************************/
 
     public static void reconfigureSwitchRecord() {
         keysManager.reRegisterTask(switchRecord, ActionInvoker.newBuilder().withHotKey(config.getRECORD()).build());
@@ -188,7 +195,6 @@ public final class Backend {
         keysManager.reRegisterTask(switchReplayCompiled, ActionInvoker.newBuilder().withHotKey(config.getCOMPILED_REPLAY()).build());
     }
 
-    /*************************************************************************************************************/
     /****************************************Record and replay****************************************************/
     public static synchronized void startRecording() {
         if (isRecording) {
@@ -196,6 +202,8 @@ public final class Backend {
         }
         switchRecord();
     }
+
+    /*************************************************************************************************************/
 
     public static synchronized void stopRecording() {
         if (!isRecording) {
@@ -316,9 +324,9 @@ public final class Backend {
         }
     }
 
-    /*************************************************************************************************************/
     /*****************************************Task group related**************************************************/
     static void renderTaskGroup() {
+        TaskGroupManager.ensureHasAGroup();
         for (TaskGroup group : taskGroups) {
             if (!group.isEnabled()) {
                 continue;
@@ -332,6 +340,8 @@ public final class Backend {
             }
         }
     }
+
+    /*************************************************************************************************************/
 
     public static void addTaskGroup(String name) {
         for (TaskGroup group : taskGroups) {
@@ -772,8 +782,6 @@ public final class Backend {
         customFunction = null;
     }
 
-    /*************************************************************************************************************/
-
     /***************************************Configurations********************************************************/
     // Write configuration file
     public static boolean writeConfigFile() {
@@ -783,6 +791,8 @@ public final class Backend {
         }
         return result;
     }
+
+    /*************************************************************************************************************/
 
     public static void changeDebugLevel(Level level) {
         LOGGER.fine("Debug level changed to: " + level);
@@ -852,8 +862,6 @@ public final class Backend {
         return content.toString();
     }
 
-    /*************************************************************************************************************/
-
     /********************************************Source code related**********************************************/
 
     public static String generateSource() {
@@ -863,6 +871,8 @@ public final class Backend {
         }
         return source;
     }
+
+    /*************************************************************************************************************/
 
     /***************************************Source compilation****************************************************/
 
