@@ -56,7 +56,7 @@ public final class Backend {
     public static final GlobalEventsManager keysManager = new GlobalEventsManager(config, actionExecutor);
     public static final Recorder recorder = new Recorder(Core.local(config));
     private static final LogHolder logHolder = new LogHolder();
-    private static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
+//    private static final TaskInvoker taskInvoker = new TaskInvoker(Core.local(config));
     private static final Logger LOGGER = Logger.getLogger(Backend.class.getName());
     public static ReplayConfig replayConfig = ReplayConfig.of();
     private static Language compilingLanguage = Language.MANUAL_BUILD;
@@ -637,7 +637,6 @@ public final class Backend {
 //            }
 //        }
 //    }
-
     public static void importTasks(File inputFile) throws IOException {
         if (OSIdentifier.isWindows()) {
             LOGGER.warning("This feature does not work on Windows (yet), Sorry!");
