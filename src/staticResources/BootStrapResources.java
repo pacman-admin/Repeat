@@ -42,11 +42,10 @@ public final class BootStrapResources {
     private static final NativeHookBootstrapResources nativeHookResources;
 
     static {
-        TRAY_IMAGE = getImage("/staticContent/Repeat.jpg");
+        TRAY_IMAGE = getIcon();
         LANGUAGE_API = new HashMap<>();
         LANGUAGE_API.put(Language.JAVA, getFile("/staticContent/core/languageHandler/API/JavaAPI.txt"));
         NATIVE_LANGUAGE_TEMPLATES = new HashMap<>();
-//        NATIVE_LANGUAGE_TEMPLATES.put(Language.JAVA, getFile("/core/CustomAction.java"));
         NATIVE_LANGUAGE_TEMPLATES.put(Language.JAVA, getFile("/staticContent/natives/java/TemplateRepeat"));
         NATIVE_LANGUAGE_TEMPLATES.put(Language.MANUAL_BUILD, getFile("/staticContent/natives/manual/TemplateRepeat.txt"));
         nativeHookResources = new NativeHookBootstrapResources();
@@ -64,11 +63,11 @@ public final class BootStrapResources {
         return BootStrapResources.class.getResourceAsStream(resource);
     }
 
-    private static Image getImage(String resource) {
+    private static Image getIcon() {
         try {
-            return ImageIO.read(Objects.requireNonNull(BootStrapResources.class.getResourceAsStream(resource)));
+            return ImageIO.read(Objects.requireNonNull(BootStrapResources.class.getResourceAsStream("/staticContent/Repeat.jpg")));
         } catch (IOException | NullPointerException e) {
-            LOGGER.log(Level.SEVERE, "Cannot load image " + resource, e);
+            LOGGER.log(Level.SEVERE, "Cannot load application icon", e);
             return null;
         }
     }
