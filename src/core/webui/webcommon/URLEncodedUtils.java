@@ -52,16 +52,16 @@ final class URLEncodedUtils {
         } else {
             CharArrayBuffer buffer = new CharArrayBuffer(s.length());
             buffer.append(s);
-            return parse(buffer, charset, '&', ';');
+            return parse(buffer, charset);
         }
     }
 
-    private static List<NameValuePair> parse(CharArrayBuffer buf, Charset charset, char... separators) {
+    private static List<NameValuePair> parse(CharArrayBuffer buf, Charset charset) {
         Args.notNull(buf, "Char array buffer");
         TokenParser tokenParser = TokenParser.INSTANCE;
         BitSet delimSet = new BitSet();
 
-        for (char separator : separators) {
+        for (char separator : new char[]{'&', ';'}) {
             delimSet.set(separator);
         }
 

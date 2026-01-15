@@ -65,9 +65,9 @@ public final class RunTaskHandler extends AbstractPOSTHandler {
         }
 
         UserDefinedAction action = Backend.getTask(id);
-        if (action == null) {
-            throw new NullPointerException("No such task with ID " + id + ".");
-        }
+//        if (action == null) {
+//            throw new NullPointerException("No such task with ID " + id + ".");
+//        }
         Backend.actionExecutor.startExecutingAction(executionRequest, action);
         return id;
     }

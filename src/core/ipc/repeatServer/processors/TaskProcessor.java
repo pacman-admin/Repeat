@@ -6,7 +6,6 @@ import argo.jdom.JsonRootNode;
 import core.ipc.ApiProtocol;
 import core.ipc.repeatServer.MainMessageSender;
 import core.keyChain.ActionInvoker;
-import frontEnd.Backend;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -58,7 +57,7 @@ public final class TaskProcessor extends AbstractMessageProcessor {
     private final Map<Long, Reply> locks;
     private final ServerTaskRequestProcessor taskRequestProcessor;
 
-    public TaskProcessor(Backend backEnd, MainMessageSender messageSender) {
+    public TaskProcessor(MainMessageSender messageSender) {
         super(messageSender);
         this.taskRequestProcessor = new ServerTaskRequestProcessor(messageSender);
         locks = new HashMap<>();

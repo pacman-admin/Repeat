@@ -43,7 +43,7 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
             throw new IllegalArgumentException("Timestamp is empty or not provided.");
 
         UserDefinedAction action = Backend.getTask(id);
-        if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
+//        if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
 
         long timestamp = Long.parseLong(timestampString);
         String sourceCode = Backend.getSourceForTask(action, timestamp);

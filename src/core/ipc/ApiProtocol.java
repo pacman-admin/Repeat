@@ -16,7 +16,7 @@ public final class ApiProtocol {
     }
 
     public static JsonNode successReply(JsonNode message) {
-        return generateReply(SUCCESS_STATUS, message);
+        return generateReply(message);
     }
 
     public static JsonNode failureReply(String message) {
@@ -31,7 +31,7 @@ public final class ApiProtocol {
         return JsonNodeFactories.object(JsonNodeFactories.field("status", JsonNodeFactories.string(status)), JsonNodeFactories.field("message", JsonNodeFactories.string(message)), JsonNodeFactories.field("is_reply_message", JsonNodeFactories.booleanNode(true)));
     }
 
-    private static JsonNode generateReply(String status, JsonNode message) {
-        return JsonNodeFactories.object(JsonNodeFactories.field("status", JsonNodeFactories.string(status)), JsonNodeFactories.field("message", message), JsonNodeFactories.field("is_reply_message", JsonNodeFactories.booleanNode(true)));
+    private static JsonNode generateReply(JsonNode message) {
+        return JsonNodeFactories.object(JsonNodeFactories.field("status", JsonNodeFactories.string(ApiProtocol.SUCCESS_STATUS)), JsonNodeFactories.field("message", message), JsonNodeFactories.field("is_reply_message", JsonNodeFactories.booleanNode(true)));
     }
 }

@@ -158,10 +158,10 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
 
     private void runTask(String id, ActionInvoker actionInvoker) {
         UserDefinedAction action = Backend.getTask(id);
-        if (action == null) {
-            LOGGER.warning("No server action with ID " + id + " found.");
-            return;
-        }
+//        if (action == null) {
+//            LOGGER.warning("No server action with ID " + id + " found.");
+//            return;
+//        }
 
         action.setInvoker(actionInvoker);
         try {
