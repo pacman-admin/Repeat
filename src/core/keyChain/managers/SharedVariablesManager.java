@@ -15,12 +15,11 @@ import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.SharedVariablesEvent;
 import core.userDefinedTask.internals.SharedVariablesSubscription;
 
-public final class SharedVariablesManager extends ActivationEventManager {
+public final class SharedVariablesManager implements ActivationEventManager {
 
 	private final List<UserDefinedAction> registeredActions;
 
 	public SharedVariablesManager() {
-//		super(config);
 		registeredActions = new ArrayList<>();
 	}
 

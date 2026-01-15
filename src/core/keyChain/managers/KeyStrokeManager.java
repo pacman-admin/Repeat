@@ -9,7 +9,7 @@ import core.userDefinedTask.UserDefinedAction;
 import java.util.HashSet;
 import java.util.Set;
 
-public abstract class KeyStrokeManager extends ActivationEventManager {
+public abstract class KeyStrokeManager implements ActivationEventManager {
     private final Config config;
 
     KeyStrokeManager(Config config) {
