@@ -73,7 +73,7 @@ public final class Backend {
     private static final UserDefinedAction switchReplayCompiled = UserDefinedAction.of(Backend::switchRunningCompiledAction);
 
     private Backend() {
-        //This class is uninstantiable
+        //This class is uninstanta
     }
 
     static void init() {

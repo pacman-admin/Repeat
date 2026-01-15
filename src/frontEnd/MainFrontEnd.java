@@ -17,7 +17,6 @@ public final class MainFrontEnd {
     public static void run() {
         Backend.initializeLogging();
         Backend.init();
-        Backend.renderTaskGroup();
 
         try {
             IPCServiceManager.initiateServices();
@@ -47,6 +46,8 @@ public final class MainFrontEnd {
         } catch (Exception e) {
             LOGGER.severe("Could not start global event listener!\n" + e);
         }
+
+        Backend.renderTaskGroup();
         Backend.configureMainHotkeys();
 
 
