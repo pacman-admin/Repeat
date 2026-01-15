@@ -9,7 +9,7 @@ public abstract class InjectionSourceGenerator extends AbstractSourceGenerator {
 	private static final Logger LOGGER = Logger.getLogger(InjectionSourceGenerator.class.getName());
 
 	/**
-	 * The template must ensure that {@link #GENERATED_CODE_SECTION_SIGNAL} is present in the code, and
+	 * The template must ensure that {@li nk #GENERATED_CODE_SECTION_SIGNAL} is present in the code, and
 	 * that generated code (either by human or source generator) can be injected on the next line without
 	 * breaking compilability of the generated source code.
 	 */

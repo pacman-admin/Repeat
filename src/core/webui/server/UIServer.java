@@ -163,7 +163,7 @@ public final class UIServer extends IPCServiceWithModifiablePort {
         output.put("/internals/action/manually-build/constructor/remove-steps", new ActionManuallyBuildActionRemoveStepsHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/internals/action/manually-build/constructor/move-up", new ActionManuallyBuildActionMoveUpHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/internals/action/manually-build/constructor/move-down", new ActionManuallyBuildActionMoveDownHandler(objectRenderer, manuallyBuildActionConstructorManager));
-        output.put("/internals/action/manually-build/constructor/build", new ActionManuallyBuildActionBuilldAction(manuallyBuildActionConstructorManager));
+        output.put("/internals/action/manually-build/constructor/build", new ActionManuallyBuildActionBuildAction(manuallyBuildActionConstructorManager));
 
         output.put("/internals/action/add-task", new ActionAddTaskHandler(objectRenderer));
         output.put("/internals/action/add-task-group", new ActionAddTaskGroupHandler(objectRenderer));

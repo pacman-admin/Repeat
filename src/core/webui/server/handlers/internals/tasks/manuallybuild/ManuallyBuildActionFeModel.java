@@ -3,7 +3,7 @@ package core.webui.server.handlers.internals.tasks.manuallybuild;
 import java.util.*;
 import java.util.stream.Collectors;
 
-public final class ManuallyBuildActionFeModel {
+public final class wwManuallyBuildActionFeModel {
 
     private static final Map<Actor, List<Action>> ACTORS_TO_ACTIONS = new HashMap<>();
 
