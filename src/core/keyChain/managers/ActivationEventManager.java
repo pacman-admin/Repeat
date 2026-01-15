@@ -8,24 +8,21 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
-public abstract class ActivationEventManager {
+public interface ActivationEventManager {
+    void startListening();
 
+    void stopListening();
 
-    public abstract void startListening();
+    Set<UserDefinedAction> onActivationEvent(ActivationEvent event);
 
-    public abstract void stopListening();
+    void clear();
 
-    public abstract Set<UserDefinedAction> onActivationEvent(ActivationEvent event);
+    Set<UserDefinedAction> collision(Collection<ActionInvoker> activations);
 
-    public abstract void clear();
-
-    protected abstract Set<UserDefinedAction> collision(Collection<ActionInvoker> activations);
-
-    public final Set<UserDefinedAction> collision(ActionInvoker activation) {
-        return collision(List.of(activation));
+    default Set<UserDefinedAction> collision(ActionInvoker activation) {
+       return collision(List.of(activation));
     }
+    Set<UserDefinedAction> registerAction(UserDefinedAction action);
 
-    public abstract Set<UserDefinedAction> registerAction(UserDefinedAction action);
-
-    public abstract Set<UserDefinedAction> unRegisterAction(UserDefinedAction action);
+    Set<UserDefinedAction> unRegisterAction(UserDefinedAction action);
 }
