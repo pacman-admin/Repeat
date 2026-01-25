@@ -100,7 +100,7 @@ public final class Config implements ILoggable {
     private boolean useJavaAwtToGetMousePosition;
 
     private Config() {
-        logLevel = Level.CONFIG;
+        logLevel = Level.INFO;
         executeOnKeyReleased = true;
         MOUSE_GESTURE = new KeyChain(KeyEvent.VK_F4);
         RECORD = new KeyChain(KeyEvent.VK_F7);
