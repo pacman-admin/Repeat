@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Repeat:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Repeat_jar</output-path>
+    <root id="archive" name="Repeat.jar">
+      <element id="module-output" name="Repeat2" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/argo-3.10.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/Jama-1.0.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/freemarker.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/SimpleNativeHooks_0_0_8.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/apache-http-components/httpcore-4.4.9.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/libs/apache-http-components/httpcore-nio-4.4.9.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
