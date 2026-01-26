@@ -2,8 +2,8 @@ package core.webui.server.handlers.internals.menu;
 
 import argo.jdom.JsonNode;
 import core.languageHandler.Language;
-import core.languageHandler.compiler.DynamicCompilationResult;
-import core.languageHandler.compiler.DynamicCompilerOutput;
+import core.languageHandler.compiler.CompilationOutcome;
+import core.languageHandler.compiler.CompilationResult;
 import core.userDefinedTask.UserDefinedAction;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractTaskSourceCodeHandler;
@@ -30,8 +30,8 @@ public final class MenuGetGeneratedSourceHandler extends AbstractTaskSourceCodeH
         Language language = Backend.getSelectedLanguage();
         UserDefinedAction action = null;
         if (language == Language.MANUAL_BUILD) {
-            DynamicCompilationResult compilationResult = Backend.getCompiler().compile(source);
-            if (compilationResult.output() != DynamicCompilerOutput.COMPILATION_SUCCESS) {
+            CompilationResult compilationResult = Backend.getCompiler().compile(source);
+            if (compilationResult.outcome() != CompilationOutcome.COMPILATION_SUCCESS) {
                 return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
             }
 

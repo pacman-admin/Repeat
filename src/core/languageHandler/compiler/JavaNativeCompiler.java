@@ -18,16 +18,12 @@
  */
 package core.languageHandler.compiler;
 
-import argo.jdom.JsonNode;
-import argo.jdom.JsonNodeFactories;
 import core.languageHandler.Language;
 import core.userDefinedTask.DormantUserDefinedTask;
 import core.userDefinedTask.UserDefinedAction;
 import utilities.FileUtility;
-import utilities.Function;
 import utilities.RandomUtil;
 import utilities.StringUtil;
-import utilities.json.JSONUtility;
 
 import javax.tools.*;
 import java.io.File;
@@ -37,47 +33,41 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.charset.StandardCharsets;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class JavaNativeCompiler extends AbstractNativeCompiler {
+public final class JavaNativeCompiler implements Compiler {
 
     private final String[] packageTree;
     private final String defaultClassName;
     private final DynamicClassLoader classLoader;
     private String className;
-    private String[] classPaths;
 
-    private File home;
-
-    public JavaNativeCompiler(String className, String[] packageTree, String[] classPaths) {
+    public JavaNativeCompiler(String className, String[] packageTree) {
         this.packageTree = packageTree;
         this.defaultClassName = className;
-        this.classPaths = classPaths;
-
-        classLoader = new DynamicClassLoader(getClassPaths(), ClassLoader.getSystemClassLoader());
-        home = new File(System.getProperty("java.home"));
+        classLoader = new DynamicClassLoader();
     }
 
     @Override
-    public DynamicCompilationResult compile(String sourceCode, File classFile) {
+    public CompilationResult compile(String sourceCode, File classFile) {
         className = FileUtility.removeExtension(classFile).getName();
 
         if (!classFile.getParentFile().getAbsolutePath().equals(new File(FileUtility.joinPath(packageTree)).getAbsolutePath())) {
             getLogger().warning("Class file " + classFile.getAbsolutePath() + "is not consistent with packageTree");
         } else if (!classFile.getName().endsWith(".class")) {
-            getLogger().warning("Java class file " + classFile.getAbsolutePath() + " does not end with .class. Compiling using source code");
+            getLogger().fine("Java class file " + classFile.getAbsolutePath() + " does not end with .class. Compiling using source code");
             return compile(sourceCode);
         } else if (!FileUtility.fileExists(classFile)) {
-            getLogger().warning("Cannot find file " + classFile.getAbsolutePath() + ". Compiling using source code");
+            getLogger().fine("Cannot find file " + classFile.getAbsolutePath() + ". Compiling using source code");
             return compile(sourceCode);
         }
 
         try {
-            DynamicCompilationResult output = loadClass(className);
+            CompilationResult output = loadClass(className);
             getLogger().info("Skipped compilation and loaded object file.");
             className = null;
             return output;
@@ -97,16 +87,10 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
     }
 
     @Override
-    public DynamicCompilationResult compile(String sourceCode) {
-        String originalPath = System.getProperty("java.home");
-        // This no longer works in JDK 9 (but why?).
-        // We are forced to run the program in JDK in order to be
-        // able to retrieve the compiler.
-        System.setProperty("java.home", home.getAbsolutePath());
-
+    public CompilationResult compile(String sourceCode) {
         if (!sourceCode.contains("class " + defaultClassName)) {
             getLogger().warning("Cannot find class " + defaultClassName + " in source code.");
-            return DynamicCompilationResult.of(DynamicCompilerOutput.SOURCE_MISSING_PREFORMAT_ELEMENTS, null);
+            return CompilationResult.of(CompilationOutcome.SOURCE_MISSING_PREFORMAT_ELEMENTS);
         }
 
         String newClassName = className;
@@ -121,15 +105,15 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
                 try {
                     if (!FileUtility.writeToFile(sourceCode, compiling, false)) {
                         getLogger().warning("Cannot write source code to file.");
-                        return DynamicCompilationResult.of(DynamicCompilerOutput.SOURCE_NOT_ACCESSIBLE, new DormantUserDefinedTask(sourceCode, Language.JAVA));
+                        return CompilationResult.of(CompilationOutcome.SOURCE_NOT_ACCESSIBLE, new DormantUserDefinedTask(sourceCode, Language.JAVA));
                     }
 
                     /** Compilation Requirements *********************************************************************************************/
                     DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
                     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
                     if (compiler == null) {
-                        getLogger().warning("No java compiler found. Set class path points to JDK in setting?\nNote that for Java 9 an above. Setting class path no longer " + "works. You will need to launch this program using a JDK instead of a JRE.");
-                        return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILER_MISSING, new DormantUserDefinedTask(sourceCode, Language.JAVA));
+                        getLogger().warning("No java compiler found. Compiling Java custom actions requires execution from a JDK; a JRE is not sufficient.");
+                        return CompilationResult.of(CompilationOutcome.COMPILER_MISSING, new DormantUserDefinedTask(sourceCode, Language.JAVA));
                     }
                     StandardJavaFileManager fileManager = compiler.getStandardFileManager(diagnostics, Locale.US, StandardCharsets.UTF_8);
 
@@ -138,16 +122,16 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
                     List<String> optionList = new ArrayList<>();
                     optionList.add("-classpath");
                     String paths = System.getProperty("java.class.path");
-                    if (classPaths.length > 0) {
-                        paths += ";" + StringUtil.join(classPaths, ";");
-                    }
+//                    if (classPaths.length > 0) {
+//                        paths += ";" + StringUtil.join(classPaths, ";");
+//                    }
                     optionList.add(paths);
 
                     Iterable<? extends JavaFileObject> compilationUnit = fileManager.getJavaFileObjectsFromFiles(List.of(compiling));
                     JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, optionList, null, compilationUnit);
                     /********************************************************************************************* Compilation Requirements **/
                     if (task.call()) {
-                        DynamicCompilationResult output = loadClass(newClassName);
+                        CompilationResult output = loadClass(newClassName);
                         getLogger().info("Successfully compiled class " + defaultClassName);
                         return output;
                     } else {
@@ -168,14 +152,14 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
                 }
             }
             getLogger().warning("Cannot compile class " + defaultClassName);
-            return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILATION_ERROR, null);
+            return CompilationResult.of(CompilationOutcome.COMPILATION_ERROR);
         } finally {
             className = null;
-            System.setProperty("java.home", originalPath);
+//            System.setProperty("java.home", originalPath);
         }
     }
 
-    private DynamicCompilationResult loadClass(String loadClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
+    private CompilationResult loadClass(String loadClassName) throws ClassNotFoundException, InstantiationException, IllegalAccessException, MalformedURLException {
         classLoader.addURL(new File("./").toURI().toURL());
         Class<?> loadedClass = classLoader.loadClass(StringUtil.join(packageTree, ".") + "." + loadClassName);
         Object object;
@@ -183,36 +167,17 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
             object = loadedClass.getDeclaredConstructor().newInstance();
         } catch (IllegalArgumentException | InvocationTargetException | NoSuchMethodException | SecurityException e) {
             getLogger().log(Level.WARNING, "Unable to create a new instance...", e);
-            return DynamicCompilationResult.of(DynamicCompilerOutput.CONSTRUCTOR_ERROR, null);
+            return CompilationResult.of(CompilationOutcome.CONSTRUCTOR_ERROR);
         }
 
         getLogger().log(Level.FINE, "Successfully loaded class " + loadClassName);
         UserDefinedAction output = (UserDefinedAction) object;
         output.setSourcePath(getSourceFile(loadClassName).getAbsolutePath());
-        return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILATION_SUCCESS, output);
-    }
-
-    /**
-     * Construct an array of URLs from array of string representing list of
-     * class paths.
-     *
-     * @return array of URLs representing the class paths.
-     */
-    private URL[] getClassPaths() {
-        List<URL> output = new ArrayList<>();
-        for (String path : classPaths) {
-            try {
-                output.add(new File(path).toURI().toURL());
-            } catch (MalformedURLException e) {
-                getLogger().log(Level.WARNING, "Unable to construct URL for classpath " + path, e);
-            }
-        }
-
-        return output.toArray(new URL[0]);
+        return CompilationResult.of(CompilationOutcome.COMPILATION_SUCCESS, output);
     }
 
     @Override
-    protected File getSourceFile(String compileClass) {
+    public File getSourceFile(String compileClass) {
         return new File(FileUtility.joinPath(FileUtility.joinPath(packageTree), compileClass + ".java"));
     }
 
@@ -232,88 +197,7 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
     }
 
     @Override
-    public File getPath() {
-        return home.getAbsoluteFile();
-    }
-
-    @Override
-    public boolean canSetPath() {
-        return true;
-    }
-
-    @Override
-    public boolean setPath(File path) {
-        if (Files.isDirectory(path.toPath())) {
-            home = path;
-            return true;
-        }
-        getLogger().warning("Path must be directory.");
-        return false;
-    }
-
-    public List<String> getClassPath() {
-        return Arrays.asList(classPaths);
-    }
-
-    public boolean setClassPath(List<String> paths) {
-        Optional<String> invalidPath = paths.stream().filter(p -> !Files.isReadable(Paths.get(p))).findFirst();
-        if (invalidPath.isPresent()) {
-            getLogger().warning("Path " + invalidPath.get() + " is not valid (does not exist or cannot be read).");
-            return false;
-        }
-
-        String[] newPaths = new String[paths.size()];
-        for (int i = 0; i < paths.size(); i++) {
-            newPaths[i] = paths.get(i);
-        }
-        classPaths = newPaths;
-
-        try {
-            applyClassPath();
-            return true;
-        } catch (Exception e) {
-            getLogger().log(Level.WARNING, "Unable to configure the new classpath.", e);
-            return false;
-        }
-    }
-
-    @Override
-    public boolean parseCompilerSpecificArgs(JsonNode node) {
-        if (!node.isArrayNode("classpath")) {
-            return false;
-        }
-
-        List<String> paths = new ArrayList<>();
-        JSONUtility.addAllJson(node.getArrayNode("classpath"), new Function<>() {
-            @Override
-            public String apply(JsonNode d) {
-                return d.getStringValue();
-            }
-        }, paths);
-        // Override current class paths
-        classPaths = paths.toArray(classPaths);
-        try {
-            applyClassPath();
-        } catch (SecurityException | IllegalArgumentException e) {
-            getLogger().log(Level.WARNING, "Unable to apply class path.", e);
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public JsonNode getCompilerSpecificArgs() {
-        List<JsonNode> paths = new ArrayList<>(classPaths.length);
-        for (String path : classPaths) {
-            paths.add(JsonNodeFactories.string(path));
-        }
-
-        return JsonNodeFactories.object(JsonNodeFactories.field("classpath", JsonNodeFactories.array(paths)));
-    }
-
-    @Override
-    protected String getDummyPrefix() {
+    public String getDummyPrefix() {
         return "CC_";
     }
 
@@ -321,40 +205,9 @@ public final class JavaNativeCompiler extends AbstractNativeCompiler {
     public Logger getLogger() {
         return Logger.getLogger(JavaNativeCompiler.class.getName());
     }
-
-    /**
-     * Add all {@link #classPaths} on the current list of classpath to this compiler class loader.
-     * All classes compiled by this compiler will therefore be able to load all classes in {@link #classPaths}.
-     * There is a limitation that this contaminate the classpath in the class loader used by this compiler
-     * since the compiler reuses the class loader for all compilation task.
-     * <p>
-     * Alternatively, we could spawn a temporary class loader for each compilation task and not close it after loading
-     * so that the compiled task can load classes. However, it is not sure whether Java garbage collection can recycle
-     * this temporary class loader once the compiled task is discarded.
-     */
-    private void applyClassPath() {
-        // Hacky reflection solution to alter the global classpath.
-        // This no longer works for JDK 9 since system class loader is no longer a URLClassLoader.
-        // JDK 9 also emits warnings as reflection package tries to access addURL method.
-//		Method method = URLClassLoader.class.getDeclaredMethod("addURL", new Class[]{URL.class});
-//	    method.setAccessible(true);
-//	    for (String path : classPaths) {
-//	    	method.invoke(ClassLoader.getSystemClassLoader(), new Object[]{new File(path).toURI().toURL()});
-//	    }
-
-        // Add all URL to existing class loader.
-        for (URL url : getClassPaths()) {
-            classLoader.addURL(url);
-        }
-    }
-
-    /**
-     * Since code loaded by this class loader is user written (hopefully),
-     * exposing addURL should not be a concern.
-     */
     private static final class DynamicClassLoader extends URLClassLoader {
-        private DynamicClassLoader(URL[] urls, ClassLoader parent) {
-            super(urls, parent);
+        private DynamicClassLoader() {
+            super(new URL[0], ClassLoader.getSystemClassLoader());
         }
 
         /**

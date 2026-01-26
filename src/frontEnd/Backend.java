@@ -25,9 +25,9 @@ import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.Language;
-import core.languageHandler.compiler.AbstractNativeCompiler;
-import core.languageHandler.compiler.DynamicCompilationResult;
-import core.languageHandler.compiler.DynamicCompilerOutput;
+import core.languageHandler.compiler.CompilationOutcome;
+import core.languageHandler.compiler.CompilationResult;
+import core.languageHandler.compiler.Compiler;
 import core.recorder.Recorder;
 import core.recorder.ReplayConfig;
 import core.userDefinedTask.TaskGroup;
@@ -364,7 +364,7 @@ public final class Backend {
                     continue;
                 }
 
-                AbstractNativeCompiler compiler = COMPILER_FACTORY.getNativeCompiler(task.getCompiler());
+                Compiler compiler = COMPILER_FACTORY.getNativeCompiler(task.getCompiler());
                 UserDefinedAction recompiled = task.recompileNative(compiler);
                 if (recompiled == null) {
                     continue;
@@ -880,7 +880,7 @@ public final class Backend {
         return compilingLanguage;
     }
 
-    public static AbstractNativeCompiler getCompiler() {
+    public static Compiler getCompiler() {
         return TaskGroupManager.COMPILER_FACTORY.getNativeCompiler(compilingLanguage);
     }
 
@@ -891,7 +891,7 @@ public final class Backend {
      * @param taskName name of the newly created task. A default name will be given if not provided.
      */
     public static boolean compileSourceAndSetCurrent(String source, String taskName) {
-        AbstractNativeCompiler compiler = getCompiler();
+        Compiler compiler = getCompiler();
         UserDefinedAction createdInstance = compileSourceNatively(compiler, source, taskName);
         if (createdInstance == null) {
             return false;
@@ -902,17 +902,17 @@ public final class Backend {
 
     /*************************************************************************************************************/
 
-    public static UserDefinedAction compileSourceNatively(AbstractNativeCompiler compiler, String source, String taskName) {
+    public static UserDefinedAction compileSourceNatively(Compiler compiler, String source, String taskName) {
         source = source.replaceAll("\t", "    "); // Use spaces instead of tabs
 
-        DynamicCompilationResult compilationResult = compiler.compile(source);
-        DynamicCompilerOutput compilerStatus = compilationResult.output();
+        CompilationResult compilationResult = compiler.compile(source);
+        CompilationOutcome compilerStatus = compilationResult.outcome();
         UserDefinedAction createdInstance = compilationResult.action();
         if (taskName != null && !taskName.isBlank()) {
             createdInstance.setName(taskName);
         }
 
-        if (compilerStatus != DynamicCompilerOutput.COMPILATION_SUCCESS) {
+        if (compilerStatus != CompilationOutcome.COMPILATION_SUCCESS) {
             return null;
         }
 

@@ -5,7 +5,7 @@ import core.ipc.repeatServer.ClientTask;
 import core.ipc.repeatServer.MainMessageSender;
 import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
-import core.languageHandler.compiler.AbstractNativeCompiler;
+import core.languageHandler.compiler.Compiler;
 import core.userDefinedTask.UserDefinedAction;
 import frontEnd.Backend;
 import utilities.FileUtility;
@@ -124,7 +124,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
     }
 
     private UserDefinedAction createTask(String source, Language language) {
-        AbstractNativeCompiler compiler = COMPILER_FACTORY.getNativeCompiler(language);
+        Compiler compiler = COMPILER_FACTORY.getNativeCompiler(language);
         if (compiler == null) {
             LOGGER.warning("No compiler found for " + language + ".");
             return null;

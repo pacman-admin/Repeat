@@ -19,7 +19,6 @@
 package core.languageHandler.compiler;
 
 import argo.jdom.JsonNode;
-import argo.jdom.JsonNodeFactories;
 import core.languageHandler.Language;
 import core.userDefinedTask.manualBuild.ManuallyBuildAction;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
@@ -33,7 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
-public final class ManualBuildNativeCompiler extends AbstractNativeCompiler {
+public final class ManualBuildNativeCompiler implements Compiler {
 
     public static final String VERSION = "1.0";
     public static final String VERSION_PREFIX = "version=";
@@ -54,7 +53,7 @@ public final class ManualBuildNativeCompiler extends AbstractNativeCompiler {
      * See {@link ManuallyBuildActionConstructor#generateSource()} for JSON format.
      */
     @Override
-    public DynamicCompilationResult compile(String source) {
+    public CompilationResult compile(String source) {
         //LOGGER.log(Level.INFO,"Bla",new RuntimeException("compiler called"));
         String[] lines = source.split("\n");
         boolean foundVersion = false;
@@ -71,7 +70,7 @@ public final class ManualBuildNativeCompiler extends AbstractNativeCompiler {
             if (!foundVersion) {
                 if (!trimmed.startsWith(VERSION_PREFIX)) {
                     LOGGER.warning("First parsable line must start with '" + VERSION_PREFIX + "' but got " + trimmed);
-                    return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILATION_ERROR, null);
+                    return CompilationResult.of(CompilationOutcome.COMPILATION_ERROR);
                 }
 
                 foundVersion = true;
@@ -81,13 +80,13 @@ public final class ManualBuildNativeCompiler extends AbstractNativeCompiler {
             JsonNode node = JSONUtility.jsonFromString(trimmed);
             if (node == null) {
                 LOGGER.warning("Cannot parse JSON string " + trimmed + ".");
-                return DynamicCompilationResult.of(DynamicCompilerOutput.SOURCE_NOT_ACCESSIBLE, null);
+                return CompilationResult.of(CompilationOutcome.SOURCE_NOT_ACCESSIBLE);
             }
 
             ManuallyBuildStep s = ManuallyBuildStep.parseJSON(node);
             if (s == null) {
                 getLogger().warning("Unable to parse step from JSON " + JSONUtility.jsonToString(node));
-                return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILATION_ERROR, null);
+                return CompilationResult.of(CompilationOutcome.COMPILATION_ERROR);
             }
             steps.add(s);
         }
@@ -96,16 +95,16 @@ public final class ManualBuildNativeCompiler extends AbstractNativeCompiler {
         File sourceFile = getSourceFile(RandomUtil.randomID());
         if (!FileUtility.writeToFile(source, sourceFile, false)) {
             LOGGER.warning("Cannot write source code to file.");
-            return DynamicCompilationResult.of(DynamicCompilerOutput.SOURCE_NOT_ACCESSIBLE, null);
+            return CompilationResult.of(CompilationOutcome.SOURCE_NOT_ACCESSIBLE);
         }
 
         action.setSourcePath(sourceFile.getAbsolutePath());
         LOGGER.info("Successfully compiled custom action.");
-        return DynamicCompilationResult.of(DynamicCompilerOutput.COMPILATION_SUCCESS, action);
+        return CompilationResult.of(CompilationOutcome.COMPILATION_SUCCESS, action);
     }
 
     @Override
-    public DynamicCompilationResult compile(String source, File objectFile) {
+    public CompilationResult compile(String source, File objectFile) {
         return compile(source);
     }
 
@@ -125,38 +124,13 @@ public final class ManualBuildNativeCompiler extends AbstractNativeCompiler {
     }
 
     @Override
-    public File getPath() {
-        return new File(".");
-    }
-
-    @Override
-    public boolean canSetPath() {
-        return false;
-    }
-
-    @Override
-    public boolean setPath(File path) {
-        return true;
-    }
-
-    @Override
-    protected File getSourceFile(String compilingAction) {
+    public File getSourceFile(String compilingAction) {
         return new File(FileUtility.joinPath(tempSourceDir.getAbsolutePath(), getDummyPrefix() + compilingAction + getExtension()));
     }
 
     @Override
-    protected String getDummyPrefix() {
+    public String getDummyPrefix() {
         return "MANUAL_";
-    }
-
-    @Override
-    public boolean parseCompilerSpecificArgs(JsonNode node) {
-        return false;
-    }
-
-    @Override
-    public JsonNode getCompilerSpecificArgs() {
-        return JsonNodeFactories.object();
     }
 
     @Override

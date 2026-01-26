@@ -7,7 +7,7 @@ import core.config.ParsingMode;
 import core.controller.Core;
 import core.keyChain.ActionInvoker;
 import core.languageHandler.Language;
-import core.languageHandler.compiler.AbstractNativeCompiler;
+import core.languageHandler.compiler.Compiler;
 import core.languageHandler.compiler.DynamicCompilerManager;
 import core.userDefinedTask.internals.TaskSourceHistory;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
@@ -72,7 +72,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
 
             String sourcePath = node.getStringValue("source_path");
 
-            AbstractNativeCompiler compiler = factory.getNativeCompiler(node.getStringValue("compiler"));
+            Compiler compiler = factory.getNativeCompiler(node.getStringValue("compiler"));
             if (compiler == null) {
                 JOptionPane.showMessageDialog(null, "Unknown compiler " + node.getStringValue("compiler"));
                 return null;
@@ -265,7 +265,7 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     /***********************************************************************/
-    public UserDefinedAction recompileNative(AbstractNativeCompiler compiler) {
+    public UserDefinedAction recompileNative(Compiler compiler) {
         return this;
     }
 

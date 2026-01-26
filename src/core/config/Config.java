@@ -60,7 +60,7 @@ public final class Config implements ILoggable {
 
             List<JsonNode> ipcSettings = root.getArrayNode("ipc_settings");
             IPCServiceManager.parseJSON(ipcSettings);
-            TaskGroupManager.COMPILER_FACTORY.parseJSON(root.getNode("compilers"));
+//            TaskGroupManager.COMPILER_FACTORY.parseJSON(root.getNode("compilers"));
             TaskGroupManager.parseJSON(root.getArrayNode("task_groups"));
         });
         parsers.put("3.0", (data, config) -> {

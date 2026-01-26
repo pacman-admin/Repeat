@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2025 Langdon Staab <langdon@langdonstaab.ca>
+ * Copyright (c) 2026 Langdon Staab <langdon@langdonstaab.ca>
  *
  * Permission to use, copy, modify, and distribute this software for any
  * purpose with or without fee is hereby granted, provided that the above

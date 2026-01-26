@@ -28,9 +28,8 @@ public final class MenuGetCompilerConfigOptionActionHandler extends AbstractUIHt
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Current language " + language.name() + " does not support changing configuration.");
         }
 
-        JavaNativeCompiler compiler = (JavaNativeCompiler) Backend.getCompiler();
         Map<String, Object> data = new HashMap<>();
-        data.put("classPaths", StringUtil.join(compiler.getClassPath(), "\n"));
+        data.put("classPaths", "");
         return renderedPage(exchange, "fragments/java_compiler_configuration", data);
     }
 }
