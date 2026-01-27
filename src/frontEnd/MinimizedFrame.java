@@ -84,6 +84,7 @@ final class MinimizedFrame extends TrayIcon {
     }
 
     private void exit() {
-        Backend.scheduleExit(15);
+        Backend.exit();
+//        remove();
     }
 }

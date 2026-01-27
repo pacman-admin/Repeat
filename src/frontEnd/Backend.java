@@ -48,6 +48,8 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.logging.*;
 
 import static core.userDefinedTask.TaskGroupManager.*;
@@ -141,34 +143,17 @@ public final class Backend {
 
     /************************************************IPC**********************************************************/
 
-    public static synchronized void scheduleExit(long delay) {
-        actionExecutor.haltAllTasks();
-
-        GlobalListenerHookController.cleanup();
-
-        new Timer("Delayed exit Timer").schedule(new TimerTask() {
-            @Override
-            public void run() {
-                System.out.println("Writing config file...");
-                if (!writeConfigFile()) {
-                    System.err.println("Error saving configuration file.");
-                    return;
-                }
-                System.out.println("Wrote config file.");
-
-                if (trayIcon != null) {
-                    trayIcon.remove();
-                }
-
-                try {
-                    IPCServiceManager.stopServices();
-                } catch (IOException e) {
-                    System.err.println("Unable to stop ipcs\n" + e);
-                }
-                System.out.println("Goodbye");
-                System.exit(0);
-            }
-        }, delay);
+    public static synchronized void exit() {
+        try (ExecutorService cleanupHandler = Executors.newSingleThreadExecutor()) {
+            cleanupHandler.submit(actionExecutor::haltAllTasks);
+            cleanupHandler.submit(GlobalListenerHookController::cleanup);
+            cleanupHandler.submit(Backend::writeConfigFile);
+            cleanupHandler.submit(() -> {
+                if (trayIcon != null) trayIcon.remove();
+            });
+            cleanupHandler.submit(IPCServiceManager::stopServices);
+            cleanupHandler.submit(() -> System.exit(0));
+        }
     }
 
 
@@ -595,9 +580,7 @@ public final class Backend {
 
             LOGGER.info("Successfully overridden task " + customFunction.getName());
             customFunction = null;
-            if (!writeConfigFile()) {
-                LOGGER.warning("Unable to update config.");
-            }
+            writeConfigFile();
             break;
         }
         cleanUnusedSource();
@@ -784,12 +767,13 @@ public final class Backend {
 
     /***************************************Configurations********************************************************/
     // Write configuration file
-    public static boolean writeConfigFile() {
-        boolean result = config.save();
-        if (!result) {
-            LOGGER.warning("Unable to save config.");
+    public static void writeConfigFile() {
+        System.out.println("Writing config file...");
+        if (config.save()) {
+            System.out.println("Wrote config file.");
+            return;
         }
-        return result;
+        System.err.println("Error saving configuration file.");
     }
 
     /*************************************************************************************************************/

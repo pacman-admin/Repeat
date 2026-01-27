@@ -16,7 +16,7 @@ public final class IPCServiceManager {
         //This class is uninstantiable
     }
 
-    public static void stopServices() throws IOException {
+    public static void stopServices(){
         UI_SERVER.stopRunning();
     }
 
