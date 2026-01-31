@@ -14,7 +14,7 @@ public final class MenuExitActionHandler extends AbstractSingleMethodHttpHandler
 
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        Backend.exit();
+        Backend.exit(3000);
         return HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting...");
     }
 }

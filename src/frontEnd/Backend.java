@@ -48,8 +48,6 @@ import java.awt.*;
 import java.io.*;
 import java.util.*;
 import java.util.List;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.*;
 
 import static core.userDefinedTask.TaskGroupManager.*;
@@ -75,7 +73,7 @@ public final class Backend {
     private static final UserDefinedAction switchReplayCompiled = UserDefinedAction.of(Backend::switchRunningCompiledAction);
 
     private Backend() {
-        //This class is uninstanta
+        //This class is uninstantiable
     }
 
     static void init() {
@@ -142,18 +140,29 @@ public final class Backend {
     }
 
     /************************************************IPC**********************************************************/
-
     public static synchronized void exit() {
-        try (ExecutorService cleanupHandler = Executors.newSingleThreadExecutor()) {
-            cleanupHandler.submit(actionExecutor::haltAllTasks);
-            cleanupHandler.submit(GlobalListenerHookController::cleanup);
-            cleanupHandler.submit(Backend::writeConfigFile);
-            cleanupHandler.submit(() -> {
+        exit(100L);
+    }
+
+    public static synchronized void exit(long delay) {
+        actionExecutor.haltAllTasks();
+        Timer cleanupTimer = new Timer("Delayed exit timer");
+        cleanupTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                actionExecutor.haltAllTasks();
+                GlobalListenerHookController.cleanup();
+                Backend.writeConfigFile();
                 if (trayIcon != null) trayIcon.remove();
-            });
-            cleanupHandler.submit(IPCServiceManager::stopServices);
-            cleanupHandler.submit(() -> System.exit(0));
-        }
+            }
+        }, 0L);
+        cleanupTimer.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                IPCServiceManager.stopServices();
+                System.exit(0);
+            }
+        }, delay);
     }
 
 
@@ -456,9 +465,6 @@ public final class Backend {
 
     public static void removeTask(String id) {
         UserDefinedAction toRemove = getTask(id);
-//        if (toRemove == null) {
-//            return;
-//        }
         removeTask(toRemove);
     }
 
@@ -620,16 +626,6 @@ public final class Backend {
         }
     }
 
-    /**
-     * Populate all tasks with task invoker to dynamically execute other tasks.
-     */
-//    private static void setTaskInvoker() {
-//        for (TaskGroup taskGroup : taskGroups) {
-//            for (UserDefinedAction task : taskGroup.getTasks()) {
-//                task.setTaskInvoker(taskInvoker);
-//            }
-//        }
-//    }
     public static void importTasks(File inputFile) throws IOException {
         if (OSIdentifier.isWindows()) {
             LOGGER.warning("This feature does not work on Windows (yet), Sorry!");
