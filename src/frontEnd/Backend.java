@@ -625,7 +625,7 @@ public final class Backend {
 //                new ProcessBuilder("XCOPY", "/E", "tmp/data", "data").inheritIO().start().waitFor();
 //            } else {
             new ProcessBuilder("mkdir","data").inheritIO().start().waitFor();
-            new ProcessBuilder("cp", "-r", "tmp/data", "data").inheritIO().start().waitFor();
+            new ProcessBuilder("cp", "-r", "tmp/data", ".").inheritIO().start().waitFor();
 //            }
             LOGGER.fine("Successfully moved files");
 
