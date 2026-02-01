@@ -394,12 +394,8 @@ public final class Backend {
     }
 
     public static void addCurrentTask() {
-        addCurrentTask(TaskGroupManager.getCurrentTaskGroup());
-    }
-
-    private static void addCurrentTask(TaskGroup group) {
         if (customFunction != null) {
-            addTask(customFunction, group);
+            addTask(customFunction, TaskGroupManager.getCurrentTaskGroup());
         } else {
             LOGGER.info("Nothing to add. Compile first?");
         }
@@ -413,23 +409,6 @@ public final class Backend {
 
         writeConfigFile();
         cleanUnusedSource();
-    }
-
-    /**
-     * Add task to a special remote task group.
-     * If this group does not exist yet, create it.
-     */
-    public static void addRemoteCompiledTask(UserDefinedAction task) {
-        for (TaskGroup group : taskGroups) {
-            if (group.getGroupId().equals(TaskGroup.REMOTE_TASK_GROUP_ID)) {
-                addTask(task, group);
-                return;
-            }
-        }
-
-        TaskGroup remoteGroup = TaskGroup.remoteTaskGroup();
-        taskGroups.add(remoteGroup);
-        addTask(task, remoteGroup);
     }
 
     public static UserDefinedAction getTask(String id) {
@@ -628,12 +607,11 @@ public final class Backend {
 
     public static void importTasks(File inputFile) throws IOException {
         if (OSIdentifier.isWindows()) {
-            LOGGER.warning("This feature does not work on Windows (yet), Sorry!");
+            LOGGER.warning("This feature does not work on Windows; Sorry!");
             return;
         }
         String path = inputFile.getAbsolutePath();
         LOGGER.fine(path);
-        LOGGER.finer("Your java runtime is at: " + System.getProperty("java.home"));
         try {
             LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip", "-o", path).inheritIO().start().waitFor());
         } catch (Exception ignored) {
@@ -646,6 +624,7 @@ public final class Backend {
 //                LOGGER.warning("You appear to be using Windows; why?");
 //                new ProcessBuilder("XCOPY", "/E", "tmp/data", "data").inheritIO().start().waitFor();
 //            } else {
+            new ProcessBuilder("mkdir","data").inheritIO().start().waitFor();
             new ProcessBuilder("cp", "-r", "tmp/data", "data").inheritIO().start().waitFor();
 //            }
             LOGGER.fine("Successfully moved files");
@@ -851,8 +830,11 @@ public final class Backend {
         }
         return source;
     }
-    public static void createActionFromRecording(){
-        compileSourceAndSetCurrent(generateSource(),"Recorded Actions");
+
+    public static void createActionFromRecording() {
+        UserDefinedAction recorded = compileSourceNatively(getCompiler(), generateSource(), "Recorded Actions");
+        if (recorded == null) return;
+        addTask(recorded, TaskGroupManager.getCurrentTaskGroup());
     }
 
     /*************************************************************************************************************/

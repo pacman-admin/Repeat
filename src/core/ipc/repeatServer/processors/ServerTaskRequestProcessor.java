@@ -134,8 +134,7 @@ final class ServerTaskRequestProcessor extends AbstractMessageProcessor {
             LOGGER.warning("Compilation for remote task failed.");
             return null;
         }
-
-        Backend.addRemoteCompiledTask(action);
+//        Backend.addRemoteCompiledTask(action);
         return action;
     }
 
