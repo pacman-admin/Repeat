@@ -121,7 +121,7 @@ public final class UIServer extends IPCServiceWithModifiablePort {
         output.put("/internals/menu/file/exit", new MenuExitActionHandler());
 
         output.put("/internals/menu/tools/halt-all-tasks", new MenuHaltAllTasksActionHandler());
-        output.put("/internals/menu/tools/generate-source", new EmptyHandler());
+        output.put("/internals/menu/tools/generate-source", new NewActionFromRecordingMenuHandler());
         output.put("/internals/menu/tools/get-compiling-languages-options", new MenuGetCompilingLanguagesActionHandler(objectRenderer));
         output.put("/internals/menu/tools/set-compiling-language", new MenuSetCompilingLanguagesActionHandler(taskSourceCodeFragmentHandler));
 

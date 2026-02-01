@@ -154,15 +154,15 @@ public final class Backend {
                 GlobalListenerHookController.cleanup();
                 Backend.writeConfigFile();
                 if (trayIcon != null) trayIcon.remove();
+                cleanupTimer.schedule(new TimerTask() {
+                    @Override
+                    public void run() {
+                        IPCServiceManager.stopServices();
+                        System.exit(0);
+                    }
+                }, delay);
             }
         }, 0L);
-        cleanupTimer.schedule(new TimerTask() {
-            @Override
-            public void run() {
-                IPCServiceManager.stopServices();
-                System.exit(0);
-            }
-        }, delay);
     }
 
 
@@ -850,6 +850,9 @@ public final class Backend {
             source = recorder.getGeneratedCode(compilingLanguage);
         }
         return source;
+    }
+    public static void createActionFromRecording(){
+        compileSourceAndSetCurrent(generateSource(),"Recorded Actions");
     }
 
     /*************************************************************************************************************/
