@@ -49,8 +49,10 @@ public final class MainFrontEnd {
         Backend.renderTaskGroup();
         Backend.configureMainHotkeys();
 
+        LOGGER.info("\n*******************************************\nInitialization finished!\nHTTP UI server is at: http://localhost:" + IPCServiceManager.getUIServer().getPort() + "\n*******************************************");
 
-        LOGGER.info("\n*******************************************\nIf the program runs, ignore everything above this line.\n\nInitialization finished!\nHTTP UI server is at: http://localhost:" + IPCServiceManager.getUIServer().getPort() + "\n*******************************************");
+        Backend.clearLogs();
+
         String windowEnv = System.getenv("XDG_SESSION_TYPE");
         if (windowEnv == null) return;
         if (windowEnv.equalsIgnoreCase("Wayland")) {
