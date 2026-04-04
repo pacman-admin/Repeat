@@ -54,20 +54,18 @@ public final class Core {
      * Blocking wait the current action for an amount of time
      *
      * @param duration wait duration in milliseconds
-     * @throws InterruptedException
      */
-    private void blockingWait(int duration) throws InterruptedException {
-        Thread.sleep(duration);
+    public void blockingWait(int duration) throws InterruptedException {
+        delay(duration);
     }
 
     /**
      * A short alias for blockingWait
      *
      * @param duration wait duration in milliseconds
-     * @throws InterruptedException
      */
     public void delay(int duration) throws InterruptedException {
-        blockingWait(duration);
+        Thread.sleep(duration);
     }
 
     /**
