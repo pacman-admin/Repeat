@@ -154,6 +154,8 @@ public final class Backend {
                 GlobalListenerHookController.cleanup();
                 Backend.writeConfigFile();
                 if (trayIcon != null) trayIcon.remove();
+                LOGGER.info("Repeat has exited");
+                LOGGER.info("You must close all browser windows for Repeat to fully exit");
                 cleanupTimer.schedule(new TimerTask() {
                     @Override
                     public void run() {

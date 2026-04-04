@@ -10,7 +10,7 @@ public final class JavaSourceGenerator extends InjectionSourceGenerator {
 		this.sourceScheduler.setSleepSource(new Function<>() {
             @Override
             public String apply(Long r) {
-                return TWO_TAB + "c.blockingWait(" + r + ");";
+                return TWO_TAB + "c.delay(" + r + ");";
             }
         });
 	}
