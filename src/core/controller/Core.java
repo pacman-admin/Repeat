@@ -49,18 +49,18 @@ public final class Core {
 
         return new Core(new MouseCore(new LocalMouseCore(controller)), new KeyboardCore(new LocalKeyboardCore(config, controller)));
     }
-
     /**
-     * Blocking wait the current action for an amount of time
+     * A long alias for wait()
      *
      * @param duration wait duration in milliseconds
      */
+    @Deprecated
     public void blockingWait(int duration) throws InterruptedException {
         delay(duration);
     }
 
     /**
-     * A short alias for blockingWait
+     * Delay execution of current task
      *
      * @param duration wait duration in milliseconds
      */
