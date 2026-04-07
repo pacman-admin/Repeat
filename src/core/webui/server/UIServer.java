@@ -48,7 +48,6 @@ import org.apache.http.impl.nio.bootstrap.ServerBootstrap;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
 
 import java.io.IOException;
-import java.net.BindException;
 import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
