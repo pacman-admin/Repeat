@@ -32,7 +32,7 @@ public abstract class IPCServiceWithModifiablePort extends IIPCService {
 
 		// If port not specified then use default port.
 		if (!node.isNumberValue("port")) {
-			return result;
+			return false;
 		}
 
 		try {
@@ -54,7 +54,7 @@ public abstract class IPCServiceWithModifiablePort extends IIPCService {
 	}
 	@Override
 	public boolean setPort(int newPort) {
-		if (portUnavailable(newPort)) {
+		if (portUnavailable(newPort)||port<=0) {
 			return false;
 		}
 		this.port = newPort;

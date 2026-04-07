@@ -1,31 +1,23 @@
 package core.recorder;
 
-public final class ReplayConfig {
-	private long count;
-	private long delay;
-	private float speedup;
+public record ReplayConfig(long count, long delay, float speedup) {
+    public static ReplayConfig of() {
+        return new ReplayConfig(1, 0, 1);
+    }
 
-	private ReplayConfig() {}
+    public static ReplayConfig of(long count, long delay, float speedup) {
+        return new ReplayConfig(count, delay, speedup);
+    }
 
-	public static ReplayConfig of() {
-		return of(1, 0, 1);
-	}
+    public long getCount() {
+        return count;
+    }
 
-	public static ReplayConfig of(long count, long delay, float speedup) {
-		ReplayConfig output = new ReplayConfig();
-		output.count = count;
-		output.delay = delay;
-		output.speedup = speedup;
-		return output;
-	}
+    public long getDelay() {
+        return delay;
+    }
 
-	public long getCount() {
-		return count;
-	}
-	public long getDelay() {
-		return delay;
-	}
-	public float getSpeedup() {
-		return speedup;
-	}
+    public float getSpeedup() {
+        return speedup;
+    }
 }

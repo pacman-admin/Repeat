@@ -20,7 +20,7 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
     private static final Toolkit toolkit = Toolkit.getDefaultToolkit();
     private static final int TYPE_DURATION_MS = 20;
     // In OSX we somehow need to have a delay between pressing combinations.
-    private static final int OSX_KEY_FLAG_DELAY_MS = 70;
+    private static final int OSX_KEY_FLAG_DELAY_MS = 100;
 
     static {
         OSX_FLAG_KEYS = new HashSet<>();

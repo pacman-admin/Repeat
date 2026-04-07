@@ -78,8 +78,8 @@ public final class UIServer extends IPCServiceWithModifiablePort {
 
     public void start() throws IOException {
         if (portUnavailable(port)) {
+            setPort(DEFAULT_SERVER_PORT);
             getLogger().warning("Failed to initialize UI Server;  Port " + port + " is not free.");
-            throw new BindException("Port " + port + " is not free.");
         }
 
         final Map<String, HttpHandlerWithBackend> handlers = createHandlers();
