@@ -344,39 +344,6 @@ public final class Backend {
 
     /*************************************************************************************************************/
 
-    private static void recompileTasks() {
-        for (TaskGroup group : taskGroups) {
-            List<UserDefinedAction> tasks = group.getTasks();
-            for (int i = 0; i < tasks.size(); i++) {
-                UserDefinedAction task = tasks.get(i);
-
-                Compiler compiler = COMPILER_FACTORY.getNativeCompiler(task.getCompiler());
-                UserDefinedAction recompiled = task.recompileNative(compiler);
-                if (recompiled == null) {
-                    continue;
-                }
-
-                tasks.set(i, recompiled);
-
-                if (recompiled.isEnabled()) {
-                    reRegisterTask(task, recompiled);
-                }
-            }
-        }
-    }
-
-    private static void reRegisterTask(UserDefinedAction original, UserDefinedAction action) {
-        Set<UserDefinedAction> collisions = keysManager.isTaskRegistered(action);
-        boolean conflict = !collisions.isEmpty() && (collisions.size() != 1 || !collisions.iterator().next().equals(original));
-
-        if (!conflict) {
-            keysManager.registerTask(action);
-        } else {
-            List<String> collisionNames = collisions.stream().map(UserDefinedAction::getName).toList();
-            LOGGER.warning("Unable to register task " + action.getName() + ". Collisions are " + collisionNames);
-        }
-    }
-
     /**
      * Load the source code from the temporary source code file into the text area (if the source code file exists).
      */
@@ -432,28 +399,6 @@ public final class Backend {
         }
 
         writeConfigFile();
-    }
-
-    public static void removeTask(String id) {
-        UserDefinedAction toRemove = getTask(id);
-        removeTask(toRemove);
-    }
-
-    private static void removeTask(UserDefinedAction toRemove) {
-        for (TaskGroup group : taskGroups) {
-            for (Iterator<UserDefinedAction> iterator = group.getTasks().iterator(); iterator.hasNext(); ) {
-                UserDefinedAction action = iterator.next();
-                if (action != toRemove) {
-                    continue;
-                }
-                unregisterTask(action);
-
-                iterator.remove();
-
-                writeConfigFile();
-                return;
-            }
-        }
     }
 
     public static void moveTaskUp(String taskId) {
@@ -860,7 +805,7 @@ public final class Backend {
     /*************************************************************************************************************/
 
     public static UserDefinedAction compileSourceNatively(Compiler compiler, String source, String taskName) {
-        source = source.replaceAll("\t", "    "); // Use spaces instead of tabs
+        source = source.replace("\t", "    "); // Use spaces instead of tabs
 
         CompilationResult compilationResult = compiler.compile(source);
         CompilationOutcome compilerStatus = compilationResult.outcome();

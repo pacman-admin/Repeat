@@ -64,12 +64,10 @@ public abstract class IIPCService implements ILoggable {
 
     protected abstract void stop();
 
-    public final boolean setPort(int newPort) {
+    public final void setPort(int newPort) {
         if (newPort >= 1024 && newPort < 65535 && portAvailable(newPort)) {
             port = newPort;
-            return true;
         }
-        return false;
     }
 
     public final int getPort() {
