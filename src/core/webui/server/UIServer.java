@@ -18,7 +18,7 @@
  */
 package core.webui.server;
 
-import core.ipc.IPCServiceWithModifiablePort;
+import core.ipc.IIPCService;
 import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.AboutPageHandler;
@@ -55,9 +55,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
-import static core.config.Constants.DEFAULT_SERVER_PORT;
-
-public final class UIServer extends IPCServiceWithModifiablePort {
+public final class UIServer extends IIPCService {
     private static final int TERMINATION_DELAY_SECOND = 5;
     private static final ObjectRenderer objectRenderer = new ObjectRenderer();
     private static final TaskActivationConstructorManager taskActivationConstructorManager = new TaskActivationConstructorManager();
@@ -197,11 +195,6 @@ public final class UIServer extends IPCServiceWithModifiablePort {
     }
 
     public void start() throws IOException {
-        if (portUnavailable(port)) {
-            setPort(DEFAULT_SERVER_PORT);
-            getLogger().warning("Failed to initialize UI Server;  Port " + port + " is not free.");
-        }
-
         final Map<String, HttpHandlerWithBackend> handlers = createHandlers();
         taskActivationConstructorManager.start();
         manuallyBuildActionConstructorManager.start();
@@ -217,7 +210,7 @@ public final class UIServer extends IPCServiceWithModifiablePort {
     }
 
     @Override
-    protected void stop() {
+    public void stop() {
         taskActivationConstructorManager.stop();
         manuallyBuildActionConstructorManager.stop();
         server.shutdown(TERMINATION_DELAY_SECOND, TimeUnit.SECONDS);
@@ -226,11 +219,6 @@ public final class UIServer extends IPCServiceWithModifiablePort {
         } catch (InterruptedException e) {
             System.out.println("Interrupted while awaiting server termination.");
         }
-    }
-
-    @Override
-    public boolean isRunning() {
-        return true;
     }
 
     @Override

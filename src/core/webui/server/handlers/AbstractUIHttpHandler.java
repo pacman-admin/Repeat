@@ -29,7 +29,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
 
     protected final Void renderedIpcServices(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
-        data.put("ipcs", List.of(RenderedIPCService.fromIPCService(IPCServiceManager.getUIServer())));
+        data.put("ipcs", List.of(RenderedIPCService.of(IPCServiceManager.getUIServer())));
         return renderedPage(exchange, "fragments/ipcs", data);
     }
 

@@ -47,6 +47,7 @@ public final class MainMessageSender implements ILoggable {
 
         synchronized (this) {
             try {
+                getLogger().info("This actually works! (But how?)");
                 IPCProtocol.sendMessage(writer, JSONUtility.jsonToString(toSend));
             } catch (IOException e) {
                 getLogger().log(Level.WARNING, "Exception while writing message", e);

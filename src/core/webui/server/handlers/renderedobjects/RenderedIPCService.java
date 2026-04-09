@@ -8,12 +8,12 @@ public final class RenderedIPCService {
 	private String running;
 	private String launchAtStartup;
 
-	public static RenderedIPCService fromIPCService(IIPCService service) {
+	public static RenderedIPCService of(IIPCService service) {
 		RenderedIPCService output = new RenderedIPCService();
 		output.name = service.getName();
 		output.port = service.getPort() + "";
-		output.running = service.isRunning() + "";
-		output.launchAtStartup = service.isLaunchAtStartup() + "";
+		output.running = true + "";
+		output.launchAtStartup = true + "";
 		return output;
 	}
 

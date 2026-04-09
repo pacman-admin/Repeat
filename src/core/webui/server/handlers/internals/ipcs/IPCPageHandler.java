@@ -24,7 +24,7 @@ public final class IPCPageHandler extends AbstractUIHttpHandler {
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
             throws IOException {
         Map<String, Object> data = new HashMap<>();
-        data.put("ipcs", List.of(RenderedIPCService.fromIPCService(IPCServiceManager.getUIServer())));
+        data.put("ipcs", List.of(RenderedIPCService.of(IPCServiceManager.getUIServer())));
         data.put("tooltips", new TooltipsIPCPage());
         return renderedPage(exchange, "ipcs", data);
     }

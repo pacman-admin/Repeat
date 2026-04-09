@@ -22,23 +22,22 @@ import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import utilities.ILoggable;
 
+import java.io.IOException;
+import java.net.ServerSocket;
+
 import static core.config.Constants.DEFAULT_SERVER_PORT;
 
 public abstract class IIPCService implements ILoggable {
-
     protected int port = DEFAULT_SERVER_PORT;
-    private boolean launchAtStartup;
 
-    IIPCService() {
-        launchAtStartup = true;
-    }
-
-
-    public final void stopRunning() {
-        if (!isRunning()) {
-            return;
+    public static boolean portAvailable(int port) {
+        try {
+            ServerSocket socket = new ServerSocket(port);
+            socket.close();
+            return true;
+        } catch (IOException ignored) {
         }
-        stop();
+        return false;
     }
 
     /**
@@ -46,8 +45,8 @@ public abstract class IIPCService implements ILoggable {
      *
      * @return the json node containing configuration parameters for this ipc service.
      */
-    JsonNode getSpecificConfig() {
-        return JsonNodeFactories.object(JsonNodeFactories.field("launch_at_startup", JsonNodeFactories.booleanNode(launchAtStartup)));
+    public JsonNode getSpecificConfig() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("port", JsonNodeFactories.number(port)));
     }
 
     /**
@@ -56,35 +55,26 @@ public abstract class IIPCService implements ILoggable {
      * @param node the json node containing configuration parameters for this ipc service.
      * @return if parsing was successful.
      */
-    boolean extractSpecificConfig(JsonNode node) {
-        launchAtStartup = node.getBooleanValue("launch_at_startup");
+    public boolean extractSpecificConfig(JsonNode node) {
+        String portString = node.getNumberValue("port");
+        int port = Integer.parseInt(portString);
+        setPort(port);
         return true;
     }
 
     protected abstract void stop();
 
-    public abstract boolean isRunning();
-
-    public boolean setPort(int newPort) {
-        if (isRunning()) {
-            getLogger().warning("Cannot change port while running.");
-            return false;
+    public final boolean setPort(int newPort) {
+        if (newPort >= 1024 && newPort < 65535 && portAvailable(newPort)) {
+            port = newPort;
+            return true;
         }
-        if (port < 1024) {
-            getLogger().warning("Invalid port number: " + port);
-            return false;
-        }
-        this.port = newPort;
-        return true;
+        return false;
     }
 
-    public int getPort() {
+    public final int getPort() {
         return port;
     }
 
     public abstract String getName();
-
-    public boolean isLaunchAtStartup() {
-        return launchAtStartup;
-    }
 }

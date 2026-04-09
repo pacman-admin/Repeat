@@ -7,7 +7,6 @@ import org.apache.http.HttpRequest;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import core.ipc.IIPCService;
-import core.ipc.IPCServiceWithModifiablePort;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.CommonTask;
@@ -40,12 +39,8 @@ public final class ModifyIPCServicePortHandler extends AbstractUIHttpHandler {
 		}
 
 		int port = Integer.parseInt(portString);
-		if (port > 65535) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Port must be integer between 0 and 65535.");
-		}
-
-		if (!(service instanceof IPCServiceWithModifiablePort)) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Service port cannot be modified.");
+		if (port < 1024 || port > 65535) {
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Port must be integer between 1024 and 65535");
 		}
 
 		service.setPort(port);

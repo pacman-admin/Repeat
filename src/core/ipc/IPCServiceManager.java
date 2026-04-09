@@ -17,7 +17,7 @@ public final class IPCServiceManager {
     }
 
     public static void stopServices(){
-        UI_SERVER.stopRunning();
+        UI_SERVER.stop();
     }
 
     public static void parseJSON(List<JsonNode> ipcSettings) {
