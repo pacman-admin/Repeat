@@ -21,7 +21,6 @@ package frontEnd;
 import core.config.Config;
 import core.controller.Core;
 import core.ipc.IPCServiceManager;
-import core.ipc.repeatServer.processors.TaskProcessorManager;
 import core.keyChain.ActionInvoker;
 import core.keyChain.managers.GlobalEventsManager;
 import core.languageHandler.Language;
@@ -80,13 +79,7 @@ public final class Backend {
         replayConfig = ReplayConfig.of();
         compilingLanguage = Language.MANUAL_BUILD;
         runActionConfig = RunActionConfig.of();
-        TaskProcessorManager.setProcessorIdentifyCallback(new Function<>() {
-            @Override
-            public Void apply(Language language) {
-                Backend.recompiledNativeTasks(language);
-                return null;
-            }
-        });
+        //recompileTasks();
         if (!SystemTray.isSupported()) {
             LOGGER.warning("System tray is not supported.");
         }
@@ -351,14 +344,11 @@ public final class Backend {
 
     /*************************************************************************************************************/
 
-    private static void recompiledNativeTasks(Language language) {
+    private static void recompileTasks() {
         for (TaskGroup group : taskGroups) {
             List<UserDefinedAction> tasks = group.getTasks();
             for (int i = 0; i < tasks.size(); i++) {
                 UserDefinedAction task = tasks.get(i);
-                if (task.getCompiler() != language) {
-                    continue;
-                }
 
                 Compiler compiler = COMPILER_FACTORY.getNativeCompiler(task.getCompiler());
                 UserDefinedAction recompiled = task.recompileNative(compiler);
