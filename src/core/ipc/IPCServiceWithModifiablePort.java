@@ -52,12 +52,4 @@ public abstract class IPCServiceWithModifiablePort extends IIPCService {
 	protected final JsonNode getSpecificConfig() {
 		 return JSONUtility.addChild(super.getSpecificConfig(), "port", JsonNodeFactories.number(port));
 	}
-	@Override
-	public boolean setPort(int newPort) {
-		if (portUnavailable(newPort)||port<=0) {
-			return false;
-		}
-		this.port = newPort;
-		return true;
-	}
 }

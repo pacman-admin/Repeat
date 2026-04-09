@@ -57,45 +57,15 @@ import java.util.logging.Logger;
 
 import static core.config.Constants.DEFAULT_SERVER_PORT;
 
-@SuppressWarnings("unused")
 public final class UIServer extends IPCServiceWithModifiablePort {
     private static final int TERMINATION_DELAY_SECOND = 5;
-    private final ObjectRenderer objectRenderer;
-    private final TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler;
-    private final TaskActivationConstructorManager taskActivationConstructorManager;
-    private final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager;
-    private HttpServer server;
+    private static final ObjectRenderer objectRenderer = new ObjectRenderer();
+    private static final TaskActivationConstructorManager taskActivationConstructorManager = new TaskActivationConstructorManager();
+    private static final ManuallyBuildActionConstructorManager manuallyBuildActionConstructorManager = ManuallyBuildActionConstructorManager.of();
+    private static final TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler = new TaskSourceCodeFragmentHandler(objectRenderer, manuallyBuildActionConstructorManager);
+    private static HttpServer server;
 
-    public UIServer() {
-        setPort(DEFAULT_SERVER_PORT);
-
-        taskActivationConstructorManager = new TaskActivationConstructorManager();
-        manuallyBuildActionConstructorManager = ManuallyBuildActionConstructorManager.of();
-        objectRenderer = new ObjectRenderer();
-        taskSourceCodeFragmentHandler = new TaskSourceCodeFragmentHandler(objectRenderer, manuallyBuildActionConstructorManager);
-    }
-
-    public void start() throws IOException {
-        if (portUnavailable(port)) {
-            setPort(DEFAULT_SERVER_PORT);
-            getLogger().warning("Failed to initialize UI Server;  Port " + port + " is not free.");
-        }
-
-        final Map<String, HttpHandlerWithBackend> handlers = createHandlers();
-        taskActivationConstructorManager.start();
-        manuallyBuildActionConstructorManager.start();
-
-        ServerBootstrap serverBootstrap = ServerBootstrap.bootstrap().setLocalAddress(InetAddress.getByName("localhost")).setIOReactorConfig(IOReactorConfig.custom().setSoReuseAddress(true).build()).setListenerPort(port).setServerInfo("Repeat").setExceptionLogger(new UIServerExceptionLogger()).registerHandler("/test", new UpAndRunningHandler()).registerHandler("/static/*", new StaticFileServingHandler());
-        for (Entry<String, HttpHandlerWithBackend> entry : handlers.entrySet()) {
-            serverBootstrap.registerHandler(entry.getKey(), entry.getValue());
-        }
-        server = serverBootstrap.create();
-        server.start();
-
-        getLogger().info("UI server started at port: " + port);
-    }
-
-    private Map<String, HttpHandlerWithBackend> createHandlers() {
+    private static Map<String, HttpHandlerWithBackend> createHandlers() {
         Map<String, HttpHandlerWithBackend> output = new HashMap<>();
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/logs", new LogsPageHandler(objectRenderer));
@@ -226,6 +196,26 @@ public final class UIServer extends IPCServiceWithModifiablePort {
         return output;
     }
 
+    public void start() throws IOException {
+        if (portUnavailable(port)) {
+            setPort(DEFAULT_SERVER_PORT);
+            getLogger().warning("Failed to initialize UI Server;  Port " + port + " is not free.");
+        }
+
+        final Map<String, HttpHandlerWithBackend> handlers = createHandlers();
+        taskActivationConstructorManager.start();
+        manuallyBuildActionConstructorManager.start();
+
+        ServerBootstrap serverBootstrap = ServerBootstrap.bootstrap().setLocalAddress(InetAddress.getByName("localhost")).setIOReactorConfig(IOReactorConfig.custom().setSoReuseAddress(true).build()).setListenerPort(port).setServerInfo("Repeat").setExceptionLogger(new UIServerExceptionLogger()).registerHandler("/test", new UpAndRunningHandler()).registerHandler("/static/*", new StaticFileServingHandler());
+        for (Entry<String, HttpHandlerWithBackend> entry : handlers.entrySet()) {
+            serverBootstrap.registerHandler(entry.getKey(), entry.getValue());
+        }
+        server = serverBootstrap.create();
+        server.start();
+
+        getLogger().info("UI server started at port: " + port);
+    }
+
     @Override
     protected void stop() {
         taskActivationConstructorManager.stop();
@@ -247,7 +237,6 @@ public final class UIServer extends IPCServiceWithModifiablePort {
     public String getName() {
         return "UI Server";
     }
-
 
     @Override
     public Logger getLogger() {

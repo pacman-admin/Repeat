@@ -22,9 +22,11 @@ import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import utilities.ILoggable;
 
+import static core.config.Constants.DEFAULT_SERVER_PORT;
+
 public abstract class IIPCService implements ILoggable {
 
-    protected int port;
+    protected int port = DEFAULT_SERVER_PORT;
     private boolean launchAtStartup;
 
     IIPCService() {
@@ -68,12 +70,18 @@ public abstract class IIPCService implements ILoggable {
             getLogger().warning("Cannot change port while running.");
             return false;
         }
+        if (port < 1024) {
+            getLogger().warning("Invalid port number: " + port);
+            return false;
+        }
         this.port = newPort;
         return true;
     }
-    public int getPort(){
+
+    public int getPort() {
         return port;
     }
+
     public abstract String getName();
 
     public boolean isLaunchAtStartup() {
