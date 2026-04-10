@@ -64,17 +64,11 @@ public final class UIServer extends IIPCService {
         Map<String, HttpHandlerWithBackend> output = new HashMap<>();
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
-        output.put("/repeats-remote-clients", new EmptyHandler());
-        output.put("/global-configs", new EmptyHandler());
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
         output.put("/tasks/details", new TaskDetailsPageHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/tasks/manually-build", new TaskBuilderPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/api", new ApiPageHandler());
         output.put("/about", new AboutPageHandler(objectRenderer));
-
-        output.put("/internals/global-configs/tools-config/set-clients", new EmptyHandler());
-        output.put("/internals/global-configs/core-config/set-clients", new EmptyHandler());
-        output.put("/internals/global-configs/remote-repeats-compiler-config/set-clients", new EmptyHandler());
 
         output.put("/internals/menu/file/save-config", new MenuSaveConfigActionHandler());
         output.put("/internals/menu/file/import-tasks", new MenuImportTaskActionHandler());
@@ -88,10 +82,6 @@ public final class UIServer extends IIPCService {
         output.put("/internals/menu/tools/get-compiling-languages-options", new MenuGetCompilingLanguagesActionHandler(objectRenderer));
         output.put("/internals/menu/tools/set-compiling-language", new MenuSetCompilingLanguagesActionHandler(taskSourceCodeFragmentHandler));
 
-        output.put("/internals/menu/settings/get-compiler-path", new EmptyHandler());
-        output.put("/internals/menu/settings/set-compiler-path", new EmptyHandler());
-        output.put("/internals/menu/settings/compiler-config-options", new EmptyHandler());
-        output.put("/internals/menu/settings/set-compiler-config", new EmptyHandler());
         output.put("/internals/menu/settings/record-mouse-click-only", new MenuRecordMouseClickOnlyActionHandler());
         output.put("/internals/menu/settings/halt-task-by-escape", new EmptyHandler());
         output.put("/internals/menu/settings/debug-level-options", new MenuGetDebugLevelOptionsActionHandler(objectRenderer));
@@ -111,8 +101,6 @@ public final class UIServer extends IIPCService {
         output.put("/internals/action/task-activation/mouse-gestures/set", new ActionTaskActivationSetMouseGesturesHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/phrase/add", new ActionTaskActivationAddPhraseHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/phrase/remove", new ActionTaskActivationRemovePhraseHandler(objectRenderer, taskActivationConstructorManager));
-        output.put("/internals/action/task-activation/shared-variables/add", new EmptyHandler());
-        output.put("/internals/action/task-activation/shared-variables/remove", new EmptyHandler());
         output.put("/internals/action/task-activation/strokes/add-mouse-key", new ActionTaskActivationAddMouseKey(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/strokes/add-as-key-chain", new ActionTaskActivationAddStrokesAsKeyChainHandler(objectRenderer, taskActivationConstructorManager));
         output.put("/internals/action/task-activation/strokes/add-as-key-sequence", new ActionTaskActivationAddStrokesAsKeySequenceHandler(objectRenderer, taskActivationConstructorManager));
@@ -147,20 +135,12 @@ public final class UIServer extends IIPCService {
         output.put("/internals/action/run-config/save", new SaveRunTaskConfigHandler());
         output.put("/internals/action/run-config/get", new GetRunTaskConfigHandler(objectRenderer));
         output.put("/internals/action/run-compiled-task", new ActionRunCompiledTaskHandler());
-        output.put("/internals/action/run-ipc-service", new EmptyHandler());
         output.put("/internals/action/start-record", new ActionStartRecordingHandler());
         output.put("/internals/action/start-replay", new ActionStartReplayHandler());
         output.put("/internals/action/stop-record", new ActionStopRecordingHandler());
         output.put("/internals/action/stop-replay", new ActionStopReplayHandler());
-        output.put("/internals/action/stop-ipc-service", new EmptyHandler());
         output.put("/internals/action/stop-running-compiled-task", new ActionStopRunningCompiledTaskHandler());
         output.put("/internals/action/switch-task-group", new ActionSwitchTaskGroupHandler(objectRenderer));
-
-        output.put("/internals/repeats-remote-clients/add", new EmptyHandler());
-        output.put("/internals/repeats-remote-clients/delete", new EmptyHandler());
-        output.put("/internals/repeats-remote-clients/start", new EmptyHandler());
-        output.put("/internals/repeats-remote-clients/stop", new EmptyHandler());
-        output.put("/internals/repeats-remote-clients/set-launch-at-startup", new EmptyHandler());
 
         output.put("/internals/get/editted-source", new GetEditedSourceHandler());
         output.put("/internals/get/is-running-compiled-task", new GetIsRunningCompiledTaskHandler());
@@ -176,13 +156,10 @@ public final class UIServer extends IIPCService {
         output.put("/internals/get/rendered-task-groups-select-modal", new GetRenderedTaskGroupsSelectModalHandler(objectRenderer));
 
         output.put("/internals/set/selected-task", new SetSelectedTaskHandler(taskSourceCodeFragmentHandler));
-        output.put("/internals/set/mouse-position-logging-enabled", new EmptyHandler());
-        output.put("/internals/set/active-window-info-logging-enabled", new EmptyHandler());
 
         output.put("/internals/modify/ipc-service-port", new ModifyIPCServicePortHandler(objectRenderer));
         output.put("/internals/modify/task-name", new ModifyTaskNameHandler(objectRenderer));
 
-        output.put("/internals/toggle/ipc-service-launch-at-startup", new EmptyHandler());
         output.put("/internals/toggle/task-group-enabled", new ToggleTaskGroupEnabledHandler(objectRenderer));
         output.put("/internals/toggle/task-enabled", new ToggleTaskEnabledHandler(objectRenderer));
 
