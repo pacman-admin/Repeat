@@ -28,9 +28,6 @@ import core.webui.server.handlers.IndexPageHandler;
 import core.webui.server.handlers.internals.*;
 import core.webui.server.handlers.internals.ipcs.IPCPageHandler;
 import core.webui.server.handlers.internals.ipcs.ModifyIPCServicePortHandler;
-import core.webui.server.handlers.internals.logs.GetIsActiveWindowInfosLoggingEnabledHandler;
-import core.webui.server.handlers.internals.logs.GetIsMousePositionLoggingEnabledHandler;
-import core.webui.server.handlers.internals.logs.LogsPageHandler;
 import core.webui.server.handlers.internals.menu.*;
 import core.webui.server.handlers.internals.recordsreplays.*;
 import core.webui.server.handlers.internals.taskactivation.*;
@@ -66,7 +63,6 @@ public final class UIServer extends IIPCService {
     private static Map<String, HttpHandlerWithBackend> createHandlers() {
         Map<String, HttpHandlerWithBackend> output = new HashMap<>();
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
-        output.put("/logs", new LogsPageHandler(objectRenderer));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
         output.put("/repeats-remote-clients", new EmptyHandler());
         output.put("/global-configs", new EmptyHandler());
@@ -170,8 +166,7 @@ public final class UIServer extends IIPCService {
         output.put("/internals/get/is-running-compiled-task", new GetIsRunningCompiledTaskHandler());
         output.put("/internals/get/is-recording", new GetIsRecordingHandler());
         output.put("/internals/get/is-replaying", new GetIsReplayingHandler());
-        output.put("/internals/get/is-mouse-position-logging-enabled", new GetIsMousePositionLoggingEnabledHandler());
-        output.put("/internals/get/is-active-window-info-logging-enabled", new GetIsActiveWindowInfosLoggingEnabledHandler());
+
         output.put("/internals/get/logs", new GetLogsHandler());
         output.put("/internals/get/mouse-position", new GetMousePositionHandler());
         output.put("/internals/get/path-suggestion", new GetPathSuggestionHandler());

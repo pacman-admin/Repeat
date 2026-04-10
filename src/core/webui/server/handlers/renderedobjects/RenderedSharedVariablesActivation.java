@@ -4,13 +4,9 @@ import java.util.List;
 
 public final class RenderedSharedVariablesActivation {
 
-    private final List<RenderedSharedVariableActivation> variables = List.of();
+    private final List<Void> variables = List.of();
 
-    public static RenderedSharedVariablesActivation of() {
-        return new RenderedSharedVariablesActivation();
-    }
-
-    public List<RenderedSharedVariableActivation> getVariables() {
+    public List<Void> getVariables() {
         return variables;
     }
 }
