@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import core.keyChain.*;
-
+@SuppressWarnings("unused")
 public final class RenderedTaskActivation {
     private List<SortedString> keyChains;
     private List<SortedString> keySequences;
