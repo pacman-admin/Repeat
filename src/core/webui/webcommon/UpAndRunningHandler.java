@@ -18,7 +18,7 @@ public final class UpAndRunningHandler implements HttpAsyncRequestHandler<HttpRe
 
     @Override
     public void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext ignored) {
-        String msg = "Server is up and running.";
+        String msg = "Hello World!";
         LOGGER.info(msg);
         HttpServerUtilities.prepareTextResponse(exchange, 200, msg);
     }
