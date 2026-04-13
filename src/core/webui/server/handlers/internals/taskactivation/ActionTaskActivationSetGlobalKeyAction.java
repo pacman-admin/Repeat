@@ -26,14 +26,14 @@ public final class ActionTaskActivationSetGlobalKeyAction extends AbstractTaskAc
             return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Value of released must be boolean.");
         }
 
-        if (params.containsKey("pressed")) {
-            boolean value = params.get("pressed").equals("true");
-            constructor.setGlobalKeyPressed(value);
-        }
-        if (params.containsKey("released")) {
-            boolean value = params.get("released").equals("true");
-            constructor.setGlobalKeyReleased(value);
-        }
+//        if (params.containsKey("pressed")) {
+//            boolean value = params.get("pressed").equals("true");
+        constructor.setGlobalKeyPressed(false);
+//        }
+//        if (params.containsKey("released")) {
+//            boolean value = params.get("released").equals("true");
+        constructor.setGlobalKeyReleased(false);
+//        }
 
         return emptySuccessResponse(exchange);
     }
