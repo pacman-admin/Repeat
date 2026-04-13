@@ -24,7 +24,8 @@ import core.keyChain.ButtonStroke;
 import core.keyChain.MouseGesture;
 import core.keyChain.mouseGestureRecognition.MouseGestureClassifier;
 import core.userDefinedTask.UserDefinedAction;
-import globalListener.GlobalListenerFactory;
+import org.simplenativehooks.NativeKeyHook;
+import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 import org.simplenativehooks.utilities.Function;
@@ -58,7 +59,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
         mouseGestureRecognizer = new MouseGestureClassifier();
         actionMap = new HashMap<>();
         coordinates = new ConcurrentLinkedQueue<>();
-        mouseListener = GlobalListenerFactory.createGlobalMouseListener();
+        mouseListener = NativeMouseHook.of();
     }
 
     /**

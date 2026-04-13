@@ -1,7 +1,7 @@
 package frontEnd;
 
 import core.ipc.IPCServiceManager;
-import globalListener.GlobalListenerHookController;
+import org.simplenativehooks.NativeHookInitializer;
 import staticResources.BootStrapResources;
 
 import java.io.IOException;
@@ -36,7 +36,10 @@ public final class MainFrontEnd {
 
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        GlobalListenerHookController.initialize(Backend.config.isUseJavaAwtToGetMousePosition());
+        NativeHookInitializer.Config.Builder confBuilder = NativeHookInitializer.Config.Builder.of();
+        confBuilder.useJnaForWindows(true);
+        confBuilder.useJavaAwtToReportMousePositionOnWindows(Backend.config.isUseJavaAwtToGetMousePosition());
+        NativeHookInitializer.of(confBuilder.build()).start();
 
         /*************************************************************************************/
         /********************************Start main program***********************************/

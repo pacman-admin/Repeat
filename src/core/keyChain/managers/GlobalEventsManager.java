@@ -19,14 +19,15 @@
 package core.keyChain.managers;
 
 import core.config.Config;
+import core.keyChain.ActionInvoker;
 import core.keyChain.ActivationEvent;
 import core.keyChain.KeyStroke;
 import core.keyChain.MouseKey;
-import core.keyChain.ActionInvoker;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.preconditions.ExecutionPreconditionsChecker;
-import globalListener.GlobalListenerFactory;
+import org.simplenativehooks.NativeKeyHook;
+import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
@@ -76,7 +77,7 @@ public final class GlobalEventsManager {
     public void startGlobalListener() {
         AbstractGlobalKeyListener keyListener = getAbstractGlobalKeyListener();
 
-        AbstractGlobalMouseListener mouseListener = GlobalListenerFactory.createGlobalMouseListener();
+        AbstractGlobalMouseListener mouseListener = NativeMouseHook.of();
         mouseListener.setMousePressed(new Function<>() {
             @Override
             public Boolean apply(NativeMouseEvent r) {
@@ -100,19 +101,13 @@ public final class GlobalEventsManager {
             }
         });
 
-//        SharedVariablesPubSubManager.get().addSubscriber(SharedVariablesSubscriber.of(SharedVariablesSubscription.forAll(), e -> {
-//            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(ActivationEvent.of(e));
-//            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-//            actionExecutor.startExecutingActions(actions);
-//        }));
-
         taskActivationManager.startListening();
         keyListener.startListening();
         mouseListener.startListening();
     }
 
     private AbstractGlobalKeyListener getAbstractGlobalKeyListener() {
-        AbstractGlobalKeyListener keyListener = GlobalListenerFactory.createGlobalKeyListener();
+        AbstractGlobalKeyListener keyListener = NativeKeyHook.of();
         keyListener.setKeyPressed(new Function<>() {
             @Override
             public Boolean apply(NativeKeyEvent r) {

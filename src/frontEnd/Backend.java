@@ -36,7 +36,7 @@ import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
-import globalListener.GlobalListenerHookController;
+import org.simplenativehooks.NativeHookInitializer;
 import staticResources.BootStrapResources;
 import utilities.*;
 import utilities.Desktop;
@@ -49,7 +49,8 @@ import java.util.*;
 import java.util.List;
 import java.util.logging.*;
 
-import static core.userDefinedTask.TaskGroupManager.*;
+import static core.userDefinedTask.TaskGroupManager.setCurrentTaskGroup;
+import static core.userDefinedTask.TaskGroupManager.taskGroups;
 
 @SuppressWarnings("DanglingJavadoc")
 public final class Backend {
@@ -144,7 +145,7 @@ public final class Backend {
             @Override
             public void run() {
                 actionExecutor.haltAllTasks();
-                GlobalListenerHookController.cleanup();
+                NativeHookInitializer.of().stop();
                 Backend.writeConfigFile();
                 if (trayIcon != null) trayIcon.remove();
                 LOGGER.info("Repeat has exited");
@@ -561,7 +562,7 @@ public final class Backend {
 //                LOGGER.warning("You appear to be using Windows; why?");
 //                new ProcessBuilder("XCOPY", "/E", "tmp/data", "data").inheritIO().start().waitFor();
 //            } else {
-            new ProcessBuilder("mkdir","data").inheritIO().start().waitFor();
+            new ProcessBuilder("mkdir", "data").inheritIO().start().waitFor();
             new ProcessBuilder("cp", "-r", "tmp/data", ".").inheritIO().start().waitFor();
 //            }
             LOGGER.fine("Successfully moved files");

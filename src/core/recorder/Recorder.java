@@ -25,7 +25,8 @@ import core.languageHandler.sourceGenerator.AbstractSourceGenerator.Device;
 import core.languageHandler.sourceGenerator.JavaSourceGenerator;
 import core.languageHandler.sourceGenerator.ManuallyBuildSourceGenerator;
 import core.scheduler.SchedulingData;
-import globalListener.GlobalListenerFactory;
+import org.simplenativehooks.NativeKeyHook;
+import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
@@ -58,7 +59,7 @@ public final class Recorder {
         sourceGenerators.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
 
         /*************************************************************************************************/
-        keyListener = GlobalListenerFactory.createGlobalKeyListener();
+        keyListener = NativeKeyHook.of();
         keyListener.setKeyPressed(new Function<>() {
             @Override
             public Boolean apply(final NativeKeyEvent r) {
@@ -88,7 +89,7 @@ public final class Recorder {
         });
 
         /*************************************************************************************************/
-        mouseListener = GlobalListenerFactory.createGlobalMouseListener();
+        mouseListener = NativeMouseHook.of();
         mouseListener.setMouseReleased(new Function<>() {
             @Override
             public Boolean apply(final NativeMouseEvent r) {

@@ -1,25 +1,24 @@
 package core.keyChain;
 
+import core.background.AbstractBackgroundEntityManager;
+import org.simplenativehooks.NativeKeyHook;
 import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.utilities.Function;
 
-import core.background.AbstractBackgroundEntityManager;
-import globalListener.GlobalListenerFactory;
-
 public final class TaskActivationConstructorManager extends AbstractBackgroundEntityManager<TaskActivationConstructor> {
 
-	private final AbstractGlobalKeyListener keyListener;
+    private final AbstractGlobalKeyListener keyListener;
 
-	public TaskActivationConstructorManager() {
-		keyListener = GlobalListenerFactory.createGlobalKeyListener();
-	}
+    public TaskActivationConstructorManager() {
+        keyListener = NativeKeyHook.of();
+    }
 
-	@Override
-	public void start() {
-		super.start();
+    @Override
+    public void start() {
+        super.start();
 
-		keyListener.setKeyReleased(new Function<>() {
+        keyListener.setKeyReleased(new Function<>() {
             @Override
             public Boolean apply(NativeKeyEvent r) {
                 onStroke(KeyStroke.of(r));
@@ -27,27 +26,27 @@ public final class TaskActivationConstructorManager extends AbstractBackgroundEn
             }
         });
 
-		keyListener.startListening();
-	}
+        keyListener.startListening();
+    }
 
-	@Override
-	public void stop() {
-		keyListener.stopListening();
-		super.stop();
-	}
+    @Override
+    public void stop() {
+        keyListener.stopListening();
+        super.stop();
+    }
 
-	private synchronized void onStroke(KeyStroke stroke) {
-		for (TaskActivationConstructor constructor : entities.values()) {
-			constructor.onStroke(stroke);
-		}
-	}
+    private synchronized void onStroke(KeyStroke stroke) {
+        for (TaskActivationConstructor constructor : entities.values()) {
+            constructor.onStroke(stroke);
+        }
+    }
 
-	public synchronized String addNewConstructor(ActionInvoker source) {
-		return addNewConstructor(source, TaskActivationConstructor.Config.of());
-	}
+    public synchronized String addNewConstructor(ActionInvoker source) {
+        return addNewConstructor(source, TaskActivationConstructor.Config.of());
+    }
 
-	public synchronized String addNewConstructor(ActionInvoker source, TaskActivationConstructor.Config config) {
-		TaskActivationConstructor constructor = new TaskActivationConstructor(source, config);
-		return add(constructor);
-	}
+    public synchronized String addNewConstructor(ActionInvoker source, TaskActivationConstructor.Config config) {
+        TaskActivationConstructor constructor = new TaskActivationConstructor(source, config);
+        return add(constructor);
+    }
 }
