@@ -28,7 +28,7 @@ public final class RenderedTaskActivation {
         output.phrases = sortedStrings(List.of());
         output.mouseGestures = RenderedMouseGestureActivation.fromActivation(activation);
         output.sharedVariables = new RenderedSharedVariablesActivation();
-        output.globalActivation = RenderedGlobalActivation.fromActivation(activation);
+        output.globalActivation = new RenderedGlobalActivation();
         TaskActivationConstructor.Config config = constructor.getConfig();
         output.config = Config.of(true)
                 .setDisableGlobalAction(config.isDisabledGlobalKeyAction())
