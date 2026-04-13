@@ -1,222 +1,206 @@
 package core.userDefinedTask;
 
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.stream.Collectors;
-
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import core.keyChain.ActionInvoker;
 import utilities.DateUtility;
 import utilities.json.AutoJsonable;
 import utilities.json.IJsonable;
-import utilities.json.JSONUtility;
-import utilities.json.Jsonizer;
+
+import java.util.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public final class UsageStatistics implements IJsonable {
 
-	private static final Logger LOGGER = Logger.getLogger(UsageStatistics.class.getName());
-	private static final int MAX_EXECUTION_INSTANCES_STORED = 10000;
+    private static final Logger LOGGER = Logger.getLogger(UsageStatistics.class.getName());
+    private static final int MAX_EXECUTION_INSTANCES_STORED = 10000;
+    private final Map<String, ExecutionInstance> onGoingInstances;
+    private long count;
+    private Calendar lastUse;
+    private Calendar created;
+    //	private Map<ActionInvoker, Long> taskActivationBreakdown;
+    private long totalExecutionTime;
+    private LinkedList<ExecutionInstance> executionInstances;
 
-	private long count;
-	private Calendar lastUse;
-	private Calendar created;
-	private long totalExecutionTime;
-	private Map<ActionInvoker, Long> taskActivationBreakdown;
+    public UsageStatistics() {
+        created = Calendar.getInstance();
+//		taskActivationBreakdown = new HashMap<>();
+        onGoingInstances = new HashMap<>();
+        executionInstances = new LinkedList<>();
+    }
 
-	private final Map<String, ExecutionInstance> onGoingInstances;
-	private LinkedList<ExecutionInstance> executionInstances;
+    public static UsageStatistics parseJSON(JsonNode node) {
+        try {
+            long count = Long.parseLong(node.getNumberValue("count"));
+            long totalExecutionTime = Long.parseLong(node.getNumberValue("total_execution_time"));
 
-	public UsageStatistics() {
-		created = Calendar.getInstance();
-		taskActivationBreakdown = new HashMap<>();
-		onGoingInstances = new HashMap<>();
-		executionInstances = new LinkedList<>();
-	}
+            Calendar lastUse;
+            if (node.isNullableObjectNode("last_use")) {
+                lastUse = null;
+            } else {
+                lastUse = DateUtility.stringToCalendar(node.getStringValue("last_use"));
+            }
 
-	@Override
-	public JsonRootNode jsonize() {
-		return JsonNodeFactories.object(
-				JsonNodeFactories.field("count", JsonNodeFactories.number(count)),
-				JsonNodeFactories.field("total_execution_time", JsonNodeFactories.number(totalExecutionTime)),
-				JsonNodeFactories.field("last_use", lastUse != null ? JsonNodeFactories.string(DateUtility.calendarToTimeString(lastUse)) : JsonNodeFactories.nullNode()),
-				JsonNodeFactories.field("created", JsonNodeFactories.string(DateUtility.calendarToTimeString(created))),
-				JsonNodeFactories.field("task_activations_breakdown", JsonNodeFactories.array(
-						taskActivationBreakdown.entrySet().stream().map(
-								e -> JsonNodeFactories.object(
-										JsonNodeFactories.field("task_activation", e.getKey().jsonize()),
-										JsonNodeFactories.field("count", JsonNodeFactories.number(e.getValue())))
-								).collect(Collectors.toList())
-						)),
-				JsonNodeFactories.field("execution_instances", JsonNodeFactories.array(JSONUtility.listToJson(executionInstances)))
-				);
-	}
+            Calendar created = DateUtility.stringToCalendar(node.getStringValue("created"));
+            if (created == null) {
+                LOGGER.warning("Unable to parse created date object.");
+                return null;
+            }
 
-	public static UsageStatistics parseJSON(JsonNode node) {
-		try {
-			long count = Long.parseLong(node.getNumberValue("count"));
-			long totalExecutionTime = Long.parseLong(node.getNumberValue("total_execution_time"));
+//			Map<ActionInvoker, Long> taskActivationBreakdown = new HashMap<>();
+//			if (node.isArrayNode("task_activations_breakdown")) {
+//				List<JsonNode> nodes = node.getArrayNode("task_activations_breakdown");
+//				for (JsonNode n : nodes) {
+//					JsonNode activationNode = n.getNode("task_activation");
+//					ActionInvoker activation = ActionInvoker.parseJSON(activationNode);
+//					if (activation == null) {
+//						LOGGER.warning("Unable to parse task activation.");
+//						return null;
+//					}
+//
+//					long activationCount = Long.parseLong(n.getNode("count").getNumberValue());
+//					taskActivationBreakdown.put(activation, activationCount);
+//				}
+//			}
+//
+//			LinkedList<ExecutionInstance> instances = new LinkedList<>();
+//			if (node.isArrayNode("execution_instances")) {
+//				List<JsonNode> nodes = node.getArrayNode("execution_instances");
+//				instances = nodes.stream().map(n -> {
+//					ExecutionInstance i = ExecutionInstance.of(0, 0);
+//					Jsonizer.parse(n, i);
+//					return i;
+//				}).collect(Collectors.toCollection(LinkedList::new));
+//			}
 
-			Calendar lastUse;
-			if (node.isNullableObjectNode("last_use")) {
-				lastUse = null;
-			} else {
-				lastUse = DateUtility.stringToCalendar(node.getStringValue("last_use"));
-			}
+            UsageStatistics output = new UsageStatistics();
+            output.count = count;
+            output.totalExecutionTime = totalExecutionTime;
+            output.lastUse = lastUse;
+            output.created = created;
+//			output.taskActivationBreakdown = taskActivationBreakdown;
+//			output.executionInstances = instances;
 
-			Calendar created = DateUtility.stringToCalendar(node.getStringValue("created"));
-			if (created == null) {
-				LOGGER.warning("Unable to parse created date object.");
-				return null;
-			}
+            return output;
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Encountered exception when parsing usage statistics", e);
+            return null;
+        }
+    }
 
-			Map<ActionInvoker, Long> taskActivationBreakdown = new HashMap<>();
-			if (node.isArrayNode("task_activations_breakdown")) {
-				List<JsonNode> nodes = node.getArrayNode("task_activations_breakdown");
-				for (JsonNode n : nodes) {
-					JsonNode activationNode = n.getNode("task_activation");
-					ActionInvoker activation = ActionInvoker.parseJSON(activationNode);
-					if (activation == null) {
-						LOGGER.warning("Unable to parse task activation.");
-						return null;
-					}
+    @Override
+    public JsonRootNode jsonize() {
+        return JsonNodeFactories.object(JsonNodeFactories.field("count", JsonNodeFactories.number(count)), JsonNodeFactories.field("total_execution_time", JsonNodeFactories.number(totalExecutionTime)), JsonNodeFactories.field("last_use", lastUse != null ? JsonNodeFactories.string(DateUtility.calendarToTimeString(lastUse)) : JsonNodeFactories.nullNode()), JsonNodeFactories.field("created", JsonNodeFactories.string(DateUtility.calendarToTimeString(created)))//,
+//				JsonNodeFactories.field("task_activations_breakdown", JsonNodeFactories.array(
+//						taskActivationBreakdown.entrySet().stream().map(
+//								e -> JsonNodeFactories.object(
+//										JsonNodeFactories.field("task_activation", e.getKey().jsonize()),
+//										JsonNodeFactories.field("count", JsonNodeFactories.number(e.getValue())))
+//								).collect(Collectors.toList())
+//						)),
+//				JsonNodeFactories.field("execution_instances", JsonNodeFactories.array(JSONUtility.listToJson(executionInstances)))
+        );
+    }
 
-					long activationCount = Long.parseLong(n.getNode("count").getNumberValue());
-					taskActivationBreakdown.put(activation, activationCount);
-				}
-			}
+    public long getCount() {
+        return count;
+    }
 
-			LinkedList<ExecutionInstance> instances = new LinkedList<>();
-			if (node.isArrayNode("execution_instances")) {
-				List<JsonNode> nodes = node.getArrayNode("execution_instances");
-				instances = nodes.stream().map(n -> {
-					ExecutionInstance i = ExecutionInstance.of(0, 0);
-					Jsonizer.parse(n, i);
-					return i;
-				}).collect(Collectors.toCollection(LinkedList::new));
-			}
+    public Calendar getLastUse() {
+        return lastUse;
+    }
 
-			UsageStatistics output = new UsageStatistics();
-			output.count = count;
-			output.totalExecutionTime = totalExecutionTime;
-			output.lastUse = lastUse;
-			output.created = created;
-			output.taskActivationBreakdown = taskActivationBreakdown;
-			output.executionInstances = instances;
+    public Calendar getCreated() {
+        return created;
+    }
 
-			return output;
-		} catch (Exception e) {
-			LOGGER.log(Level.WARNING, "Encountered exception when parsing usage statistics", e);
-			return null;
-		}
-	}
+    public double getAverageExecutionTime() {
+        return (double) totalExecutionTime / count;
+    }
 
-	public long getCount() {
-		return count;
-	}
+    public long getTotalExecutionTime() {
+        return totalExecutionTime;
+    }
 
-	public Calendar getLastUse() {
-		return lastUse;
-	}
+    //	public Map<ActionInvoker, Long> getTaskActivationBreakdown() {
+//		return Collections.unmodifiableMap(taskActivationBreakdown);
+//	}
+//
+    public List<ExecutionInstance> getExecutionInstances() {
+        return Collections.unmodifiableList(executionInstances);
+    }
 
-	public Calendar getCreated() {
-		return created;
-	}
+    /**
+     * @return an ID to update at completion time.
+     */
+    public synchronized String useNow(ExecutionContext executionContext) {
+        if (lastUse == null) {
+            lastUse = Calendar.getInstance();
+        } else {
+            lastUse.setTimeInMillis(System.currentTimeMillis());
+        }
 
-	public double getAverageExecutionTime() {
-		return (double) totalExecutionTime / count;
-	}
+        String id = UUID.randomUUID().toString();
+        ExecutionInstance instance = ExecutionInstance.of(System.currentTimeMillis(), ExecutionInstance.DID_NOT_END);
+        onGoingInstances.put(id, instance);
+        executionInstances.addLast(instance);
+        while (executionInstances.size() > MAX_EXECUTION_INSTANCES_STORED) {
+            executionInstances.removeFirst();
+        }
+//        long countForActivation = taskActivationBreakdown.getOrDefault(executionContext.getActivation(), 0L);
+//        taskActivationBreakdown.put(executionContext.getActivation(), countForActivation + 1);
+        return id;
+    }
 
-	public long getTotalExecutionTime() {
-		return totalExecutionTime;
-	}
+    public void createNow() {
+        created.setTimeInMillis(System.currentTimeMillis());
+    }
 
-	public Map<ActionInvoker, Long> getTaskActivationBreakdown() {
-		return Collections.unmodifiableMap(taskActivationBreakdown);
-	}
+    public synchronized void executionFinished(String id) {
+        count++;
+        if (!onGoingInstances.containsKey(id)) {
+            LOGGER.warning("Unable to find start time for execution statistics " + id);
+            return;
+        }
 
-	public List<ExecutionInstance> getExecutionInstances() {
-		return Collections.unmodifiableList(executionInstances);
-	}
+        ExecutionInstance instance = onGoingInstances.remove(id);
+        long start = instance.getStart();
+        long end = System.currentTimeMillis();
+        instance.setEnd(end);
 
-	/**
-	 * @return an ID to update at completion time.
-	 */
-	public synchronized String useNow(ExecutionContext executionContext) {
-		if (lastUse == null) {
-			lastUse = Calendar.getInstance();
-		} else {
-			lastUse.setTimeInMillis(System.currentTimeMillis());
-		}
+        totalExecutionTime += end - start;
+    }
 
-		String id = UUID.randomUUID().toString();
-		ExecutionInstance instance = ExecutionInstance.of(System.currentTimeMillis(), ExecutionInstance.DID_NOT_END);
-		onGoingInstances.put(id, instance);
-		executionInstances.addLast(instance);
-		while (executionInstances.size() > MAX_EXECUTION_INSTANCES_STORED) {
-			executionInstances.removeFirst();
-		}
-		long countForActivation = taskActivationBreakdown.getOrDefault(executionContext.getActivation(), 0L);
-		taskActivationBreakdown.put(executionContext.getActivation(), countForActivation + 1);
-		return id;
-	}
+    public static final class ExecutionInstance extends AutoJsonable {
+        public static final Long DID_NOT_END = -1L;
 
-	public void createNow() {
-		created.setTimeInMillis(System.currentTimeMillis());
-	}
+        private final long start;
+        private long end;
 
-	public synchronized void executionFinished(String id) {
-		count++;
-		if (!onGoingInstances.containsKey(id)) {
-			LOGGER.warning("Unable to find start time for execution statistics " + id);
-			return;
-		}
+        private ExecutionInstance(long start, long end) {
+            this.start = start;
+            this.end = end;
+        }
 
-		ExecutionInstance instance = onGoingInstances.remove(id);
-		long start = instance.getStart();
-		long end = System.currentTimeMillis();
-		instance.setEnd(end);
+        private static ExecutionInstance of(long start, long end) {
+            return new ExecutionInstance(start, end);
+        }
 
-		totalExecutionTime += end-start;
-	}
+        public long getStart() {
+            return start;
+        }
 
-	public static final class ExecutionInstance extends AutoJsonable {
-		public static final Long DID_NOT_END = -1L;
+        public long getEnd() {
+            return end;
+        }
 
-		private final long start;
-		private long end;
+        private void setEnd(long end) {
+            this.end = end;
+        }
 
-		private static ExecutionInstance of(long start, long end) {
-			return new ExecutionInstance(start, end);
-		}
-
-		private ExecutionInstance(long start, long end) {
-			this.start = start;
-			this.end = end;
-		}
-
-		public long getStart() {
-			return start;
-		}
-
-		public long getEnd() {
-			return end;
-		}
-
-		public long getDuration() {
-			return end - start;
-		}
-
-		private void setEnd(long end) {
-			this.end = end;
-		}
-	}
+        public long getDuration() {
+            return end - start;
+        }
+    }
 }
