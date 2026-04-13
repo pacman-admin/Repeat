@@ -20,10 +20,12 @@ public final class ActionInvoker implements IJsonable {
     private static final Logger LOGGER = Logger.getLogger(ActionInvoker.class.getName());
     private Set<KeyChain> hotkeys;
     private Set<MouseGesture> mouseGestures;
+    private Set<KeySequence> keySequences;
 
     private ActionInvoker(Builder builder) {
         hotkeys = builder.hotkeys;
         mouseGestures = builder.mouseGestures;
+        keySequences = builder.keySequences;
     }
 
     /**
@@ -35,6 +37,7 @@ public final class ActionInvoker implements IJsonable {
     public static ActionInvoker parseJSON(JsonNode node) {
         try {
             List<JsonNode> hotkeysNode = node.getArrayNode("hotkey");
+            List<JsonNode> keySequenceNodes = node.isArrayNode("key_sequence") ? node.getArrayNode("key_sequence") : new ArrayList<>();
             List<JsonNode> mouseGestureNode = node.getArrayNode("mouse_gesture");
 
             Set<KeyChain> keyChains = new HashSet<>();
@@ -47,12 +50,21 @@ public final class ActionInvoker implements IJsonable {
                 }
             }
 
+            Set<KeySequence> keySequences = new HashSet<>();
+            for (JsonNode keySequenceNode : keySequenceNodes) {
+                KeySequence newkeySequence = KeySequence.parseJSON(keySequenceNode.getArrayNode());
+                if (newkeySequence == null) {
+                    LOGGER.log(Level.WARNING, "Cannot parse key chain " + keySequenceNode);
+                } else {
+                    keySequences.add(newkeySequence);
+                }
+            }
 
             Set<MouseGesture> gestures = MouseGesture.parseJSON(mouseGestureNode);
 
-
             return ActionInvoker.newBuilder()
                     .withHotKeys(keyChains)
+                    .withKeySequence(keySequences)
                     .withMouseGestures(gestures)
                     .build();
         } catch (Exception e) {
@@ -126,16 +138,53 @@ public final class ActionInvoker implements IJsonable {
         }
     }
 
+    /**
+     * @return set of key sequences associated with this activation entity.
+     */
+    public Set<KeySequence> getKeySequences() {
+        if (keySequences == null) {
+            return new HashSet<>();
+        }
+
+        return keySequences;
+    }
+
+    /**
+     * @param keySequences set of key sequences to set.
+     */
+    private void setKeySequences(Set<KeySequence> keySequences) {
+        this.keySequences = new HashSet<>();
+        this.keySequences.addAll(keySequences);
+    }
+
+    /**
+     * @return an arbitrary {@link KeySequence} from the set of gestures, or null if the set is empty.
+     */
+    public KeySequence getFirstKeySequence() {
+        Set<KeySequence> keySequences = getKeySequences();
+        if (keySequences.isEmpty()) {
+            return null;
+        } else {
+            return keySequences.iterator().next();
+        }
+    }
+
+    /**
+     * Copy the content of the other {@link ActionInvoker} to this object.
+     *
+     * @param other other task activation whose content will be copied from.
+     */
     public void copy(ActionInvoker other) {
         setHotKeys(other.getHotkeys());
         setMouseGestures(other.getMouseGestures());
+        setKeySequences(other.getKeySequences());
     }
 
     /**
      * Check if this activation is empty (i.e. no event for activation).
      */
     public boolean isEmpty() {
-        return getHotkeys().isEmpty() && getMouseGestures().isEmpty();
+        return getHotkeys().isEmpty() && getMouseGestures().isEmpty() && getKeySequences().isEmpty();
     }
 
     /**
@@ -145,6 +194,9 @@ public final class ActionInvoker implements IJsonable {
     public String getRepresentativeString() {
         if (!getHotkeys().isEmpty()) {
             return "{" + getHotkeys().iterator().next().toString() + "}";
+        }
+        if (!getKeySequences().isEmpty()) {
+            return "<" + getKeySequences().iterator().next().toString() + ">";
         }
         if (!getMouseGestures().isEmpty()) {
             return "[" + getMouseGestures().iterator().next().toString() + "]";
@@ -156,6 +208,7 @@ public final class ActionInvoker implements IJsonable {
     public JsonRootNode jsonize() {
         return JsonNodeFactories.object(
                 JsonNodeFactories.field("hotkey", JsonNodeFactories.array(JSONUtility.listToJson(getHotkeys()))),
+                JsonNodeFactories.field("key_sequence", JsonNodeFactories.array(JSONUtility.listToJson(getKeySequences()))),
                 JsonNodeFactories.field("mouse_gesture", JsonNodeFactories.array(JSONUtility.listToJson(getMouseGestures()))));
     }
 
@@ -163,6 +216,7 @@ public final class ActionInvoker implements IJsonable {
     public int hashCode() {
         return Objects.hash(
                 getHotkeys(),
+                getKeySequences(),
                 getMouseGestures());
     }
 
@@ -179,6 +233,7 @@ public final class ActionInvoker implements IJsonable {
         }
         ActionInvoker other = (ActionInvoker) obj;
         return getHotkeys().equals(other.getHotkeys())
+                && getKeySequences().equals(other.getKeySequences())
                 && getMouseGestures().equals(other.getMouseGestures());
     }
 
@@ -188,10 +243,12 @@ public final class ActionInvoker implements IJsonable {
     public static final class Builder {
         private final Set<KeyChain> hotkeys;
         private final Set<MouseGesture> mouseGestures;
+        private final Set<KeySequence> keySequences;
 
         private Builder() {
             hotkeys = new HashSet<>();
             mouseGestures = new HashSet<>();
+            keySequences = new HashSet<>();
         }
 
         public Builder addHotKeys(KeyChain... keys) {
@@ -225,6 +282,23 @@ public final class ActionInvoker implements IJsonable {
         public Builder withMouseGestures(Collection<MouseGesture> gestures) {
             this.mouseGestures.clear();
             this.mouseGestures.addAll(gestures);
+            return this;
+        }
+
+        public Builder addKeySequence(KeySequence... keySequences) {
+            this.keySequences.addAll(Arrays.asList(keySequences));
+            return this;
+        }
+
+        public Builder withKeySequence(KeySequence keySequences) {
+            this.keySequences.clear();
+            this.keySequences.add(keySequences);
+            return this;
+        }
+
+        public Builder withKeySequence(Collection<KeySequence> keySequences) {
+            this.keySequences.clear();
+            this.keySequences.addAll(keySequences);
             return this;
         }
 

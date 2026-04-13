@@ -11,13 +11,10 @@ import java.util.stream.Collectors;
 public final class TaskActivationConstructor {
 
     private final List<KeyChain> keyChains;
-    //    private final List<KeySequence> keySequences;
-//    private final List<ActivationPhrase> phrases;
+    private final List<KeySequence> keySequences;
     private final List<MouseGesture> mouseGestures;
-    //    private final List<SharedVariablesActivation> variables;
     private final Config config;
     private LinkedList<ButtonStroke> strokes;
-    //    private GlobalActivation globalActivation;
     private boolean listening;
 
     public TaskActivationConstructor(ActionInvoker reference) {
@@ -27,12 +24,8 @@ public final class TaskActivationConstructor {
     public TaskActivationConstructor(ActionInvoker reference, Config config) {
         strokes = new LinkedList<>();
         keyChains = new ArrayList<>(reference.getHotkeys());
-//        keySequences = new ArrayList<>(reference.getKeySequences());
-//        phrases = new ArrayList<>(reference.getPhrases());
+        keySequences = new ArrayList<>(reference.getKeySequences());
         mouseGestures = new ArrayList<>(reference.getMouseGestures());
-//        variables = new ArrayList<>(reference.getVariables());
-//        globalActivation = reference.getGlobalActivation();
-
         this.config = config;
     }
 
@@ -45,24 +38,16 @@ public final class TaskActivationConstructor {
     }
 
     public ActionInvoker getActivation() {
-        return ActionInvoker.newBuilder().withHotKeys(keyChains).withMouseGestures(mouseGestures).build();
+        return ActionInvoker.newBuilder().withHotKeys(keyChains).withKeySequence(keySequences).withMouseGestures(mouseGestures).build();
     }
 
     public List<KeyChain> getKeyChains() {
         return keyChains;
     }
 
-//    public List<KeySequence> getKeySequences() {
-//        return keySequences;
-//    }
-//
-//    public List<ActivationPhrase> getPhrases() {
-//        return phrases;
-//    }
-//
-//    public List<SharedVariablesActivation> getVariables() {
-//        return variables;
-//    }
+    public List<KeySequence> getKeySequences() {
+        return keySequences;
+    }
 
     public void startListening() {
         listening = true;
@@ -105,6 +90,21 @@ public final class TaskActivationConstructor {
             return;
         }
         keyChains.remove(index);
+    }
+
+    public void addAsKeySequence() {
+        if (strokes.isEmpty()) {
+            return;
+        }
+        keySequences.add(new KeySequence(strokes));
+        strokes = new LinkedList<>();
+    }
+
+    public void removeKeySequence(int index) {
+        if (index < 0 || index >= keySequences.size()) {
+            return;
+        }
+        keySequences.remove(index);
     }
 
     public void setMouseGestures(Collection<MouseGesture> gestures) {
