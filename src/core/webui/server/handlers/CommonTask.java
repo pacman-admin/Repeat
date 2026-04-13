@@ -92,7 +92,7 @@ public final class CommonTask {
 
         String id = getTaskGroupIdFromRequest(params);
         if (id == null) {
-            LOGGER.warning("Could not gt TaskGroup from request");
+            LOGGER.warning("Could not get TaskGroup from request");
             return null;
         }
         return TaskGroupManager.getTaskGroup(id);
