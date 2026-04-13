@@ -24,7 +24,6 @@ import core.keyChain.ButtonStroke;
 import core.keyChain.MouseGesture;
 import core.keyChain.mouseGestureRecognition.MouseGestureClassifier;
 import core.userDefinedTask.UserDefinedAction;
-import org.simplenativehooks.NativeKeyHook;
 import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
