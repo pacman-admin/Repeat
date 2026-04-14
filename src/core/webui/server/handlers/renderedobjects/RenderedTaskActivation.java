@@ -24,7 +24,7 @@ public final class RenderedTaskActivation {
         // use the Set interface provided by ActionInvoker because set
         // iteration does not have any specific order.
         output.keyChains = sortedStrings(constructor.getKeyChains().stream().map(KeyChain::toString).collect(Collectors.toList()));
-        output.keySequences = sortedStrings(List.of());
+        output.keySequences = sortedStrings(constructor.getKeySequences().stream().map(KeySequence::toString).collect(Collectors.toList()));
         output.phrases = sortedStrings(List.of());
         output.mouseGestures = RenderedMouseGestureActivation.fromActivation(activation);
         output.sharedVariables = new RenderedSharedVariablesActivation();
