@@ -5,15 +5,11 @@ import core.ipc.IIPCService;
 public final class RenderedIPCService {
 	private String name;
 	private String port;
-	private String running;
-	private String launchAtStartup;
 
 	public static RenderedIPCService of(IIPCService service) {
 		RenderedIPCService output = new RenderedIPCService();
 		output.name = service.getName();
 		output.port = service.getPort() + "";
-		output.running = true + "";
-		output.launchAtStartup = true + "";
 		return output;
 	}
 
@@ -23,22 +19,6 @@ public final class RenderedIPCService {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getRunning() {
-		return running;
-	}
-
-	public void setRunning(String running) {
-		this.running = running;
-	}
-
-	public String getLaunchAtStartup() {
-		return launchAtStartup;
-	}
-
-	public void setLaunchAtStartup(String launchAtStartup) {
-		this.launchAtStartup = launchAtStartup;
 	}
 
 	public String getPort() {
