@@ -53,7 +53,7 @@ public abstract class KeySeries implements IJsonable {
     public abstract boolean collideWith(KeySeries other);
 
     /**
-     * @return list of key codes in this key chain.
+     * @return list of key codes in this keychain.
      * @deprecated change to use {@link #getButtonStrokes()} instead.
      */
     @Deprecated
@@ -66,7 +66,7 @@ public abstract class KeySeries implements IJsonable {
     }
 
     /**
-     * @return the list of key strokes contained in this key chain.
+     * @return the list of keystrokes contained in this keychain.
      * @deprecated change to use {@link #getButtonStrokes()} instead. This will not
      * include any mouse related strokes.
      */
@@ -83,7 +83,7 @@ public abstract class KeySeries implements IJsonable {
     }
 
     /**
-     * @return the list of button strokes contained in this key chain.
+     * @return the list of button strokes contained in this keychain.
      */
     public List<ButtonStroke> getButtonStrokes() {
         List<ButtonStroke> output = new ArrayList<>(keys.size());
@@ -94,21 +94,21 @@ public abstract class KeySeries implements IJsonable {
     }
 
     /**
-     * @return the number of key strokes in this key chain.
+     * @return the number of keystrokes in this keychain.
      */
     public int getSize() {
         return keys.size();
     }
 
     /*
-     * Add all key strokes from another key chain.
+     * Add all keystrokes from another keychain.
      */
     public void addFrom(KeySeries other) {
         keys.addAll(other.keys);
     }
 
     /**
-     * Add a single stroke to the key chain.
+     * Add a single stroke to the keychain.
      *
      * @param stroke stroke to add.
      */
@@ -117,24 +117,24 @@ public abstract class KeySeries implements IJsonable {
     }
 
     /**
-     * Remove all keys in this key chain.
+     * Remove all keys in this keychain.
      */
     public void clearKeys() {
         keys.clear();
     }
 
     /**
-     * Check whether this key chain contains no key.
+     * Check whether this keychain contains no key.
      *
-     * @return if there is no key stroke in this key chain.
+     * @return if there is no keystroke in this keychain.
      */
     public boolean isEmpty() {
         return keys.isEmpty();
     }
 
     /**
-     * @param stroke the key stroke to find.
-     * @return whether the given key stroke is in this key chain.
+     * @param stroke the keystroke to find.
+     * @return whether the given keystroke is in this keychain.
      */
     public boolean contains(ButtonStroke stroke) {
         for (ButtonStroke key : keys) {
@@ -147,7 +147,7 @@ public abstract class KeySeries implements IJsonable {
 
     /**
      * Get the string which would be typed out if all keys in this {@link KeySequence} are pressed in the specified order.
-     * Note that this ignores effects of keys like SHIFT, CAPSLOCK, or NUMSLOCK.
+     * Note that this ignores effects of keys like SHIFT, CAPSLOCK, or NUMLOCK.
      */
     public String getTypedString() {
         StringBuilder builder = new StringBuilder();

@@ -48,36 +48,12 @@ public final class KeyboardState {
 		return clone().setNumslockLocked(state);
 	}
 
-	public KeyboardState withCapslockOn() {
-		return clone().setCapslockLocked(true);
-	}
-
-	public KeyboardState withCapslockOff() {
-		return clone().setCapslockLocked(false);
-	}
-
 	private KeyboardState withCapslock(boolean state) {
 		return clone().setCapslockLocked(state);
 	}
 
-	public KeyboardState withScrollLockOn() {
-		return clone().setScrollLockLocked(true);
-	}
-
-	public KeyboardState withScrollLockOff() {
-		return clone().setScrollLockLocked(false);
-	}
-
 	private KeyboardState withScrollLock(boolean state) {
 		return clone().setScrollLockLocked(state);
-	}
-
-	public KeyboardState withShiftLocked() {
-		return clone().setShiftLocked(true);
-	}
-
-	public KeyboardState withShiftUnlocked() {
-		return clone().setShiftLocked(false);
 	}
 
 	private KeyboardState withShiftLocked(boolean state) {
@@ -94,9 +70,6 @@ public final class KeyboardState {
 	}
 	public boolean isCapslockLocked() {
 		return capslockLocked;
-	}
-	public boolean isScrollLockLocked() {
-		return scrollLockLocked;
 	}
 	public boolean isShiftLocked() {
 		return shiftLocked;

@@ -18,7 +18,7 @@ public enum MouseGesture implements IJsonable {
     private final String text;
 
     /**
-     * @param text human readable text form of this classification
+     * @param text human-readable text form of this classification
      */
     MouseGesture(final String text) {
         this.text = text;
@@ -28,7 +28,7 @@ public enum MouseGesture implements IJsonable {
      * Find the mouse gesture given its name.
      *
      * @param name name of the mouse gesture
-     * @return the found mouse gesture, or null if cannot find one
+     * @return the found mouse gesture, or null otherwise
      */
     public static MouseGesture find(String name) {
         for (MouseGesture classification : MouseGesture.values()) {
@@ -43,7 +43,7 @@ public enum MouseGesture implements IJsonable {
     /**
      * Parse a json list of strings into a set of mouse gestures.
      *
-     * @param nodes the json list of strings
+     * @param nodes the JSON list of strings
      * @return set of mouse gestures parsed.
      */
     public static Set<MouseGesture> parseJSON(List<JsonNode> nodes) {
