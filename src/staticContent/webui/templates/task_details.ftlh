@@ -1,4 +1,3 @@
-<#import "/fragments/activations_modals.ftlh" as activations_modals_fragment>
 <#import "/fragments/task_execution_preconditions.ftlh" as task_execution_preconditions_fragment>
 <#import "/fragments/activations.ftlh" as activations_fragment>
 <#import "/fragments/task_source_history.ftlh" as task_source_history_fragment>
@@ -16,9 +15,6 @@
 <body>
 
 <div class="wrapper">
-    <!-- Modals -->
-    <@activations_modals_fragment.fragment/>
-    <!-- End Modals -->
 
     <div class="main-panel">
         <nav class="navbar navbar-default navbar-fixed">

@@ -3,8 +3,6 @@
         <tr>
             <th scope="col">Process</th>
             <th scope="col">Port</th>
-            <th scope="col">Running</th>
-            <th scope="col">Launch at startup</th>
         </tr>
     </thead>
     <tbody>
@@ -16,5 +14,4 @@
         </#list>
     </tbody>
 </#macro>
-
 <@fragment/>

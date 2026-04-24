@@ -1,8 +1,5 @@
-<#import "/fragments/global_key_action.ftlh" as global_key_action_fragment>
 <#import "/fragments/key_chains.ftlh" as key_chains_fragment>
 <#import "/fragments/key_sequences.ftlh" as key_sequences_fragment>
-<#import "/fragments/phrases.ftlh" as phrases_fragment>
-<#import "/fragments/shared_variables.ftlh" as shared_variables>
 
 <#macro fragment>
     <h1> Activation </h1>
