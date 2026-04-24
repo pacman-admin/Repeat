@@ -12,8 +12,6 @@
         <tr>
             <td>${ipc.name}</td>
             <td>${ipc.port}</td>
-            <td>${ipc.running}</td>
-            <td>${ipc.launchAtStartup}</td>
         </tr>
         </#list>
     </tbody>
