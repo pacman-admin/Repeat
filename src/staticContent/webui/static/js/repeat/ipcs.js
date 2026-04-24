@@ -1,9 +1,8 @@
 function registerIpcPage(argument) {
     registerIpcTableRows();
-
     $("#modal-ipc-port-save").click(buttonSavePortAction);
-    $("#button-run").click(buttonRunAction);
-    $("#button-stop").click(buttonStopAction);
+    //$("#button-run").click(buttonRunAction);
+    //$("#button-stop").click(buttonStopAction);
 }
 
 function registerIpcTableRows() {
@@ -48,31 +47,31 @@ function buttonSavePortAction(e) {
     });
 }
 
-function buttonRunAction(e) {
-    var index = utils_GetTableSelectedRowIndex("ipcs-table");
-    if (index == -1) {
-        return;
-    }
+// function buttonRunAction(e) {
+//     var index = utils_GetTableSelectedRowIndex("ipcs-table");
+//     if (index == -1) {
+//         return;
+//     }
 
-    $.post("/internals/action/run-ipc-service", JSON.stringify({ipc: index}), function(data) {
-        refreshIpcsWithDataAndIndex(data, index);
-    }).fail(function(response) {
-        alert('Error running IPC service: ' + response.responseText);
-    });
-}
+//     $.post("/internals/action/run-ipc-service", JSON.stringify({ipc: index}), function(data) {
+//         refreshIpcsWithDataAndIndex(data, index);
+//     }).fail(function(response) {
+//         alert('Error running IPC service: ' + response.responseText);
+//     });
+// }
 
-function buttonStopAction(e) {
-    var index = utils_GetTableSelectedRowIndex("ipcs-table");
-    if (index == -1) {
-        return;
-    }
+// function buttonStopAction(e) {
+//     var index = utils_GetTableSelectedRowIndex("ipcs-table");
+//     if (index == -1) {
+//         return;
+//     }
 
-    $.post("/internals/action/stop-ipc-service", JSON.stringify({ipc: index}), function(data) {
-        refreshIpcsWithDataAndIndex(data, index);
-    }).fail(function(response) {
-        alert('Error stopping IPC service: ' + response.responseText);
-    });
-}
+//     $.post("/internals/action/stop-ipc-service", JSON.stringify({ipc: index}), function(data) {
+//         refreshIpcsWithDataAndIndex(data, index);
+//     }).fail(function(response) {
+//         alert('Error stopping IPC service: ' + response.responseText);
+//     });
+// }
 
 function refreshIpcsWithDataAndIndex(data, index) {
     $("#ipcs-table").html(data);
