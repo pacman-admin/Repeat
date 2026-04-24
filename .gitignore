@@ -1,5 +1,5 @@
 ### IntelliJ IDEA ###
-out/
+/out/
 !**/src/main/**/out/
 !**/src/test/**/out/
 .kotlin
@@ -32,3 +32,6 @@ bin/
 *.json
 *.out
 *.manualbuild
+/data/
+/core/
+/resources/
