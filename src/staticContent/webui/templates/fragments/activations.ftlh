@@ -1,17 +1,8 @@
-<#import "/fragments/global_key_action.ftlh" as global_key_action_fragment>
 <#import "/fragments/key_chains.ftlh" as key_chains_fragment>
 <#import "/fragments/key_sequences.ftlh" as key_sequences_fragment>
-<#import "/fragments/phrases.ftlh" as phrases_fragment>
-<#import "/fragments/shared_variables.ftlh" as shared_variables>
 
 <#macro fragment>
     <h1> Activation </h1>
-    <div class="row top-buffer">
-        <span class="label label-default">Global Key Action</span>
-        <div>
-            <@global_key_action_fragment.fragment/>
-        </div>
-    </div>
     <div class="row top-buffer">
         <span class="label label-default">Start pressing keys when enabled</span>
         <div><button id="button-strokes" type="button" class="btn btn-default btn-span">None</button></div>
@@ -42,22 +33,6 @@
         </div>
     </div>
 
-    <div class="row top-buffer">
-        <div class="col-xs-6">
-            <span class="label label-default">Phrases</span>
-            <button id="button-add-phrase" type="button" class="btn btn-default btn-span" <#if task.activation.config.disablePhrase> disabled </#if>>Add phrase</button>
-            <table id="table-phrases" class="table">
-                <@phrases_fragment.fragment/>
-            </table>
-        </div>
-        <div class="col-xs-6">
-            <span class="label label-default">Shared variables</span>
-            <button id="button-add-shared-variables" type="button" class="btn btn-default btn-span" <#if task.activation.config.disableSharedVariable> disabled </#if>>Add shared variable</button>
-            <table id="table-shared-variables" class="table">
-                <@shared_variables.fragment/>
-            </table>
-        </div>
-    </div>
     <div class="row">
         <div class="form-group">
             <span class="label label-default">Mouse gestures (hold shift to select more than one)</span>

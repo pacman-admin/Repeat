@@ -54,7 +54,6 @@
                                 <li id="menu-import"><a href="#">Import...</a></li>
                                 <li id="menu-export"><a href="#">Export</a></li>
                                 <li class="divider"></li>
-                                <li id="menu-force-exit"><a href="#">Force exit...</a></li>
                                 <li id="menu-exit"><a href="#">Exit</a></li>
                               </ul>
                         </li>
@@ -69,7 +68,6 @@
                                 <li id="menu-halt-all-tasks"><a href="#">Halt all tasks</a></li>
                                 <li id="menu-generate-source"><a href="#">Generate source</a></li>
                                 <li><a href="/ipcs">Native modules...</a></li>
-                                <li><a href="/repeats-remote-clients">Remote Repeats clients...</a></li>
                                 <li id="menu-compiling-languages"><a href="#">Compiling languages...</a></li>
                               </ul>
                         </li>
@@ -82,18 +80,12 @@
                               </a>
                               <ul class="dropdown-menu">
                                 <li id="menu-hotkeys"><a href="#">Hotkeys...</a></li>
-                                <li id="menu-compiler-path"><a href="#">Set compiler path...</a></li>
-                                <li id="menu-configure-compiler"><a href="#">Configure compiler...</a></li>
-                                <li><a href="/global-configs">Global configs...</a></li>
                                 <li id="menu-record-mouse-click-only"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.recordMouseClickOnly> checked </#if>/>&nbsp;Record mouse click only</a></li>
-                                <li id="menu-halt-task-by-escape"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.haltTaskByEscape> checked </#if>/>&nbsp;Halt task by ESC</a></li>
                                 <li id="menu-execute-on-release"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.executeOnRelease> checked </#if>/>&nbsp;Execute on release</a></li>
                                 <li id="menu-use-clipboard-to-type-string"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.useClipboardToTypeString> checked </#if>/>&nbsp;Use clipboard to type strings</a></li>
-                                <li id="menu-run-task-with-server-config"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.runTaskWithServerConfig> checked </#if>/>&nbsp;Run task using server config</a></li>
                                 <li id="menu-use-java-awt-for-mouse-position"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.useJavaAwtToGetMousePosition> checked </#if>/>&nbsp;Use Java AWT for mouse position</a></li>
                                 <li class="divider"></li>
                                 <li id="menu-debug-level"><a href="#">Debug level...</a></li>
-                                <li id="menu-use-tray-icon"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.useTrayIcon> checked </#if>/>&nbsp;Use tray icon</a></li>
                               </ul>
                         </li>
                         <li class="dropdown">
