@@ -66,10 +66,6 @@
         <div class="content">
             <div class="container-fluid">
                 <div class="row">
-                    <button id="button-run" title="${tooltips.run}" type="button" class="btn btn-default repeat-btn-replay">&nbsp</button>
-                    <button id="button-stop" title="${tooltips.stop}" type="button" class="btn btn-default repeat-btn-stop">&nbsp</button>
-                </div>
-                <div class="row">
                     <table id="ipcs-table" class="table">
                         <@ipcs_fragment.fragment/>
                     </table>
