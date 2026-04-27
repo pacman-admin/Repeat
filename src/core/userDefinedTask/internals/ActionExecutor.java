@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
-    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 3;
+    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 1;
 
     private final HashMap<String, Thread> executions;
     private final Core core;
@@ -47,7 +47,7 @@ public final class ActionExecutor {
      */
     public void startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
         if (executions.size() >= MAX_SIMULTANEOUS_EXECUTIONS) {
-            //LOGGER.info("Cannot run more than " + MAX_SIMULTANEOUS_EXECUTIONS + " tasks simultaneously.");
+            LOGGER.fine("Cannot run more than " + MAX_SIMULTANEOUS_EXECUTIONS + " tasks simultaneously.");
             return;
         }
         if (action == null) {
@@ -64,8 +64,9 @@ public final class ActionExecutor {
                 LOGGER.info("Task ended prematurely");
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Exception while executing task " + action.getName(), e);
+            } finally {
+                executions.remove(id);
             }
-            executions.remove(id);
         }, "Execution thread for Action " + action.getName() + "ID: " + action.getActionId());
 
         executions.put(id, execution);
@@ -76,8 +77,11 @@ public final class ActionExecutor {
      * Interrupt all currently executing tasks, and clear the record of all executing tasks
      */
     public void haltAllTasks() {
-        LinkedList<Thread> endingThreads = new LinkedList<>(executions.values());
-        for (Thread thread : endingThreads) {
+        for (Thread thread : executions.values()) {
+            thread.interrupt();
+        }
+        for (Thread thread : executions.values()) {
+            thread.interrupt();
             LOGGER.info("Halting execution thread " + thread.getName());
             while (thread.isAlive() && thread != Thread.currentThread()) {
                 thread.interrupt();
