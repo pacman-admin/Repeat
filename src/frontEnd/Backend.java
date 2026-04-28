@@ -139,12 +139,11 @@ public final class Backend {
     }
 
     public static synchronized void exit(long delay) {
-        actionExecutor.haltAllTasks();
+        actionExecutor.shutdown();
         Timer cleanupTimer = new Timer("Delayed exit timer");
         cleanupTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                actionExecutor.haltAllTasks();
                 NativeHookInitializer.of().stop();
                 Backend.writeConfigFile();
                 if (trayIcon != null) trayIcon.remove();

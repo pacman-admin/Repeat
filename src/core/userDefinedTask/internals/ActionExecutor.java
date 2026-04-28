@@ -3,9 +3,12 @@ package core.userDefinedTask.internals;
 import core.controller.Core;
 import core.userDefinedTask.UserDefinedAction;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +17,8 @@ public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
     private final Core core;
-    private ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final ExecutorService executor = Executors.newSingleThreadExecutor();
+    private final List<Future<?>> executions = new ArrayList<>();
 
     public ActionExecutor(Core controller) {
         this.core = controller;
@@ -44,10 +48,8 @@ public final class ActionExecutor {
         if (action == null) {
             throw new IllegalArgumentException("Nothing to run.");
         }
-        if (executor.isShutdown()) {
-            executor = Executors.newSingleThreadExecutor();
-        }
-        executor.submit(() -> {
+        if(executor.isShutdown()) return;
+        executions.add(executor.submit(() -> {
             try {
                 for (int i = 0; i < request.getRepeatCount(); i++) {
                     action.trackedAction(core);
@@ -58,18 +60,26 @@ public final class ActionExecutor {
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Exception while executing task " + action.getName(), e);
             }
-        });
+        }));
+        executions.removeIf(Future::isDone);
     }
 
     /**
      * Interrupt all currently executing tasks, and clear the record of all executing tasks
      */
     public void haltAllTasks() {
-        executor.shutdownNow();
+        executions.forEach(task -> task.cancel(true));
         LOGGER.info("Halting all tasks...");
+        executions.clear();
+    }
+
+    public void shutdown() {
+        haltAllTasks();
+        executor.shutdownNow();
+        LOGGER.info("Shutting down main executor...");
         try {
-            if (executor.awaitTermination(5L, TimeUnit.SECONDS)) {
-                LOGGER.info("All tasks halted");
+            if (executor.awaitTermination(15, TimeUnit.SECONDS)) {
+                LOGGER.info("Main executor shut down");
                 return;
             }
         } catch (InterruptedException e) {
