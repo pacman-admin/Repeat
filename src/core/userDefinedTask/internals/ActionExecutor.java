@@ -2,24 +2,25 @@ package core.userDefinedTask.internals;
 
 import core.controller.Core;
 import core.userDefinedTask.UserDefinedAction;
-import utilities.RandomUtil;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.LinkedList;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
-    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 1;
-    private final HashMap<String, Thread> executions;
+    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 2;
+    //private final HashSet<Future<?>> executions;
     private final Core core;
+    private ExecutorService executor = Executors.newFixedThreadPool(MAX_SIMULTANEOUS_EXECUTIONS);
 
     public ActionExecutor(Core controller) {
         this.core = controller;
-        this.executions = new HashMap<>();
+        //this.executions = new HashSet<>();
     }
 
     /**
@@ -28,9 +29,7 @@ public final class ActionExecutor {
      * @param actions actions to execute.
      */
     public void startExecutingActions(Collection<UserDefinedAction> actions) {
-        for (UserDefinedAction action : actions) {
-            startExecutingAction(action);
-        }
+        actions.forEach(this::startExecutingAction);
     }
 
 
@@ -45,15 +44,13 @@ public final class ActionExecutor {
      * @param action  action to execute
      */
     public void startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
-        if (executions.size() >= MAX_SIMULTANEOUS_EXECUTIONS) {
-            LOGGER.fine("Cannot run more than " + MAX_SIMULTANEOUS_EXECUTIONS + " tasks simultaneously.");
-            return;
-        }
         if (action == null) {
             throw new IllegalArgumentException("Nothing to run.");
         }
-        final String id = RandomUtil.randomID();
-        Thread execution = new Thread(() -> {
+        if (executor.isShutdown()) {
+            executor = Executors.newFixedThreadPool(MAX_SIMULTANEOUS_EXECUTIONS);
+        }
+        executor.submit(() -> {
             try {
                 for (int i = 0; i < request.getRepeatCount(); i++) {
                     action.trackedAction(core);
@@ -63,29 +60,24 @@ public final class ActionExecutor {
                 LOGGER.info("Task ended prematurely");
             } catch (Exception e) {
                 LOGGER.log(Level.WARNING, "Exception while executing task " + action.getName(), e);
-            } finally {
-                executions.remove(id);
             }
-        }, "Execution thread for Action " + action.getName() + "ID: " + action.getActionId());
-
-        executions.put(id, execution);
-        execution.start();
+        });
     }
 
     /**
      * Interrupt all currently executing tasks, and clear the record of all executing tasks
      */
     public void haltAllTasks() {
-        for (Thread thread : executions.values()) {
-            thread.interrupt();
-        }
-        for (Thread thread : executions.values()) {
-            thread.interrupt();
-            LOGGER.info("Halting execution thread " + thread.getName());
-            while (thread.isAlive() && thread != Thread.currentThread()) {
-                thread.interrupt();
+        executor.shutdownNow();
+        LOGGER.info("Halting all tasks...");
+        try {
+            if (executor.awaitTermination(5L, TimeUnit.SECONDS)) {
+                LOGGER.info("All tasks halted");
+                return;
             }
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        executions.clear();
+        LOGGER.warning("Error halting all tasks");
     }
 }
