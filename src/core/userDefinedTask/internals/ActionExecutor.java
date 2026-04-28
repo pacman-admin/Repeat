@@ -13,11 +13,11 @@ public final class ActionExecutor {
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
     private final Core core;
     private final ExecutorService executor = Executors.newSingleThreadExecutor();
-    //    private final List<Future<?>> executions = new ArrayList<>();
     private Future<?> execution;
 
     public ActionExecutor(Core controller) {
         this.core = controller;
+        execution = executor.submit(() -> LOGGER.info("Main executor started"));
     }
 
     /**
@@ -40,6 +40,7 @@ public final class ActionExecutor {
      * @param request request for execution of this action
      * @param action  action to execute
      */
+    @SuppressWarnings("BusyWait")
     public void startExecutingAction(ActionExecutionRequest request, UserDefinedAction action) {
         if (execution.isDone()) {
             try {
@@ -66,10 +67,9 @@ public final class ActionExecutor {
      * Interrupt all currently executing tasks, and clear the record of all executing tasks
      */
     public void haltAllTasks() {
-//        executions.forEach(task -> task.cancel(true));
+        if (execution == null) return;
         execution.cancel(true);
         LOGGER.info("Halting current task...");
-//        executions.clear();
     }
 
     public void shutdown() {
