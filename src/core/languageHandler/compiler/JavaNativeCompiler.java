@@ -68,7 +68,7 @@ public final class JavaNativeCompiler implements Compiler {
 
         try {
             CompilationResult output = loadClass(className);
-            getLogger().info("Skipped compilation and loaded object file.");
+            getLogger().fine("Skipped compilation and loaded object file.");
             className = null;
             return output;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e) {

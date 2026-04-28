@@ -17,7 +17,7 @@ public final class ActionExecutor {
 
     public ActionExecutor(Core controller) {
         this.core = controller;
-        execution = executor.submit(() -> LOGGER.info("Main executor started"));
+        execution = executor.submit(() -> LOGGER.fine("Main executor started"));
     }
 
     /**
@@ -51,14 +51,14 @@ public final class ActionExecutor {
                             Thread.sleep(request.getDelayMsBetweenRepeat());
                         }
                     } catch (InterruptedException e) {
-                        LOGGER.info("Task ended prematurely");
+                        LOGGER.fine("Task ended prematurely");
                     } catch (Exception e) {
                         LOGGER.log(Level.WARNING, "Exception while executing task " + action.getName(), e);
                     }
                 });
             } catch (RejectedExecutionException ignored) {
             } catch (NullPointerException ignored) {
-                LOGGER.warning("Nothing to run");
+                LOGGER.info("Nothing to run");
             }
         }
     }
@@ -69,7 +69,7 @@ public final class ActionExecutor {
     public void haltAllTasks() {
         if (execution == null) return;
         execution.cancel(true);
-        LOGGER.info("Halting current task...");
+        LOGGER.fine("Halting current task...");
     }
 
     public void shutdown() {
@@ -78,12 +78,12 @@ public final class ActionExecutor {
         LOGGER.info("Shutting down main executor...");
         try {
             if (executor.awaitTermination(15, TimeUnit.SECONDS)) {
-                LOGGER.info("Main executor shut down");
+                LOGGER.fine("Main executor shut down");
                 return;
             }
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-        LOGGER.warning("Error halting all tasks");
+        LOGGER.fine("Error halting all tasks");
     }
 }
