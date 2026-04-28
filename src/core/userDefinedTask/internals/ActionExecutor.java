@@ -14,13 +14,11 @@ public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
     private static final int MAX_SIMULTANEOUS_EXECUTIONS = 2;
-    //private final HashSet<Future<?>> executions;
     private final Core core;
     private ExecutorService executor = Executors.newFixedThreadPool(MAX_SIMULTANEOUS_EXECUTIONS);
 
     public ActionExecutor(Core controller) {
         this.core = controller;
-        //this.executions = new HashSet<>();
     }
 
     /**
