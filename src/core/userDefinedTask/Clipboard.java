@@ -38,10 +38,11 @@ public final class Clipboard {
     public static synchronized String get() {
         try {
             return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
-        } catch (HeadlessException | UnsupportedFlavorException | IOException e) {
-            LOGGER.log(Level.WARNING, "Unable to retrieve text from clipboard", e);
-            return "";
+        } catch (UnsupportedFlavorException ignored) {
+        } catch (Exception e) {
+            LOGGER.warning("Unable to retrieve text from clipboard");
         }
+        return "";
     }
 
     /**

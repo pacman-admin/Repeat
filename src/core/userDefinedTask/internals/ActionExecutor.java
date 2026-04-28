@@ -14,7 +14,6 @@ public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
     private static final int MAX_SIMULTANEOUS_EXECUTIONS = 1;
-
     private final HashMap<String, Thread> executions;
     private final Core core;
 
