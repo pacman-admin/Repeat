@@ -58,9 +58,7 @@ public final class Config implements ILoggable {
             config.setREPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay")));
             config.setCOMPILED_REPLAY(KeyChain.parseJSON(globalHotkey.getArrayNode("replay_compiled")));
 
-            List<JsonNode> ipcSettings = root.getArrayNode("ipc_settings");
-            IPCServiceManager.parseJSON(ipcSettings);
-//            TaskGroupManager.COMPILER_FACTORY.parseJSON(root.getNode("compilers"));
+            IPCServiceManager.parseJSON(root.getArrayNode("ipc_settings"));
             TaskGroupManager.parseJSON(root.getArrayNode("task_groups"));
         });
         parsers.put("3.0", (data, config) -> {

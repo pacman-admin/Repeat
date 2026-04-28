@@ -47,7 +47,7 @@ public final class Recorder {
     private final HashMap<Language, AbstractSourceGenerator> sourceGenerators;
     private float speedup;
     private long startTime;
-    private int mode;
+    private int mode = 1;
 
     public Recorder(final Core controller) {
         taskScheduler = new TaskScheduler();
