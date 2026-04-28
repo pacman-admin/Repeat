@@ -150,7 +150,7 @@ public final class GlobalEventsManager {
      * @return if we should continue delegating this to the managers.
      */
     private boolean shouldDelegate(KeyStroke stroke) {
-        if ((stroke.getKey() == HALT_TASK) && config.isEnabledHaltingKeyPressed()) {
+        if (stroke.getKey() == HALT_TASK) {
             taskActivationManager.clear();
             actionExecutor.haltAllTasks();
             return false;

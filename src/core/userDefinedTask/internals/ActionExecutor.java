@@ -13,9 +13,8 @@ import java.util.logging.Logger;
 public final class ActionExecutor {
 
     private static final Logger LOGGER = Logger.getLogger(ActionExecutor.class.getName());
-    private static final int MAX_SIMULTANEOUS_EXECUTIONS = 2;
     private final Core core;
-    private ExecutorService executor = Executors.newFixedThreadPool(MAX_SIMULTANEOUS_EXECUTIONS);
+    private ExecutorService executor = Executors.newSingleThreadExecutor();
 
     public ActionExecutor(Core controller) {
         this.core = controller;
@@ -46,7 +45,7 @@ public final class ActionExecutor {
             throw new IllegalArgumentException("Nothing to run.");
         }
         if (executor.isShutdown()) {
-            executor = Executors.newFixedThreadPool(MAX_SIMULTANEOUS_EXECUTIONS);
+            executor = Executors.newSingleThreadExecutor();
         }
         executor.submit(() -> {
             try {
