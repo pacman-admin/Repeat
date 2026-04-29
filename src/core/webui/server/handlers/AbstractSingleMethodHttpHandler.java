@@ -18,6 +18,7 @@
  */
 package core.webui.server.handlers;
 
+import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpHandlerWithBackend;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
@@ -29,6 +30,7 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
 
     protected static final String GET_METHOD = "GET";
     protected static final String POST_METHOD = "POST";
+    private final static HTTPLogger LOGGER = new HTTPLogger("Could not add action step");
     private final String allowedMethod;
 
     public AbstractSingleMethodHttpHandler(String allowedMethod) {
@@ -41,11 +43,10 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Only " + allowedMethod + " requests are accepted.");
             return;
         }
-
-        handleAllowedRequestWithBackend(request, exchange);
+        LOGGER.exec(() -> handleAllowedRequestWithBackend(request, exchange), exchange);
     }
 
-    protected final Void emptySuccessResponse(HttpAsyncExchange exchange){
+    protected final Void emptySuccessResponse(HttpAsyncExchange exchange) {
         return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 
