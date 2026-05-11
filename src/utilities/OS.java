@@ -25,7 +25,7 @@ public enum OS {
 
     static OS getCurrentOS() {
         String OSName = System.getProperty("os.name").toLowerCase().trim();
-        //System.out.println("Your OS is: " + OSName);
+        //LOGGER.fine("Your OS is: " + OSName);
         if (OSName.startsWith("mac")) {
             return OS.MAC;
         }

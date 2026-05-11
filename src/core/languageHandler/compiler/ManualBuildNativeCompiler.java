@@ -99,7 +99,7 @@ public final class ManualBuildNativeCompiler implements Compiler {
         }
 
         action.setSourcePath(sourceFile.getAbsolutePath());
-        LOGGER.info("Successfully compiled custom action.");
+        LOGGER.fine("Successfully compiled custom action.");
         return CompilationResult.of(CompilationOutcome.COMPILATION_SUCCESS, action);
     }
 

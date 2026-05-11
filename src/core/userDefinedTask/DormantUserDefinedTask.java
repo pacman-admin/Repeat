@@ -53,7 +53,7 @@ public final class DormantUserDefinedTask extends UserDefinedAction implements I
             getLogger().warning("Unable to recompile dormant task " + getName() + ". Error " + compilerStatus);
             return this;
         }
-        getLogger().info("Successfully recompiled dormant task " + getName() + ".");
+        getLogger().fine("Successfully recompiled dormant task " + getName() + ".");
         output.syncContent(this);
         output.compiler = getCompiler();
         return output;

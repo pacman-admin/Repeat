@@ -86,9 +86,9 @@ public final class Backend {
         }
         TaskGroupManager.ensureHasAGroup();
         try {
-            LOGGER.info("Adding tray icon...");
+            LOGGER.fine("Adding tray icon...");
             trayIcon = new MinimizedFrame(BootStrapResources.TRAY_IMAGE);
-            LOGGER.info("Tray Icon added");
+            LOGGER.fine("Tray Icon added");
         } catch (Exception e) {
             LOGGER.warning("Could not add tray icon!\n" + e.getMessage());
         }
@@ -96,7 +96,7 @@ public final class Backend {
     }
 
     public static void editSource(String code) {
-        LOGGER.info("Opening source code in editor...");
+        LOGGER.fine("Opening source code in editor...");
         try {
             File f = File.createTempFile("source", compilingLanguage == Language.JAVA ? ".java" : ".txt");
             FileUtility.writeToFile(code, f, false);
@@ -107,7 +107,7 @@ public final class Backend {
     }
 
     public static String reloadSource() {
-        LOGGER.info("Reloading edits...");
+        LOGGER.fine("Reloading edits...");
         if (currentTempFile == null) throw new RuntimeException("Source code was never opened for editing.");
         return Objects.requireNonNull(FileUtility.readFromFile(currentTempFile)).toString();
     }
@@ -553,7 +553,7 @@ public final class Backend {
             LOGGER.fine("Exit code of unzip: " + new ProcessBuilder("unzip", "-o", path).inheritIO().start().waitFor());
         } catch (Exception ignored) {
         }
-        LOGGER.info("Extracted tasks to import");
+        LOGGER.fine("Extracted tasks to import");
 
         LOGGER.fine("Moving files...");
         try {
@@ -617,7 +617,7 @@ public final class Backend {
     }
 
     public static void exportTasks(File outputDirectory) {
-        LOGGER.info(outputDirectory.getAbsolutePath());
+        LOGGER.fine(outputDirectory.getAbsolutePath());
         File destination = new File(FileUtility.joinPath(outputDirectory.getAbsolutePath(), "tmp"));
         FileUtility.createDirectory(destination.getAbsolutePath());
         config.exportTasksConfig(destination);
@@ -680,12 +680,12 @@ public final class Backend {
     /***************************************Configurations********************************************************/
     // Write configuration file
     public static void writeConfigFile() {
-        System.out.println("Writing config file...");
+        LOGGER.fine("Writing config file...");
         if (config.save()) {
-            System.out.println("Wrote config file.");
+            LOGGER.fine("Wrote config file.");
             return;
         }
-        System.err.println("Error saving configuration file.");
+        LOGGER.warning("Error saving configuration file.");
     }
 
     /*************************************************************************************************************/

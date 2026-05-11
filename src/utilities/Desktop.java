@@ -54,7 +54,7 @@ public final class Desktop {
     }
 
     public static boolean openFile(File file) {
-        LOGGER.info("Opening file " + file.getAbsolutePath());
+        LOGGER.fine("Opening file " + file.getAbsolutePath());
         try {
             java.awt.Desktop.getDesktop().open(file);
             return true;
@@ -84,7 +84,7 @@ public final class Desktop {
         if (openWithCommand("gnome-open", file)) {
             return true;
         }
-        LOGGER.info("No good text editor was found. Using xedit (sorry)");
+        LOGGER.fine("No good text editor was found. Using xedit (sorry)");
         return openWithCommand("xedit", file);
     }
 

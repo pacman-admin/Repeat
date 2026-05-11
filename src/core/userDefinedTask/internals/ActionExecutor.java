@@ -75,7 +75,7 @@ public final class ActionExecutor {
     public void shutdown() {
         haltAllTasks();
         executor.shutdownNow();
-        LOGGER.info("Shutting down main executor...");
+        LOGGER.fine("Shutting down main executor...");
         try {
             if (executor.awaitTermination(15, TimeUnit.SECONDS)) {
                 LOGGER.fine("Main executor shut down");

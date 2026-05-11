@@ -185,7 +185,7 @@ public final class UIServer extends IIPCService {
         try {
             server.awaitTermination(1, TimeUnit.MINUTES);
         } catch (InterruptedException e) {
-            System.out.println("Interrupted while awaiting server termination.");
+            getLogger().fine("Interrupted while awaiting server termination.");
         }
     }
 

@@ -112,7 +112,7 @@ public final class GlobalEventsManager {
             @Override
             public Boolean apply(NativeKeyEvent r) {
                 KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key pressed " + stroke);
+                LOGGER.finer("Key pressed " + stroke);
 
                 if (!shouldDelegate(stroke)) {
                     return true;
@@ -129,7 +129,7 @@ public final class GlobalEventsManager {
             @Override
             public Boolean apply(NativeKeyEvent r) {
                 KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.fine("Key released " + stroke);
+                LOGGER.finer("Key released " + stroke);
                 if (!shouldDelegate(stroke)) {
                     return true;
                 }

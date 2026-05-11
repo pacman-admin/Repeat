@@ -18,7 +18,7 @@
 //
 //    public TaskInvoker(final Core controller) {
 //        this.core = controller;
-//        LOGGER.info("Created TaskInvoker");
+//        LOGGER.fine("Created TaskInvoker");
 //    }
 //
 //    /**
@@ -60,7 +60,7 @@
 //     * @param id ID of the task.
 //     */
 //    public void execute(String id) throws InterruptedException {
-//        LOGGER.info("Executing task: " + id);
+//        LOGGER.fine("Executing task: " + id);
 //        execute(id, ActionInvoker.newBuilder().build());
 //    }
 //
@@ -75,7 +75,7 @@
 //            for (UserDefinedAction task : group.getTasks()) {
 //                if (task.getActionId().equals(id)) {
 //                    execute(task, activation);
-//                    LOGGER.info("Executing task: " + task.getName());
+//                    LOGGER.fine("Executing task: " + task.getName());
 //                    return;
 //                }
 //            }
@@ -84,7 +84,7 @@
 //    }
 //
 //    private void execute(UserDefinedAction action, ActionInvoker activation) throws InterruptedException {
-//        LOGGER.info("Executing task: " + action.getName());
+//        LOGGER.fine("Executing task: " + action.getName());
 //        action.setInvoker(activation);
 //        action.trackedAction(core);
 //    }

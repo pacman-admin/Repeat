@@ -25,7 +25,7 @@ final class TaskScheduler extends AbstractScheduler<Runnable> {
 	synchronized long runTasks(final long count, final long delay, final float speedup,
                                final Function<Void, Void> callBack, final long callBackDelay) {
 		if (isRunning) {
-			LOGGER.info("Cannot invoke two running instances");
+			LOGGER.fine("Cannot invoke two running instances");
 			return 0;
 		} else if (count < 1) {
 			LOGGER.warning("Attempt to run tasks with count " + count);
@@ -53,7 +53,7 @@ final class TaskScheduler extends AbstractScheduler<Runnable> {
                     try {
                         Thread.sleep((long)((currentTime - time) / speedup));
                     } catch (InterruptedException e) {
-                        LOGGER.info("Ended prematurely");
+                        LOGGER.fine("Ended prematurely");
                         return; // Ended prematurely
                     }
 
@@ -65,7 +65,7 @@ final class TaskScheduler extends AbstractScheduler<Runnable> {
                     try {
                         Thread.sleep((long)(delay / speedup));
                     } catch (InterruptedException e) {
-                        LOGGER.info("Ended prematurely");
+                        LOGGER.fine("Ended prematurely");
                         return; // Ended prematurely
                     }
                 }
@@ -84,7 +84,7 @@ final class TaskScheduler extends AbstractScheduler<Runnable> {
 		executeAgent.start();
 
 		if (tasks.isEmpty()) {
-			//LOGGER.info("Nothing to run");
+			//LOGGER.fine("Nothing to run");
 			return callBackDelay;
 		} else {
 			return tasks.getLast().getTime() + callBackDelay;
@@ -107,7 +107,7 @@ final class TaskScheduler extends AbstractScheduler<Runnable> {
 
 	synchronized void clearTasks() {
 		if (isRunning) {
-			LOGGER.info("Stop task scheduler first before clearing tasks");
+			LOGGER.fine("Stop task scheduler first before clearing tasks");
 			return;
 		}
 

@@ -26,7 +26,7 @@ public final class FileZipper {
 
     private void addFile(File f, String pathPrefix) throws IOException {
         if (f.isHidden() || !f.exists()) return;
-        System.out.println("Adding '" + f.getName() + "'...");
+        //System.out.println("Adding '" + f.getName() + "'...");
         if (f.isDirectory()) {
             z.putNextEntry(new ZipEntry(pathPrefix + f.getName() + "/"));
             z.closeEntry();

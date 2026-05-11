@@ -73,7 +73,7 @@ public final class JavaNativeCompiler implements Compiler {
             return output;
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e) {
             getLogger().log(Level.WARNING, "Cannot load class file " + classFile.getAbsolutePath(), e);
-            getLogger().info("Compiling using source code");
+            getLogger().fine("Compiling using source code");
             return compile(sourceCode);
         } catch (Throwable e) {
             // Note that we need to catch Throwable instead of Exception
@@ -81,7 +81,7 @@ public final class JavaNativeCompiler implements Compiler {
             // As a result, catching Exception alone would not cover all
             // failure cases here.
             getLogger().log(Level.WARNING, "Encountering unknown throwable when loading class file " + classFile.getAbsolutePath(), e);
-            getLogger().info("Compiling using source code");
+            getLogger().fine("Compiling using source code");
             return compile(sourceCode);
         }
     }
@@ -132,7 +132,7 @@ public final class JavaNativeCompiler implements Compiler {
                     /********************************************************************************************* Compilation Requirements **/
                     if (task.call()) {
                         CompilationResult output = loadClass(newClassName);
-                        getLogger().info("Successfully compiled class " + defaultClassName);
+                        getLogger().fine("Successfully compiled class " + defaultClassName);
                         return output;
                     } else {
                         for (Diagnostic<? extends JavaFileObject> diagnostic : diagnostics.getDiagnostics()) {
