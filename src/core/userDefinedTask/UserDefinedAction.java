@@ -265,20 +265,6 @@ public abstract class UserDefinedAction implements IJsonable, ILoggable {
     }
 
     /***********************************************************************/
-    public UserDefinedAction recompileNative(Compiler compiler) {
-        return this;
-    }
-
-    final void syncContent(UserDefinedAction other) {
-        sourcePath = other.sourcePath;
-        compiler = other.compiler;
-        name = other.name;
-        executionPreconditions = other.executionPreconditions.copy();
-        activation.copy(other.activation);
-        enabled = other.enabled;
-    }
-
-    /***********************************************************************/
     @Override
     public JsonRootNode jsonize() {
         return JsonNodeFactories.object(JsonNodeFactories.field("action_id", JsonNodeFactories.string(actionId)), JsonNodeFactories.field("source_path", JsonNodeFactories.string(sourcePath)), JsonNodeFactories.field("compiler", JsonNodeFactories.string(compiler.toString())), JsonNodeFactories.field("name", JsonNodeFactories.string(name)), JsonNodeFactories.field("execution_preconditions", executionPreconditions.jsonize()), JsonNodeFactories.field("activation", activation.jsonize()), JsonNodeFactories.field("enabled", JsonNodeFactories.booleanNode(enabled)), JsonNodeFactories.field("statistics", statistics.jsonize()), JsonNodeFactories.field("source_history", sourceHistory.jsonize()));

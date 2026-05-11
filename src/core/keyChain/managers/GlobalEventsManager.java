@@ -45,13 +45,11 @@ public final class GlobalEventsManager {
 
     private static final Logger LOGGER = Logger.getLogger(GlobalEventsManager.class.getName());
 
-    private final Config config;
     private final ActionExecutor actionExecutor;
     private final ExecutionPreconditionsChecker executionPreconditionsChecker;
     private final ActivationEventManager taskActivationManager;
 
     public GlobalEventsManager(Config config, ActionExecutor actionExecutor) {
-        this.config = config;
         this.actionExecutor = actionExecutor;
 
         this.executionPreconditionsChecker = ExecutionPreconditionsChecker.of();
