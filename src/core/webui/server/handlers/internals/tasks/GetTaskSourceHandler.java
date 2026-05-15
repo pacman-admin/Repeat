@@ -32,7 +32,7 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
 
     @Override
     protected String handleAsString(Map<String, String> params) {
-
+        System.out.println("Source code request.\n"+params);
         if (params == null) throw new IllegalArgumentException("Params must not be null.");
 
         String id = params.get("id");

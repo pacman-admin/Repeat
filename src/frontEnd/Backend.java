@@ -251,9 +251,7 @@ public final class Backend {
             isReplaying = false;
             recorder.stopReplay();
         } else {
-            if (!applySpeedup()) {
-                return;
-            }
+            applySpeedup();
 
             isReplaying = true;
             recorder.replay(replayConfig.getCount(), replayConfig.getDelay(), new Function<>() {
@@ -709,9 +707,8 @@ public final class Backend {
      *
      * @return if the speedup was successfully parsed and applied.
      */
-    private static boolean applySpeedup() {
+    private static void applySpeedup() {
         recorder.setSpeedup(replayConfig.getSpeedup());
-        return true;
     }
 
     /*************************************************************************************************************/
@@ -761,11 +758,8 @@ public final class Backend {
     /********************************************Source code related**********************************************/
 
     public static String generateSource() {
-        String source = "";
-        if (applySpeedup()) {
-            source = recorder.getGeneratedCode(compilingLanguage);
-        }
-        return source;
+        applySpeedup();
+        return recorder.getGeneratedCode(compilingLanguage);
     }
 
     public static void createActionFromRecording() {

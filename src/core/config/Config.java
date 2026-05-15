@@ -104,7 +104,6 @@ public final class Config implements ILoggable {
         RECORD = new KeyChain(KeyEvent.VK_F7);
         REPLAY = new KeyChain(KeyEvent.VK_F8);
         COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F9);
-        initParsers();
     }
 
     public static Config loadFromFile() {
@@ -205,10 +204,6 @@ public final class Config implements ILoggable {
         }
     }
 
-    public boolean isUseTrayIcon() {
-        return true;
-    }
-
     public boolean isExecuteOnKeyReleased() {
         return executeOnKeyReleased;
     }
@@ -225,9 +220,6 @@ public final class Config implements ILoggable {
         logLevel = debugLevel;
     }
 
-    public boolean isEnabledHaltingKeyPressed() {
-        return true;
-    }
 
     public boolean isUseClipboardToTypeString() {
         return useClipboardToTypeString;
@@ -235,10 +227,6 @@ public final class Config implements ILoggable {
 
     public void setUseClipboardToTypeString(boolean useClipboardToTypeString) {
         this.useClipboardToTypeString = useClipboardToTypeString;
-    }
-
-    public boolean isRunTaskWithServerConfig() {
-        return false;
     }
 
     public boolean isUseJavaAwtToGetMousePosition() {
@@ -254,7 +242,4 @@ public final class Config implements ILoggable {
         return Logger.getLogger(Config.class.getName());
     }
 
-    private void initParsers() {
-
-    }
 }

@@ -64,10 +64,6 @@ public abstract class AbstractSourceGenerator {
         }
     }
 
-    private boolean verify(Object... ignored) {
-        return true;
-    }
-
     public final void clear() {
         source.setLength(0);
         sourceScheduler.clear();

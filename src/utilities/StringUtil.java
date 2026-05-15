@@ -268,9 +268,6 @@ public final class StringUtil {
 
                 // Uncomment this for Optimal Alignment String Distance calculation
                 // Transposition
-//				if (i > 1 && j > 1 && cl == r.charAt(j-2) && l.charAt(i-2) == cr) {
-//					d[i][j] = Math.min(d[i][j], d[i-2][j-2]);
-//				}
             }
         }
 

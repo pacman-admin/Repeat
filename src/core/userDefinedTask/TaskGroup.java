@@ -41,9 +41,6 @@ public final class TaskGroup implements IJsonable {
         return new TaskGroup("remote-tasks", REMOTE_TASK_GROUP_ID);
     }
 
-    /*public static String getSourceFilePath(){
-        return sourceFilePath;
-    }*/
     public static TaskGroup parseJSON(DynamicCompilerManager factory, JsonNode node, ParsingMode parseMode) {
         try {
             String groupId = node.getStringValue("group_id");

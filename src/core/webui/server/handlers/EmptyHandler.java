@@ -19,8 +19,6 @@ import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 
-
-
 public final class EmptyHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) {

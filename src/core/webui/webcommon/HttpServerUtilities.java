@@ -24,7 +24,7 @@ public final class HttpServerUtilities {
     }
 
     public static Map<String, String> parseGetParameters(URI url) {
-        String query = url.getQuery(); // Returns "q=java+parse&lang=en"
+        String query = url.getQuery();
 
         Map<String, String> queryParams = new LinkedHashMap<>();
         String[] pairs = query.split("&");
@@ -36,7 +36,7 @@ public final class HttpServerUtilities {
             queryParams.put(key, value);
         }
 
-        LOGGER.finer("GET params: "+queryParams);
+        LOGGER.info("GET params: "+queryParams);
         return queryParams;
     }
 
