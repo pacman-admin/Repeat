@@ -58,7 +58,6 @@ public final class UIServer extends IIPCService {
 
     private static Map<String, HttpHandler> createHandlers() {
         Map<String, HttpHandler> output = new HashMap<>();
-        output.put("/static", new StaticFileServingHandler());
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
@@ -164,14 +163,12 @@ public final class UIServer extends IIPCService {
         taskActivationConstructorManager.start();
         manuallyBuildActionConstructorManager.start();
         server = HttpServer.create(new InetSocketAddress(port), 0);
-//        server.createContext("/static", new StaticFileServingHandler());
+        server.createContext("/static", new StaticFileServingHandler());
         for (Entry<String, HttpHandler> entry : handlers.entrySet()) {
             server.createContext(entry.getKey(), entry.getValue());
         }
-
         server.start();
-
-        getLogger().info("UI server started at port: " + port);
+        getLogger().info("UI server started at port: " + server.getAddress().getPort());
     }
 
     @Override

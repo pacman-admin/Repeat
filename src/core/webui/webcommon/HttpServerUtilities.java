@@ -37,7 +37,7 @@ public final class HttpServerUtilities {
             queryParams.put(key, value);
         }
 
-        LOGGER.fine(queryParams);
+        LOGGER.finer("GET params: "+queryParams);
         return queryParams;
     }
 
