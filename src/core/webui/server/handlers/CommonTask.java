@@ -28,7 +28,7 @@ import frontEnd.Backend;
 import java.util.Map;
 import java.util.logging.Logger;
 
-@SuppressWarnings("unused")
+
 public final class CommonTask {
 
     private static final Logger LOGGER = Logger.getLogger(CommonTask.class.getName());
