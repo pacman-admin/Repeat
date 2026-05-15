@@ -38,7 +38,7 @@ public abstract class AbstractSingleMethodHttpHandler implements HttpHandler {
     }
 
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
         if (allowedMethod != null && !exchange.getRequestMethod().equalsIgnoreCase(allowedMethod)) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Only " + allowedMethod + " requests are accepted.");
             return;

@@ -44,7 +44,7 @@ public final class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHand
         RunConfig config = RunConfig.of();
         config.parse(requestMessage);
         String repeatCountString = config.getRepeatCount();
-        if (!NumberUtility.isPositiveInteger(repeatCountString)) {
+        if (NumberUtility.isPositiveInteger(repeatCountString)) {
             HttpServerUtilities.prepareTextResponse(exchange, 400, "Repeat count must be a positive integer.");
             return;
         }

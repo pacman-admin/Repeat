@@ -16,7 +16,7 @@ public final class ActionTaskActivationAddStrokesAsKeyChainHandler extends Abstr
     }
 
     @Override
-    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         //LOGGER.fine("ActionTaskActivationAddStrokesAsKeyChainHandler");
         constructor.addAsKeyChain();
         constructor.stopListening();

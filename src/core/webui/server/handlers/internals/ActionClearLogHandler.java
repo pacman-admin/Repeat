@@ -32,7 +32,7 @@ public final class ActionClearLogHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handleAsString(HttpExchange exchange) throws UnsupportedEncodingException {
+    protected String handleAsString(HttpExchange exchange) {
         Backend.clearLogs();
         return "Cleared logs.";
     }

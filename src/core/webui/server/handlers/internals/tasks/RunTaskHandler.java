@@ -52,7 +52,7 @@ public final class RunTaskHandler extends AbstractPOSTHandler {
 
         if (requestData.getRunConfig() != null) { // Custom run config is provided.
             String repeatCountString = requestData.getRunConfig().getRepeatCount();
-            if (!NumberUtility.isPositiveInteger(repeatCountString)) {
+            if (NumberUtility.isPositiveInteger(repeatCountString)) {
                 throw new IllegalArgumentException("Repeat count must be a positive integer.");
             }
             int repeatCount = Integer.parseInt(repeatCountString);

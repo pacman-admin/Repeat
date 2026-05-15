@@ -59,7 +59,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         renderedPage(exchange, "fragments/compiling_languages", data);
     }
 
-    protected final void renderedPage(HttpExchange exchange, String template, Map<String, Object> data) throws IOException {
+    protected final void renderedPage(HttpExchange exchange, String template, Map<String, Object> data) {
         LOGGER.exec(() -> {
             String page = objectRenderer.render(template, data);
             if (page == null) {

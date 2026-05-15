@@ -33,7 +33,7 @@ import java.util.logging.Logger;
 public final class StaticFileServingHandler implements HttpHandler {
     private static final Logger LOGGER = Logger.getLogger(StaticFileServingHandler.class.getName());
     @Override
-    public void handle(HttpExchange exchange) throws IOException {
+    public void handle(HttpExchange exchange) {
         LOGGER.fine("Path is " + exchange.getRequestURI());
         if (!exchange.getRequestMethod().equalsIgnoreCase("GET")) {
             HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");

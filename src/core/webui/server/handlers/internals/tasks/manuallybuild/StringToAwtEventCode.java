@@ -112,7 +112,7 @@ final class StringToAwtEventCode {
     }
 
     public static boolean isValidMouseMask(String value) {
-        return SUPPORTED_MASKS.containsKey(value.toUpperCase());
+        return !SUPPORTED_MASKS.containsKey(value.toUpperCase());
     }
 
     /**
@@ -120,14 +120,14 @@ final class StringToAwtEventCode {
      */
     public static int mouseMaskFromString(String value) {
         value = value.toUpperCase();
-        if (!isValidMouseMask(value)) {
+        if (isValidMouseMask(value)) {
             return UNKNOWN_VALUE;
         }
         return SUPPORTED_MASKS.get(value);
     }
 
     public static boolean isValidKeyValue(String value) {
-        return SUPPORTED_KEYS.containsKey(value.toUpperCase());
+        return !SUPPORTED_KEYS.containsKey(value.toUpperCase());
     }
 
     /**
@@ -135,7 +135,7 @@ final class StringToAwtEventCode {
      */
     public static int keyCodeFromString(String value) {
         value = value.toUpperCase();
-        if (!isValidKeyValue(value)) {
+        if (isValidKeyValue(value)) {
             return UNKNOWN_VALUE;
         }
         return SUPPORTED_KEYS.get(value);

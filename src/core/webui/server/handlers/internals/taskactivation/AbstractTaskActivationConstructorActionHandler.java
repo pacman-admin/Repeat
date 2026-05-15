@@ -27,7 +27,7 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
     }
 
     @Override
-    public final void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
+    public final void handleAllowedRequestWithBackend(HttpExchange exchange) {
         LOGGER.exec(() -> {
             Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
             if (params == null) {
@@ -41,11 +41,7 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             if (constructor == null) {
                 throw new NullPointerException("No constructor found for ID '" + id + "'.");
             }
-            try {
-                handleRequestWithBackendAndConstructor(exchange, constructor, params);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            handleRequestWithBackendAndConstructor(exchange, constructor, params);
         }, exchange);
     }
 
@@ -53,13 +49,9 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
         LOGGER.exec(() -> {
             Map<String, Object> data = new HashMap<>();
             data.put("task", RenderedDetailedUserDefinedAction.withEmptyTaskInfo(constructor));
-            try {
-                renderedPage(exchange, template, data);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+            renderedPage(exchange, template, data);
         }, exchange);
     }
 
-    abstract void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
+    abstract void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params);
 }

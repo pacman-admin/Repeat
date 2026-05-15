@@ -30,7 +30,7 @@ public abstract class AbstractComplexGETHandler extends AbstractSimpleHandler {
     protected abstract String handleAsString(Map<String, String> params);
 
     @Override
-    public final String handleAsString(HttpExchange exchange) throws UnsupportedEncodingException {
+    public final String handleAsString(HttpExchange exchange) {
         return handleAsString(HttpServerUtilities.parseGetParameters(exchange.getRequestURI()));
     }
 }

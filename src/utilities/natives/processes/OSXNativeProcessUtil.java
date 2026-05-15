@@ -1,8 +1,7 @@
 package utilities.natives.processes;
 
-import utilities.ExecUtil;
-
-import java.util.logging.Level;
+import java.io.BufferedReader;
+import java.io.IOException;
 import java.util.logging.Logger;
 
 /**
@@ -35,7 +34,7 @@ final class OSXNativeProcessUtil {
 
     public static NativeProcessUtil.NativeWindowInfo getActiveWindowInfo() {
         String execResult = executeActiveWindowTitleCmd();
-        if (execResult == null || execResult.isBlank()) {
+        if (execResult.isBlank()) {
             return NativeProcessUtil.NativeWindowInfo.of("", "");
         }
 
@@ -51,11 +50,19 @@ final class OSXNativeProcessUtil {
 
     private static String executeActiveWindowTitleCmd() {
         try {
-            String[] outputs = ExecUtil.execute(ACTIVE_WINDOW, "");
-            return outputs[1];
-        } catch (ExecUtil.ExecutionException e) {
-            LOGGER.log(Level.WARNING, "Exception when fetching active window title.", e);
+            Process p = Runtime.getRuntime().exec(ACTIVE_WINDOW);
+            p.waitFor();
+            BufferedReader stdErr = p.errorReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = stdErr.readLine()) != null) {
+                sb.append(line).append(System.lineSeparator());
+            }
+            stdErr.close();
+            return sb.toString();
+        } catch (IOException | InterruptedException e) {
+            throw new RuntimeException(e);
         }
-        return "";
+//        return "";
     }
 }

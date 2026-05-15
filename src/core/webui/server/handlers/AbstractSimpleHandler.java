@@ -30,7 +30,7 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
         errorMessage = errorMsg;
     }
 
-    protected abstract String handleAsString(HttpExchange exchange) throws UnsupportedEncodingException;
+    protected abstract String handleAsString(HttpExchange exchange);
 
     private String getErrorMsg(Exception e) {
         return errorMessage + "\n" + e.getMessage();

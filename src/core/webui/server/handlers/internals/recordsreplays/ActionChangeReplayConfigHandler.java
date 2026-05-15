@@ -33,7 +33,7 @@ return;
 
         String countString = params.get("count");
         if (countString != null) {
-            if (!NumberUtility.isPositiveInteger(countString)) {
+            if (NumberUtility.isPositiveInteger(countString)) {
                 HttpServerUtilities.prepareHttpResponse(exchange, 400, "Count must be positive integer."); 
 return;
             }
@@ -44,7 +44,7 @@ return;
 
         String delayString = params.get("delay");
         if (delayString != null) {
-            if (!NumberUtility.isPositiveInteger(delayString)) {
+            if (NumberUtility.isPositiveInteger(delayString)) {
                 HttpServerUtilities.prepareHttpResponse(exchange, 400, "Delay must be non-negative integer."); 
 return;
             }

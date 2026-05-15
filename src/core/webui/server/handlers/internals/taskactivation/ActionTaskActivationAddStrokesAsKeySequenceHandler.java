@@ -16,7 +16,7 @@ public final class ActionTaskActivationAddStrokesAsKeySequenceHandler extends Ab
     }
 
     @Override
-    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         constructor.addAsKeySequence();
         constructor.stopListening();
         renderedTaskActivationPage(exchange, "fragments/key_sequences", constructor);

@@ -33,7 +33,7 @@ public abstract class AbstractBooleanConfigHttpHandler extends AbstractSingleMet
     }
 
     @Override
-    public final void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
+    public final void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
         if (params == null) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse POST parameters."); 

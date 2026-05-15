@@ -18,7 +18,7 @@ public final class ActionManuallyBuildActionParametersPlaceHolderHandler extends
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws UnsupportedEncodingException {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Map<String, String> parameters = HttpServerUtilities.parseGetParameters(exchange.getRequestURI());
         if (parameters == null) {
             HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse GET parameters.");

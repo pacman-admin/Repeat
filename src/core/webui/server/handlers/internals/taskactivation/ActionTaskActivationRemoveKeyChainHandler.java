@@ -18,7 +18,7 @@ public final class ActionTaskActivationRemoveKeyChainHandler extends AbstractTas
     }
 
     @Override
-    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         String index = params.get("index");
         if (!NumberUtility.isNonNegativeInteger(index)) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Index must be non-negative integer."); 

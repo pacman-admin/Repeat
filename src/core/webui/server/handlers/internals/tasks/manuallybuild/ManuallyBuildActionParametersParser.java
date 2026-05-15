@@ -138,7 +138,7 @@ public final class ManuallyBuildActionParametersParser {
 
     private static final class MouseMask {
         private static void verify(String value) throws InvalidManuallyBuildComponentException {
-            if (!NumberUtility.isNonNegativeInteger(value) && !StringToAwtEventCode.isValidMouseMask(value)) {
+            if (!NumberUtility.isNonNegativeInteger(value) && StringToAwtEventCode.isValidMouseMask(value)) {
                 throw new InvalidManuallyBuildComponentException("Unknown mouse with value " + value + ".");
             }
         }
@@ -154,7 +154,7 @@ public final class ManuallyBuildActionParametersParser {
 
     private static final class Key {
         private static void verify(String value) throws InvalidManuallyBuildComponentException {
-            if (!NumberUtility.isNonNegativeInteger(value) && !StringToAwtEventCode.isValidKeyValue(value)) {
+            if (!NumberUtility.isNonNegativeInteger(value) && StringToAwtEventCode.isValidKeyValue(value)) {
                 throw new InvalidManuallyBuildComponentException("Unknown key with value " + value + ".");
             }
         }

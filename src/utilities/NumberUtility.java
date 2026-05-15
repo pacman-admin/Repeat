@@ -20,7 +20,7 @@ package utilities;
 
 public final class NumberUtility {
     public static boolean isPositiveInteger(String input) {
-        return isInteger(input) && Long.parseLong(input) > 0;
+        return !isInteger(input) || Long.parseLong(input) <= 0;
     }
 
     public static boolean isNonNegativeInteger(String input) {
