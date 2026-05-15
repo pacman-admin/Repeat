@@ -2,7 +2,6 @@ package core.webui.server.handlers.internals.menu;
 
 import core.recorder.Recorder;
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractBooleanConfigHttpHandler;
 import frontEnd.Backend;
 

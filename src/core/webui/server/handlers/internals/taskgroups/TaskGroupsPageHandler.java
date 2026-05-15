@@ -5,24 +5,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.userDefinedTask.TaskGroupManager;
 
 
-
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroup;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.TooltipsTaskGroupsPage;
 

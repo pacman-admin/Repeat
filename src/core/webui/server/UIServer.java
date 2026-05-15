@@ -42,7 +42,6 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.StaticFileHandler;
 //import core.webui.webcommon.StaticFileServingHandler;
 import core.webui.webcommon.StaticFileServingHandler;
-import staticResources.WebUIResources;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

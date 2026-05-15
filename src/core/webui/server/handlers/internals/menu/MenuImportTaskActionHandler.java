@@ -1,7 +1,6 @@
 package core.webui.server.handlers.internals.menu;
 
 import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;

@@ -1,20 +1,10 @@
 package core.webui.server.handlers.internals.ipcs;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.ipc.IPCServiceManager;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedIPCService;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.TooltipsIPCPage;
 

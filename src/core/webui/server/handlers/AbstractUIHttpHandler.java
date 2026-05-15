@@ -1,11 +1,9 @@
 package core.webui.server.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.ipc.IPCServiceManager;
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.TaskGroupManager;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.*;
 import core.webui.webcommon.HTTPLogger;
