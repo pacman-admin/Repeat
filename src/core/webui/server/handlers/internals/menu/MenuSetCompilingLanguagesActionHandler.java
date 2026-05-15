@@ -43,11 +43,9 @@ return;
 		try {
 			JsonNode data = taskSourceCodeFragmentHandler.render(language);
 			Backend.setCompilingLanguage(language);
-			HttpServerUtilities.prepareJsonResponse(exchange, 200, data); 
-return;
-		} catch (RenderException e) {
-			HttpServerUtilities.prepareTextResponse(exchange, 500, "Failed to render page: " + e.getMessage()); 
-return;
-		}
+			HttpServerUtilities.prepareJsonResponse(exchange, 200, data);
+        } catch (RenderException e) {
+			HttpServerUtilities.prepareTextResponse(exchange, 500, "Failed to render page: " + e.getMessage());
+        }
 	}
 }

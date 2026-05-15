@@ -16,7 +16,6 @@ public final class ActionStartReplayHandler extends AbstractSingleMethodHttpHand
 	@Override
 	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
 		Backend.startReplay();
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
-	}
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+    }
 }

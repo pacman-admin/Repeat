@@ -56,7 +56,6 @@ return;
         }
 
         constructor.setMouseGestures(chosenGestures);
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 }

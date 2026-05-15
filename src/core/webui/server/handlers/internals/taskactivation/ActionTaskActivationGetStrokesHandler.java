@@ -17,7 +17,6 @@ public final class ActionTaskActivationGetStrokesHandler extends AbstractTaskAct
     @Override
     public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         String strokes = constructor.getStrokes();
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, strokes.isBlank() ? "None" : strokes); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, strokes.isBlank() ? "None" : strokes);
     }
 }

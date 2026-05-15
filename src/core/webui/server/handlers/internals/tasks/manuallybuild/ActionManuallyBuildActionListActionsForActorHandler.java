@@ -37,7 +37,6 @@ return;
 return;
 		}
 
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
-return;
-	}
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
+    }
 }

@@ -16,7 +16,6 @@ public final class ActionStartRecordingHandler extends AbstractSingleMethodHttpH
 	@Override
 	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
 		Backend.startRecording();
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
-	}
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+    }
 }

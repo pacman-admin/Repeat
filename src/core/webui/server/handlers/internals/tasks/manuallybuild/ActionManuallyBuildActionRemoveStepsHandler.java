@@ -71,7 +71,6 @@ return;
 			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
 return;
 		}
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
-return;
-	}
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
+    }
 }

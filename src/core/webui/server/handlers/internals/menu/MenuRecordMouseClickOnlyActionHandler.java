@@ -16,6 +16,5 @@ public final class MenuRecordMouseClickOnlyActionHandler extends AbstractBoolean
             Backend.recorder.setRecordMode(Recorder.MODE_NORMAL);
         }
         emptySuccessResponse(exchange);
-return;
     }
 }

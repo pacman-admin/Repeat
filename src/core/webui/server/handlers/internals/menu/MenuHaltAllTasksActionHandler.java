@@ -16,7 +16,6 @@ public final class MenuHaltAllTasksActionHandler extends AbstractSingleMethodHtt
 	@Override
 	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
 		Backend.haltAllTasks();
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
-	}
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+    }
 }

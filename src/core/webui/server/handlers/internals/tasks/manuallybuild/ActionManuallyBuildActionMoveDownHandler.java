@@ -68,6 +68,5 @@ public final class ActionManuallyBuildActionMoveDownHandler extends AbstractUIHt
             return;
         }
         HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
-        return;
     }
 }

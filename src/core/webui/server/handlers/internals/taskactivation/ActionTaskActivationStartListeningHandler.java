@@ -18,7 +18,6 @@ public final class ActionTaskActivationStartListeningHandler extends AbstractTas
     @Override
     public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         constructor.startListening();
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 }

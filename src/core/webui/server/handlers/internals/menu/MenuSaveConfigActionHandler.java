@@ -15,6 +15,5 @@ public final class MenuSaveConfigActionHandler extends AbstractSingleMethodHttpH
     public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Backend.writeConfigFile();
         emptySuccessResponse(exchange);
-        return;
     }
 }

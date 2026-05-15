@@ -36,7 +36,6 @@ public final class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHtt
 return;
         }
 
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
     }
 }

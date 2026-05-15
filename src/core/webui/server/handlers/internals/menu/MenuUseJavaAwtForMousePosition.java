@@ -11,6 +11,5 @@ public final class MenuUseJavaAwtForMousePosition extends AbstractBooleanConfigH
     public void handleAllowedRequestWithBackendAndValue(HttpExchange exchange, boolean value) {
         Backend.config.setUseJavaAwtToGetMousePosition(value);
         emptySuccessResponse(exchange);
-        return;
     }
 }

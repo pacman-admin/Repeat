@@ -19,7 +19,6 @@ public final class ActionTaskActivationStopListeningHandler extends AbstractTask
     public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         constructor.stopListening();
         constructor.clearStrokes();
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 }

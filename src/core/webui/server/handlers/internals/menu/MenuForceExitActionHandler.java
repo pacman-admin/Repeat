@@ -26,7 +26,6 @@ public final class MenuForceExitActionHandler extends AbstractSingleMethodHttpHa
             }
         }, EXIT_DELAY_MS);
 
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting after " + EXIT_DELAY_MS + "ms..."); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting after " + EXIT_DELAY_MS + "ms...");
     }
 }

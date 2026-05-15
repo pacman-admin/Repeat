@@ -33,7 +33,6 @@ public final class ActionTaskActivationAddMouseKey extends AbstractTaskActivatio
             default -> throw new IllegalArgumentException("Invalid key in exchange.");
         }
         constructor.addMouseKey(MouseKey.of(mouseKey));
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, constructor.getStrokes()); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, constructor.getStrokes());
     }
 }

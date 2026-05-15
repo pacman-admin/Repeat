@@ -59,6 +59,5 @@ public final class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHand
 
         Backend.setRunActionConfig(RunActionConfig.of(repeatCount, delayMs));
         HttpServerUtilities.prepareTextResponse(exchange, 200, "");
-        return;
     }
 }

@@ -34,7 +34,6 @@ public final class GetRenderedTaskGroupsDropdown extends AbstractUIHttpHandler {
 return;
 		}
 
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
-return;
-	}
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
+    }
 }

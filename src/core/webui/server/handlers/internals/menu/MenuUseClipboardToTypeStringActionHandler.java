@@ -11,6 +11,5 @@ public final class MenuUseClipboardToTypeStringActionHandler extends AbstractBoo
     public void handleAllowedRequestWithBackendAndValue(HttpExchange exchange, boolean value) {
         Backend.config.setUseClipboardToTypeString(value && OSIdentifier.getCurrentOS().isClipboardSupported);
         emptySuccessResponse(exchange);
-return;
     }
 }

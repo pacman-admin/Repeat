@@ -16,7 +16,6 @@ public final class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttp
     @Override
     public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Backend.runCompiledAction();
-        HttpServerUtilities.prepareTextResponse(exchange, 200, ""); 
-return;
+        HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }
 }

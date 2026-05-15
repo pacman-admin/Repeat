@@ -30,7 +30,6 @@ public final class GetRunTaskConfigHandler extends AbstractUIHttpHandler {
 return;
         }
 
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
     }
 }

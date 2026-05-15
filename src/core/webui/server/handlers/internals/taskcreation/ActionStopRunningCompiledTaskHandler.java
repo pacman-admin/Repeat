@@ -16,7 +16,6 @@ public final class ActionStopRunningCompiledTaskHandler extends AbstractSingleMe
     @Override
     public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Backend.stopRunningCompiledAction();
-        HttpServerUtilities.prepareTextResponse(exchange, 200, ""); 
-return;
+        HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }
 }

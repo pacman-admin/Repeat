@@ -43,7 +43,6 @@ return;
             HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code."); 
 return;
         }
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 }

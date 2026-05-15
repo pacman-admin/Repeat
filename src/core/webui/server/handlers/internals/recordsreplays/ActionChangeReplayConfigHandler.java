@@ -78,8 +78,7 @@ return;
 return;
         }
 
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode())); 
-return;
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode()));
     }
 
     @SuppressWarnings("unused")

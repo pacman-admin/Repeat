@@ -11,6 +11,5 @@ public final class MenuExecuteOnReleaseActionHandler extends AbstractBooleanConf
     public void handleAllowedRequestWithBackendAndValue(HttpExchange exchange, boolean value) {
         Backend.config.setExecuteOnKeyReleased(value);
         emptySuccessResponse(exchange);
-return;
     }
 }
