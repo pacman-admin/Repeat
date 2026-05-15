@@ -15,12 +15,11 @@
  */
 package core.webui.server.handlers;
 
-import org.apache.http.HttpRequest;
 
 public abstract class AbstractPOSTHandler extends AbstractSimpleHandler {
     protected AbstractPOSTHandler(String errorMsg) {
         super(AbstractSingleMethodHttpHandler.POST_METHOD, errorMsg);
     }
 
-    protected abstract String handle(HttpRequest r);
+//    protected abstract String handle(HttpRequest r);
 }

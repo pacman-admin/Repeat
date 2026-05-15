@@ -3,13 +3,21 @@ package core.webui.server.handlers.internals.taskgroups;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import core.userDefinedTask.TaskGroup;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.CommonTask;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 
@@ -20,23 +28,26 @@ public final class ActionChangeTaskGroupNameHandler extends AbstractUIHttpHandle
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+	public void handleAllowedRequestWithBackend(HttpExchange exchange)
 			throws IOException {
-		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
 		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters."); 
+return;
 		}
 		TaskGroup group = CommonTask.getTaskGroupFromRequest( params, false);
 		if (group == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get task group.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get task group."); 
+return;
 		}
 
 		String name = params.get("name");
 		if (name == null || name.isBlank()) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Group name must be provided.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Group name must be provided."); 
+return;
 		}
 
 		group.setName(name);
-		return renderedTaskGroups(exchange);
+		renderedTaskGroups(exchange);
 	}
 }

@@ -2,8 +2,10 @@ package core.webui.server.handlers.internals.taskactivation;
 
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -15,10 +17,10 @@ public final class ActionTaskActivationAddStrokesAsKeyChainHandler extends Abstr
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
         //LOGGER.fine("ActionTaskActivationAddStrokesAsKeyChainHandler");
         constructor.addAsKeyChain();
         constructor.stopListening();
-        return renderedTaskActivationPage(exchange, "fragments/key_chains", constructor);
+        renderedTaskActivationPage(exchange, "fragments/key_chains", constructor);
     }
 }

@@ -1,12 +1,20 @@
 package core.webui.server.handlers.internals.menu;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedConfig;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,9 +27,9 @@ public final class MenuGetDebugLevelOptionsActionHandler extends AbstractUIHttpH
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("config", new RenderedConfig(Backend.config, Backend.recorder));
-        return renderedPage(exchange, "fragments/debug_levels", data);
+        renderedPage(exchange, "fragments/debug_levels", data);
     }
 }

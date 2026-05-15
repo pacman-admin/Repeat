@@ -1,10 +1,12 @@
 package core.webui.server.handlers.internals.menu;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 
 public final class MenuExitActionHandler extends AbstractSingleMethodHttpHandler {
 
@@ -13,8 +15,8 @@ public final class MenuExitActionHandler extends AbstractSingleMethodHttpHandler
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Backend.exit(3000);
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting...");
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting...");
     }
 }

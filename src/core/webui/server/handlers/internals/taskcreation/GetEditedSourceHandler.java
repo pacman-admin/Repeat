@@ -15,6 +15,8 @@
  */
 package core.webui.server.handlers.internals.taskcreation;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractGETHandler;
 import frontEnd.Backend;
 
@@ -23,7 +25,7 @@ public final class GetEditedSourceHandler extends AbstractGETHandler {
         super("Could not load edits to source code.");
     }
 
-    protected String handle() {
+    protected String handleAsString() {
         return Backend.reloadSource();
     }
 }

@@ -10,7 +10,11 @@ import core.languageHandler.sourceGenerator.AbstractSourceGenerator;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.manualBuild.ManuallyBuildAction;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionBuilderBody;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
 public final class TaskSourceCodeFragmentHandler {
@@ -25,8 +29,6 @@ public final class TaskSourceCodeFragmentHandler {
 
 	public JsonNode render(Language language) throws RenderException {
 		if (language == Language.MANUAL_BUILD) {
-//			Map<String, Object> data = new HashMap<>();
-//			data.put("displayManualBuild", true);
 			String id = manuallyBuildActionConstructorManager.addNew();
 			return renderManuallyBuildActionConstructor(id);
 		}

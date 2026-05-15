@@ -18,9 +18,12 @@
  */
 package core.webui.server.handlers.internals;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
+
+import java.io.UnsupportedEncodingException;
+
 
 public final class ActionClearLogHandler extends AbstractPOSTHandler {
 
@@ -29,7 +32,7 @@ public final class ActionClearLogHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handle(HttpRequest ignored) {
+    protected String handleAsString(HttpExchange exchange) throws UnsupportedEncodingException {
         Backend.clearLogs();
         return "Cleared logs.";
     }

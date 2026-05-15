@@ -18,10 +18,13 @@
  */
 package core.webui.server.handlers.internals.taskcreation;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
+
 
 import java.nio.charset.StandardCharsets;
 
@@ -31,8 +34,8 @@ public final class ActionCompileTaskHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handle(HttpRequest request) {
-        byte[] data = HttpServerUtilities.getPostContent(request);
+    protected String handleAsString(HttpExchange exchange) {
+        byte[] data = HttpServerUtilities.getPostContent(exchange);
         if (data == null) throw new IllegalArgumentException("Unable to get POST request data.");
         String source = new String(data, StandardCharsets.UTF_8);
         if (source.isBlank()) throw new IllegalArgumentException("Nothing to compile.");

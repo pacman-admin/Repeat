@@ -19,13 +19,12 @@
 package core.webui.server.handlers.internals.tasks;
 
 import argo.jdom.JsonNode;
+import com.sun.net.httpserver.HttpExchange;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.internals.tasks.RunTaskRequest.RunConfig;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.NumberUtility;
 
 public final class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHandler {
@@ -35,27 +34,31 @@ public final class SaveRunTaskConfigHandler extends AbstractSingleMethodHttpHand
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        JsonNode requestMessage = HttpServerUtilities.parsePostParameters(request);
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+        JsonNode requestMessage = HttpServerUtilities.parsePostParameters(exchange);
         if (requestMessage == null) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse JSON from request parameter.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse JSON from request parameter.");
+            return;
         }
 
         RunConfig config = RunConfig.of();
         config.parse(requestMessage);
         String repeatCountString = config.getRepeatCount();
         if (!NumberUtility.isPositiveInteger(repeatCountString)) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Repeat count must be a positive integer.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Repeat count must be a positive integer.");
+            return;
         }
         int repeatCount = Integer.parseInt(repeatCountString);
 
         String delayMsString = config.getDelayMsBetweenRepeat();
         if (!NumberUtility.isNonNegativeInteger(delayMsString)) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Delay in milliseconds must be a non-negative integer.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Delay in milliseconds must be a non-negative integer.");
+            return;
         }
         long delayMs = Long.parseLong(delayMsString);
 
         Backend.setRunActionConfig(RunActionConfig.of(repeatCount, delayMs));
-        return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
+        HttpServerUtilities.prepareTextResponse(exchange, 200, "");
+        return;
     }
 }

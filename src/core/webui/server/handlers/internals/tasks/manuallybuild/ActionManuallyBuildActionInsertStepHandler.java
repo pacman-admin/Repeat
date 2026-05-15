@@ -4,15 +4,23 @@ import argo.jdom.JsonNode;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpStatus;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,24 +36,28 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        return LOGGER.exec(() -> {
-            JsonNode params = HttpServerUtilities.parsePostParameters(request);
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+        LOGGER.exec(() -> {
+            JsonNode params = HttpServerUtilities.parsePostParameters(exchange);
             if (params == null) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters."); 
+return;
             }
 
             if (!params.isStringValue("id")) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
+return;
             }
 
             String id = params.getStringValue("id");
             if (id == null || id.isBlank()) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
+return;
             }
 
             if (!params.isNumberValue("index")) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No index provided.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "No index provided."); 
+return;
             }
 
             int index = Integer.parseInt(params.getNumberValue("index"));
@@ -55,7 +67,8 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
 
             ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
             if (constructor == null) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder for ID " + id + ".");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder for ID " + id + "."); 
+return;
             }
             if (index >= constructor.getSteps().size()) {
                 index = Math.max(0, constructor.getSteps().size() - 1);
@@ -65,10 +78,12 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
             try {
                 step = getStepFromRequest(params);
             } catch (InvalidManuallyBuildComponentException e) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, e.getMessage());
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, e.getMessage()); 
+return;
             }
             if (step == null) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot parse step.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 500, "Cannot parse step."); 
+return;
             }
 
             constructor.addStep(index, step);
@@ -77,9 +92,11 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
             data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));
             String page = objectRenderer.render("fragments/task_builder_steps_table_rendered", data);
             if (page == null) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
+return;
             }
-            return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+            HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
+return;
 
         }, exchange);
     }

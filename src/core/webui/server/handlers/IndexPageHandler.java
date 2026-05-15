@@ -7,23 +7,42 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.userDefinedTask.TaskGroupManager;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionBuilderBody;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedCompilingLanguage;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedConfig;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedReplayConfig;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedRunTaskConfig;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroupButton;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedUserDefinedAction;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.TooltipsIndexPage;
 import utilities.DateUtility;
 
@@ -37,7 +56,7 @@ public final class IndexPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+	public void handleAllowedRequestWithBackend(HttpExchange exchange)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		data.put("replayConfig", RenderedReplayConfig.fromReplayConfig(Backend.replayConfig));
@@ -66,7 +85,7 @@ public final class IndexPageHandler extends AbstractUIHttpHandler {
 			data.putAll(manuallyBuildBodyData);
 		}
 
-		return renderedPage(exchange, "index", data);
+		renderedPage(exchange, "index", data);
 	}
 
 	private String getExecutionTime() {

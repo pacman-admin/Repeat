@@ -15,9 +15,11 @@
  */
 package core.webui.server.handlers;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+import java.io.UnsupportedEncodingException;
+
 
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     private final String errorMessage;
@@ -28,24 +30,24 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
         errorMessage = errorMsg;
     }
 
-    abstract String handle(HttpRequest r);
+    protected abstract String handleAsString(HttpExchange exchange) throws UnsupportedEncodingException;
 
     private String getErrorMsg(Exception e) {
         return errorMessage + "\n" + e.getMessage();
     }
 
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    public final void handleAllowedRequestWithBackend(HttpExchange exchange) {
         try {
-            String data = handle(request);
-            return HttpServerUtilities.prepareTextResponse(exchange, 200, data);
+            String data = handleAsString(exchange);
+            HttpServerUtilities.prepareTextResponse(exchange, 200, data);
         } catch (NullPointerException e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
         } catch (IllegalArgumentException e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
         } catch (IllegalStateException e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 503, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 503, getErrorMsg(e));
         } catch (Exception e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
         }
     }
 }

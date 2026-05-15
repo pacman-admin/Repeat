@@ -1,11 +1,13 @@
 package core.webui.server.handlers.internals.taskcreation;
 
 import core.languageHandler.sourceGenerator.AbstractSourceGenerator;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 public final class GetSourceTemplateHandler extends AbstractSingleMethodHttpHandler {
 
@@ -14,8 +16,9 @@ public final class GetSourceTemplateHandler extends AbstractSingleMethodHttpHand
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         String source = AbstractSourceGenerator.getReferenceSource(Backend.getSelectedLanguage());
-        return HttpServerUtilities.prepareTextResponse(exchange, 200, source);
+        HttpServerUtilities.prepareTextResponse(exchange, 200, source); 
+return;
     }
 }

@@ -1,11 +1,14 @@
 package core.webui.server.handlers.internals.taskactivation;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.keyChain.MouseKey;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 
 import java.awt.event.InputEvent;
 import java.util.Map;
@@ -17,7 +20,7 @@ public final class ActionTaskActivationAddMouseKey extends AbstractTaskActivatio
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         if (!constructor.isListening()) {
             throw new IllegalStateException("Enable key listening before adding mouse click.");
         }
@@ -29,9 +32,10 @@ public final class ActionTaskActivationAddMouseKey extends AbstractTaskActivatio
             case "LEFT" -> mouseKey = InputEvent.BUTTON1_DOWN_MASK;
             case "RIGHT" -> mouseKey = InputEvent.BUTTON3_DOWN_MASK;
             case "MIDDLE" -> mouseKey = InputEvent.BUTTON2_DOWN_MASK;
-            default -> throw new IllegalArgumentException("Invalid key in request.");
+            default -> throw new IllegalArgumentException("Invalid key in exchange.");
         }
         constructor.addMouseKey(MouseKey.of(mouseKey));
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, constructor.getStrokes());
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, constructor.getStrokes()); 
+return;
     }
 }

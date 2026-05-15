@@ -18,6 +18,8 @@
  */
 package core.webui.server.handlers.internals;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractGETHandler;
 import frontEnd.Backend;
 
@@ -30,7 +32,7 @@ public final class GetMousePositionHandler extends AbstractGETHandler {
     }
 
     @Override
-    protected String handle() {
+    protected String handleAsString() {
         Point p = Backend.getCore().mouse().getPosition();
         return p.x + ", " + p.y;
     }

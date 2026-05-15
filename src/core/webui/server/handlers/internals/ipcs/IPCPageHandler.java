@@ -1,13 +1,24 @@
 package core.webui.server.handlers.internals.ipcs;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.ipc.IPCServiceManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedIPCService;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.TooltipsIPCPage;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -21,11 +32,11 @@ public final class IPCPageHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+    public void handleAllowedRequestWithBackend(HttpExchange exchange)
             throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("ipcs", List.of(RenderedIPCService.of(IPCServiceManager.getUIServer())));
         data.put("tooltips", new TooltipsIPCPage());
-        return renderedPage(exchange, "ipcs", data);
+        renderedPage(exchange, "ipcs", data);
     }
 }

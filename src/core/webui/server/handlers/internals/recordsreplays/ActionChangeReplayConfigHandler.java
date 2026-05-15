@@ -1,11 +1,13 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
 import argo.jdom.JsonNode;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 import utilities.NumberUtility;
 import utilities.json.JSONUtility;
 import utilities.json.Jsonizer;
@@ -19,10 +21,11 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
         if (params == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters."); 
+return;
         }
 
         long count;
@@ -32,7 +35,8 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
         String countString = params.get("count");
         if (countString != null) {
             if (!NumberUtility.isPositiveInteger(countString)) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Count must be positive integer.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Count must be positive integer."); 
+return;
             }
             count = Long.parseLong(countString);
         } else {
@@ -42,7 +46,8 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
         String delayString = params.get("delay");
         if (delayString != null) {
             if (!NumberUtility.isPositiveInteger(delayString)) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Delay must be non-negative integer.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Delay must be non-negative integer."); 
+return;
             }
             delay = Long.parseLong(delayString);
         } else {
@@ -52,11 +57,13 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
         String speedupString = params.get("speedup");
         if (speedupString != null) {
             if (!NumberUtility.isDouble(speedupString)) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a float number.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a float number."); 
+return;
             }
             speedup = Float.parseFloat(speedupString);
             if (speedup <= 0) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a positive float number.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a positive float number."); 
+return;
             }
         } else {
             speedup = Backend.replayConfig.getSpeedup();
@@ -68,10 +75,12 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
 
         JsonNode responseNode = Jsonizer.jsonize(ResponseMessage.of(count, delay, speedup));
         if (responseNode == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to jsonize response.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to jsonize response."); 
+return;
         }
 
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode()));
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode())); 
+return;
     }
 
     @SuppressWarnings("unused")

@@ -1,5 +1,6 @@
 package core.webui.server.handlers.internals.tasks;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.keyChain.ActionInvoker;
 import core.keyChain.KeyChain;
 import core.keyChain.TaskActivationConstructor;
@@ -11,10 +12,9 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedDetailedUserDefinedAction;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -42,33 +42,32 @@ public final class TaskDetailsPageHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
-        String uriString = request.getRequestLine().getUri();
-        Map<String, String> params = HttpServerUtilities.parseGetParameters(uriString);
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
+        URI uri = exchange.getRequestURI();
+        Map<String, String> params = HttpServerUtilities.parseGetParameters(uri);
         if (params == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse URL " + uriString);
+            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse URL " + uri);
+            return;
         }
 
         String id = params.get("id");
         if (id == null || id.isBlank()) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Task ID is empty or not provided.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Task ID is empty or not provided.");
+            return;
         }
         if (isHotkey(id)) {
-            return handleNewHotkey(exchange, id);
+            handleNewHotkey(exchange, id);
         }
 
         UserDefinedAction action = Backend.getTask(id);
-//        if (action == null) {
-//            return HttpServerUtilities.prepareHttpResponse(exchange, 404, "Cannot find task with ID " + id + ".");
-//        }
 
         String activationConstructorId = taskActivationConstructorManager.addNewConstructor(action.getActivation());
         TaskActivationConstructor activationConstructor = taskActivationConstructorManager.get(activationConstructorId);
         RenderedDetailedUserDefinedAction renderedDetailedUserDefinedAction = RenderedDetailedUserDefinedAction.fromUserDefinedAction(action, activationConstructor);
-        return renderTaskDetails(exchange, activationConstructorId, renderedDetailedUserDefinedAction);
+        renderTaskDetails(exchange, activationConstructorId, renderedDetailedUserDefinedAction);
     }
 
-    private Void handleNewHotkey(HttpAsyncExchange exchange, String taskString) throws IOException {
+    private void handleNewHotkey(HttpExchange exchange, String taskString) throws IOException {
         String activationConstructorId = "";
         if (taskString.equals(RECORD_TASK_NAME)) {
             KeyChain recordKeyChain = Backend.config.getRECORD();
@@ -87,19 +86,20 @@ public final class TaskDetailsPageHandler extends AbstractUIHttpHandler {
             activationConstructorId = taskActivationConstructorManager.addNewConstructor(ActionInvoker.newBuilder().withHotKey(mouseGestureKeyChain).build(), TaskActivationConstructor.Config.ofRestricted().setDisableKeyChain(false).setMaxStrokes(1));
         }
         if (activationConstructorId.isBlank()) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString);
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString);
+            return;
         }
 
         TaskActivationConstructor activationConstructor = taskActivationConstructorManager.get(activationConstructorId);
         RenderedDetailedUserDefinedAction renderedDetailedUserDefinedAction = RenderedDetailedUserDefinedAction.fromHotkey(taskString, HOTKEY_NAMES.getOrDefault(taskString, ""), activationConstructor);
-        return renderTaskDetails(exchange, activationConstructorId, renderedDetailedUserDefinedAction);
+        renderTaskDetails(exchange, activationConstructorId, renderedDetailedUserDefinedAction);
     }
 
-    private Void renderTaskDetails(HttpAsyncExchange exchange, String activationConstructorId, RenderedDetailedUserDefinedAction renderedDetailedUserDefinedAction) throws IOException {
+    private void renderTaskDetails(HttpExchange exchange, String activationConstructorId, RenderedDetailedUserDefinedAction renderedDetailedUserDefinedAction) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("task", renderedDetailedUserDefinedAction);
         data.put("taskActivationConstructorId", activationConstructorId);
-        return renderedPage(exchange, "task_details", data);
+        renderedPage(exchange, "task_details", data);
     }
 
     private boolean isHotkey(String taskString) {

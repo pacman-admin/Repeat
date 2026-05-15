@@ -18,15 +18,15 @@
  */
 package core.webui.server.handlers;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HTTPLogger;
-import core.webui.webcommon.HttpHandlerWithBackend;
+import com.sun.net.httpserver.HttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 
 import java.io.IOException;
 
-public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBackend {
+public abstract class AbstractSingleMethodHttpHandler implements HttpHandler {
 
     protected static final String GET_METHOD = "GET";
     protected static final String POST_METHOD = "POST";
@@ -38,17 +38,23 @@ public abstract class AbstractSingleMethodHttpHandler extends HttpHandlerWithBac
     }
 
     @Override
-    protected final void handle(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
-        if (allowedMethod != null && !request.getRequestLine().getMethod().equalsIgnoreCase(allowedMethod)) {
+    public void handle(HttpExchange exchange) throws IOException {
+        if (allowedMethod != null && !exchange.getRequestMethod().equalsIgnoreCase(allowedMethod)) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Only " + allowedMethod + " requests are accepted.");
             return;
         }
-        LOGGER.exec(() -> handleAllowedRequestWithBackend(request, exchange), exchange);
+        LOGGER.exec(() -> {
+            try {
+                handleAllowedRequestWithBackend(exchange);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }, exchange);
     }
 
-    protected final Void emptySuccessResponse(HttpAsyncExchange exchange) {
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+    protected final void emptySuccessResponse(HttpExchange exchange) {
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 
-    protected abstract Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException;
+    protected abstract void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException;
 }

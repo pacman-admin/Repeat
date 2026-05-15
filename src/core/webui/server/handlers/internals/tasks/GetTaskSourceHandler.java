@@ -19,6 +19,8 @@
 package core.webui.server.handlers.internals.tasks;
 
 import core.userDefinedTask.UserDefinedAction;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractComplexGETHandler;
 import frontEnd.Backend;
 
@@ -31,7 +33,7 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
     }
 
     @Override
-    protected String handle(Map<String, String> params) {
+    protected String handleAsString(Map<String, String> params) {
 
         if (params == null) throw new IllegalArgumentException("Params must not be null.");
 
@@ -43,7 +45,6 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
             throw new IllegalArgumentException("Timestamp is empty or not provided.");
 
         UserDefinedAction action = Backend.getTask(id);
-//        if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
 
         long timestamp = Long.parseLong(timestampString);
         String sourceCode = Backend.getSourceForTask(action, timestamp);

@@ -1,9 +1,12 @@
 package core.webui.server.handlers.internals.menu;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 public final class MenuCleanUnusedSourcesActionHandler extends AbstractSingleMethodHttpHandler {
 
@@ -12,8 +15,8 @@ public final class MenuCleanUnusedSourcesActionHandler extends AbstractSingleMet
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Backend.cleanUnusedSource();
-        return emptySuccessResponse(exchange);
+        emptySuccessResponse(exchange);
     }
 }

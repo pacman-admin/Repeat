@@ -1,9 +1,11 @@
 package core.webui.server.handlers.internals.menu;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
+
 
 import java.io.File;
 import java.nio.file.Files;
@@ -17,7 +19,7 @@ public final class MenuExportTaskActionHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handle(HttpRequest r) {
+    protected String handleAsString(HttpExchange r) {
         Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(r);
         if (params == null) {
             throw new IllegalArgumentException("Failed to get POST parameters.");

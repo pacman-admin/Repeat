@@ -18,6 +18,8 @@
  */
 package core.webui.server.handlers.internals;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractComplexGETHandler;
 import utilities.json.JSONUtility;
 import utilities.json.Jsonizer;
@@ -35,7 +37,7 @@ public final class GetPathSuggestionHandler extends AbstractComplexGETHandler {
     }
 
     @Override
-    protected String handle(Map<String, String> params) {
+    protected String handleAsString(Map<String, String> params) {
         if (params == null) {
             throw new IllegalArgumentException("No parameters supplied.");
         }

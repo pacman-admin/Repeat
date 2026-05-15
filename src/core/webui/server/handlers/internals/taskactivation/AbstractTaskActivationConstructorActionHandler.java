@@ -1,15 +1,24 @@
 package core.webui.server.handlers.internals.taskactivation;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedDetailedUserDefinedAction;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,9 +35,9 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
     }
 
     @Override
-    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
-        return LOGGER.exec(() -> {
-            Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+    public final void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
+        LOGGER.exec(() -> {
+            Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
             if (params == null) {
                 throw new IllegalArgumentException("Failed to get POST parameters.");
             }
@@ -40,17 +49,25 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             if (constructor == null) {
                 throw new NullPointerException("No constructor found for ID '" + id + "'.");
             }
-            return handleRequestWithBackendAndConstructor(exchange, constructor, params);
+            try {
+                handleRequestWithBackendAndConstructor(exchange, constructor, params);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }, exchange);
     }
 
-    final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) {
-        return LOGGER.exec(() -> {
+    final void renderedTaskActivationPage(HttpExchange exchange, String template, TaskActivationConstructor constructor) {
+        LOGGER.exec(() -> {
             Map<String, Object> data = new HashMap<>();
             data.put("task", RenderedDetailedUserDefinedAction.withEmptyTaskInfo(constructor));
-            return renderedPage(exchange, template, data);
+            try {
+                renderedPage(exchange, template, data);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }, exchange);
     }
 
-    abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
+    abstract void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
 }

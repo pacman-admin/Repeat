@@ -4,16 +4,24 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpStatus;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
+
 
 import argo.jdom.JsonNode;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.webcommon.HttpServerUtilities;
 
@@ -28,28 +36,33 @@ public final class ActionManuallyBuildActionRemoveStepsHandler extends AbstractU
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-		JsonNode params = HttpServerUtilities.parsePostParameters(request);
+	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+		JsonNode params = HttpServerUtilities.parsePostParameters(exchange);
 		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters."); 
+return;
 		}
 
 		if (!params.isStringValue("id")) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
+return;
 		}
 
 		String id = params.getStringValue("id");
 		if (id == null || id.isBlank()) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
+return;
 		}
 
 		if (!params.isArrayNode("indices")) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices is not an array node.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices is not an array node."); 
+return;
 		}
 
 		List<JsonNode> indicesNodes = params.getArrayNode("indices");
 		if (indicesNodes.stream().anyMatch(n -> !n.isNumberValue())) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices must all be integers.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices must all be integers."); 
+return;
 		}
 		// Get indices, largest one first.
 		List<Integer> indices = indicesNodes.stream().map(n -> Integer.parseInt(n.getNumberValue())).sorted((i1, i2) -> Integer.compare(i2, i1)).toList();
@@ -62,8 +75,10 @@ public final class ActionManuallyBuildActionRemoveStepsHandler extends AbstractU
 		data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));
 		String page = objectRenderer.render("fragments/task_builder_steps_table_rendered", data);
 		if (page == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
+return;
 		}
-		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+		HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
+return;
 	}
 }

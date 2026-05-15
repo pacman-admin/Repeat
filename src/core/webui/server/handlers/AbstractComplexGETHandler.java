@@ -15,9 +15,10 @@
  */
 package core.webui.server.handlers;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpRequest;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public abstract class AbstractComplexGETHandler extends AbstractSimpleHandler {
@@ -26,10 +27,10 @@ public abstract class AbstractComplexGETHandler extends AbstractSimpleHandler {
         super(AbstractSingleMethodHttpHandler.GET_METHOD, errorMsg);
     }
 
-    protected abstract String handle(Map<String, String> params);
+    protected abstract String handleAsString(Map<String, String> params);
 
     @Override
-    String handle(HttpRequest request) {
-        return handle(HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri()));
+    public final String handleAsString(HttpExchange exchange) throws UnsupportedEncodingException {
+        return handleAsString(HttpServerUtilities.parseGetParameters(exchange.getRequestURI()));
     }
 }

@@ -4,11 +4,17 @@ import java.io.IOException;
 import java.util.Map;
 
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
 
+
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 
@@ -19,19 +25,21 @@ public final class ActionAddTaskGroupHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+	public void handleAllowedRequestWithBackend(HttpExchange exchange)
 			throws IOException {
-		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
 		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters."); 
+return;
 		}
 
 		String name = params.get("name");
 		if (name == null || name.isBlank()) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Group name must be provided.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Group name must be provided."); 
+return;
 		}
 
 		Backend.addTaskGroup(name);
-		return renderedTaskGroups(exchange);
+		renderedTaskGroups(exchange);
 	}
 }

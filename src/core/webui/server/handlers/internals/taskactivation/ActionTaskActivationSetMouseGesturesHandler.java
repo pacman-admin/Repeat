@@ -4,10 +4,14 @@ import argo.jdom.JsonNode;
 import core.keyChain.MouseGesture;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedMouseGestureActivation;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 import utilities.json.JSONUtility;
 
 import java.util.*;
@@ -19,23 +23,27 @@ public final class ActionTaskActivationSetMouseGesturesHandler extends AbstractT
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         String nodeString = params.get("gestures");
         if (nodeString == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be provided.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be provided."); 
+return;
         }
 
         JsonNode node = JSONUtility.jsonFromString(nodeString);
         if (node == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse list of gesture indices as JSON.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse list of gesture indices as JSON."); 
+return;
         }
         if (!node.isArrayNode()) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be a list.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be a list."); 
+return;
         }
         List<Integer> indices = new ArrayList<>();
         for (JsonNode index : node.getNullableArrayNode()) {
             if (!index.isNumberValue()) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "All gesture indices must be numbers.");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "All gesture indices must be numbers."); 
+return;
             }
             indices.add(Integer.parseInt(index.getNumberValue()));
         }
@@ -44,12 +52,14 @@ public final class ActionTaskActivationSetMouseGesturesHandler extends AbstractT
         Set<MouseGesture> chosenGestures = new HashSet<>();
         for (int i : indices) {
             if (i < 0 || i >= gestures.length) {
-                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Gesture index out of bound: " + i + ".");
+                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Gesture index out of bound: " + i + "."); 
+return;
             }
             chosenGestures.add(gestures[i]);
         }
 
         constructor.setMouseGestures(chosenGestures);
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, ""); 
+return;
     }
 }

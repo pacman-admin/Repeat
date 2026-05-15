@@ -5,14 +5,25 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.userDefinedTask.TaskGroupManager;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
 
+
+
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroup;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.TooltipsTaskGroupsPage;
 
 public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
@@ -22,7 +33,7 @@ public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+	public void handleAllowedRequestWithBackend(HttpExchange exchange)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		data.put("groups", TaskGroupManager.getTaskGroups()
@@ -30,6 +41,6 @@ public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 				.collect(Collectors.toList()));
 		data.put("tooltips", new TooltipsTaskGroupsPage());
 
-		return renderedPage(exchange, "task_groups", data);
+		renderedPage(exchange, "task_groups", data);
 	}
 }

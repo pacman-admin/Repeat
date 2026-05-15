@@ -1,13 +1,21 @@
 package core.webui.server.handlers.internals.taskmanagement;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.CommonTask;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import java.io.IOException;
 import java.util.Map;
@@ -19,21 +27,24 @@ public final class ActionChangeTaskGroupForTaskHandler extends AbstractUIHttpHan
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
         if (params == null) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Failed to parse POST data."); 
+return;
         }
         String groupId = CommonTask.getTaskGroupIdFromRequest( params);
         if (groupId == null || groupId.isBlank()) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get group ID.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get group ID."); 
+return;
         }
         String taskId = CommonTask.getTaskIdFromRequest(params);
         if (taskId.isBlank()) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get task ID.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to get task ID."); 
+return;
         }
 
         Backend.changeTaskGroup(taskId, groupId);
-        return renderedTaskForGroup(exchange);
+        renderedTaskForGroup(exchange);
     }
 }

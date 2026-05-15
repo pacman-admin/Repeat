@@ -2,22 +2,18 @@ package core.webui.webcommon;
 
 import argo.jdom.JsonField;
 import argo.jdom.JsonNode;
-import org.apache.http.*;
-import org.apache.http.entity.BasicHttpEntity;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.nio.protocol.BasicAsyncResponseProducer;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+import com.sun.net.httpserver.HttpExchange;
 import utilities.json.JSONUtility;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URISyntaxException;
+import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.List;
+import java.util.LinkedHashMap;
 import java.util.Map;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class HttpServerUtilities {
@@ -28,23 +24,25 @@ public final class HttpServerUtilities {
         throw new InstantiationError("This class is uninstantiable.");
     }
 
-    public static Map<String, String> parseGetParameters(String url) {
-        try {
-            List<NameValuePair> paramList = URLEncodedUtils.parse(new URI(url), StandardCharsets.UTF_8);
-            Map<String, String> params = new HashMap<>();
-            for (NameValuePair param : paramList) {
-                params.put(param.getName(), param.getValue());
-                LOGGER.fine(param.getName() + ", " + param.getValue());
-            }
-            return params;
-        } catch (URISyntaxException e) {
-            LOGGER.log(Level.WARNING, "Exception when parsing URL.", e);
-            return null;
+    public static Map<String, String> parseGetParameters(URI url) throws UnsupportedEncodingException {
+        String query = url.getQuery(); // Returns "q=java+parse&lang=en"
+
+        Map<String, String> queryParams = new LinkedHashMap<>();
+        String[] pairs = query.split("&");
+        for (String pair : pairs) {
+            int idx = pair.indexOf("=");
+            // Use URLDecoder to handle special characters and spaces
+            String key = URLDecoder.decode(pair.substring(0, idx), "UTF-8");
+            String value = URLDecoder.decode(pair.substring(idx + 1), "UTF-8");
+            queryParams.put(key, value);
         }
+
+        System.out.println(queryParams);
+        return queryParams;
     }
 
-    public static JsonNode parsePostParameters(HttpRequest request) {
-        byte[] content = getPostContent(request);
+    public static JsonNode parsePostParameters(HttpExchange exchange) {
+        byte[] content = getPostContent(exchange);
         if (content == null) {
             LOGGER.warning("Failed to get POST content.");
             return null;
@@ -53,34 +51,25 @@ public final class HttpServerUtilities {
         return getPostParameters(content);
     }
 
-    public static Map<String, String> parseSimplePostParameters(HttpRequest request) {
-        byte[] content = getPostContent(request);
+    public static byte[] getPostContent(HttpExchange exchange) {
+        try {
+            byte[] data = exchange.getRequestBody().readAllBytes();
+            exchange.getRequestBody().close();
+            return data;
+        } catch (IOException e) {
+            LOGGER.warning("Error reading request data");
+        }
+        return null;
+    }
+
+    public static Map<String, String> parseSimplePostParameters(HttpExchange exchange) {
+        byte[] content = getPostContent(exchange);
         if (content == null) {
             LOGGER.warning("Failed to get POST content.");
             return null;
         }
 
         return getSimplePostParameters(content);
-    }
-
-    public static byte[] getPostContent(HttpRequest request) {
-        if (!(request instanceof HttpEntityEnclosingRequest entityRequest)) {
-            LOGGER.warning("Unknown request type for POST request " + request.getClass());
-            return null;
-        }
-        HttpEntity entity = entityRequest.getEntity();
-        if (!(entity instanceof BasicHttpEntity basicEntity)) {
-            LOGGER.warning("Unknown entity type for POST request " + entity.getClass());
-            return null;
-        }
-        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-        try {
-            basicEntity.writeTo(buffer);
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "Failed to read all request content.", e);
-            return null;
-        }
-        return buffer.toByteArray();
     }
 
     private static JsonNode getPostParameters(byte[] content) {
@@ -123,29 +112,29 @@ public final class HttpServerUtilities {
         return output;
     }
 
-    public static Void prepareHttpResponse(HttpAsyncExchange exchange, int code, String data) {
-        return prepareStringResponse(exchange, code, data, "text/html");
+    public static void prepareHttpResponse(HttpExchange exchange, int code, String data) {
+        prepareStringResponse(exchange, code, data, "text/html");
     }
 
-    public static Void prepareTextResponse(HttpAsyncExchange exchange, int code, String data) {
-        return prepareStringResponse(exchange, code, data, "text/plain; charset=utf-8");
+    public static void prepareTextResponse(HttpExchange exchange, int code, String data) {
+        prepareStringResponse(exchange, code, data, "text/plain; charset=utf-8");
     }
 
-    public static Void prepareJsonResponse(HttpAsyncExchange exchange, int code, JsonNode data) {
-        return prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data), "application/json; charset=utf-8");
+    public static void prepareJsonResponse(HttpExchange exchange, int code, JsonNode data) {
+        prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data), "application/json; charset=utf-8");
     }
 
-    private static Void prepareStringResponse(HttpAsyncExchange exchange, int code, String data, String contentType) {
-        HttpResponse response = exchange.getResponse();
-        response.setStatusCode(code);
-        StringEntity entity = new StringEntity(data, "UTF-8");
-        entity.setContentEncoding("UTF-8");
-        entity.setContentType(contentType);
-        response.setEntity(entity);
-        exchange.submitResponse(new BasicAsyncResponseProducer(response));
+    private static void prepareStringResponse(HttpExchange exchange, int code, String data, String contentType) {
+        try {
+            exchange.sendResponseHeaders(code, data.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(data.getBytes());
+            os.close();
+        } catch (IOException e) {
+            LOGGER.warning("" + e);
+        }
         if (code >= 400) {
             LOGGER.warning("HTTP response with code " + code + ": " + data);
         }
-        return null;
     }
 }

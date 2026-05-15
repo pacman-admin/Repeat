@@ -1,11 +1,18 @@
 package core.webui.server.handlers.internals.taskmanagement;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import java.io.IOException;
 
@@ -16,8 +23,8 @@ public final class ActionAddTaskHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
         Backend.addCurrentTask();
-        return renderedTaskForGroup(exchange);
+        renderedTaskForGroup(exchange);
     }
 }

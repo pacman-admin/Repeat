@@ -2,9 +2,11 @@ package core.webui.server.handlers.internals.taskactivation;
 
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 
 import java.util.Map;
 
@@ -14,8 +16,9 @@ public final class ActionTaskActivationGetStrokesHandler extends AbstractTaskAct
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         String strokes = constructor.getStrokes();
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, strokes.isBlank() ? "None" : strokes);
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, strokes.isBlank() ? "None" : strokes); 
+return;
     }
 }

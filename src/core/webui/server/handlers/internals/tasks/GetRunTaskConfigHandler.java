@@ -1,13 +1,21 @@
 package core.webui.server.handlers.internals.tasks;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedRunTaskConfig;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,15 +27,17 @@ public final class GetRunTaskConfigHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Map<String, Object> data = new HashMap<>();
         data.put("runTaskConfig", RenderedRunTaskConfig.fromRunTaskConfig(Backend.getRunActionConfig()));
 
         String page = objectRenderer.render("fragments/run_task_config_modal", data);
         if (page == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
+return;
         }
 
-        return HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
+return;
     }
 }

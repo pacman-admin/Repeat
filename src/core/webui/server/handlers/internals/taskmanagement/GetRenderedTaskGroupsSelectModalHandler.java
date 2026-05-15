@@ -2,14 +2,22 @@ package core.webui.server.handlers.internals.taskmanagement;
 
 import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.TaskGroupManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroupForSelectModal;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpStatus;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
+
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,7 +31,7 @@ public final class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHtt
     }
 
     @Override
-    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Map<String, Object> data = new HashMap<>();
         TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
         List<TaskGroup> groups = TaskGroupManager.getTaskGroups();
@@ -31,9 +39,11 @@ public final class GetRenderedTaskGroupsSelectModalHandler extends AbstractUIHtt
 
         String page = objectRenderer.render("fragments/task_groups_select", data);
         if (page == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
+return;
         }
 
-        return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+        HttpServerUtilities.prepareHttpResponse(exchange, 200, page); 
+return;
     }
 }

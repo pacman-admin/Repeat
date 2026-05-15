@@ -3,13 +3,20 @@ package core.webui.server.handlers.internals.tasks;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionBuilderBody;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
 public final class TaskBuilderPageHandler extends AbstractUIHttpHandler {
@@ -22,10 +29,10 @@ public final class TaskBuilderPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+	public void handleAllowedRequestWithBackend(HttpExchange exchange)
 			throws IOException {
 		String id = manuallyBuildActionConstructorManager.addNew();
 		Map<String, Object> data = ManuallyBuildActionBuilderBody.bodyData(manuallyBuildActionConstructorManager, id);
-		return renderedPage(exchange, "task_builder", data);
+		renderedPage(exchange, "task_builder", data);
 	}
 }

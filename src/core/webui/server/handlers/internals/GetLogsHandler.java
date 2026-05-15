@@ -18,6 +18,8 @@
  */
 package core.webui.server.handlers.internals;
 
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractGETHandler;
 import frontEnd.Backend;
 
@@ -28,7 +30,7 @@ public final class GetLogsHandler extends AbstractGETHandler {
     }
 
     @Override
-    protected String handle() {
+    protected String handleAsString() {
         return Backend.getLogs();
     }
 }

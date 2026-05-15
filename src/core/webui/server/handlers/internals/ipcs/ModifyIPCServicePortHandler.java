@@ -3,13 +3,20 @@ package core.webui.server.handlers.internals.ipcs;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
 
+import com.sun.net.httpserver.HttpExchange;
 import core.ipc.IIPCService;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.CommonTask;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import utilities.NumberUtility;
@@ -21,29 +28,33 @@ public final class ModifyIPCServicePortHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+	public void handleAllowedRequestWithBackend(HttpExchange exchange)
 			throws IOException {
-		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
+		Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
 		if (params == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST parameters.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get POST parameters."); 
+return;
 		}
 
 		IIPCService service = CommonTask.getIPCService(params);
 		if (service == null) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get IPC service.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get IPC service."); 
+return;
 		}
 
 		String portString = params.get("port");
 		if (portString == null || !NumberUtility.isNonNegativeInteger(portString)) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Port must be non-negative integer.");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Port must be non-negative integer."); 
+return;
 		}
 
 		int port = Integer.parseInt(portString);
 		if (port < 1024 || port > 65535) {
-			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Port must be integer between 1024 and 65535");
+			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Port must be integer between 1024 and 65535"); 
+return;
 		}
 
 		service.setPort(port);
-		return renderedIpcServices(exchange);
+		renderedIpcServices(exchange);
 	}
 }

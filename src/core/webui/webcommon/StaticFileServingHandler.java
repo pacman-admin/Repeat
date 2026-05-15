@@ -17,16 +17,13 @@
  */
 package core.webui.webcommon;
 
-import org.apache.http.HttpRequest;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
-import org.apache.http.entity.ContentType;
-import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.nio.protocol.BasicAsyncResponseProducer;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
 import staticResources.BootStrapResources;
 import staticResources.WebUIResources;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -35,81 +32,84 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class StaticFileServingHandler extends HttpSimpleAsyncRequestHandler {
+public final class StaticFileServingHandler implements HttpHandler {
 
     private static final Logger LOGGER = Logger.getLogger(StaticFileServingHandler.class.getName());
 
-    public StaticFileServingHandler() {
-    }
+//    private String contentType(String filePath) {
+//        if (filePath.endsWith(".js")) {
+//            return "application/javascript";
+//        }
+//        if (filePath.endsWith(".css")) {
+//            return "text/css";
+//        }
+//        if (filePath.endsWith(".htm") || filePath.endsWith(".html")) {
+//            return "text/html";
+//        }
+//        if (filePath.endsWith(".jpg") || filePath.endsWith(".jpeg") || filePath.endsWith(".jpe")) {
+//            return "image/jpeg";
+//        }
+//        if (filePath.endsWith(".png")) {
+//            return "image/png";
+//        }
+//        if (filePath.endsWith(".gif")) {
+//            return "image/gif";
+//        }
+//        return "text/plain";
+//    }
 
     @Override
-    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange){
-        LOGGER.fine("Path is " + request.getRequestLine().getUri());
-        if (!request.getRequestLine().getMethod().equalsIgnoreCase("GET")) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");
+    public void handle(HttpExchange exchange) throws IOException {
+        LOGGER.fine("Path is " + exchange.getRequestURI());
+        if (!exchange.getRequestMethod().equalsIgnoreCase("GET")) {
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");
         }
 
-        String requestUri = request.getRequestLine().getUri();
-        if (!requestUri.startsWith("/static/")) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 500, "URI must start with '/static/'.");
-        }
-
-        String uriWithoutParameter;
+        String uriWithoutParameter = "";
         try {
-            URI uri = new URI(requestUri);
+            URI uri = exchange.getRequestURI();
             uriWithoutParameter = new URI(uri.getScheme(), uri.getAuthority(), uri.getPath(), null, // Ignore the query part of the input url.
                     uri.getFragment()).toString();
         } catch (URISyntaxException e) {
             LOGGER.log(Level.WARNING, "Encountered exception when trying to remove query parameters.", e);
-            return HttpServerUtilities.prepareTextResponse(exchange, 500, "Encountered exception when trying to remove query parameters.");
+            HttpServerUtilities.prepareTextResponse(exchange, 500, "Encountered exception when trying to remove query parameters.");
         }
 
         String path = uriWithoutParameter.substring("/static/".length());
-        String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
-        if (decodedPath.contains("./") || decodedPath.contains("..") || decodedPath.endsWith("/")) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
-        }
-
-        HttpResponse response = exchange.getResponse();
-        response.setStatusCode(HttpStatus.SC_OK);
-        response.addHeader("Cache-Control", "max-age=3600"); // Max age = 1 hour.
-        String contentType = contentType(decodedPath);
+//        String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
+//        if (decodedPath.contains("./") || decodedPath.contains("..") || decodedPath.endsWith("/")) {
+//            HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
+//        }
+//        LOGGER.info(path + ", " + decodedPath);
+//        HttpResponse response = exchange.getResponse();
+//        response.setStatusCode(HttpStatus.SC_OK);
+//        response.addHeader("Cache-Control", "max-age=3600"); // Max age = 1 hour.
+//        String contentType = contentType(decodedPath);
         try {
-            InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
-            if (inputStream == null) {
-                LOGGER.warning("Content could not be accessed:\n" + path + ", " + decodedPath);
-                return HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
-            }
+            InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + path);
             LOGGER.fine("Accessing " + path + "...");
-            InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
-            response.setEntity(body);
-            exchange.submitResponse(new BasicAsyncResponseProducer(response));
+//            URL filePath = BootStrapResources.class.getResource(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
+            if (inputStream == null) {
+                LOGGER.warning("Content could not be accessed:\n" + path);
+                HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
+            }
+            exchange.sendResponseHeaders(200, 0);
+//            LOGGER.info("File " + path + " size: " + new File(String.valueOf(filePath)).length());
+            assert inputStream != null;
+            long length = inputStream.transferTo(exchange.getResponseBody());
+            inputStream.close();
+            exchange.getResponseBody().close();
+//            exchange.sendResponseHeaders(200, length);
+            LOGGER.fine("Served " + path + ". Bytes: " + length);
+//            InputStreamEntity body = new InputStreamEntity(inputStream, ContentType.create(contentType));
+//            response.setEntity(body);
+//            exchange.submitResponse(new BasicAsyncResponseProducer(response));
+        } catch (FileNotFoundException e) {
+            LOGGER.log(Level.WARNING, "Content could not be accessed:\n" + path, e);
+            HttpServerUtilities.prepareTextResponse(exchange, 404, "Could not access file." + path);
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Content could not be accessed:\n" + path, e);
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, "Could not access file." + path);
+            HttpServerUtilities.prepareTextResponse(exchange, 500, "Could not access file." + path);
         }
-        return null;
-    }
-
-    private String contentType(String filePath) {
-        if (filePath.endsWith(".js")) {
-            return "application/javascript";
-        }
-        if (filePath.endsWith(".css")) {
-            return "text/css";
-        }
-        if (filePath.endsWith(".htm") || filePath.endsWith(".html")) {
-            return "text/html";
-        }
-        if (filePath.endsWith(".jpg") || filePath.endsWith(".jpeg") || filePath.endsWith(".jpe")) {
-            return "image/jpeg";
-        }
-        if (filePath.endsWith(".png")) {
-            return "image/png";
-        }
-        if (filePath.endsWith(".gif")) {
-            return "image/gif";
-        }
-        return "text/plain";
     }
 }

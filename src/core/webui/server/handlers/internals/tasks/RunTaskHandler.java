@@ -22,10 +22,12 @@ import argo.jdom.JsonNode;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.ActionExecutionRequest;
 import core.userDefinedTask.internals.RunActionConfig;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpRequest;
+
 import utilities.NumberUtility;
 
 public final class RunTaskHandler extends AbstractPOSTHandler {
@@ -35,8 +37,8 @@ public final class RunTaskHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handle(HttpRequest request) {
-        JsonNode requestMessage = HttpServerUtilities.parsePostParameters(request);
+    protected String handleAsString(HttpExchange exchange) {
+        JsonNode requestMessage = HttpServerUtilities.parsePostParameters(exchange);
         if (requestMessage == null) {
             throw new IllegalArgumentException("Unable to parse JSON from request parameter.");
         }
@@ -65,9 +67,6 @@ public final class RunTaskHandler extends AbstractPOSTHandler {
         }
 
         UserDefinedAction action = Backend.getTask(id);
-//        if (action == null) {
-//            throw new NullPointerException("No such task with ID " + id + ".");
-//        }
         Backend.actionExecutor.startExecutingAction(executionRequest, action);
         return id;
     }

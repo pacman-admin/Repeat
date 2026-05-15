@@ -2,9 +2,11 @@ package core.webui.server.handlers.internals.taskactivation;
 
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
-import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 import utilities.NumberUtility;
 
 import java.io.IOException;
@@ -17,12 +19,13 @@ public final class ActionTaskActivationRemoveKeySequenceHandler extends Abstract
     }
 
     @Override
-    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
+    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
         String index = params.get("index");
         if (!NumberUtility.isNonNegativeInteger(index)) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Index must be non-negative integer.");
+            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Index must be non-negative integer."); 
+return;
         }
         constructor.removeKeySequence(Integer.parseInt(index));
-        return renderedTaskActivationPage(exchange, "fragments/key_sequences", constructor);
+        renderedTaskActivationPage(exchange, "fragments/key_sequences", constructor);
     }
 }
