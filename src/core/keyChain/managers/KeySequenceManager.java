@@ -63,7 +63,7 @@ public final class KeySequenceManager extends KeyStrokeManager {
 	 * @return set of actions to execute.
 	 */
 	private Set<UserDefinedAction> considerTaskExecution(ButtonStroke key) {
-		if (key.getKey() == Constants.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
+		if (key.getKey() == Constants.HALT_TASK) {
 			clear();
 			return Collections.emptySet();
 		}

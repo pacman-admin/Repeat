@@ -24,10 +24,6 @@ public final class RenderedConfig {
         return recordMouseClickOnly;
     }
 
-    public boolean isHaltTaskByEscape() {
-        return haltTaskByEscape;
-    }
-
     public boolean isExecuteOnRelease() {
         return executeOnRelease;
     }
@@ -36,16 +32,8 @@ public final class RenderedConfig {
         return useClipboardToTypeString;
     }
 
-    public boolean isRunTaskWithServerConfig() {
-        return runTaskWithServerConfig;
-    }
-
     public boolean isUseJavaAwtToGetMousePosition() {
         return useJavaAwtToGetMousePosition;
-    }
-
-    public boolean isUseTrayIcon() {
-        return useTrayIcon;
     }
 
     public List<RenderedDebugLevel> getDebugLevels() {
