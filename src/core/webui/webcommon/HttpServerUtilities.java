@@ -7,7 +7,6 @@ import utilities.json.JSONUtility;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
@@ -24,7 +23,7 @@ public final class HttpServerUtilities {
         throw new InstantiationError("This class is uninstantiable.");
     }
 
-    public static Map<String, String> parseGetParameters(URI url) throws UnsupportedEncodingException {
+    public static Map<String, String> parseGetParameters(URI url) {
         String query = url.getQuery(); // Returns "q=java+parse&lang=en"
 
         Map<String, String> queryParams = new LinkedHashMap<>();
@@ -113,23 +112,21 @@ public final class HttpServerUtilities {
     }
 
     public static void prepareHttpResponse(HttpExchange exchange, int code, String data) {
-        prepareStringResponse(exchange, code, data, "text/html");
+        prepareStringResponse(exchange, code, data);
     }
 
     public static void prepareTextResponse(HttpExchange exchange, int code, String data) {
-        prepareStringResponse(exchange, code, data, "text/plain; charset=utf-8");
+        prepareStringResponse(exchange, code, data);
     }
 
     public static void prepareJsonResponse(HttpExchange exchange, int code, JsonNode data) {
-        prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data), "application/json; charset=utf-8");
+        prepareStringResponse(exchange, code, JSONUtility.jsonToSingleLineString(data));
     }
 
-    private static void prepareStringResponse(HttpExchange exchange, int code, String data, String contentType) {
-        try {
+    private static void prepareStringResponse(HttpExchange exchange, int code, String data) {
+        try (OutputStream os = exchange.getResponseBody()){
             exchange.sendResponseHeaders(code, data.length());
-            OutputStream os = exchange.getResponseBody();
             os.write(data.getBytes());
-            os.close();
         } catch (IOException e) {
             LOGGER.warning("" + e);
         }
