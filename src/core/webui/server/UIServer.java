@@ -39,8 +39,6 @@ import core.webui.server.handlers.internals.taskmanagement.*;
 import core.webui.server.handlers.internals.tasks.*;
 import core.webui.server.handlers.internals.tasks.manuallybuild.*;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import core.webui.webcommon.StaticFileHandler;
-//import core.webui.webcommon.StaticFileServingHandler;
 import core.webui.webcommon.StaticFileServingHandler;
 
 import java.io.IOException;
@@ -60,6 +58,7 @@ public final class UIServer extends IIPCService {
 
     private static Map<String, HttpHandler> createHandlers() {
         Map<String, HttpHandler> output = new HashMap<>();
+        output.put("/static", new StaticFileServingHandler());
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
@@ -164,8 +163,8 @@ public final class UIServer extends IIPCService {
         final Map<String, HttpHandler> handlers = createHandlers();
         taskActivationConstructorManager.start();
         manuallyBuildActionConstructorManager.start();
-        server = HttpServer.create(new InetSocketAddress(port), Integer.MAX_VALUE);
-        server.createContext("/static", new StaticFileServingHandler());
+        server = HttpServer.create(new InetSocketAddress(port), 0);
+//        server.createContext("/static", new StaticFileServingHandler());
         for (Entry<String, HttpHandler> entry : handlers.entrySet()) {
             server.createContext(entry.getKey(), entry.getValue());
         }
