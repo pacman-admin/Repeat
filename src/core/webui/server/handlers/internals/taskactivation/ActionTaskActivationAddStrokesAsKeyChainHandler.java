@@ -6,7 +6,6 @@ import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 
 
-import java.io.IOException;
 import java.util.Map;
 
 public final class ActionTaskActivationAddStrokesAsKeyChainHandler extends AbstractTaskActivationConstructorActionHandler {

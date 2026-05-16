@@ -58,7 +58,7 @@ public final class ActionManuallyBuildActionMoveDownHandler extends AbstractUIHt
 
         ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
         // Since the list of indices is sorted with the largest one first, it's safe to move them sequentially.
-        indices.stream().forEach(constructor::moveStepDown);
+        indices.forEach(constructor::moveStepDown);
 
         Map<String, Object> data = new HashMap<>();
         data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));

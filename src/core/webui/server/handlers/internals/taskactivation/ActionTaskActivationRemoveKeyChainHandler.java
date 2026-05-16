@@ -8,7 +8,6 @@ import core.webui.webcommon.HttpServerUtilities;
 
 import utilities.NumberUtility;
 
-import java.io.IOException;
 import java.util.Map;
 
 public final class ActionTaskActivationRemoveKeyChainHandler extends AbstractTaskActivationConstructorActionHandler {

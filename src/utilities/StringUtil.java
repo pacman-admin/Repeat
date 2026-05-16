@@ -72,7 +72,7 @@ public final class StringUtil {
         while (iter.hasNext()) {
             String next = iter.next();
 
-            boolean valid = !next.replaceAll(" ", "").isBlank();
+            boolean valid = !next.replace(" ", "").isBlank();
 
             if (valid) {
                 builder.append(next);

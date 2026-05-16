@@ -22,8 +22,6 @@ import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import frontEnd.Backend;
 
-import java.io.UnsupportedEncodingException;
-
 
 public final class ActionClearLogHandler extends AbstractPOSTHandler {
 

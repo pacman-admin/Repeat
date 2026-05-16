@@ -22,8 +22,6 @@ import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
 
 
-
-import java.io.IOException;
 import java.util.Map;
 
 public abstract class AbstractBooleanConfigHttpHandler extends AbstractSingleMethodHttpHandler {

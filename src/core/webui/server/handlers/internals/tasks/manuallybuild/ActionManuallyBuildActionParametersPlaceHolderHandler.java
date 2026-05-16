@@ -8,7 +8,6 @@ import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildAct
 import core.webui.server.handlers.internals.tasks.manuallybuild.ManuallyBuildActionFeModel.MouseAction;
 import core.webui.webcommon.HttpServerUtilities;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public final class ActionManuallyBuildActionParametersPlaceHolderHandler extends AbstractSingleMethodHttpHandler {

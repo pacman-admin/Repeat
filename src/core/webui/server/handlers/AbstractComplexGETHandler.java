@@ -18,7 +18,6 @@ package core.webui.server.handlers;
 import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
 
-import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 public abstract class AbstractComplexGETHandler extends AbstractSimpleHandler {

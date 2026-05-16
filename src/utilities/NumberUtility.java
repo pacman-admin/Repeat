@@ -30,7 +30,7 @@ public final class NumberUtility {
     private static boolean isInteger(String input) {
         if(StringUtil.isNullOrEmpty(input))
             return false;
-        input = input.replaceAll(",", "");
+        input = input.replace(",", "");
         if (input.startsWith("-")) {
             input = input.substring(1);
         }

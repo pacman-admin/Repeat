@@ -49,8 +49,8 @@ public final class IndexPageHandler extends AbstractUIHttpHandler {
             languages.add(RenderedCompilingLanguage.forLanguage(language, language == selectedLanguage));
         }
         data.put("compilingLanguages", languages);
-        //boolean displayManualBuild = Backend.getSelectedLanguage() == Language.MANUAL_BUILD;
-        boolean displayManualBuild = false;
+        boolean displayManualBuild = Backend.getSelectedLanguage() == Language.MANUAL_BUILD;
+//        boolean displayManualBuild = false;
         data.put("displayManualBuild", displayManualBuild);
         if (displayManualBuild) {
             String id = manuallyBuildActionConstructorManager.addNew();

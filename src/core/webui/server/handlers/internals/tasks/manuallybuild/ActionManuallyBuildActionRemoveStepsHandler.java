@@ -62,7 +62,7 @@ return;
 
 		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
 		// Since the list of indices is sorted with the largest one first, it's safe to remove them sequentially.
-		indices.stream().forEach(constructor::removeStep);
+		indices.forEach(constructor::removeStep);
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));

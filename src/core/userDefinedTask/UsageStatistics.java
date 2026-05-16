@@ -19,13 +19,11 @@ public final class UsageStatistics implements IJsonable {
     private long count;
     private Calendar lastUse;
     private Calendar created;
-    //	private Map<ActionInvoker, Long> taskActivationBreakdown;
     private long totalExecutionTime;
     private final LinkedList<ExecutionInstance> executionInstances;
 
     public UsageStatistics() {
         created = Calendar.getInstance();
-//		taskActivationBreakdown = new HashMap<>();
         onGoingInstances = new HashMap<>();
         executionInstances = new LinkedList<>();
     }
@@ -63,16 +61,7 @@ public final class UsageStatistics implements IJsonable {
 
     @Override
     public JsonRootNode jsonize() {
-        return JsonNodeFactories.object(JsonNodeFactories.field("count", JsonNodeFactories.number(count)), JsonNodeFactories.field("total_execution_time", JsonNodeFactories.number(totalExecutionTime)), JsonNodeFactories.field("last_use", lastUse != null ? JsonNodeFactories.string(DateUtility.calendarToTimeString(lastUse)) : JsonNodeFactories.nullNode()), JsonNodeFactories.field("created", JsonNodeFactories.string(DateUtility.calendarToTimeString(created)))//,
-//				JsonNodeFactories.field("task_activations_breakdown", JsonNodeFactories.array(
-//						taskActivationBreakdown.entrySet().stream().map(
-//								e -> JsonNodeFactories.object(
-//										JsonNodeFactories.field("task_activation", e.getKey().jsonize()),
-//										JsonNodeFactories.field("count", JsonNodeFactories.number(e.getValue())))
-//								).collect(Collectors.toList())
-//						)),
-//				JsonNodeFactories.field("execution_instances", JsonNodeFactories.array(JSONUtility.listToJson(executionInstances)))
-        );
+        return JsonNodeFactories.object(JsonNodeFactories.field("count", JsonNodeFactories.number(count)), JsonNodeFactories.field("total_execution_time", JsonNodeFactories.number(totalExecutionTime)), JsonNodeFactories.field("last_use", lastUse != null ? JsonNodeFactories.string(DateUtility.calendarToTimeString(lastUse)) : JsonNodeFactories.nullNode()), JsonNodeFactories.field("created", JsonNodeFactories.string(DateUtility.calendarToTimeString(created))));
     }
 
     public long getCount() {
@@ -102,7 +91,7 @@ public final class UsageStatistics implements IJsonable {
     /**
      * @return an ID to update at completion time.
      */
-    public synchronized String useNow(ExecutionContext executionContext) {
+    public synchronized String useNow(ExecutionContext ignoredExecutionContext) {
         if (lastUse == null) {
             lastUse = Calendar.getInstance();
         } else {

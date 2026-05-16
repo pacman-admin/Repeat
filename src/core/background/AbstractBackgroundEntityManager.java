@@ -68,7 +68,7 @@ public abstract class AbstractBackgroundEntityManager<T> {
                 toRemove.add(id);
             }
         }
-        toRemove.stream().forEach(this::remove);
+        toRemove.forEach(this::remove);
     }
 
     public final T get(String id) {

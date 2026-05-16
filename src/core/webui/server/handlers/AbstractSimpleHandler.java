@@ -18,8 +18,6 @@ package core.webui.server.handlers;
 import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
 
-import java.io.UnsupportedEncodingException;
-
 
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     private final String errorMessage;

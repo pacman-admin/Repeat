@@ -17,6 +17,7 @@ public final class GetSourceTemplateHandler extends AbstractSingleMethodHttpHand
     @Override
     public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         String source = AbstractSourceGenerator.getReferenceSource(Backend.getSelectedLanguage());
+        System.out.println(source);
         HttpServerUtilities.prepareTextResponse(exchange, 200, source);
     }
 }

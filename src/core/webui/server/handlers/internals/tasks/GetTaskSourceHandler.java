@@ -47,7 +47,7 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
         long timestamp = Long.parseLong(timestampString);
         String sourceCode = Backend.getSourceForTask(action, timestamp);
         if (sourceCode == null) throw new NullPointerException("Could not find source code for Action with ID: " + id);
-
+        System.out.println(sourceCode);
         return sourceCode;
     }
 }
