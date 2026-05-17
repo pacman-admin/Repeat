@@ -204,10 +204,6 @@ public final class Config implements ILoggable {
         }
     }
 
-    public boolean isUseTrayIcon() {
-        return true;
-    }
-
     public boolean isExecuteOnKeyReleased() {
         return executeOnKeyReleased;
     }
@@ -234,10 +230,6 @@ public final class Config implements ILoggable {
 
     public void setUseClipboardToTypeString(boolean useClipboardToTypeString) {
         this.useClipboardToTypeString = useClipboardToTypeString;
-    }
-
-    public boolean isRunTaskWithServerConfig() {
-        return false;
     }
 
     public boolean isUseJavaAwtToGetMousePosition() {

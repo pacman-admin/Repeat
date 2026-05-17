@@ -27,7 +27,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         this.objectRenderer = objectRenderer;
     }
 
-    protected final Void renderedIpcServices(HttpAsyncExchange exchange) throws IOException {
+    protected final Void renderedIpcServices(HttpAsyncExchange exchange) {
         Map<String, Object> data = new HashMap<>();
         data.put("ipcs", List.of(RenderedIPCService.of(IPCServiceManager.getUIServer())));
         return renderedPage(exchange, "fragments/ipcs", data);
@@ -42,13 +42,13 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         return renderedPage(exchange, "fragments/tasks", data);
     }
 
-    protected final Void renderedTaskGroups(HttpAsyncExchange exchange) throws IOException {
+    protected final Void renderedTaskGroups(HttpAsyncExchange exchange) {
         Map<String, Object> data = new HashMap<>();
         data.put("groups", TaskGroupManager.getTaskGroups().stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == TaskGroupManager.getCurrentTaskGroup())).collect(Collectors.toList()));
         return renderedPage(exchange, "fragments/task_groups", data);
     }
 
-    protected final Void renderedCompilingLanguages(HttpAsyncExchange exchange) throws IOException {
+    protected final Void renderedCompilingLanguages(HttpAsyncExchange exchange) {
         Language selected = Backend.getSelectedLanguage();
         Map<String, Object> data = new HashMap<>();
         List<RenderedCompilingLanguage> languages = new ArrayList<>();
@@ -59,7 +59,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         return renderedPage(exchange, "fragments/compiling_languages", data);
     }
 
-    protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) throws IOException {
+    protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) {
         return LOGGER.exec(() -> {
             String page = objectRenderer.render(template, data);
             if (page == null) {
