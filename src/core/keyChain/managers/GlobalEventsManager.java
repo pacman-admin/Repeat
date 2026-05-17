@@ -20,7 +20,6 @@ package core.keyChain.managers;
 
 import core.config.Config;
 import core.keyChain.ActionInvoker;
-import core.keyChain.ActivationEvent;
 import core.keyChain.KeyStroke;
 import core.keyChain.MouseKey;
 import core.userDefinedTask.UserDefinedAction;
@@ -81,7 +80,7 @@ public final class GlobalEventsManager {
             public Boolean apply(NativeMouseEvent r) {
                 MouseKey stroke = MouseKey.of(r);
 
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(new ActivationEvent(stroke));
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
                 actionExecutor.startExecutingActions(actions);
                 return true;
@@ -92,7 +91,7 @@ public final class GlobalEventsManager {
             public Boolean apply(NativeMouseEvent r) {
                 MouseKey stroke = MouseKey.of(r);
 
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(new ActivationEvent(stroke));
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
                 actionExecutor.startExecutingActions(actions);
                 return true;
@@ -116,7 +115,7 @@ public final class GlobalEventsManager {
                     return true;
                 }
 
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(new ActivationEvent(stroke));
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
                 actionExecutor.startExecutingActions(actions);
                 return true;
@@ -132,7 +131,7 @@ public final class GlobalEventsManager {
                     return true;
                 }
 
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(new ActivationEvent(stroke));
+                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
                 actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
                 actionExecutor.startExecutingActions(actions);
                 return true;

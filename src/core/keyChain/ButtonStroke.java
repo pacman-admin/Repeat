@@ -6,7 +6,7 @@ import utilities.json.IJsonable;
 /**
  * Represents any input button stroke (e.g. mouse button, keyboard, joystick, ...)
  */
-public interface ButtonStroke extends IJsonable {
+public interface ButtonStroke extends ActivationEvent {
     static ButtonStroke parseJSON(JsonNode n) {
         if (n.isStringValue("type") && n.getStringValue("type").equals(MouseKey.TYPE_STRING)) {
             return MouseKey.parseJSON(n);

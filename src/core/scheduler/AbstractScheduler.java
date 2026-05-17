@@ -38,14 +38,6 @@ public abstract class AbstractScheduler<T> {
 
 	protected abstract boolean isLegalAddTask();
 
-	protected SchedulingData<T> getLast() {
-		return tasks.getLast();
-	}
-
-	protected SchedulingData<T> getFirst() {
-		return tasks.getFirst();
-	}
-
 	/**
 	 * Delete all data from this scheduler.
 	 */

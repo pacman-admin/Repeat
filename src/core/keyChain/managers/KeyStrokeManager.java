@@ -20,7 +20,6 @@ package core.keyChain.managers;
 
 import core.config.Config;
 import core.keyChain.ActivationEvent;
-import core.keyChain.ActivationEvent.EventType;
 import core.keyChain.ButtonStroke;
 import core.userDefinedTask.UserDefinedAction;
 
@@ -40,11 +39,9 @@ public abstract class KeyStrokeManager implements ActivationEventManager {
 
     @Override
     public final Set<UserDefinedAction> onActivationEvent(ActivationEvent event) {
-        if (event.getType() != EventType.BUTTON_STROKE) {
+        if (!(event instanceof ButtonStroke buttonStroke)) {
             return new HashSet<>();
         }
-
-        ButtonStroke buttonStroke = event.getButtonStroke();
         if (buttonStroke.isPressed()) {
             return onButtonStrokePressed(buttonStroke);
         }
