@@ -25,7 +25,7 @@ import java.awt.event.KeyEvent;
  */
 public final class Constants {
     public static final int DEFAULT_SERVER_PORT = 54321;
-    public static final String PROGRAM_VERSION = "6.0.0";
+    public static final String PROGRAM_VERSION = "7.1.0";
     public static final int HALT_TASK = KeyEvent.VK_ESCAPE; // This should be hardcoded, and must not be changed
     public static final String CURRENT_CONFIG_VERSION = "3.0";
     public static final String CONFIG_FILE_NAME = "config.json";
