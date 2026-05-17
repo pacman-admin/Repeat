@@ -62,12 +62,9 @@ public final class RenderedTaskActivation {
 
     public static final class Config {
         private boolean modifiable;
-        private boolean disableGlobalAction;
         private boolean disableKeyChain;
         private boolean disableKeySequence;
-        private boolean disablePhrase;
         private boolean disableMouseGesture;
-        private boolean disableSharedVariable;
 
         public static Config of(boolean modifiable) {
             Config result = new Config();
@@ -81,15 +78,6 @@ public final class RenderedTaskActivation {
 
         public void setModifiable(boolean modifiable) {
             this.modifiable = modifiable;
-        }
-
-        public boolean isDisableGlobalAction() {
-            return disableGlobalAction;
-        }
-
-        public Config setDisableGlobalAction(boolean disableGlobalAction) {
-            this.disableGlobalAction = disableGlobalAction;
-            return this;
         }
 
         public boolean isDisableKeyChain() {
@@ -110,30 +98,12 @@ public final class RenderedTaskActivation {
             return this;
         }
 
-        public boolean isDisablePhrase() {
-            return disablePhrase;
-        }
-
-        public Config setDisablePhrase(boolean disablePhrase) {
-            this.disablePhrase = disablePhrase;
-            return this;
-        }
-
         public boolean isDisableMouseGesture() {
             return disableMouseGesture;
         }
 
         public Config setDisableMouseGesture(boolean disableMouseGesture) {
             this.disableMouseGesture = disableMouseGesture;
-            return this;
-        }
-
-        public boolean isDisableSharedVariable() {
-            return disableSharedVariable;
-        }
-
-        public Config setDisableSharedVariable(boolean disableSharedVariable) {
-            this.disableSharedVariable = disableSharedVariable;
             return this;
         }
     }
