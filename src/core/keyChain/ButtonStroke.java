@@ -1,7 +1,6 @@
 package core.keyChain;
 
 import argo.jdom.JsonNode;
-import utilities.json.IJsonable;
 
 /**
  * Represents any input button stroke (e.g. mouse button, keyboard, joystick, ...)

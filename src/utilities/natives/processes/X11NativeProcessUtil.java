@@ -132,6 +132,7 @@ public final class X11NativeProcessUtil {
         }
     }
 
+    @SuppressWarnings("InterfaceNeverImplemented")
     public interface X11Extended extends X11 {
         X11Extended INSTANCE = new Function<Void, X11Extended>() {
             @Override
