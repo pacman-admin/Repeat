@@ -10,10 +10,7 @@ import core.keyChain.*;
 public final class RenderedTaskActivation {
     private List<SortedString> keyChains;
     private List<SortedString> keySequences;
-    private List<SortedString> phrases;
     private RenderedMouseGestureActivation mouseGestures;
-    private RenderedSharedVariablesActivation sharedVariables;
-    private RenderedGlobalActivation globalActivation;
     private Config config;
 
     public static RenderedTaskActivation fromActivation(TaskActivationConstructor constructor) {
@@ -25,18 +22,12 @@ public final class RenderedTaskActivation {
         // iteration does not have any specific order.
         output.keyChains = sortedStrings(constructor.getKeyChains().stream().map(KeyChain::toString).collect(Collectors.toList()));
         output.keySequences = sortedStrings(constructor.getKeySequences().stream().map(KeySequence::toString).collect(Collectors.toList()));
-        output.phrases = sortedStrings(List.of());
         output.mouseGestures = RenderedMouseGestureActivation.fromActivation(activation);
-        output.sharedVariables = new RenderedSharedVariablesActivation();
-        output.globalActivation = new RenderedGlobalActivation();
         TaskActivationConstructor.Config config = constructor.getConfig();
         output.config = Config.of(true)
-                .setDisableGlobalAction(config.isDisabledGlobalKeyAction())
                 .setDisableKeyChain(config.isDisableKeyChain())
                 .setDisableKeySequence(config.isDisableKeySequence())
-                .setDisablePhrase(config.isDisablePhrase())
-                .setDisableMouseGesture(config.isDisableMouseGesture())
-                .setDisableSharedVariable(config.isDisableVariablesActivation());
+                .setDisableMouseGesture(config.isDisableMouseGesture());
         return output;
     }
 
@@ -159,29 +150,11 @@ public final class RenderedTaskActivation {
     public void setKeySequences(List<SortedString> keySequences) {
         this.keySequences = keySequences;
     }
-    public List<SortedString> getPhrases() {
-        return phrases;
-    }
-    public void setPhrases(List<SortedString> phrases) {
-        this.phrases = phrases;
-    }
     public RenderedMouseGestureActivation getMouseGestures() {
         return mouseGestures;
     }
     public void setMouseGestures(RenderedMouseGestureActivation mouseGestures) {
         this.mouseGestures = mouseGestures;
-    }
-    public RenderedSharedVariablesActivation getSharedVariables() {
-        return sharedVariables;
-    }
-    public void setSharedVariables(RenderedSharedVariablesActivation sharedVariables) {
-        this.sharedVariables = sharedVariables;
-    }
-    public RenderedGlobalActivation getGlobalActivation() {
-        return globalActivation;
-    }
-    public void setGlobalActivation(RenderedGlobalActivation globalActivation) {
-        this.globalActivation = globalActivation;
     }
     public Config getConfig() {
         return config;
