@@ -28,7 +28,7 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
 
     @Override
     protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
-        return LOGGER.exec(() -> {
+        LOGGER.exec(() -> {
             JsonNode params = HttpServerUtilities.parsePostParameters(request);
             if (params == null) {
                 return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
@@ -81,6 +81,7 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
             return HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
 
         }, exchange);
+        return null;
     }
 
     private ManuallyBuildStep getStepFromRequest(JsonNode params) throws InvalidManuallyBuildComponentException {

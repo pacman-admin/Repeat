@@ -25,19 +25,26 @@ public final class HTTPLogger {
         errorMessage = errorMsg;
     }
 
-    public void exec(Runnable task, HttpAsyncExchange exchange) {
+    public void exec(RunnableVoid task, HttpAsyncExchange exchange) {
         try {
             task.run();
         } catch (NullPointerException e) {
             HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
         } catch (IllegalArgumentException e) {
             HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
-        } catch (Exception e) {
+        } catch (Throwable e) {
             HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
         }
     }
 
-    private String getErrorMsg(Exception e) {
+    public void exec(ErrorProneRunnable task, HttpAsyncExchange exchange) {
+        exec(() -> {
+            task.run();
+            return null;
+        }, exchange);
+    }
+
+    private String getErrorMsg(Throwable e) {
         return errorMessage + "\n" + e.getMessage();
     }
 }
