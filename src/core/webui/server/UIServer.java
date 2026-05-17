@@ -39,7 +39,6 @@ import core.webui.server.handlers.internals.tasks.manuallybuild.*;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpHandlerWithBackend;
 import core.webui.webcommon.StaticFileServingHandler;
-import core.webui.webcommon.UpAndRunningHandler;
 import org.apache.http.impl.nio.bootstrap.HttpServer;
 import org.apache.http.impl.nio.bootstrap.ServerBootstrap;
 import org.apache.http.impl.nio.reactor.IOReactorConfig;
@@ -166,12 +165,17 @@ public final class UIServer extends IIPCService {
         final Map<String, HttpHandlerWithBackend> handlers = createHandlers();
         taskActivationConstructorManager.start();
         manuallyBuildActionConstructorManager.start();
-
-        ServerBootstrap serverBootstrap = ServerBootstrap.bootstrap().setLocalAddress(InetAddress.getByName("localhost")).setIOReactorConfig(IOReactorConfig.custom().setSoReuseAddress(true).build()).setListenerPort(port).setServerInfo("Repeat").setExceptionLogger(new UIServerExceptionLogger()).registerHandler("/test", new UpAndRunningHandler()).registerHandler("/static/*", new StaticFileServingHandler());
+        ServerBootstrap bootstrap = ServerBootstrap.bootstrap();
+        bootstrap.setLocalAddress(InetAddress.getByName("localhost"));
+        bootstrap.setIOReactorConfig(IOReactorConfig.custom().setSoReuseAddress(true).build());
+        bootstrap.setListenerPort(port);
+        bootstrap.setServerInfo("Repeat");
+        bootstrap.setExceptionLogger(new UIServerExceptionLogger());
+        bootstrap.registerHandler("/static/*", new StaticFileServingHandler());
         for (Entry<String, HttpHandlerWithBackend> entry : handlers.entrySet()) {
-            serverBootstrap.registerHandler(entry.getKey(), entry.getValue());
+            bootstrap.registerHandler(entry.getKey(), entry.getValue());
         }
-        server = serverBootstrap.create();
+        server = bootstrap.create();
         server.start();
 
         getLogger().info("UI server started at port: " + port);

@@ -25,15 +25,15 @@ public final class HTTPLogger {
         errorMessage = errorMsg;
     }
 
-    public Void exec(RunnableVoid task, HttpAsyncExchange exchange) {
+    public void exec(Runnable task, HttpAsyncExchange exchange) {
         try {
-            return task.run();
+            task.run();
         } catch (NullPointerException e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
         } catch (IllegalArgumentException e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
         } catch (Exception e) {
-            return HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
+            HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
         }
     }
 
