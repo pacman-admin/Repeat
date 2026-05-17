@@ -7,7 +7,7 @@ import argo.jdom.JsonRootNode;
 /**
  * Condition that always returns valid.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "SameReturnValue"})
 public final class AlwaysMatchingStringCondition extends StringMatchingCondition {
 
     public static final AlwaysMatchingStringCondition INSTANCE = new AlwaysMatchingStringCondition();

@@ -19,8 +19,6 @@ import java.awt.*;
 import java.awt.datatransfer.DataFlavor;
 import java.awt.datatransfer.StringSelection;
 import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class Clipboard {

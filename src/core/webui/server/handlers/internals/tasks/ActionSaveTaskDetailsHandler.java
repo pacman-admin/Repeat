@@ -65,9 +65,6 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         }
 
         UserDefinedAction task = CommonTask.getTaskFromId( taskString);
-        if (task == null) {
-            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot get task from request.");
-        }
 
         ActionInvoker activation = constructor.getActivation();
         if (!Backend.changeHotkeyTask(task, activation)) {

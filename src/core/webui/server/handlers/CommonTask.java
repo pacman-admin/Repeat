@@ -62,9 +62,7 @@ public final class CommonTask {
     }
 
     public static UserDefinedAction getTaskFromId(String id) {
-        UserDefinedAction task = Backend.getTask(id);
-
-        return task;
+        return Backend.getTask(id);
     }
 
     public static String getTaskGroupIdFromRequest(Map<String, String> params) {
