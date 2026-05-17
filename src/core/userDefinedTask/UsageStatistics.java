@@ -19,11 +19,13 @@ public final class UsageStatistics implements IJsonable {
     private long count;
     private Calendar lastUse;
     private Calendar created;
+    //	private Map<ActionInvoker, Long> taskActivationBreakdown;
     private long totalExecutionTime;
-    private final LinkedList<ExecutionInstance> executionInstances;
+    private LinkedList<ExecutionInstance> executionInstances;
 
     public UsageStatistics() {
         created = Calendar.getInstance();
+//		taskActivationBreakdown = new HashMap<>();
         onGoingInstances = new HashMap<>();
         executionInstances = new LinkedList<>();
     }
@@ -46,11 +48,39 @@ public final class UsageStatistics implements IJsonable {
                 return null;
             }
 
+//			Map<ActionInvoker, Long> taskActivationBreakdown = new HashMap<>();
+//			if (node.isArrayNode("task_activations_breakdown")) {
+//				List<JsonNode> nodes = node.getArrayNode("task_activations_breakdown");
+//				for (JsonNode n : nodes) {
+//					JsonNode activationNode = n.getNode("task_activation");
+//					ActionInvoker activation = ActionInvoker.parseJSON(activationNode);
+//					if (activation == null) {
+//						LOGGER.warning("Unable to parse task activation.");
+//						return null;
+//					}
+//
+//					long activationCount = Long.parseLong(n.getNode("count").getNumberValue());
+//					taskActivationBreakdown.put(activation, activationCount);
+//				}
+//			}
+//
+//			LinkedList<ExecutionInstance> instances = new LinkedList<>();
+//			if (node.isArrayNode("execution_instances")) {
+//				List<JsonNode> nodes = node.getArrayNode("execution_instances");
+//				instances = nodes.stream().map(n -> {
+//					ExecutionInstance i = ExecutionInstance.of(0, 0);
+//					Jsonizer.parse(n, i);
+//					return i;
+//				}).collect(Collectors.toCollection(LinkedList::new));
+//			}
+
             UsageStatistics output = new UsageStatistics();
             output.count = count;
             output.totalExecutionTime = totalExecutionTime;
             output.lastUse = lastUse;
             output.created = created;
+//			output.taskActivationBreakdown = taskActivationBreakdown;
+//			output.executionInstances = instances;
 
             return output;
         } catch (Exception e) {
@@ -61,7 +91,16 @@ public final class UsageStatistics implements IJsonable {
 
     @Override
     public JsonRootNode jsonize() {
-        return JsonNodeFactories.object(JsonNodeFactories.field("count", JsonNodeFactories.number(count)), JsonNodeFactories.field("total_execution_time", JsonNodeFactories.number(totalExecutionTime)), JsonNodeFactories.field("last_use", lastUse != null ? JsonNodeFactories.string(DateUtility.calendarToTimeString(lastUse)) : JsonNodeFactories.nullNode()), JsonNodeFactories.field("created", JsonNodeFactories.string(DateUtility.calendarToTimeString(created))));
+        return JsonNodeFactories.object(JsonNodeFactories.field("count", JsonNodeFactories.number(count)), JsonNodeFactories.field("total_execution_time", JsonNodeFactories.number(totalExecutionTime)), JsonNodeFactories.field("last_use", lastUse != null ? JsonNodeFactories.string(DateUtility.calendarToTimeString(lastUse)) : JsonNodeFactories.nullNode()), JsonNodeFactories.field("created", JsonNodeFactories.string(DateUtility.calendarToTimeString(created)))//,
+//				JsonNodeFactories.field("task_activations_breakdown", JsonNodeFactories.array(
+//						taskActivationBreakdown.entrySet().stream().map(
+//								e -> JsonNodeFactories.object(
+//										JsonNodeFactories.field("task_activation", e.getKey().jsonize()),
+//										JsonNodeFactories.field("count", JsonNodeFactories.number(e.getValue())))
+//								).collect(Collectors.toList())
+//						)),
+//				JsonNodeFactories.field("execution_instances", JsonNodeFactories.array(JSONUtility.listToJson(executionInstances)))
+        );
     }
 
     public long getCount() {
@@ -84,6 +123,10 @@ public final class UsageStatistics implements IJsonable {
         return totalExecutionTime;
     }
 
+    //	public Map<ActionInvoker, Long> getTaskActivationBreakdown() {
+//		return Collections.unmodifiableMap(taskActivationBreakdown);
+//	}
+//
     public List<ExecutionInstance> getExecutionInstances() {
         return Collections.unmodifiableList(executionInstances);
     }
@@ -91,7 +134,7 @@ public final class UsageStatistics implements IJsonable {
     /**
      * @return an ID to update at completion time.
      */
-    public synchronized String useNow(ExecutionContext ignoredExecutionContext) {
+    public synchronized String useNow(ExecutionContext executionContext) {
         if (lastUse == null) {
             lastUse = Calendar.getInstance();
         } else {
@@ -105,6 +148,8 @@ public final class UsageStatistics implements IJsonable {
         while (executionInstances.size() > MAX_EXECUTION_INSTANCES_STORED) {
             executionInstances.removeFirst();
         }
+//        long countForActivation = taskActivationBreakdown.getOrDefault(executionContext.getActivation(), 0L);
+//        taskActivationBreakdown.put(executionContext.getActivation(), countForActivation + 1);
         return id;
     }
 

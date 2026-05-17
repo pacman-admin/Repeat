@@ -1,6 +1,11 @@
 package core.webui.server.handlers.internals.tasks;
 
-import com.sun.net.httpserver.HttpExchange;
+import java.io.IOException;
+import java.util.Map;
+
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
+
 import core.userDefinedTask.UserDefinedAction;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
@@ -9,36 +14,30 @@ import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import utilities.StringUtil;
 
-import java.io.IOException;
-import java.util.Map;
-
 public final class ModifyTaskNameHandler extends AbstractUIHttpHandler {
 
-    public ModifyTaskNameHandler(ObjectRenderer objectRenderer) {
-        super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
-    }
+	public ModifyTaskNameHandler(ObjectRenderer objectRenderer) {
+		super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
+	}
 
-    @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
-        if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse POST parameters.");
-            return;
-        }
-        UserDefinedAction task = CommonTask.getTaskFromRequest(params);
-        if (task == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get task.");
-            return;
-        }
+	@Override
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
+			throws IOException {
+		Map<String, String>  params = HttpServerUtilities.parseSimplePostParameters(request);
+		if (params == null) {
+			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse POST parameters.");
+		}
+		UserDefinedAction task = CommonTask.getTaskFromRequest( params);
+		if (task == null) {
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get task.");
+		}
 
-        String name = params.get("name");
-        if (StringUtil.isNullOrEmpty(name)) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Name must be provided and not empty.");
-            return;
-        }
-        System.out.println("task rename");
+		String name = params.get("name");
+		if (StringUtil.isNullOrEmpty(name)) {
+			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Name must be provided and not empty.");
+		}
 
-        task.setName(name);
-        renderedTaskForGroup(exchange);
-    }
+		task.setName(name);
+		return renderedTaskForGroup(exchange);
+	}
 }

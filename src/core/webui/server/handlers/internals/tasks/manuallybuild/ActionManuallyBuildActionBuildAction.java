@@ -3,13 +3,12 @@ package core.webui.server.handlers.internals.tasks.manuallybuild;
 import core.languageHandler.Language;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpStatus;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Map;
 
@@ -23,26 +22,23 @@ public final class ActionManuallyBuildActionBuildAction extends AbstractSingleMe
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
         if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
         }
 
         String id = params.get("id");
         if (id == null || id.isBlank()) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
         }
 
         ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
         String source = constructor.generateSource();
         Backend.setCompilingLanguage(Language.MANUAL_BUILD);
         if (!Backend.compileSourceAndSetCurrent(source, null)) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
         }
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+        return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");
     }
 }

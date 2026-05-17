@@ -35,7 +35,7 @@ public final class GetPathSuggestionHandler extends AbstractComplexGETHandler {
     }
 
     @Override
-    protected String handleAsString(Map<String, String> params) {
+    protected String handle(Map<String, String> params) {
         if (params == null) {
             throw new IllegalArgumentException("No parameters supplied.");
         }

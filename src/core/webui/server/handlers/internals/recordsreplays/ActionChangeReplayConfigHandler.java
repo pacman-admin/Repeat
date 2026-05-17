@@ -1,12 +1,11 @@
 package core.webui.server.handlers.internals.recordsreplays;
 
 import argo.jdom.JsonNode;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.NumberUtility;
 import utilities.json.JSONUtility;
 import utilities.json.Jsonizer;
@@ -20,11 +19,10 @@ public final class ActionChangeReplayConfigHandler extends AbstractSingleMethodH
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
         if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
         }
 
         long count;
@@ -33,9 +31,8 @@ return;
 
         String countString = params.get("count");
         if (countString != null) {
-            if (NumberUtility.isPositiveInteger(countString)) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Count must be positive integer."); 
-return;
+            if (!NumberUtility.isPositiveInteger(countString)) {
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Count must be positive integer.");
             }
             count = Long.parseLong(countString);
         } else {
@@ -44,9 +41,8 @@ return;
 
         String delayString = params.get("delay");
         if (delayString != null) {
-            if (NumberUtility.isPositiveInteger(delayString)) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Delay must be non-negative integer."); 
-return;
+            if (!NumberUtility.isPositiveInteger(delayString)) {
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Delay must be non-negative integer.");
             }
             delay = Long.parseLong(delayString);
         } else {
@@ -56,13 +52,11 @@ return;
         String speedupString = params.get("speedup");
         if (speedupString != null) {
             if (!NumberUtility.isDouble(speedupString)) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a float number."); 
-return;
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a float number.");
             }
             speedup = Float.parseFloat(speedupString);
             if (speedup <= 0) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a positive float number."); 
-return;
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Speedup must be a positive float number.");
             }
         } else {
             speedup = Backend.replayConfig.getSpeedup();
@@ -74,11 +68,10 @@ return;
 
         JsonNode responseNode = Jsonizer.jsonize(ResponseMessage.of(count, delay, speedup));
         if (responseNode == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to jsonize response."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to jsonize response.");
         }
 
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode()));
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, JSONUtility.jsonToString(responseNode.getRootNode()));
     }
 
     @SuppressWarnings("unused")

@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpStatus;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedPossibleManuallyBuildActions;
 import core.webui.webcommon.HttpServerUtilities;
 
@@ -19,11 +21,10 @@ public final class ActionManuallyBuildActionListActionsForActorHandler extends A
 	}
 
 	@Override
-	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
-		Map<String, String> params = HttpServerUtilities.parseGetParameters(exchange.getRequestURI());
-        if (!params.containsKey("actor")) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided."); 
-return;
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+		Map<String, String> params = HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri());
+        if (params == null || !params.containsKey("actor")) {
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided.");
         }
         String actor = params.get("actor").toLowerCase();
 		List<String> actions = ManuallyBuildActionFeModel.of().actionsForActor(actor);
@@ -32,10 +33,9 @@ return;
 
 		String page = objectRenderer.render("fragments/manually_build_task_actions_rendered", data);
 		if (page == null) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
 		}
 
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
-    }
+		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+	}
 }

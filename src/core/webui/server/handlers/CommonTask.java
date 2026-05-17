@@ -18,6 +18,8 @@
  */
 package core.webui.server.handlers;
 
+import core.ipc.IIPCService;
+import core.ipc.IPCServiceManager;
 import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.TaskGroupManager;
 import core.userDefinedTask.UserDefinedAction;
@@ -26,13 +28,17 @@ import frontEnd.Backend;
 import java.util.Map;
 import java.util.logging.Logger;
 
-
+@SuppressWarnings("unused")
 public final class CommonTask {
 
     private static final Logger LOGGER = Logger.getLogger(CommonTask.class.getName());
 
     private CommonTask() {
         throw new InstantiationError("This class is uninstantiable.");
+    }
+
+    public static IIPCService getIPCService(Map<String, String> params) {
+        return IPCServiceManager.getUIServer();
     }
 
     public static UserDefinedAction getTaskFromRequest(Map<String, String> params) {
@@ -42,7 +48,7 @@ public final class CommonTask {
             return null;
         }
 
-        return Backend.getTask(taskId);
+        return getTaskFromId(taskId);
     }
 
     public static String getTaskIdFromRequest(Map<String, String> params) {
@@ -53,6 +59,16 @@ public final class CommonTask {
         }
 
         return taskValue;
+    }
+
+    public static UserDefinedAction getTaskFromId(String id) {
+        UserDefinedAction task = Backend.getTask(id);
+//        if (task == null) {
+//            LOGGER.warning("No such task with ID " + id + ".");
+//            return null;
+//        }
+
+        return task;
     }
 
     public static String getTaskGroupIdFromRequest(Map<String, String> params) {

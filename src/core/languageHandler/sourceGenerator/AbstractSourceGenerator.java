@@ -43,7 +43,10 @@ public abstract class AbstractSourceGenerator {
     }
 
     public final void submitTask(long time, Device device, String action, int[] param) {
-        internalSubmitTask(time, device, action, param);
+        if (verify(device, action, param)) {
+            internalSubmitTask(time, device, action, param);
+        }
+
     }
 
     private void internalSubmitTask(long time, Device device, String action, int[] params) {
@@ -59,6 +62,10 @@ public abstract class AbstractSourceGenerator {
         if (mid != null) {
             sourceScheduler.addTask(new SchedulingData<>(time, getSourceTab() + mid + "\n"));
         }
+    }
+
+    private boolean verify(Object... ignored) {
+        return true;
     }
 
     public final void clear() {

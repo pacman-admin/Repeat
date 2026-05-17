@@ -15,15 +15,14 @@
  */
 package core.webui.server.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import core.webui.webcommon.HttpHandlerWithBackend;
 import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-
-
-public abstract class AbstractBooleanGETHandler implements HttpHandler {
+public abstract class AbstractBooleanGETHandler extends HttpHandlerWithBackend {
     @Override
-    public void handle(HttpExchange exchange) {
+    protected void handle(HttpRequest request, HttpAsyncExchange exchange) {
         HttpServerUtilities.prepareTextResponse(exchange, 200, "" + handle());
     }
 

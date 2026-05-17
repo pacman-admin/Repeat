@@ -4,12 +4,11 @@ import core.userDefinedTask.TaskGroup;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.CommonTask;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
 import java.util.Map;
@@ -21,20 +20,18 @@ public final class ToggleTaskGroupEnabledHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
         if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to get parameters.");
         }
 
         TaskGroup group = CommonTask.getTaskGroupFromRequest(params, false);
         if (group == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get task group from request parameters."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unable to get task group from request parameters.");
         }
 
         group.setEnabled(!group.isEnabled(), Backend.keysManager);
-        renderedTaskGroups(exchange);
+        return renderedTaskGroups(exchange);
     }
 }

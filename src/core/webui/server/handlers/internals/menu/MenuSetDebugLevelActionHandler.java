@@ -1,11 +1,10 @@
 package core.webui.server.handlers.internals.menu;
 
 import core.webui.server.handlers.AbstractPOSTHandler;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedDebugLevel;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-
+import org.apache.http.HttpRequest;
 import utilities.NumberUtility;
 
 import java.util.Map;
@@ -18,8 +17,8 @@ public final class MenuSetDebugLevelActionHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handleAsString(HttpExchange exchange) {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
+    protected String handle(HttpRequest request) {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
         if (params == null) {
             throw new IllegalArgumentException("Request empty");
         }

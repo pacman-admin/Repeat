@@ -1,9 +1,9 @@
 package core.webui.server.handlers.internals.menu;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import frontEnd.Backend;
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public final class MenuSaveConfigActionHandler extends AbstractSingleMethodHttpHandler {
 
@@ -12,8 +12,8 @@ public final class MenuSaveConfigActionHandler extends AbstractSingleMethodHttpH
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         Backend.writeConfigFile();
-        emptySuccessResponse(exchange);
+        return emptySuccessResponse(exchange);
     }
 }

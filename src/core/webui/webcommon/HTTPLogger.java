@@ -15,8 +15,7 @@
  */
 package core.webui.webcommon;
 
-
-import com.sun.net.httpserver.HttpExchange;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public final class HTTPLogger {
     private final String errorMessage;
@@ -26,15 +25,15 @@ public final class HTTPLogger {
         errorMessage = errorMsg;
     }
 
-    public void exec(Runnable task, HttpExchange exchange) {
+    public Void exec(RunnableVoid task, HttpAsyncExchange exchange) {
         try {
-            task.run();
+            return task.run();
         } catch (NullPointerException e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
         } catch (IllegalArgumentException e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
         } catch (Exception e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
         }
     }
 

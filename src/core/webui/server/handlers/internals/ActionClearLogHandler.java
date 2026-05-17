@@ -18,10 +18,9 @@
  */
 package core.webui.server.handlers.internals;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import frontEnd.Backend;
-
+import org.apache.http.HttpRequest;
 
 public final class ActionClearLogHandler extends AbstractPOSTHandler {
 
@@ -30,7 +29,7 @@ public final class ActionClearLogHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handleAsString(HttpExchange exchange) {
+    protected String handle(HttpRequest ignored) {
         Backend.clearLogs();
         return "Cleared logs.";
     }

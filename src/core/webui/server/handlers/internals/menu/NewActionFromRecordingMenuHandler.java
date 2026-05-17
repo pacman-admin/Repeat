@@ -1,9 +1,8 @@
 package core.webui.server.handlers.internals.menu;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractPOSTHandler;
 import frontEnd.Backend;
-
+import org.apache.http.HttpRequest;
 
 public class NewActionFromRecordingMenuHandler extends AbstractPOSTHandler {
     public NewActionFromRecordingMenuHandler() {
@@ -11,7 +10,7 @@ public class NewActionFromRecordingMenuHandler extends AbstractPOSTHandler {
     }
 
     @Override
-    protected String handleAsString(HttpExchange r) {
+    protected String handle(HttpRequest r) {
         Backend.createActionFromRecording();
         return "";
     }

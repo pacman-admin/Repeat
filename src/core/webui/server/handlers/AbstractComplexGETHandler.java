@@ -15,8 +15,8 @@
  */
 package core.webui.server.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
 
 import java.util.Map;
 
@@ -26,10 +26,10 @@ public abstract class AbstractComplexGETHandler extends AbstractSimpleHandler {
         super(AbstractSingleMethodHttpHandler.GET_METHOD, errorMsg);
     }
 
-    protected abstract String handleAsString(Map<String, String> params);
+    protected abstract String handle(Map<String, String> params);
 
     @Override
-    public final String handleAsString(HttpExchange exchange) {
-        return handleAsString(HttpServerUtilities.parseGetParameters(exchange.getRequestURI()));
+    String handle(HttpRequest request) {
+        return handle(HttpServerUtilities.parseGetParameters(request.getRequestLine().getUri()));
     }
 }

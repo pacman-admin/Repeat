@@ -93,7 +93,6 @@ public final class ManuallyBuildActionFeModel {
         }
     }
 
-    @SuppressWarnings("SameParameterValue")
     public enum ControllerAction implements Action {
         WAIT("blocking wait");
 

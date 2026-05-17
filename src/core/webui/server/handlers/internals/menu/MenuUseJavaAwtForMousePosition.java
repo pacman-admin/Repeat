@@ -1,15 +1,14 @@
 package core.webui.server.handlers.internals.menu;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractBooleanConfigHttpHandler;
 import frontEnd.Backend;
-
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public final class MenuUseJavaAwtForMousePosition extends AbstractBooleanConfigHttpHandler {
 
     @Override
-    public void handleAllowedRequestWithBackendAndValue(HttpExchange exchange, boolean value) {
+    protected Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value) {
         Backend.config.setUseJavaAwtToGetMousePosition(value);
-        emptySuccessResponse(exchange);
+        return emptySuccessResponse(exchange);
     }
 }

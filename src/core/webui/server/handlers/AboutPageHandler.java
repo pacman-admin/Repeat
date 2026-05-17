@@ -19,10 +19,9 @@
 package core.webui.server.handlers;
 
 import core.config.Constants;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,9 +34,9 @@ public final class AboutPageHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("version", Constants.PROGRAM_VERSION);
-        renderedPage(exchange, "about", data);
+        return renderedPage(exchange, "about", data);
     }
 }

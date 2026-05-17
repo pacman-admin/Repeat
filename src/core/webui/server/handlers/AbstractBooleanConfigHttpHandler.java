@@ -18,10 +18,11 @@
  */
 package core.webui.server.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-
+import java.io.IOException;
 import java.util.Map;
 
 public abstract class AbstractBooleanConfigHttpHandler extends AbstractSingleMethodHttpHandler {
@@ -31,20 +32,18 @@ public abstract class AbstractBooleanConfigHttpHandler extends AbstractSingleMet
     }
 
     @Override
-    public final void handleAllowedRequestWithBackend(HttpExchange exchange) {
-        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+        Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
         if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse POST parameters."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse POST parameters.");
         }
         String value = params.get("value");
         if (value == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Missing value."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Missing value.");
         }
         boolean enabled = value.equalsIgnoreCase("true");
-        handleAllowedRequestWithBackendAndValue(exchange, enabled);
+        return handleAllowedRequestWithBackendAndValue(exchange, enabled);
     }
 
-    protected abstract void handleAllowedRequestWithBackendAndValue(HttpExchange exchange, boolean value);
+    protected abstract Void handleAllowedRequestWithBackendAndValue(HttpAsyncExchange exchange, boolean value);
 }

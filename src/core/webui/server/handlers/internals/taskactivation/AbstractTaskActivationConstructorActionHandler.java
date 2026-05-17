@@ -5,12 +5,13 @@ import core.keyChain.TaskActivationConstructorManager;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedDetailedUserDefinedAction;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,9 +26,9 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
     }
 
     @Override
-    public final void handleAllowedRequestWithBackend(HttpExchange exchange) {
-        LOGGER.exec(() -> {
-            Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(exchange);
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+        return LOGGER.exec(() -> {
+            Map<String, String> params = HttpServerUtilities.parseSimplePostParameters(request);
             if (params == null) {
                 throw new IllegalArgumentException("Failed to get POST parameters.");
             }
@@ -39,17 +40,17 @@ abstract class AbstractTaskActivationConstructorActionHandler extends AbstractUI
             if (constructor == null) {
                 throw new NullPointerException("No constructor found for ID '" + id + "'.");
             }
-            handleRequestWithBackendAndConstructor(exchange, constructor, params);
+            return handleRequestWithBackendAndConstructor(exchange, constructor, params);
         }, exchange);
     }
 
-    final void renderedTaskActivationPage(HttpExchange exchange, String template, TaskActivationConstructor constructor) {
-        LOGGER.exec(() -> {
+    final Void renderedTaskActivationPage(HttpAsyncExchange exchange, String template, TaskActivationConstructor constructor) {
+        return LOGGER.exec(() -> {
             Map<String, Object> data = new HashMap<>();
             data.put("task", RenderedDetailedUserDefinedAction.withEmptyTaskInfo(constructor));
-            renderedPage(exchange, template, data);
+            return renderedPage(exchange, template, data);
         }, exchange);
     }
 
-    abstract void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params);
+    abstract Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException;
 }

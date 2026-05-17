@@ -15,8 +15,7 @@
  */
 package core.webui.server.handlers;
 
-
-import com.sun.net.httpserver.HttpExchange;
+import org.apache.http.HttpRequest;
 
 public abstract class AbstractGETHandler extends AbstractSimpleHandler {
 
@@ -24,10 +23,10 @@ public abstract class AbstractGETHandler extends AbstractSimpleHandler {
         super(AbstractSingleMethodHttpHandler.GET_METHOD, errorMsg);
     }
 
-    protected abstract String handleAsString();
+    protected abstract String handle();
 
     @Override
-    public String handleAsString(HttpExchange exchange) {
-        return handleAsString();
+    String handle(HttpRequest ignored) {
+        return handle();
     }
 }

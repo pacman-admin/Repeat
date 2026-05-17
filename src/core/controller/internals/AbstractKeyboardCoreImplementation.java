@@ -63,7 +63,7 @@ public abstract class AbstractKeyboardCoreImplementation {
      * Type a sequence of keys sequentially multiple times
      *
      * @param count number of times to repeat the typing
-     * @param keys   integers representing the keys as specified in java.awt.events.KeyEvent class
+     * @param key   integers representing the keys as specified in java.awt.events.KeyEvent class
      * @throws InterruptedException
      */
     public final void repeat(int count, int... keys) throws InterruptedException {

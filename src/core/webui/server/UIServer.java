@@ -18,8 +18,6 @@
  */
 package core.webui.server;
 
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
 import core.ipc.IIPCService;
 import core.keyChain.TaskActivationConstructorManager;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
@@ -39,13 +37,19 @@ import core.webui.server.handlers.internals.taskmanagement.*;
 import core.webui.server.handlers.internals.tasks.*;
 import core.webui.server.handlers.internals.tasks.manuallybuild.*;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import core.webui.webcommon.HttpHandlerWithBackend;
 import core.webui.webcommon.StaticFileServingHandler;
+import core.webui.webcommon.UpAndRunningHandler;
+import org.apache.http.impl.nio.bootstrap.HttpServer;
+import org.apache.http.impl.nio.bootstrap.ServerBootstrap;
+import org.apache.http.impl.nio.reactor.IOReactorConfig;
 
 import java.io.IOException;
-import java.net.InetSocketAddress;
+import java.net.InetAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.concurrent.TimeUnit;
 import java.util.logging.Logger;
 
 public final class UIServer extends IIPCService {
@@ -56,8 +60,8 @@ public final class UIServer extends IIPCService {
     private static final TaskSourceCodeFragmentHandler taskSourceCodeFragmentHandler = new TaskSourceCodeFragmentHandler(objectRenderer, manuallyBuildActionConstructorManager);
     private static HttpServer server;
 
-    private static Map<String, HttpHandler> createHandlers() {
-        Map<String, HttpHandler> output = new HashMap<>();
+    private static Map<String, HttpHandlerWithBackend> createHandlers() {
+        Map<String, HttpHandlerWithBackend> output = new HashMap<>();
         output.put("/", new IndexPageHandler(objectRenderer, manuallyBuildActionConstructorManager));
         output.put("/ipcs", new IPCPageHandler(objectRenderer));
         output.put("/task-groups", new TaskGroupsPageHandler(objectRenderer));
@@ -159,23 +163,30 @@ public final class UIServer extends IIPCService {
     }
 
     public void start() throws IOException {
-        final Map<String, HttpHandler> handlers = createHandlers();
+        final Map<String, HttpHandlerWithBackend> handlers = createHandlers();
         taskActivationConstructorManager.start();
         manuallyBuildActionConstructorManager.start();
-        server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/static", new StaticFileServingHandler());
-        for (Entry<String, HttpHandler> entry : handlers.entrySet()) {
-            server.createContext(entry.getKey(), entry.getValue());
+
+        ServerBootstrap serverBootstrap = ServerBootstrap.bootstrap().setLocalAddress(InetAddress.getByName("localhost")).setIOReactorConfig(IOReactorConfig.custom().setSoReuseAddress(true).build()).setListenerPort(port).setServerInfo("Repeat").setExceptionLogger(new UIServerExceptionLogger()).registerHandler("/test", new UpAndRunningHandler()).registerHandler("/static/*", new StaticFileServingHandler());
+        for (Entry<String, HttpHandlerWithBackend> entry : handlers.entrySet()) {
+            serverBootstrap.registerHandler(entry.getKey(), entry.getValue());
         }
+        server = serverBootstrap.create();
         server.start();
-        getLogger().info("UI server started at port: " + server.getAddress().getPort());
+
+        getLogger().info("UI server started at port: " + port);
     }
 
     @Override
     public void stop() {
         taskActivationConstructorManager.stop();
         manuallyBuildActionConstructorManager.stop();
-        server.stop(TERMINATION_DELAY_SECOND);
+        server.shutdown(TERMINATION_DELAY_SECOND, TimeUnit.SECONDS);
+        try {
+            server.awaitTermination(1, TimeUnit.MINUTES);
+        } catch (InterruptedException e) {
+            getLogger().fine("Interrupted while awaiting server termination.");
+        }
     }
 
     @Override

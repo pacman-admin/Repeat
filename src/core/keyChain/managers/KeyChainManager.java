@@ -132,7 +132,7 @@ public final class KeyChainManager extends KeyStrokeManager {
      * @return if operation succeeded (even if no action has been invoked)
      */
     private UserDefinedAction considerTaskExecution(ButtonStroke stroke) {
-        if (stroke.getKey() == Constants.HALT_TASK) {
+        if (stroke.getKey() == Constants.HALT_TASK && getConfig().isEnabledHaltingKeyPressed()) {
             clear();
             return null;
         }

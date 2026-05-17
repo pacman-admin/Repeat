@@ -15,13 +15,14 @@
  */
 package core.webui.server.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
+import core.webui.webcommon.HttpHandlerWithBackend;
 import core.webui.webcommon.HttpServerUtilities;
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-public final class EmptyHandler implements HttpHandler {
+public final class EmptyHandler extends HttpHandlerWithBackend {
     @Override
-    public void handle(HttpExchange exchange) {
+    protected void handle(HttpRequest request, HttpAsyncExchange exchange) {
         HttpServerUtilities.prepareHttpResponse(exchange, 200, "Feature disabled");
     }
 }

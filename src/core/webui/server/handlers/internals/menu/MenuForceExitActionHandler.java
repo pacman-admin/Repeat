@@ -1,10 +1,9 @@
 package core.webui.server.handlers.internals.menu;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Timer;
 import java.util.TimerTask;
@@ -18,7 +17,7 @@ public final class MenuForceExitActionHandler extends AbstractSingleMethodHttpHa
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -26,6 +25,6 @@ public final class MenuForceExitActionHandler extends AbstractSingleMethodHttpHa
             }
         }, EXIT_DELAY_MS);
 
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting after " + EXIT_DELAY_MS + "ms...");
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "Exiting after " + EXIT_DELAY_MS + "ms...");
     }
 }

@@ -2,10 +2,9 @@ package core.webui.server.handlers.internals.menu;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
 
@@ -16,7 +15,7 @@ public final class MenuGetCompilingLanguagesActionHandler extends AbstractUIHttp
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
-        renderedCompilingLanguages(exchange);
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
+        return renderedCompilingLanguages(exchange);
     }
 }

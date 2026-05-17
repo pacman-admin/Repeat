@@ -20,7 +20,7 @@ package utilities;
 
 public final class NumberUtility {
     public static boolean isPositiveInteger(String input) {
-        return !isInteger(input) || Long.parseLong(input) <= 0;
+        return isInteger(input) && Long.parseLong(input) > 0;
     }
 
     public static boolean isNonNegativeInteger(String input) {
@@ -30,7 +30,7 @@ public final class NumberUtility {
     private static boolean isInteger(String input) {
         if(StringUtil.isNullOrEmpty(input))
             return false;
-        input = input.replace(",", "");
+        input = input.replaceAll(",", "");
         if (input.startsWith("-")) {
             input = input.substring(1);
         }

@@ -15,9 +15,9 @@
  */
 package core.webui.server.handlers;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.webcommon.HttpServerUtilities;
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
     private final String errorMessage;
@@ -28,24 +28,24 @@ abstract class AbstractSimpleHandler extends AbstractSingleMethodHttpHandler {
         errorMessage = errorMsg;
     }
 
-    protected abstract String handleAsString(HttpExchange exchange);
+    abstract String handle(HttpRequest r);
 
     private String getErrorMsg(Exception e) {
         return errorMessage + "\n" + e.getMessage();
     }
 
-    public final void handleAllowedRequestWithBackend(HttpExchange exchange) {
+    protected final Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         try {
-            String data = handleAsString(exchange);
-            HttpServerUtilities.prepareTextResponse(exchange, 200, data);
+            String data = handle(request);
+            return HttpServerUtilities.prepareTextResponse(exchange, 200, data);
         } catch (NullPointerException e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 404, getErrorMsg(e));
         } catch (IllegalArgumentException e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 400, getErrorMsg(e));
         } catch (IllegalStateException e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 503, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 503, getErrorMsg(e));
         } catch (Exception e) {
-            HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
+            return HttpServerUtilities.prepareTextResponse(exchange, 500, getErrorMsg(e));
         }
     }
 }

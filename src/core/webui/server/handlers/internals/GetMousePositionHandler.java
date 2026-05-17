@@ -30,7 +30,7 @@ public final class GetMousePositionHandler extends AbstractGETHandler {
     }
 
     @Override
-    protected String handleAsString() {
+    protected String handle() {
         Point p = Backend.getCore().mouse().getPosition();
         return p.x + ", " + p.y;
     }

@@ -112,7 +112,7 @@ public final class GlobalEventsManager {
                 KeyStroke stroke = KeyStroke.of(r);
                 LOGGER.finer("Key pressed " + stroke);
 
-                if (shouldDelegate(stroke)) {
+                if (!shouldDelegate(stroke)) {
                     return true;
                 }
 
@@ -128,7 +128,7 @@ public final class GlobalEventsManager {
             public Boolean apply(NativeKeyEvent r) {
                 KeyStroke stroke = KeyStroke.of(r);
                 LOGGER.finer("Key released " + stroke);
-                if (shouldDelegate(stroke)) {
+                if (!shouldDelegate(stroke)) {
                     return true;
                 }
 
@@ -151,9 +151,9 @@ public final class GlobalEventsManager {
         if (stroke.getKey() == HALT_TASK) {
             taskActivationManager.clear();
             actionExecutor.haltAllTasks();
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     /**

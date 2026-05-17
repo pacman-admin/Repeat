@@ -5,10 +5,9 @@ import core.keyChain.MouseGesture;
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedMouseGestureActivation;
 import core.webui.webcommon.HttpServerUtilities;
-
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 import utilities.json.JSONUtility;
 
 import java.util.*;
@@ -20,27 +19,23 @@ public final class ActionTaskActivationSetMouseGesturesHandler extends AbstractT
     }
 
     @Override
-    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
+    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
         String nodeString = params.get("gestures");
         if (nodeString == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be provided."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be provided.");
         }
 
         JsonNode node = JSONUtility.jsonFromString(nodeString);
         if (node == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse list of gesture indices as JSON."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to parse list of gesture indices as JSON.");
         }
         if (!node.isArrayNode()) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be a list."); 
-return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "List of gesture indices must be a list.");
         }
         List<Integer> indices = new ArrayList<>();
         for (JsonNode index : node.getNullableArrayNode()) {
             if (!index.isNumberValue()) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 400, "All gesture indices must be numbers."); 
-return;
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "All gesture indices must be numbers.");
             }
             indices.add(Integer.parseInt(index.getNumberValue()));
         }
@@ -49,13 +44,12 @@ return;
         Set<MouseGesture> chosenGestures = new HashSet<>();
         for (int i : indices) {
             if (i < 0 || i >= gestures.length) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 400, "Gesture index out of bound: " + i + "."); 
-return;
+                return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Gesture index out of bound: " + i + ".");
             }
             chosenGestures.add(gestures[i]);
         }
 
         constructor.setMouseGestures(chosenGestures);
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 }

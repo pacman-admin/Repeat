@@ -6,13 +6,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 import core.userDefinedTask.TaskGroupManager;
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedTaskGroup;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.TooltipsTaskGroupsPage;
 
 public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
@@ -22,7 +22,7 @@ public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 	}
 
 	@Override
-	public void handleAllowedRequestWithBackend(HttpExchange exchange)
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange)
 			throws IOException {
 		Map<String, Object> data = new HashMap<>();
 		data.put("groups", TaskGroupManager.getTaskGroups()
@@ -30,6 +30,6 @@ public final class TaskGroupsPageHandler extends AbstractUIHttpHandler {
 				.collect(Collectors.toList()));
 		data.put("tooltips", new TooltipsTaskGroupsPage());
 
-		renderedPage(exchange, "task_groups", data);
+		return renderedPage(exchange, "task_groups", data);
 	}
 }

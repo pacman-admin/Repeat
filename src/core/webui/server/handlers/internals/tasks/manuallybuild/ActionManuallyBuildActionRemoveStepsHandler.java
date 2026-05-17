@@ -4,9 +4,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.HttpStatus;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import argo.jdom.JsonNode;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
@@ -14,7 +14,6 @@ import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructorManager;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.webcommon.HttpServerUtilities;
 
@@ -29,48 +28,42 @@ public final class ActionManuallyBuildActionRemoveStepsHandler extends AbstractU
 	}
 
 	@Override
-	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
-		JsonNode params = HttpServerUtilities.parsePostParameters(exchange);
+	protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+		JsonNode params = HttpServerUtilities.parsePostParameters(request);
 		if (params == null) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
 		}
 
 		if (!params.isStringValue("id")) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
 		}
 
 		String id = params.getStringValue("id");
 		if (id == null || id.isBlank()) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "No builder ID provided.");
 		}
 
 		if (!params.isArrayNode("indices")) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices is not an array node."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices is not an array node.");
 		}
 
 		List<JsonNode> indicesNodes = params.getArrayNode("indices");
 		if (indicesNodes.stream().anyMatch(n -> !n.isNumberValue())) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices must all be integers."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Indices must all be integers.");
 		}
 		// Get indices, largest one first.
 		List<Integer> indices = indicesNodes.stream().map(n -> Integer.parseInt(n.getNumberValue())).sorted((i1, i2) -> Integer.compare(i2, i1)).toList();
 
 		ManuallyBuildActionConstructor constructor = manuallyBuildActionConstructorManager.get(id);
 		// Since the list of indices is sorted with the largest one first, it's safe to remove them sequentially.
-		indices.forEach(constructor::removeStep);
+		indices.stream().forEach(constructor::removeStep);
 
 		Map<String, Object> data = new HashMap<>();
 		data.put("constructor", RenderedManuallyBuildSteps.fromManuallyBuildActionConstructor(constructor));
 		String page = objectRenderer.render("fragments/task_builder_steps_table_rendered", data);
 		if (page == null) {
-			HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page."); 
-return;
+			return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
 		}
-		HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
-    }
+		return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+	}
 }

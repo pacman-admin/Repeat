@@ -4,12 +4,12 @@ import core.ipc.IPCServiceManager;
 import core.languageHandler.Language;
 import core.userDefinedTask.TaskGroup;
 import core.userDefinedTask.TaskGroupManager;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.*;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-
+import org.apache.http.HttpStatus;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -27,28 +27,28 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
         this.objectRenderer = objectRenderer;
     }
 
-    protected final void renderedIpcServices(HttpExchange exchange) throws IOException {
+    protected final Void renderedIpcServices(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("ipcs", List.of(RenderedIPCService.of(IPCServiceManager.getUIServer())));
-        renderedPage(exchange, "fragments/ipcs", data);
+        return renderedPage(exchange, "fragments/ipcs", data);
     }
 
-    protected final void renderedTaskForGroup(HttpExchange exchange) throws IOException {
+    protected final Void renderedTaskForGroup(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         TaskGroup group = TaskGroupManager.getCurrentTaskGroup();
         List<RenderedUserDefinedAction> taskList = group.getTasks().stream().map(RenderedUserDefinedAction::fromUserDefinedAction).collect(Collectors.toList());
         data.put("tooltips", new TooltipsIndexPage());
         data.put("tasks", taskList);
-        renderedPage(exchange, "fragments/tasks", data);
+        return renderedPage(exchange, "fragments/tasks", data);
     }
 
-    protected final void renderedTaskGroups(HttpExchange exchange) throws IOException {
+    protected final Void renderedTaskGroups(HttpAsyncExchange exchange) throws IOException {
         Map<String, Object> data = new HashMap<>();
         data.put("groups", TaskGroupManager.getTaskGroups().stream().map(g -> RenderedTaskGroup.fromTaskGroup(g, g == TaskGroupManager.getCurrentTaskGroup())).collect(Collectors.toList()));
-        renderedPage(exchange, "fragments/task_groups", data);
+        return renderedPage(exchange, "fragments/task_groups", data);
     }
 
-    protected final void renderedCompilingLanguages(HttpExchange exchange) throws IOException {
+    protected final Void renderedCompilingLanguages(HttpAsyncExchange exchange) throws IOException {
         Language selected = Backend.getSelectedLanguage();
         Map<String, Object> data = new HashMap<>();
         List<RenderedCompilingLanguage> languages = new ArrayList<>();
@@ -56,17 +56,16 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
             languages.add(RenderedCompilingLanguage.forLanguage(language, language == selected));
         }
         data.put("compilingLanguages", languages);
-        renderedPage(exchange, "fragments/compiling_languages", data);
+        return renderedPage(exchange, "fragments/compiling_languages", data);
     }
 
-    protected final void renderedPage(HttpExchange exchange, String template, Map<String, Object> data) {
-        LOGGER.exec(() -> {
+    protected final Void renderedPage(HttpAsyncExchange exchange, String template, Map<String, Object> data) throws IOException {
+        return LOGGER.exec(() -> {
             String page = objectRenderer.render(template, data);
             if (page == null) {
-                HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
-                return;
+                return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
             }
-            HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
+            return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
         }, exchange);
     }
 }

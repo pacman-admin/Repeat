@@ -2,10 +2,10 @@ package core.webui.server.handlers.internals.taskactivation;
 
 import core.keyChain.TaskActivationConstructor;
 import core.keyChain.TaskActivationConstructorManager;
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
-
+import java.io.IOException;
 import java.util.Map;
 
 public final class ActionTaskActivationAddStrokesAsKeySequenceHandler extends AbstractTaskActivationConstructorActionHandler {
@@ -15,9 +15,9 @@ public final class ActionTaskActivationAddStrokesAsKeySequenceHandler extends Ab
     }
 
     @Override
-    public void handleRequestWithBackendAndConstructor(HttpExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) {
+    protected Void handleRequestWithBackendAndConstructor(HttpAsyncExchange exchange, TaskActivationConstructor constructor, Map<String, String> params) throws IOException {
         constructor.addAsKeySequence();
         constructor.stopListening();
-        renderedTaskActivationPage(exchange, "fragments/key_sequences", constructor);
+        return renderedTaskActivationPage(exchange, "fragments/key_sequences", constructor);
     }
 }

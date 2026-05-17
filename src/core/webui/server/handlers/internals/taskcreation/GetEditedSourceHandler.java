@@ -23,7 +23,7 @@ public final class GetEditedSourceHandler extends AbstractGETHandler {
         super("Could not load edits to source code.");
     }
 
-    protected String handleAsString() {
+    protected String handle() {
         return Backend.reloadSource();
     }
 }

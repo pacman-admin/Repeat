@@ -1,19 +1,18 @@
 package core.webui.server.handlers.internals.tasks;
 
 import argo.jdom.JsonNode;
-import com.sun.net.httpserver.HttpExchange;
-import core.keyChain.ActionInvoker;
-import core.keyChain.KeyChain;
-import core.keyChain.TaskActivationConstructor;
-import core.keyChain.TaskActivationConstructorManager;
+import core.keyChain.*;
 import core.userDefinedTask.UserDefinedAction;
 import core.userDefinedTask.internals.preconditions.*;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.server.handlers.AbstractUIHttpHandler;
+import core.webui.server.handlers.CommonTask;
 import core.webui.server.handlers.renderedobjects.ObjectRenderer;
 import core.webui.server.handlers.renderedobjects.RenderedMatchingOptionSelection;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Set;
 
@@ -21,7 +20,8 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
 
     private final TaskActivationConstructorManager taskActivationConstructorManager;
 
-    public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer, TaskActivationConstructorManager taskActivationConstructorManager) {
+    public ActionSaveTaskDetailsHandler(ObjectRenderer objectRenderer,
+                                        TaskActivationConstructorManager taskActivationConstructorManager) {
         super(objectRenderer, AbstractSingleMethodHttpHandler.POST_METHOD);
         this.taskActivationConstructorManager = taskActivationConstructorManager;
     }
@@ -44,43 +44,43 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
-        JsonNode params = HttpServerUtilities.parsePostParameters(exchange);
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
+        JsonNode params = HttpServerUtilities.parsePostParameters(request);
         if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
-            return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get POST parameters.");
         }
         if (!validateInput(exchange, params)) {
-            return;
+            return null;
         }
 
         String id = params.getStringValue("id");
         TaskActivationConstructor constructor = taskActivationConstructorManager.get(id);
         if (constructor == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 404, "No constructor found for ID '" + id + "'.");
-            return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 404, "No constructor found for ID '" + id + "'.");
         }
 
         String taskString = params.getStringValue("task");
         if (isHotkey(taskString)) {
-            handleSaveHotkey(exchange, constructor.getActivation(), taskString);
+            return handleSaveHotkey(exchange, constructor.getActivation(), taskString);
         }
 
-        UserDefinedAction task = Backend.getTask(taskString);
+        UserDefinedAction task = CommonTask.getTaskFromId( taskString);
+        if (task == null) {
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot get task from request.");
+        }
 
         ActionInvoker activation = constructor.getActivation();
         if (!Backend.changeHotkeyTask(task, activation)) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot change task activation.");
-            return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Cannot change task activation.");
         }
         TaskExecutionPreconditions preconditions = getTaskExecutionPreconditions(params);
         task.setExecutionPreconditions(preconditions);
 
         taskActivationConstructorManager.remove(id);
-        HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 
-    private boolean validateInput(HttpExchange exchange, JsonNode params) {
+    private boolean validateInput(HttpAsyncExchange exchange, JsonNode params) {
         if (!params.isStringValue("id")) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "Failed to get task activation constructor ID.");
             return false;
@@ -116,11 +116,10 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
         return true;
     }
 
-    private void handleSaveHotkey(HttpExchange exchange, ActionInvoker activation, String taskString) {
+    private Void handleSaveHotkey(HttpAsyncExchange exchange, ActionInvoker activation, String taskString) {
         Set<KeyChain> hotKeys = activation.getHotkeys();
         if (hotKeys.isEmpty()) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set!");
-            return;
+            return HttpServerUtilities.prepareHttpResponse(exchange, 400, "There is no hot key to set!");
         }
         KeyChain hotKey = hotKeys.iterator().next();
 
@@ -128,32 +127,29 @@ public final class ActionSaveTaskDetailsHandler extends AbstractUIHttpHandler {
             case TaskDetailsPageHandler.RECORD_TASK_NAME -> {
                 Backend.config.setRECORD(hotKey);
                 Backend.reconfigureSwitchRecord();
-                emptySuccessResponse(exchange);
-                return;
+                return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.REPLAY_TASK_NAME -> {
                 Backend.config.setREPLAY(hotKey);
                 Backend.reconfigureSwitchReplay();
-                emptySuccessResponse(exchange);
-                return;
+                return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.RUN_COMPILED_TASK_NAME -> {
                 Backend.config.setCOMPILED_REPLAY(hotKey);
                 Backend.reconfigureSwitchCompiledReplay();
-                emptySuccessResponse(exchange);
-                return;
+                return emptySuccessResponse(exchange);
             }
             case TaskDetailsPageHandler.MOUSE_GESTURE_ACTIVATION_TASK_NAME -> {
                 Backend.config.setMOUSE_GESTURE(hotKey);
-                emptySuccessResponse(exchange);
-                return;
+                return emptySuccessResponse(exchange);
             }
         }
-        HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString + ".");
+        return HttpServerUtilities.prepareHttpResponse(exchange, 400, "Unknown hotkey " + taskString + ".");
     }
 
     private boolean isHotkey(String taskString) {
-        return taskString != null && (TaskDetailsPageHandler.HOTKEY_NAMES.containsKey(taskString));
+        return taskString != null &&
+                (TaskDetailsPageHandler.HOTKEY_NAMES.containsKey(taskString));
     }
 
     private TaskExecutionPreconditions getTaskExecutionPreconditions(JsonNode params) {

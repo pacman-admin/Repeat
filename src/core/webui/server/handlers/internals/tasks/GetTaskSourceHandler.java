@@ -31,8 +31,8 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
     }
 
     @Override
-    protected String handleAsString(Map<String, String> params) {
-        System.out.println("Source code request.\n"+params);
+    protected String handle(Map<String, String> params) {
+
         if (params == null) throw new IllegalArgumentException("Params must not be null.");
 
         String id = params.get("id");
@@ -43,11 +43,12 @@ public final class GetTaskSourceHandler extends AbstractComplexGETHandler {
             throw new IllegalArgumentException("Timestamp is empty or not provided.");
 
         UserDefinedAction action = Backend.getTask(id);
+//        if (action == null) throw new NullPointerException("Could not find Action with ID: " + id);
 
         long timestamp = Long.parseLong(timestampString);
         String sourceCode = Backend.getSourceForTask(action, timestamp);
         if (sourceCode == null) throw new NullPointerException("Could not find source code for Action with ID: " + id);
-        System.out.println(sourceCode);
+
         return sourceCode;
     }
 }

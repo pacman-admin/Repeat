@@ -46,10 +46,11 @@ public final class Desktop {
         }
     }
 
-    public static void setClipboard(String data) {
+    public static boolean setClipboard(String data) {
         Clipboard clipboard = Toolkit.getDefaultToolkit().getSystemClipboard();
         StringSelection selection = new StringSelection(data);
         clipboard.setContents(selection, null);
+        return true;
     }
 
     public static boolean openFile(File file) {

@@ -28,7 +28,7 @@ public final class GetLogsHandler extends AbstractGETHandler {
     }
 
     @Override
-    protected String handleAsString() {
+    protected String handle() {
         return Backend.getLogs();
     }
 }

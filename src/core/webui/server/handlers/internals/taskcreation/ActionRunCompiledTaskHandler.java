@@ -1,11 +1,10 @@
 package core.webui.server.handlers.internals.taskcreation;
 
-import com.sun.net.httpserver.HttpExchange;
 import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-
-
+import org.apache.http.HttpRequest;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 public final class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttpHandler {
 
@@ -14,8 +13,8 @@ public final class ActionRunCompiledTaskHandler extends AbstractSingleMethodHttp
     }
 
     @Override
-    public void handleAllowedRequestWithBackend(HttpExchange exchange) {
+    protected Void handleAllowedRequestWithBackend(HttpRequest request, HttpAsyncExchange exchange) {
         Backend.runCompiledAction();
-        HttpServerUtilities.prepareTextResponse(exchange, 200, "");
+        return HttpServerUtilities.prepareTextResponse(exchange, 200, "");
     }
 }

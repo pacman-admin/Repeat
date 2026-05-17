@@ -9,7 +9,7 @@ import core.userDefinedTask.UserDefinedAction;
 
 @SuppressWarnings("unused")
 final class CustomAction extends UserDefinedAction {
-    public void action(final Core c) {
+    public void action(final Core c) throws InterruptedException {
         KeyboardCore k = c.keyBoard();
         MouseCore m = c.mouse();
         //Begin generated code (this line must not be changed)

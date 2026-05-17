@@ -226,8 +226,8 @@ public abstract class AbstractMouseCoreImplementation {
 
 	/**
 	 * Drag a mouse from by a distance (i.e. left mask down during mouse movement)
-	 * @param amountX x amount to drag mouse by
-	 * @param amountY y amount to drag mouse by
+	 * @param sourceX x coordinate of the beginning point
+	 * @param sourceY y coordinate of the beginning point
 	 */
 	public abstract void dragBy(int amountX, int amountY);
 }

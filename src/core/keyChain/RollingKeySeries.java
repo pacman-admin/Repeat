@@ -18,15 +18,15 @@ public final class RollingKeySeries extends KeySeries {
     private final LinkedList<ButtonStroke> keys; // This is an alias for the underlying keys.
 
     public RollingKeySeries() {
-        this(List.of());
+        this(List.of(), DEFAULT_LIMIT);
     }
 
-    private RollingKeySeries(List<ButtonStroke> keys) {
+    private RollingKeySeries(List<ButtonStroke> keys, int limit) {
         super();
         super.keys = new LinkedList<>();
         this.keys = (LinkedList<ButtonStroke>) super.keys;
 
-        this.limit = RollingKeySeries.DEFAULT_LIMIT;
+        this.limit = limit;
 
         for (ButtonStroke key : keys) {
             addKeyStroke(key);
