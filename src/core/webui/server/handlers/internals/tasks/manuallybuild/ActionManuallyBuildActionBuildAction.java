@@ -7,7 +7,6 @@ import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
 import org.apache.http.HttpRequest;
-import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.Map;
@@ -39,6 +38,6 @@ public final class ActionManuallyBuildActionBuildAction extends AbstractSingleMe
         if (!Backend.compileSourceAndSetCurrent(source, null)) {
             return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Unable to compile generated source code.");
         }
-        return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, "");
+        return HttpServerUtilities.prepareHttpResponse(exchange, 200, "");
     }
 }

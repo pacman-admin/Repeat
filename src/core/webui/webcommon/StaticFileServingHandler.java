@@ -19,7 +19,6 @@ package core.webui.webcommon;
 
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
-import org.apache.http.HttpStatus;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
 import org.apache.http.nio.protocol.BasicAsyncResponseProducer;
@@ -43,7 +42,7 @@ public final class StaticFileServingHandler extends HttpSimpleAsyncRequestHandle
     }
 
     @Override
-    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange){
+    public Void handleRequest(HttpRequest request, HttpAsyncExchange exchange) {
         LOGGER.fine("Path is " + request.getRequestLine().getUri());
         if (!request.getRequestLine().getMethod().equalsIgnoreCase("GET")) {
             return HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");
@@ -71,7 +70,7 @@ public final class StaticFileServingHandler extends HttpSimpleAsyncRequestHandle
         }
 
         HttpResponse response = exchange.getResponse();
-        response.setStatusCode(HttpStatus.SC_OK);
+        response.setStatusCode(200);
         response.addHeader("Cache-Control", "max-age=3600"); // Max age = 1 hour.
         String contentType = contentType(decodedPath);
         try {

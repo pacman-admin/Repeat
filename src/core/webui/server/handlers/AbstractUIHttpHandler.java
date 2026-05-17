@@ -8,7 +8,6 @@ import core.webui.server.handlers.renderedobjects.*;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
-import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.io.IOException;
@@ -65,7 +64,7 @@ public abstract class AbstractUIHttpHandler extends AbstractSingleMethodHttpHand
             if (page == null) {
                 return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
             }
-            return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+            return HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
         }, exchange);
     }
 }

@@ -11,7 +11,6 @@ import core.webui.server.handlers.renderedobjects.RenderedManuallyBuildSteps;
 import core.webui.webcommon.HTTPLogger;
 import core.webui.webcommon.HttpServerUtilities;
 import org.apache.http.HttpRequest;
-import org.apache.http.HttpStatus;
 import org.apache.http.nio.protocol.HttpAsyncExchange;
 
 import java.util.HashMap;
@@ -79,7 +78,7 @@ public final class ActionManuallyBuildActionInsertStepHandler extends AbstractUI
             if (page == null) {
                 return HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to render page.");
             }
-            return HttpServerUtilities.prepareHttpResponse(exchange, HttpStatus.SC_OK, page);
+            return HttpServerUtilities.prepareHttpResponse(exchange, 200, page);
 
         }, exchange);
     }
