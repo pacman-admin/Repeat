@@ -30,63 +30,32 @@ public final class RenderedConfig {
 		return recordMouseClickOnly;
 	}
 
-	public void setRecordMouseClickOnly(boolean recordMouseClickOnly) {
-		//this.recordMouseClickOnly = recordMouseClickOnly;
-	}
-
 	public boolean isHaltTaskByEscape() {
 		return haltTaskByEscape;
-	}
-
-	public void setHaltTaskByEscape(boolean haltTaskByEscape) {
-		//this.haltTaskByEscape = haltTaskByEscape;
 	}
 
 	public boolean isExecuteOnRelease() {
 		return executeOnRelease;
 	}
 
-	public void setExecuteOnRelease(boolean executeOnRelease) {
-		//this.executeOnRelease = executeOnRelease;
-	}
-
 	public boolean isUseClipboardToTypeString() {
 		return useClipboardToTypeString;
-	}
-
-	public void setUseClipboardToTypeString(boolean useClipboardToTypeString) {
-		//this.useClipboardToTypeString = useClipboardToTypeString;
 	}
 
 	public boolean isRunTaskWithServerConfig() {
 		return runTaskWithServerConfig;
 	}
 
-	public void setRunTaskWithServerConfig(boolean runTaskWithServerConfig) {
-		//this.runTaskWithServerConfig = runTaskWithServerConfig;
-	}
-
 	public boolean isUseJavaAwtToGetMousePosition() {
 		return useJavaAwtToGetMousePosition;
-	}
-
-	public void setUseJavaAwtToGetMousePosition(boolean useJavaAwtToGetMousePosition) {
-		//this.useJavaAwtToGetMousePosition = useJavaAwtToGetMousePosition;
 	}
 
 	public boolean isUseTrayIcon() {
 		return useTrayIcon;
 	}
 
-	public void setUseTrayIcon(boolean useTrayIcon) {
-		//this.useTrayIcon = useTrayIcon;
-	}
-
 	public List<RenderedDebugLevel> getDebugLevels() {
 		return debugLevels;
 	}
 
-	public void setDebugLevels(List<RenderedDebugLevel> debugLevels) {
-		//this.debugLevels = debugLevels;
-	}
 }

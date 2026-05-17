@@ -104,7 +104,6 @@ public final class Config implements ILoggable {
         RECORD = new KeyChain(KeyEvent.VK_F7);
         REPLAY = new KeyChain(KeyEvent.VK_F8);
         COMPILED_REPLAY = new KeyChain(KeyEvent.VK_F9);
-        initParsers();
     }
 
     public static Config loadFromFile() {
@@ -252,9 +251,5 @@ public final class Config implements ILoggable {
     @Override
     public Logger getLogger() {
         return Logger.getLogger(Config.class.getName());
-    }
-
-    private void initParsers() {
-
     }
 }
