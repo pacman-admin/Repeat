@@ -11,6 +11,7 @@ import java.util.logging.Logger;
  * Sequence of keys sorted chronologically. There is no guarantee that one is
  * released before another is pressed.
  */
+@SuppressWarnings("MethodDoesntCallSuperMethod")
 public final class KeySequence extends KeySeries {
 
     private static final Logger LOGGER = Logger.getLogger(KeySequence.class.getName());

@@ -6,6 +6,7 @@ import java.awt.event.KeyEvent;
  * The state of lock keys on the keyboard (numslock, capslock, scrolllock).
  * Instances of this class is immutable.
  */
+@SuppressWarnings("MethodDoesntCallSuperMethod")
 public final class KeyboardState {
 	private boolean numslockLocked;
 	private boolean capslockLocked;
@@ -60,7 +61,8 @@ public final class KeyboardState {
 		return clone().setShiftLocked(state);
 	}
 
-	@Override
+	@SuppressWarnings("MethodDoesntCallSuperMethod")
+    @Override
 	public KeyboardState clone() {
 		return of(numslockLocked, capslockLocked, scrollLockLocked, shiftLocked);
 	}

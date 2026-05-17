@@ -13,6 +13,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
+@SuppressWarnings("StaticInitializerReferencesSubClass")
 public abstract class ManuallyBuildStep implements IJsonable {
 
     private static final Logger LOGGER = Logger.getLogger(ManuallyBuildStep.class.getName());

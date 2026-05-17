@@ -8,6 +8,7 @@ import org.simplenativehooks.events.NativeMouseEvent.State;
 
 import java.awt.event.InputEvent;
 
+@SuppressWarnings("MethodDoesntCallSuperMethod")
 public final class MouseKey implements ButtonStroke {
 
     static final String TYPE_STRING = "mouse_key";

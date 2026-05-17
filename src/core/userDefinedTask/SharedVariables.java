@@ -57,11 +57,4 @@ public final class SharedVariables {
     public static synchronized String del(String name) {
         return variables.remove(name);
     }
-
-    /**
-     * Wait for the next call to set value of a variable with a timeout in milliseconds.
-     * This will wait until the variable value is set, or timeout occurs.
-     *
-     * @return the new value of the variable, or null if timeout.
-     */
 }

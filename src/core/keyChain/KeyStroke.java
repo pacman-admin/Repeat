@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 /**
  * Represents a key stroke on the keyboard.
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "MethodDoesntCallSuperMethod"})
 public final class KeyStroke implements ButtonStroke {
 
     private static final Logger LOGGER = Logger.getLogger(KeyStroke.class.getName());

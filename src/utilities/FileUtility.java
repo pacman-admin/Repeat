@@ -323,6 +323,7 @@ public final class FileUtility {
      * @param append  will the content be appended to the file or overwritten old data in file (if exists)
      * @return return if write successfully
      */
+    @SuppressWarnings("ResultOfMethodCallIgnored")
     public static boolean writeToFile(String content, File file, boolean append) {
         if (!fileExists(file)) {
             if (file.getParentFile() != null) {

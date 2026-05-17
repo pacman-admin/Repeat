@@ -58,7 +58,7 @@ public final class Recorder {
         sourceGenerators.put(Language.JAVA, new JavaSourceGenerator());
         sourceGenerators.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
 
-        /*************************************************************************************************/
+        /* ************************************************************************************************/
         keyListener = NativeKeyHook.of();
         keyListener.setKeyPressed(new Function<>() {
             @Override
@@ -88,7 +88,7 @@ public final class Recorder {
             }
         });
 
-        /*************************************************************************************************/
+        /* ************************************************************************************************/
         mouseListener = NativeMouseHook.of();
         mouseListener.setMouseReleased(new Function<>() {
             @Override

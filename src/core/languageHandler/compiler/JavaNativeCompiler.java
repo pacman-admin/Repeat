@@ -108,7 +108,7 @@ public final class JavaNativeCompiler implements Compiler {
                         return CompilationResult.of(CompilationOutcome.SOURCE_NOT_ACCESSIBLE, new DormantUserDefinedTask(sourceCode, Language.JAVA));
                     }
 
-                    /** Compilation Requirements *********************************************************************************************/
+                    /* Compilation Requirements *********************************************************************************************/
                     DiagnosticCollector<JavaFileObject> diagnostics = new DiagnosticCollector<>();
                     JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
                     if (compiler == null) {
@@ -126,7 +126,7 @@ public final class JavaNativeCompiler implements Compiler {
 
                     Iterable<? extends JavaFileObject> compilationUnit = fileManager.getJavaFileObjectsFromFiles(List.of(compiling));
                     JavaCompiler.CompilationTask task = compiler.getTask(null, fileManager, diagnostics, optionList, null, compilationUnit);
-                    /********************************************************************************************* Compilation Requirements **/
+                    /* ******************************************************************************************** Compilation Requirements **/
                     if (task.call()) {
                         CompilationResult output = loadClass(newClassName);
                         getLogger().fine("Successfully compiled class " + defaultClassName);

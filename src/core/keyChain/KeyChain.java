@@ -11,6 +11,7 @@ import java.util.logging.Logger;
  * Represents keys pressed in a "hotkey" manner like
  * Ctrl + C, Ctrl + V, Ctrl + Alt + Del.
  */
+@SuppressWarnings("MethodDoesntCallSuperMethod")
 public final class KeyChain extends KeySeries {
 
     private static final Logger LOGGER = Logger.getLogger(KeyChain.class.getName());

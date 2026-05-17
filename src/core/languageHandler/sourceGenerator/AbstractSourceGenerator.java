@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Logger;
 
+@SuppressWarnings("StaticInitializerReferencesSubClass")
 public abstract class AbstractSourceGenerator {
 
     private static final Logger LOGGER = Logger.getLogger(AbstractSourceGenerator.class.getName());
