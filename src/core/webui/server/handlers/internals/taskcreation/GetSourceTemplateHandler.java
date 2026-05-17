@@ -6,18 +6,19 @@ import core.webui.server.handlers.AbstractSingleMethodHttpHandler;
 import core.webui.webcommon.HttpServerUtilities;
 import frontEnd.Backend;
 
+import java.util.logging.Logger;
 
 
-public final class GetSourceTemplateHandler extends AbstractSingleMethodHttpHandler {
+public final class GetSourceTemplateHandler extends AbstractSingleMethodHttpHandler{
 
     public GetSourceTemplateHandler() {
         super(AbstractSingleMethodHttpHandler.GET_METHOD);
     }
-
+    private static final Logger LOGGER = Logger.getLogger(GetSourceTemplateHandler.class.getName());
     @Override
     public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         String source = AbstractSourceGenerator.getReferenceSource(Backend.getSelectedLanguage());
-        System.out.println(source);
+        LOGGER.info(source);
         HttpServerUtilities.prepareTextResponse(exchange, 200, source);
     }
 }
