@@ -83,7 +83,6 @@
                                 <li id="menu-record-mouse-click-only"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.recordMouseClickOnly> checked </#if>/>&nbsp;Record mouse click only</a></li>
                                 <li id="menu-execute-on-release"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.executeOnRelease> checked </#if>/>&nbsp;Execute on release</a></li>
                                 <li id="menu-use-clipboard-to-type-string"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.useClipboardToTypeString> checked </#if>/>&nbsp;Use clipboard to type strings</a></li>
-                                <li id="menu-use-java-awt-for-mouse-position"><a href="#" data-value="option1" tabIndex="-1"><input type="checkbox" <#if config.useJavaAwtToGetMousePosition> checked </#if>/>&nbsp;Use Java AWT for mouse position</a></li>
                                 <li class="divider"></li>
                                 <li id="menu-debug-level"><a href="#">Debug level...</a></li>
                               </ul>

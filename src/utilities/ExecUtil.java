@@ -27,7 +27,7 @@ public final class ExecUtil {
 
         return execute(command, new ExceptableFunction<>() {
             @Override
-            public Process apply(Void d) throws IOException {
+            public Process apply() throws IOException {
                 return Runtime.getRuntime().exec(command, null, dir);
             }
         });
@@ -51,7 +51,7 @@ public final class ExecUtil {
 
         return execute(String.join(" ", Arrays.asList(command)), new ExceptableFunction<>() {
             @Override
-            public Process apply(Void d) throws IOException {
+            public Process apply() throws IOException {
                 return Runtime.getRuntime().exec(command, null, dir);
             }
         });
@@ -63,7 +63,7 @@ public final class ExecUtil {
         return builder.start().waitFor();
     }
 
-    private static String[] execute(String command, ExceptableFunction<Void, Process, IOException> processSupplier) throws ExecutionException {
+    private static String[] execute(String command, ExceptableFunction<Process, IOException> processSupplier) throws ExecutionException {
         // 0 for stdout, 1 for stderr.
         final boolean[] fail = new boolean[2];
 
@@ -71,7 +71,7 @@ public final class ExecUtil {
             StringBuffer stdout = new StringBuffer();
             StringBuffer stderr = new StringBuffer();
 //			Process process = Runtime.getRuntime().exec(command, null, dir);
-            Process process = processSupplier.apply(null);
+            Process process = processSupplier.apply();
             BufferedReader bufferStdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
             BufferedReader bufferStderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
 
@@ -148,9 +148,9 @@ public final class ExecUtil {
         return execute(command, "")[0];
     }
 
-    private static abstract class ExceptableFunction<D, R, E extends Exception> {
+    private static abstract class ExceptableFunction<R, E extends Exception> {
 
-        protected abstract R apply(D d) throws E;
+        protected abstract R apply() throws E;
     }
 
     public static final class ExecutionException extends Exception {

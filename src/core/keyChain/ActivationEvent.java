@@ -4,7 +4,7 @@ package core.keyChain;
 
 public final class ActivationEvent {
     private final EventType type;
-    private ButtonStroke buttonStroke;
+    private final ButtonStroke buttonStroke;
 //    private SharedVariablesEvent variable;
 
     public ActivationEvent(ButtonStroke buttonStroke) {
