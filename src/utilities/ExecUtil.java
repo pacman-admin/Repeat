@@ -49,8 +49,8 @@ public final class ExecUtil {
             StringBuffer stderr = new StringBuffer();
 //			Process process = Runtime.getRuntime().exec(command, null, dir);
             Process process = processSupplier.apply();
-            BufferedReader bufferStdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
-            BufferedReader bufferStderr = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+            BufferedReader bufferStdout = process.inputReader();
+            BufferedReader bufferStderr = process.errorReader();
 
             Thread t1 = new Thread(() -> {
                 try {
@@ -74,6 +74,7 @@ public final class ExecUtil {
             t2.join();
 
             process.waitFor();
+            process.close();
 
             if (fail[0] || fail[1]) {
                 LOGGER.log(Level.WARNING, "Exception encountered when executing command $" + command);
