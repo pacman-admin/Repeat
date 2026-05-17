@@ -21,7 +21,7 @@ public final class UsageStatistics implements IJsonable {
     private Calendar created;
     //	private Map<ActionInvoker, Long> taskActivationBreakdown;
     private long totalExecutionTime;
-    private LinkedList<ExecutionInstance> executionInstances;
+    private final LinkedList<ExecutionInstance> executionInstances;
 
     public UsageStatistics() {
         created = Calendar.getInstance();
