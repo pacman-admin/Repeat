@@ -64,18 +64,4 @@ public final class SharedVariables {
      *
      * @return the new value of the variable, or null if timeout.
      */
-//	public static String await(String namespace, String variable, long timeoutMs) {
-//		Semaphore s = new Semaphore(0);
-//		SharedVariablesPubSubManager.get().addSubscriber(SharedVariablesSubscriber.of(SharedVariablesSubscription.forVar(namespace, variable), e -> s.release()));
-//		try {
-//			if (!s.tryAcquire(timeoutMs, TimeUnit.MILLISECONDS)) {
-//				return null;
-//			}
-//		} catch (InterruptedException e) {
-//			LOGGER.warning("Interrupted while waiting for semaphore.");
-//			return null;
-//		}
-//
-//		return getVar(namespace, variable);
-//	}
 }

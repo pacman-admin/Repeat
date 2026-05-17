@@ -58,9 +58,6 @@ public final class TaskDetailsPageHandler extends AbstractUIHttpHandler {
         }
 
         UserDefinedAction action = Backend.getTask(id);
-//        if (action == null) {
-//            return HttpServerUtilities.prepareHttpResponse(exchange, 404, "Cannot find task with ID " + id + ".");
-//        }
 
         String activationConstructorId = taskActivationConstructorManager.addNewConstructor(action.getActivation());
         TaskActivationConstructor activationConstructor = taskActivationConstructorManager.get(activationConstructorId);

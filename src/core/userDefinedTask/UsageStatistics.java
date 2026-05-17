@@ -48,39 +48,11 @@ public final class UsageStatistics implements IJsonable {
                 return null;
             }
 
-//			Map<ActionInvoker, Long> taskActivationBreakdown = new HashMap<>();
-//			if (node.isArrayNode("task_activations_breakdown")) {
-//				List<JsonNode> nodes = node.getArrayNode("task_activations_breakdown");
-//				for (JsonNode n : nodes) {
-//					JsonNode activationNode = n.getNode("task_activation");
-//					ActionInvoker activation = ActionInvoker.parseJSON(activationNode);
-//					if (activation == null) {
-//						LOGGER.warning("Unable to parse task activation.");
-//						return null;
-//					}
-//
-//					long activationCount = Long.parseLong(n.getNode("count").getNumberValue());
-//					taskActivationBreakdown.put(activation, activationCount);
-//				}
-//			}
-//
-//			LinkedList<ExecutionInstance> instances = new LinkedList<>();
-//			if (node.isArrayNode("execution_instances")) {
-//				List<JsonNode> nodes = node.getArrayNode("execution_instances");
-//				instances = nodes.stream().map(n -> {
-//					ExecutionInstance i = ExecutionInstance.of(0, 0);
-//					Jsonizer.parse(n, i);
-//					return i;
-//				}).collect(Collectors.toCollection(LinkedList::new));
-//			}
-
             UsageStatistics output = new UsageStatistics();
             output.count = count;
             output.totalExecutionTime = totalExecutionTime;
             output.lastUse = lastUse;
             output.created = created;
-//			output.taskActivationBreakdown = taskActivationBreakdown;
-//			output.executionInstances = instances;
 
             return output;
         } catch (Exception e) {
@@ -123,10 +95,6 @@ public final class UsageStatistics implements IJsonable {
         return totalExecutionTime;
     }
 
-    //	public Map<ActionInvoker, Long> getTaskActivationBreakdown() {
-//		return Collections.unmodifiableMap(taskActivationBreakdown);
-//	}
-//
     public List<ExecutionInstance> getExecutionInstances() {
         return Collections.unmodifiableList(executionInstances);
     }
@@ -148,8 +116,6 @@ public final class UsageStatistics implements IJsonable {
         while (executionInstances.size() > MAX_EXECUTION_INSTANCES_STORED) {
             executionInstances.removeFirst();
         }
-//        long countForActivation = taskActivationBreakdown.getOrDefault(executionContext.getActivation(), 0L);
-//        taskActivationBreakdown.put(executionContext.getActivation(), countForActivation + 1);
         return id;
     }
 

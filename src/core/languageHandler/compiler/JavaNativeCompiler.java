@@ -122,9 +122,6 @@ public final class JavaNativeCompiler implements Compiler {
                     List<String> optionList = new ArrayList<>();
                     optionList.add("-classpath");
                     String paths = System.getProperty("java.class.path");
-//                    if (classPaths.length > 0) {
-//                        paths += ";" + StringUtil.join(classPaths, ";");
-//                    }
                     optionList.add(paths);
 
                     Iterable<? extends JavaFileObject> compilationUnit = fileManager.getJavaFileObjectsFromFiles(List.of(compiling));

@@ -63,10 +63,6 @@ public final class CommonTask {
 
     public static UserDefinedAction getTaskFromId(String id) {
         UserDefinedAction task = Backend.getTask(id);
-//        if (task == null) {
-//            LOGGER.warning("No such task with ID " + id + ".");
-//            return null;
-//        }
 
         return task;
     }
