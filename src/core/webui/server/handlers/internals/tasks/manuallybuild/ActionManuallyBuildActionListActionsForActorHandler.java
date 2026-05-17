@@ -21,7 +21,7 @@ public final class ActionManuallyBuildActionListActionsForActorHandler extends A
 	@Override
 	public void handleAllowedRequestWithBackend(HttpExchange exchange) {
 		Map<String, String> params = HttpServerUtilities.parseGetParameters(exchange.getRequestURI());
-        if (params == null || !params.containsKey("actor")) {
+        if (!params.containsKey("actor")) {
             HttpServerUtilities.prepareHttpResponse(exchange, 400, "No actor provided."); 
 return;
         }

@@ -19,15 +19,7 @@ public final class ActionManuallyBuildActionParametersPlaceHolderHandler extends
     @Override
     public void handleAllowedRequestWithBackend(HttpExchange exchange) {
         Map<String, String> parameters = HttpServerUtilities.parseGetParameters(exchange.getRequestURI());
-        if (parameters == null) {
-            HttpServerUtilities.prepareTextResponse(exchange, 400, "Unable to parse GET parameters.");
-            return;
-        }
         String actor = parameters.get("actor");
-        if (actor == null) {
-            HttpServerUtilities.prepareTextResponse(exchange, 400, "Actor must be provided.");
-            return;
-        }
         String action = parameters.get("action");
         if (action == null) {
             HttpServerUtilities.prepareTextResponse(exchange, 400, "Action must be provided.");

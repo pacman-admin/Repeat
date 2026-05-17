@@ -5,7 +5,7 @@
         <@task_builder_body_fragment.fragment/>
     <#else>
         <label for="source-code">Source code:</label>
-        <textarea class="form-control" id="source-code">//Source template not found</textarea>
+        <textarea class="form-control" id="source-code">abc</textarea>
     </#if>
 </#macro>
 

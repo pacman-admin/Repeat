@@ -1,13 +1,13 @@
 var _internalEditor = null;
-//
-//function hasSourceCode() {
-//    return document.getElementById('source-code') != null
-//}
+
+function hasSourceCode() {
+    return document.getElementById('source-code') != null
+}
 
 function registerSourceTextArea() {
-//    if (!hasSourceCode()) {
-//        return
-//    }
+    if (!hasSourceCode()) {
+        return
+    }
 
     var editor = CodeMirror.fromTextArea(document.getElementById('source-code'), {
       lineNumbers: true,

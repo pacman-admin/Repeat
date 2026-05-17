@@ -45,10 +45,6 @@ public final class TaskDetailsPageHandler extends AbstractUIHttpHandler {
     public void handleAllowedRequestWithBackend(HttpExchange exchange) throws IOException {
         URI uri = exchange.getRequestURI();
         Map<String, String> params = HttpServerUtilities.parseGetParameters(uri);
-        if (params == null) {
-            HttpServerUtilities.prepareHttpResponse(exchange, 500, "Failed to parse URL " + uri);
-            return;
-        }
 
         String id = params.get("id");
         if (id == null || id.isBlank()) {
