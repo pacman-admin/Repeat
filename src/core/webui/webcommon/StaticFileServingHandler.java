@@ -17,13 +17,12 @@
  */
 package core.webui.webcommon;
 
-import org.apache.http.HttpException;
 import org.apache.http.HttpRequest;
 import org.apache.http.HttpResponse;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.InputStreamEntity;
-import org.apache.http.nio.protocol.*;
-import org.apache.http.protocol.HttpContext;
+import org.apache.http.nio.protocol.BasicAsyncResponseProducer;
+import org.apache.http.nio.protocol.HttpAsyncExchange;
 import staticResources.BootStrapResources;
 import staticResources.WebUIResources;
 
@@ -36,7 +35,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public final class StaticFileServingHandler implements HttpAsyncRequestHandler<HttpRequest> {
+public final class StaticFileServingHandler extends HttpHandlerWithBackend {
 
     private static final Logger LOGGER = Logger.getLogger(StaticFileServingHandler.class.getName());
 
@@ -63,21 +62,15 @@ public final class StaticFileServingHandler implements HttpAsyncRequestHandler<H
     }
 
     @Override
-    public HttpAsyncRequestConsumer<HttpRequest> processRequest(HttpRequest httpRequest, HttpContext httpContext) {
-        // Buffer request content in memory for simplicity.
-        return new BasicAsyncRequestConsumer();
-    }
-
-    @Override
-    public void handle(HttpRequest request, HttpAsyncExchange exchange, HttpContext ignored) throws HttpException, IOException {
+    protected void handle(HttpRequest request, HttpAsyncExchange exchange) throws IOException {
         LOGGER.fine("Path is " + request.getRequestLine().getUri());
         if (!request.getRequestLine().getMethod().equalsIgnoreCase("GET")) {
-             HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "I only accept GET requests.");
         }
 
         String requestUri = request.getRequestLine().getUri();
         if (!requestUri.startsWith("/static/")) {
-             HttpServerUtilities.prepareTextResponse(exchange, 500, "URI must start with '/static/'.");
+            HttpServerUtilities.prepareTextResponse(exchange, 500, "URI must start with '/static/'.");
         }
 
         String uriWithoutParameter = "";
@@ -87,13 +80,13 @@ public final class StaticFileServingHandler implements HttpAsyncRequestHandler<H
                     uri.getFragment()).toString();
         } catch (URISyntaxException e) {
             LOGGER.log(Level.WARNING, "Encountered exception when trying to remove query parameters.", e);
-             HttpServerUtilities.prepareTextResponse(exchange, 500, "Encountered exception when trying to remove query parameters.");
+            HttpServerUtilities.prepareTextResponse(exchange, 500, "Encountered exception when trying to remove query parameters.");
         }
 
         String path = uriWithoutParameter.substring("/static/".length());
         String decodedPath = URLDecoder.decode(path, StandardCharsets.UTF_8);
         if (decodedPath.contains("./") || decodedPath.contains("..") || decodedPath.endsWith("/")) {
-             HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Bad request.");
         }
 
         HttpResponse response = exchange.getResponse();
@@ -104,7 +97,7 @@ public final class StaticFileServingHandler implements HttpAsyncRequestHandler<H
             InputStream inputStream = BootStrapResources.getStaticContentStream(WebUIResources.STATIC_RESOURCES_PREFIX + decodedPath);
             if (inputStream == null) {
                 LOGGER.warning("Content could not be accessed:\n" + path + ", " + decodedPath);
-                 HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
+                HttpServerUtilities.prepareTextResponse(exchange, 404, String.format("File does not exist %s.", path));
             }
             LOGGER.fine("Accessing " + path + "...");
             assert inputStream != null;
@@ -113,7 +106,7 @@ public final class StaticFileServingHandler implements HttpAsyncRequestHandler<H
             exchange.submitResponse(new BasicAsyncResponseProducer(response));
         } catch (Throwable e) {
             LOGGER.log(Level.WARNING, "Content could not be accessed:\n" + path, e);
-             HttpServerUtilities.prepareTextResponse(exchange, 400, "Could not access file." + path);
+            HttpServerUtilities.prepareTextResponse(exchange, 400, "Could not access file." + path);
         }
     }
 }
