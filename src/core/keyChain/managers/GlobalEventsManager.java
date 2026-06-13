@@ -27,12 +27,10 @@ import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.preconditions.ExecutionPreconditionsChecker;
 import org.simplenativehooks.NativeKeyHook;
 import org.simplenativehooks.NativeMouseHook;
-import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
 import java.util.Set;
-import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
