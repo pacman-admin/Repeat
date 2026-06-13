@@ -3,7 +3,6 @@ package frontEnd;
 import core.ipc.IPCServiceManager;
 import org.simplenativehooks.BootstrapResources;
 import org.simplenativehooks.NativeHookInitializer;
-import staticResources.BootStrapResources;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -15,7 +14,16 @@ public final class MainFrontEnd {
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
 
     public static void run() {
+        Backend.initializeLogging();
+        Backend.init();
 
+        try {
+            IPCServiceManager.initiateServices();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
+        }
 
         /*************************************************************************************/
         /********************************Extracting resources*********************************/
@@ -32,16 +40,7 @@ public final class MainFrontEnd {
 
         /*************************************************************************************/
         /********************************Start main program***********************************/
-        Backend.initializeLogging();
-        Backend.init();
 
-        try {
-            IPCServiceManager.initiateServices();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
-        }
         try {
             Backend.keysManager.startGlobalListener();
         } catch (Exception e) {
