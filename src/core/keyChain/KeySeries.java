@@ -3,7 +3,6 @@ package core.keyChain;
 import argo.jdom.JsonNode;
 import argo.jdom.JsonNodeFactories;
 import argo.jdom.JsonRootNode;
-import utilities.Function;
 import utilities.KeyCodeToChar;
 import utilities.StringUtil;
 import utilities.json.IJsonable;
@@ -193,14 +192,7 @@ public abstract class KeySeries implements IJsonable {
     @Override
     public JsonRootNode jsonize() {
         List<JsonNode> keyChain = new ArrayList<>();
-                getButtonStrokes().forEach((s) -> keyChain.add(s.jsonize()));
-                /*= new Function<ButtonStroke, JsonNode>() {
-            @Override
-            public JsonNode apply(ButtonStroke s) {
-                return s.jsonize();
-            }
-        }.map(getButtonStrokes());*/
-
+        getButtonStrokes().forEach((s) -> keyChain.add(s.jsonize()));
         return JsonNodeFactories.array(keyChain);
     }
 }

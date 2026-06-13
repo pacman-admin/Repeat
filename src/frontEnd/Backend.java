@@ -636,15 +636,8 @@ public final class Backend {
     }
 
     public static void cleanUnusedSource() {
-//        List<File> files = FileUtility.walk(FileUtility.joinPath("data", "source"));
         Set<String> allNames = new HashSet<>();
         FileUtility.walk(FileUtility.joinPath("data", "source")).forEach(f -> allNames.add(f.getAbsolutePath()));
-//        new Function<File, String>() {
-//            @Override
-//            public String apply(File file) {
-//                return file.getAbsolutePath();
-//            }
-//        }.map(files)
 
         Set<String> using = new HashSet<>();
         for (TaskGroup group : taskGroups) {
