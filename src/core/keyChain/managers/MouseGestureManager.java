@@ -27,13 +27,13 @@ import core.userDefinedTask.UserDefinedAction;
 import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
-import java.util.function.Function;
 
 import java.awt.*;
 import java.util.*;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -58,7 +58,13 @@ public final class MouseGestureManager extends KeyStrokeManager {
         mouseGestureRecognizer = new MouseGestureClassifier();
         actionMap = new HashMap<>();
         coordinates = new ConcurrentLinkedQueue<>();
-        mouseListener = NativeMouseHook.of();
+        mouseListener = NativeMouseHook.of(r -> null, r -> null, d -> {
+            LOGGER.finest("Mouse moved to " + d.getX() + ", " + d.getY() + ".");
+            if (enabled && coordinates.size() < MAX_COORDINATES_COUNT) {
+                coordinates.add(new Point(d.getX(), d.getY()));
+            }
+            return true;
+        });
     }
 
     /**
@@ -66,15 +72,12 @@ public final class MouseGestureManager extends KeyStrokeManager {
      */
     @Override
     public void startListening() {
-        mouseListener.setMouseMoved(new Function<>() {
-            @Override
-            public Boolean apply(NativeMouseEvent d) {
-                LOGGER.finest("Mouse moved to " + d.getX() + ", " + d.getY() + ".");
-                if (enabled && coordinates.size() < MAX_COORDINATES_COUNT) {
-                    coordinates.add(new Point(d.getX(), d.getY()));
-                }
-                return true;
+        mouseListener.setMouseMoved(d -> {
+            LOGGER.finest("Mouse moved to " + d.getX() + ", " + d.getY() + ".");
+            if (enabled && coordinates.size() < MAX_COORDINATES_COUNT) {
+                coordinates.add(new Point(d.getX(), d.getY()));
             }
+            return true;
         });
         mouseListener.startListening();
     }

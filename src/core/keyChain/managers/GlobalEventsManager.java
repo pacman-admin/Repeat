@@ -28,7 +28,6 @@ import core.userDefinedTask.internals.preconditions.ExecutionPreconditionsChecke
 import org.simplenativehooks.NativeKeyHook;
 import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeKeyEvent;
-import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
@@ -66,72 +65,47 @@ public final class GlobalEventsManager {
     }
 
     public void startGlobalListener() {
-        AbstractGlobalKeyListener keyListener = getAbstractGlobalKeyListener();
-
-        AbstractGlobalMouseListener mouseListener = NativeMouseHook.of();
-        mouseListener.setMousePressed(new Function<>() {
-            @Override
-            public Boolean apply(NativeMouseEvent r) {
-                MouseKey stroke = MouseKey.of(r);
-
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
-                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
+        AbstractGlobalKeyListener keyListener = NativeKeyHook.of(r -> {
+            KeyStroke stroke = KeyStroke.of(r);
+            LOGGER.finer("Key pressed " + stroke);
+            if (!shouldDelegate(stroke)) {
                 return true;
             }
-        });
-        mouseListener.setMouseReleased(new Function<>() {
-            @Override
-            public Boolean apply(NativeMouseEvent r) {
-                MouseKey stroke = MouseKey.of(r);
-
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
-                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
+            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
+            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+            actionExecutor.startExecutingActions(actions);
+            return true;
+        }, r -> {
+            KeyStroke stroke = KeyStroke.of(r);
+            LOGGER.finer("Key released " + stroke);
+            if (!shouldDelegate(stroke)) {
                 return true;
             }
+            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
+            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+            actionExecutor.startExecutingActions(actions);
+            return true;
         });
+
+        AbstractGlobalMouseListener mouseListener = NativeMouseHook.of(r -> {
+            MouseKey stroke = MouseKey.of(r);
+            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
+            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+            actionExecutor.startExecutingActions(actions);
+            return true;
+        }, r -> {
+            MouseKey stroke = MouseKey.of(r);
+            Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
+            actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
+            actionExecutor.startExecutingActions(actions);
+            return true;
+        }, r -> true);
+//        mouseListener.setMousePressed();
+//        mouseListener.setMouseReleased();
 
         taskActivationManager.startListening();
         keyListener.startListening();
         mouseListener.startListening();
-    }
-
-    private AbstractGlobalKeyListener getAbstractGlobalKeyListener() {
-        AbstractGlobalKeyListener keyListener = NativeKeyHook.of();
-        keyListener.setKeyPressed(new Function<>() {
-            @Override
-            public Boolean apply(NativeKeyEvent r) {
-                KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.finer("Key pressed " + stroke);
-
-                if (!shouldDelegate(stroke)) {
-                    return true;
-                }
-
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
-                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
-                return true;
-            }
-        });
-
-        keyListener.setKeyReleased(new Function<>() {
-            @Override
-            public Boolean apply(NativeKeyEvent r) {
-                KeyStroke stroke = KeyStroke.of(r);
-                LOGGER.finer("Key released " + stroke);
-                if (!shouldDelegate(stroke)) {
-                    return true;
-                }
-
-                Set<UserDefinedAction> actions = taskActivationManager.onActivationEvent(stroke);
-                actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
-                actionExecutor.startExecutingActions(actions);
-                return true;
-            }
-        });
-        return keyListener;
     }
 
     /**

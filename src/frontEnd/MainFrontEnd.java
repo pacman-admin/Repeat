@@ -14,17 +14,6 @@ public final class MainFrontEnd {
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
 
     public static void run() {
-        Backend.initializeLogging();
-        Backend.init();
-
-        try {
-            IPCServiceManager.initiateServices();
-        } catch (IOException e) {
-            LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
-        } catch (Exception e) {
-            LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
-        }
-
         /*************************************************************************************/
         /********************************Extracting resources*********************************/
         try {
@@ -45,6 +34,16 @@ public final class MainFrontEnd {
             Backend.keysManager.startGlobalListener();
         } catch (Exception e) {
             LOGGER.severe("Could not start global event listener!\n" + e);
+        }
+        Backend.initializeLogging();
+        Backend.init();
+
+        try {
+            IPCServiceManager.initiateServices();
+        } catch (IOException e) {
+            LOGGER.log(Level.WARNING, "IO Exception when launching ipcs.", e);
+        } catch (Exception e) {
+            LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
         }
 
         Backend.renderTaskGroup();
