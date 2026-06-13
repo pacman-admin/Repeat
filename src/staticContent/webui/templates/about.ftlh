@@ -42,25 +42,27 @@
                     <div class="col-md-6 col-md-offset-3">
                         <h4 class="title">Repeat ${version}</h4>
                         <p>A tool to repeat yourself with some intelligence.</p>
-                        <p>Created by HP Truong. Contact me at hptruong93@gmail.com.</p>
+                        <p>Originally created by HP Truong</p>
+                        <p>Created by Langdon Staab. Contact me at repeat@langdonstaab.ca</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
                         <h4 class="title">Powered by:</h4>
                          <ul>
-                            <li><a href="https://github.com/repeats/SimpleNativeHooks">Simple Native Hooks</a></li>
+                            <li><a href="https://github.com/pacman-admin/SimpleNativeHooks">Simple Native Hooks</a></li>
                             <li><a href="http://argo.sourceforge.net">Argo JSON</a></li>
                             <li><a href="https://math.nist.gov/javanumerics/jama/">Jama - A Java matrix package</a></li>
                             <li><a href="https://hc.apache.org/httpcomponents-core-ga/index.html">Apache HttpComponents Core</a></li>
                             <li><a href="https://hc.apache.org/httpcomponents-client-ga/index.html">Apache HttpClient</a></li>
                             <li><a href="https://freemarker.apache.org/">FreeMarker Java Template Engine</a></li>
+                            <li><a href="https://github.com/java-native-access/jna">JNA & JNA Platform</a></li>
                         </ul>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6 col-md-offset-3">
-                        <h4 class="title"><a href="https://github.com/repeats/Repeat/blob/master/LICENSE">License: Apache License 2.0</a></h4>
+                        <h4 class="title"><a href="https://github.com/pacman-admin/Repeat/blob/new/LICENSE.txt">License: Apache License 2.0</a></h4>
                     </div>
                 </div>
             </div>
