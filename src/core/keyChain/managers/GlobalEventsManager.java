@@ -99,8 +99,6 @@ public final class GlobalEventsManager {
             actionExecutor.startExecutingActions(actions);
             return true;
         }, Function.identity());
-//        mouseListener.setMousePressed();
-//        mouseListener.setMouseReleased();
 
         taskActivationManager.startListening();
         keyListener.startListening();
