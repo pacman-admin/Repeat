@@ -31,6 +31,7 @@ import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
 import java.util.Set;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -97,7 +98,7 @@ public final class GlobalEventsManager {
             actions = actions.stream().filter(executionPreconditionsChecker::shouldExecute).collect(Collectors.toSet());
             actionExecutor.startExecutingActions(actions);
             return true;
-        }, r -> true);
+        }, Function.identity());
 //        mouseListener.setMousePressed();
 //        mouseListener.setMouseReleased();
 

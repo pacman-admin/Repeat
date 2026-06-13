@@ -32,6 +32,7 @@ import java.util.*;
 import java.util.List;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
@@ -56,7 +57,7 @@ public final class MouseGestureManager extends KeyStrokeManager {
         mouseGestureRecognizer = new MouseGestureClassifier();
         actionMap = new HashMap<>();
         coordinates = new ConcurrentLinkedQueue<>();
-        mouseListener = NativeMouseHook.of(null, null, d -> {
+        mouseListener = NativeMouseHook.of(Function.identity(), Function.identity(), d -> {
             LOGGER.finest("Mouse moved to " + d.getX() + ", " + d.getY() + ".");
             if (enabled && coordinates.size() < MAX_COORDINATES_COUNT) {
                 coordinates.add(new Point(d.getX(), d.getY()));

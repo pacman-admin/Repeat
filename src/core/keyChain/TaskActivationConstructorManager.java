@@ -4,12 +4,14 @@ import core.background.AbstractBackgroundEntityManager;
 import org.simplenativehooks.NativeKeyHook;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 
+import java.util.function.Function;
+
 public final class TaskActivationConstructorManager extends AbstractBackgroundEntityManager<TaskActivationConstructor> {
 
     private final AbstractGlobalKeyListener keyListener;
 
     public TaskActivationConstructorManager() {
-        keyListener = NativeKeyHook.of(null, r -> {
+        keyListener = NativeKeyHook.of(Function.identity(), r -> {
             onStroke(KeyStroke.of(r));
             return true;
         });

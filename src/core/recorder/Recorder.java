@@ -27,7 +27,6 @@ import core.languageHandler.sourceGenerator.ManuallyBuildSourceGenerator;
 import core.scheduler.SchedulingData;
 import org.simplenativehooks.NativeKeyHook;
 import org.simplenativehooks.NativeMouseHook;
-import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
 
@@ -76,7 +75,7 @@ public final class Recorder {
         });
 
         /* ************************************************************************************************/
-        mouseListener = NativeMouseHook.of(null, null, null);
+        mouseListener = NativeMouseHook.of(Function.identity(), Function.identity(), Function.identity());
         mouseListener.setMouseReleased(r -> {
             final int code = r.getButton();
             final long time = System.currentTimeMillis() - startTime;
