@@ -10,19 +10,14 @@ import core.userDefinedTask.manualBuild.steps.MouseMoveByStep;
 import core.userDefinedTask.manualBuild.steps.MouseMoveStep;
 import core.userDefinedTask.manualBuild.steps.MousePressCurrentPositionStep;
 import core.userDefinedTask.manualBuild.steps.MouseReleaseCurrentPositionStep;
-import utilities.Function;
+import java.util.function.Function;
 import utilities.json.JSONUtility;
 
 public final class ManuallyBuildSourceGenerator extends InjectionSourceGenerator {
 
 	public ManuallyBuildSourceGenerator() {
 		super();
-		this.sourceScheduler.setSleepSource(new Function<>() {
-            @Override
-            public String apply(Long r) {
-                return JSONUtility.jsonToSingleLineString(ControllerDelayStep.of(r.intValue()).jsonize());
-            }
-        });
+		this.sourceScheduler.setSleepSource(r -> JSONUtility.jsonToSingleLineString(ControllerDelayStep.of(r.intValue()).jsonize()));
 	}
 
 	@Override

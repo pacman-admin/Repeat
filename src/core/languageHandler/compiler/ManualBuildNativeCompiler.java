@@ -23,7 +23,7 @@ import core.languageHandler.Language;
 import core.userDefinedTask.manualBuild.ManuallyBuildAction;
 import core.userDefinedTask.manualBuild.ManuallyBuildActionConstructor;
 import core.userDefinedTask.manualBuild.ManuallyBuildStep;
-import org.simplenativehooks.utilities.FileUtility;
+import utilities.FileUtility;
 import utilities.RandomUtil;
 import utilities.json.JSONUtility;
 

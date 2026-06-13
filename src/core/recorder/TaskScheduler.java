@@ -3,9 +3,9 @@ package core.recorder;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import utilities.Function;
 import core.scheduler.AbstractScheduler;
 import core.scheduler.SchedulingData;
+import java.util.function.Function;
 
 final class TaskScheduler extends AbstractScheduler<Runnable> {
 

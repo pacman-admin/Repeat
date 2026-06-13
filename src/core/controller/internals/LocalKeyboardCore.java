@@ -2,7 +2,7 @@ package core.controller.internals;
 
 import core.config.Config;
 import core.userDefinedTask.Clipboard;
-import utilities.Function;
+import java.util.function.Function;
 import utilities.OSIdentifier;
 
 import java.awt.*;
@@ -37,15 +37,12 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
 
         for (int i = 0; i < inputs.length; i++) {
             final int index = i;
-            charShiftType.put(inputs[index], new Function<>() {
-                @Override
-                public Void apply(LocalKeyboardCore c) {
-                    c.press(KeyEvent.VK_SHIFT);
-                    c.press(keys[index]);
-                    c.release(KeyEvent.VK_SHIFT);
-                    c.release(keys[index]);
-                    return null;
-                }
+            charShiftType.put(inputs[index], c -> {
+                c.press(KeyEvent.VK_SHIFT);
+                c.press(keys[index]);
+                c.release(KeyEvent.VK_SHIFT);
+                c.release(keys[index]);
+                return null;
             });
         }
     }

@@ -31,7 +31,7 @@ import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
-import org.simplenativehooks.utilities.Function;
+import java.util.function.Function;
 
 import java.util.HashMap;
 
@@ -190,7 +190,7 @@ public final class Recorder {
         replay(1, 0, null, 0, true);
     }
 
-    public void replay(long count, long delay, utilities.Function<Void, Void> callBack, long callBackDelay, boolean blocking) {
+    public void replay(long count, long delay, Function<Void, Void> callBack, long callBackDelay, boolean blocking) {
         long time = taskScheduler.runTasks(count, delay, speedup, callBack, callBackDelay);
 
         if (blocking && time > 0) {

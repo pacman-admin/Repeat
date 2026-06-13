@@ -37,6 +37,7 @@ import core.userDefinedTask.internals.ActionExecutor;
 import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import org.simplenativehooks.NativeHookInitializer;
+import java.util.function.Function;
 import staticResources.BootStrapResources;
 import utilities.*;
 import utilities.Desktop;
@@ -144,7 +145,7 @@ public final class Backend {
         cleanupTimer.schedule(new TimerTask() {
             @Override
             public void run() {
-                NativeHookInitializer.of().stop();
+                NativeHookInitializer.stop();
                 Backend.writeConfigFile();
                 if (trayIcon != null) trayIcon.remove();
                 LOGGER.info("Repeat has exited");

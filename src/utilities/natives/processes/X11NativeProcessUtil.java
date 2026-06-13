@@ -24,7 +24,7 @@ import com.sun.jna.platform.unix.X11.Display;
 import com.sun.jna.platform.unix.X11.WindowByReference;
 import com.sun.jna.ptr.IntByReference;
 import com.sun.jna.ptr.PointerByReference;
-import utilities.Function;
+import java.util.function.Function;
 import utilities.OS;
 import utilities.OSIdentifier;
 
@@ -134,15 +134,12 @@ public final class X11NativeProcessUtil {
 
     @SuppressWarnings("InterfaceNeverImplemented")
     public interface X11Extended extends X11 {
-        X11Extended INSTANCE = new Function<Void, X11Extended>() {
-            @Override
-            public X11Extended apply(Void d) {
-                if (OSIdentifier.getCurrentOS() != OS.LINUX) {
-                    return null;
-                }
-                return Native.load("X11", X11Extended.class);
+        X11Extended INSTANCE = ((Function<Void, X11Extended>) d -> {
+            if (OSIdentifier.getCurrentOS() != OS.LINUX) {
+                return null;
             }
-        }.apply(null);
+            return Native.load("X11", X11Extended.class);
+        }).apply(null);
 
         void XGetInputFocus(Display display, WindowByReference focusReturn, IntByReference revertToReturn);
     }

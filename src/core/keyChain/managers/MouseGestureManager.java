@@ -27,7 +27,7 @@ import core.userDefinedTask.UserDefinedAction;
 import org.simplenativehooks.NativeMouseHook;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
-import org.simplenativehooks.utilities.Function;
+import java.util.function.Function;
 
 import java.awt.*;
 import java.util.*;

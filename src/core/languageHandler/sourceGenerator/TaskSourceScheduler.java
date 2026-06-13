@@ -4,7 +4,7 @@ import java.util.logging.Logger;
 
 import core.scheduler.AbstractScheduler;
 import core.scheduler.SchedulingData;
-import utilities.Function;
+import java.util.function.Function;
 
 final class TaskSourceScheduler extends AbstractScheduler<String> {
 

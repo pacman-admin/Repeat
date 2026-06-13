@@ -6,7 +6,7 @@ import argo.format.PrettyJsonFormatter;
 import argo.jdom.*;
 import argo.saj.InvalidSyntaxException;
 import utilities.FileUtility;
-import utilities.Function;
+import java.util.function.Function;
 
 import java.io.File;
 import java.util.*;

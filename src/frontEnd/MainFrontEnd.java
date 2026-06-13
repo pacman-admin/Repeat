@@ -1,6 +1,7 @@
 package frontEnd;
 
 import core.ipc.IPCServiceManager;
+import org.simplenativehooks.BootstrapResources;
 import org.simplenativehooks.NativeHookInitializer;
 import staticResources.BootStrapResources;
 
@@ -14,6 +15,23 @@ public final class MainFrontEnd {
     private static final Logger LOGGER = Logger.getLogger(MainFrontEnd.class.getName());
 
     public static void run() {
+
+
+        /*************************************************************************************/
+        /********************************Extracting resources*********************************/
+        try {
+            BootstrapResources.extract();
+        } catch (IOException | URISyntaxException e) {
+            LOGGER.log(Level.SEVERE, "Cannot extract bootstrap resources.", e);
+            System.exit(2);
+        }
+
+        /*************************************************************************************/
+        /********************************Initializing global hooks****************************/
+        NativeHookInitializer.start();
+
+        /*************************************************************************************/
+        /********************************Start main program***********************************/
         Backend.initializeLogging();
         Backend.init();
 
@@ -24,25 +42,6 @@ public final class MainFrontEnd {
         } catch (Exception e) {
             LOGGER.log(Level.WARNING, "Exception when launching ipcs.", e);
         }
-
-        /*************************************************************************************/
-        /********************************Extracting resources*********************************/
-        try {
-            BootStrapResources.extractResources();
-        } catch (IOException | URISyntaxException e) {
-            LOGGER.log(Level.SEVERE, "Cannot extract bootstrap resources.", e);
-            System.exit(2);
-        }
-
-        /*************************************************************************************/
-        /********************************Initializing global hooks****************************/
-        NativeHookInitializer.Config.Builder confBuilder = NativeHookInitializer.Config.Builder.of();
-        confBuilder.useJnaForWindows(true);
-        confBuilder.useJavaAwtToReportMousePositionOnWindows(Backend.config.isUseJavaAwtToGetMousePosition());
-        NativeHookInitializer.of(confBuilder.build()).start();
-
-        /*************************************************************************************/
-        /********************************Start main program***********************************/
         try {
             Backend.keysManager.startGlobalListener();
         } catch (Exception e) {

@@ -2,9 +2,7 @@ package core.keyChain;
 
 import core.background.AbstractBackgroundEntityManager;
 import org.simplenativehooks.NativeKeyHook;
-import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
-import org.simplenativehooks.utilities.Function;
 
 public final class TaskActivationConstructorManager extends AbstractBackgroundEntityManager<TaskActivationConstructor> {
 
@@ -18,12 +16,9 @@ public final class TaskActivationConstructorManager extends AbstractBackgroundEn
     public void start() {
         super.start();
 
-        keyListener.setKeyReleased(new Function<>() {
-            @Override
-            public Boolean apply(NativeKeyEvent r) {
-                onStroke(KeyStroke.of(r));
-                return true;
-            }
+        keyListener.setKeyReleased(r -> {
+            onStroke(KeyStroke.of(r));
+            return true;
         });
 
         keyListener.startListening();

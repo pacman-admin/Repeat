@@ -20,6 +20,7 @@ package staticResources;
 
 import core.config.Constants;
 import core.languageHandler.Language;
+import org.simplenativehooks.BootstrapResources;
 import utilities.FileUtility;
 
 import javax.imageio.ImageIO;
@@ -39,7 +40,7 @@ public final class BootStrapResources {
     private static final Logger LOGGER = Logger.getLogger(BootStrapResources.class.getName());
     private static final Map<Language, String> LANGUAGE_API;
     private static final Map<Language, String> NATIVE_LANGUAGE_TEMPLATES;
-    private static final NativeHookBootstrapResources nativeHookResources;
+//    private static final NativeHookBootstrapResources nativeHookResources;
 
     static {
         TRAY_IMAGE = getIcon();
@@ -48,15 +49,11 @@ public final class BootStrapResources {
         NATIVE_LANGUAGE_TEMPLATES = new HashMap<>();
         NATIVE_LANGUAGE_TEMPLATES.put(Language.JAVA, getFile("/staticContent/natives/java/TemplateRepeat"));
         NATIVE_LANGUAGE_TEMPLATES.put(Language.MANUAL_BUILD, getFile("/staticContent/natives/manual/TemplateRepeat.txt"));
-        nativeHookResources = new NativeHookBootstrapResources();
+//        nativeHookResources = new NativeHookBootstrapResources();
     }
 
     private BootStrapResources() {
         throw new InstantiationError("This class is uninstantiable.");
-    }
-
-    public static void extractResources() throws IOException, URISyntaxException {
-        nativeHookResources.extractResources();
     }
 
     public static InputStream getStaticContentStream(String resource) {

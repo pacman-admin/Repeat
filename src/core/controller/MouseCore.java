@@ -19,7 +19,7 @@
 package core.controller;
 
 import core.controller.internals.AbstractMouseCoreImplementation;
-import utilities.Function;
+import java.util.function.Function;
 
 import java.awt.*;
 

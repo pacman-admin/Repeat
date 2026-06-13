@@ -31,10 +31,9 @@ import org.simplenativehooks.events.NativeKeyEvent;
 import org.simplenativehooks.events.NativeMouseEvent;
 import org.simplenativehooks.listeners.AbstractGlobalKeyListener;
 import org.simplenativehooks.listeners.AbstractGlobalMouseListener;
-import org.simplenativehooks.utilities.Function;
-import utilities.StringUtil;
 
 import java.util.Set;
+import java.util.function.Function;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
@@ -61,14 +60,9 @@ public final class GlobalEventsManager {
      * @param collisions set of colliding tasks.
      */
     public static void showCollisionWarning(Set<UserDefinedAction> collisions) {
-        String taskNames = StringUtil.join(new Function<UserDefinedAction, String>() {
-            @Override
-            public String apply(UserDefinedAction d) {
-                return '\'' + d.getName() + '\'';
-            }
-        }.map(collisions), ", ");
-
-        LOGGER.warning("Newly registered keychains " + "will collide with previously registered task(s) " + taskNames + "\n" + "You cannot assign this key chain unless you remove the conflicting key chain...");
+        StringBuilder s = new StringBuilder();
+        collisions.forEach(d -> s.append("'" + d.getName() + "', "));
+        LOGGER.warning("Newly registered keychains " + "will collide with previously registered task(s) " + s + "\n" + "You cannot assign this key chain unless you remove the conflicting key chain...");
     }
 
     public void startGlobalListener() {
