@@ -192,12 +192,14 @@ public abstract class KeySeries implements IJsonable {
 
     @Override
     public JsonRootNode jsonize() {
-        List<JsonNode> keyChain = new Function<ButtonStroke, JsonNode>() {
+        List<JsonNode> keyChain = new ArrayList<>();
+                getButtonStrokes().forEach((s) -> keyChain.add(s.jsonize()));
+                /*= new Function<ButtonStroke, JsonNode>() {
             @Override
             public JsonNode apply(ButtonStroke s) {
                 return s.jsonize();
             }
-        }.map(getButtonStrokes());
+        }.map(getButtonStrokes());*/
 
         return JsonNodeFactories.array(keyChain);
     }
