@@ -9,7 +9,7 @@ public final class TaskActivationConstructorManager extends AbstractBackgroundEn
     private final AbstractGlobalKeyListener keyListener;
 
     public TaskActivationConstructorManager() {
-        keyListener = NativeKeyHook.of(r->null, r -> {
+        keyListener = NativeKeyHook.of(null, r -> {
             onStroke(KeyStroke.of(r));
             return true;
         });

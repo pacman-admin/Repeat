@@ -56,36 +56,27 @@ public final class Recorder {
         sourceGenerators = new HashMap<>();
         sourceGenerators.put(Language.JAVA, new JavaSourceGenerator());
         sourceGenerators.put(Language.MANUAL_BUILD, new ManuallyBuildSourceGenerator());
-
         /* ************************************************************************************************/
-        keyListener = NativeKeyHook.of(new Function<>() {
-            @Override
-            public Boolean apply(final NativeKeyEvent r) {
-                final int code = r.getKey();
-                final long time = System.currentTimeMillis() - startTime;
-                taskScheduler.addTask(new SchedulingData<>(time, () -> controller.keyBoard().press(code)));
-
-                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-                    generator.submitTask(time, Device.KEYBOARD, "press", new int[]{code});
-                }
-                return true;
+        keyListener = NativeKeyHook.of(r -> {
+            final int code = r.getKey();
+            final long time = System.currentTimeMillis() - startTime;
+            taskScheduler.addTask(new SchedulingData<>(time, () -> controller.keyBoard().press(code)));
+            for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                generator.submitTask(time, Device.KEYBOARD, "press", new int[]{code});
             }
-        }, new Function<>() {
-            @Override
-            public Boolean apply(final NativeKeyEvent r) {
-                final int code = r.getKey();
-                final long time = System.currentTimeMillis() - startTime;
-                taskScheduler.addTask(new SchedulingData<>(time, () -> controller.keyBoard().release(code)));
-
-                for (AbstractSourceGenerator generator : sourceGenerators.values()) {
-                    generator.submitTask(time, Device.KEYBOARD, "release", new int[]{code});
-                }
-                return true;
+            return true;
+        }, r -> {
+            final int code = r.getKey();
+            final long time = System.currentTimeMillis() - startTime;
+            taskScheduler.addTask(new SchedulingData<>(time, () -> controller.keyBoard().release(code)));
+            for (AbstractSourceGenerator generator : sourceGenerators.values()) {
+                generator.submitTask(time, Device.KEYBOARD, "release", new int[]{code});
             }
+            return true;
         });
 
         /* ************************************************************************************************/
-        mouseListener = NativeMouseHook.of(r -> null, r -> null, r -> null);
+        mouseListener = NativeMouseHook.of(null, null, null);
         mouseListener.setMouseReleased(r -> {
             final int code = r.getButton();
             final long time = System.currentTimeMillis() - startTime;
