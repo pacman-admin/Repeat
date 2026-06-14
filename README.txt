@@ -19,7 +19,7 @@ AbstractPOSTHandler.java
 AbstractComplexGETHandler.java
 GetEditedSourceHandler.java
 ActionEditSourceHandler.java
-OSIdentifier.java
+Platform.java
 OS.java
 HTTPLogger.java
 RunnableVoid.java

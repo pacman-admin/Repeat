@@ -4,7 +4,7 @@ import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.platform.win32.WinDef.HWND;
 import com.sun.jna.ptr.PointerByReference;
-import utilities.OSIdentifier;
+import org.simplenativehooks.utilities.Platform;
 
 /**
  * Provides interaction with Window processes via Windows native DLLs.
@@ -45,7 +45,7 @@ final class WindowsNativeProcessUtil {
     @SuppressWarnings("UnusedReturnValue")
     private static final class Psapi {
         static {
-            if (OSIdentifier.isWindows()) {
+            if (Platform.isWindows()) {
                 Native.register("psapi");
             }
         }
@@ -61,7 +61,7 @@ final class WindowsNativeProcessUtil {
         private static final int PROCESS_VM_READ = 0x0010;
 
         static {
-            if (OSIdentifier.isWindows()) {
+            if (Platform.isWindows()) {
                 Native.register("kernel32");
             }
         }
@@ -73,7 +73,7 @@ final class WindowsNativeProcessUtil {
     @SuppressWarnings("UnusedReturnValue")
     private static final class User32DLL {
         static {
-            if (OSIdentifier.isWindows()) {
+            if (Platform.isWindows()) {
                 Native.register("user32");
             }
         }

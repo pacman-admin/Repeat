@@ -1,11 +1,11 @@
 package utilities;
 
 import core.keyChain.KeyboardState;
+import org.simplenativehooks.utilities.Platform;
 
 import java.awt.event.KeyEvent;
 
 public final class KeyCodeToChar {
-
     private KeyCodeToChar() {
         throw new InstantiationError("This class is uninstantiable.");
     }
@@ -180,7 +180,7 @@ public final class KeyCodeToChar {
     }
 
     private static String getCharFromNumpadCode(int code, KeyboardState state) {
-        if (!state.isNumslockLocked() && !OSIdentifier.isMac()) {
+        if (!state.isNumslockLocked() && !Platform.isMac()) {
             return "";
         }
 

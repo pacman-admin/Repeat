@@ -38,6 +38,8 @@ import core.userDefinedTask.internals.RunActionConfig;
 import core.userDefinedTask.internals.TaskSourceHistoryEntry;
 import org.simplenativehooks.NativeHookInitializer;
 import java.util.function.Function;
+
+import org.simplenativehooks.utilities.Platform;
 import staticResources.BootStrapResources;
 import utilities.*;
 import utilities.Desktop;
@@ -544,7 +546,7 @@ public final class Backend {
     }
 
     public static void importTasks(File inputFile) throws IOException {
-        if (OSIdentifier.isWindows()) {
+        if (Platform.isWindows()) {
             LOGGER.warning("This feature does not work on Windows; Sorry!");
             return;
         }
@@ -558,7 +560,7 @@ public final class Backend {
 
         LOGGER.fine("Moving files...");
         try {
-//            if (OSIdentifier.isWindows()) {
+//            if (Platform.isWindows()) {
 //                LOGGER.warning("You appear to be using Windows; why?");
 //                new ProcessBuilder("XCOPY", "/E", "tmp/data", "data").inheritIO().start().waitFor();
 //            } else {

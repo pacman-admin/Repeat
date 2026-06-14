@@ -1,5 +1,7 @@
 package utilities;
 
+import org.simplenativehooks.utilities.Platform;
+
 import java.awt.event.KeyEvent;
 
 public final class KeyEventCodeToString {
@@ -17,14 +19,14 @@ public final class KeyEventCodeToString {
         return switch (code) {
             case KeyEvent.VK_CONTROL -> "Ctrl";
             case KeyEvent.VK_ALT -> {
-                if (OSIdentifier.isMac()) {
+                if (Platform.isMac()) {
                     yield "option";
                 }
                 yield "Alt";
             }
             case KeyEvent.VK_WINDOWS -> "Windows";
             case KeyEvent.VK_META -> {
-                if (OSIdentifier.isMac()) {
+                if (Platform.isMac()) {
                     yield "command";
                 }
                 yield "Meta";

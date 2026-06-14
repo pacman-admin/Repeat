@@ -2,14 +2,15 @@ package core.controller.internals;
 
 import core.config.Config;
 import core.userDefinedTask.Clipboard;
-import java.util.function.Function;
-import utilities.OSIdentifier;
+import org.simplenativehooks.utilities.Platform;
 
 import java.awt.*;
+import java.awt.datatransfer.DataFlavor;
 import java.awt.event.KeyEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
 import java.util.logging.Logger;
 
 public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation {
@@ -59,23 +60,26 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
     }
 
     private void pasteString(String s) {
-        Clipboard.set(s);
-        switch (OSIdentifier.getCurrentOS()) {
-            case MAC:
-                press(KeyEvent.VK_META, KeyEvent.VK_V);
-                controller.delay(100);
-                release(KeyEvent.VK_V, KeyEvent.VK_META);
-                return;
-            case WINDOWS:
-                press(KeyEvent.VK_SHIFT, KeyEvent.VK_INSERT);
-                controller.delay(100);
-                release(KeyEvent.VK_INSERT, KeyEvent.VK_SHIFT);
-                return;
-            default:
-                LOGGER.warning("Using the clipboard to type strings works on macOS and Windows only.");
-                config.setUseClipboardToTypeString(false);
-                type(s);
+        if (Platform.isWindows()) {
+            Object original = "";
+            try {
+                original = Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
+            } catch (Throwable ignored) {}
+            Clipboard.set(s);
+            press(KeyEvent.VK_SHIFT, KeyEvent.VK_INSERT);
+            controller.delay(100);
+            release(KeyEvent.VK_INSERT, KeyEvent.VK_SHIFT);
+            if (original == null) return;
+            if (original instanceof String data) {
+                if (data.isBlank()) return;
+                Clipboard.set(data);
+            }
+            return;
         }
+        LOGGER.warning("Using the clipboard to type strings works on Windows only.");
+        config.setUseClipboardToTypeString(false);
+        type(s);
+
     }
 
     private void typeSingleString(String string) {
@@ -177,7 +181,7 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
 
     private void pressSingleKey(int key) {
         controller.keyPress(key);
-        if (OSIdentifier.isMac() && OSX_FLAG_KEYS.contains(key)) {
+        if (Platform.isMac() && OSX_FLAG_KEYS.contains(key)) {
             controller.delay(OSX_KEY_FLAG_DELAY_MS);
         }
     }
@@ -191,7 +195,7 @@ public final class LocalKeyboardCore extends AbstractKeyboardCoreImplementation 
 
     private void releaseSingleKey(int key) {
         controller.keyRelease(key);
-        if (OSIdentifier.isMac() && OSX_FLAG_KEYS.contains(key)) {
+        if (Platform.isMac() && OSX_FLAG_KEYS.contains(key)) {
             controller.delay(OSX_KEY_FLAG_DELAY_MS);
         }
     }

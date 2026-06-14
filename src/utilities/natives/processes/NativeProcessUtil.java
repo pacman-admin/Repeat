@@ -1,6 +1,6 @@
 package utilities.natives.processes;
 
-import utilities.OSIdentifier;
+import org.simplenativehooks.utilities.Platform;
 
 /**
  * Provides utility to interact with processes via native APIs.
@@ -12,11 +12,10 @@ public final class NativeProcessUtil {
     }
 
     public static NativeWindowInfo getActiveWindowInfo() {
-        return switch (OSIdentifier.getCurrentOS()) {
+        return switch (Platform.get()) {
             case WINDOWS -> WindowsNativeProcessUtil.getActiveWindowInfo();
-            case LINUX -> X11NativeProcessUtil.getActiveWindowInfo();
+            case OTHER -> X11NativeProcessUtil.getActiveWindowInfo();
             case MAC -> OSXNativeProcessUtil.getActiveWindowInfo();
-            default -> throw new IllegalStateException("OS is not supported.");
         };
     }
 

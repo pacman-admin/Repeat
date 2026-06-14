@@ -18,6 +18,8 @@
  */
 package utilities;
 
+import org.simplenativehooks.utilities.Platform;
+
 import java.awt.*;
 import java.awt.datatransfer.Clipboard;
 import java.awt.datatransfer.DataFlavor;
@@ -62,11 +64,10 @@ public final class Desktop {
             LOGGER.warning("File <" + file.getAbsolutePath() + "> does not exist.");
         } catch (Exception ignored) {
         }
-        return switch (OSIdentifier.getCurrentOS()) {
+        return switch (Platform.get()) {
             case WINDOWS -> openFileWindows(file);
-            case LINUX -> openFileLinux(file);
+            case OTHER -> openFileLinux(file);
             case MAC -> openFileOSX(file);
-            default -> openWithCommand("xedit", file);
         };
     }
 

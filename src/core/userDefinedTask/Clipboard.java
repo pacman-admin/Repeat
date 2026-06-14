@@ -37,7 +37,7 @@ public final class Clipboard {
         try {
             return (String) Toolkit.getDefaultToolkit().getSystemClipboard().getData(DataFlavor.stringFlavor);
         } catch (UnsupportedFlavorException ignored) {
-        } catch (Exception e) {
+        } catch (Throwable e) {
             LOGGER.warning("Unable to retrieve text from clipboard");
         }
         return "";
