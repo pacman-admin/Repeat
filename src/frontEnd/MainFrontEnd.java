@@ -2,6 +2,7 @@ package frontEnd;
 
 import core.ipc.IPCServiceManager;
 import org.simplenativehooks.BootstrapResources;
+import org.simplenativehooks.ControlMode;
 import org.simplenativehooks.NativeHookInitializer;
 
 import java.io.IOException;
@@ -15,17 +16,8 @@ public final class MainFrontEnd {
 
     public static void run() {
         /*************************************************************************************/
-        /********************************Extracting resources*********************************/
-        try {
-            BootstrapResources.extract();
-        } catch (IOException | URISyntaxException e) {
-            LOGGER.log(Level.SEVERE, "Cannot extract bootstrap resources.", e);
-            System.exit(2);
-        }
-
-        /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        NativeHookInitializer.start();
+        NativeHookInitializer.start(ControlMode.X11);
 
         /*************************************************************************************/
         /********************************Start main program***********************************/
