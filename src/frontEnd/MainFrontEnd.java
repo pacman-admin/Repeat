@@ -1,12 +1,12 @@
 package frontEnd;
 
 import core.ipc.IPCServiceManager;
-import org.simplenativehooks.BootstrapResources;
 import org.simplenativehooks.ControlMode;
 import org.simplenativehooks.NativeHookInitializer;
+import org.simplenativehooks.utilities.Platform;
 
+import javax.swing.*;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +17,15 @@ public final class MainFrontEnd {
     public static void run() {
         /*************************************************************************************/
         /********************************Initializing global hooks****************************/
-        NativeHookInitializer.start(ControlMode.X11);
+        if (Platform.isUnix()) {
+            try {
+                UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+            } catch (Throwable ignored) {}
+            int n = JOptionPane.showConfirmDialog(null, "Do you want to use native control (requires sudo permissions)?\nThe pkexec command must be installed on your system.");
+            if (n == 0) NativeHookInitializer.start(ControlMode.UNIX);
+            else if (n == 1) NativeHookInitializer.start(ControlMode.X11);
+            else NativeHookInitializer.start();
+        } else NativeHookInitializer.start();
 
         /*************************************************************************************/
         /********************************Start main program***********************************/
